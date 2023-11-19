@@ -64,7 +64,7 @@
   contentEditable={isEditable()}
   data-testid={testid}
   {id}
-  {ref}
+  use:ref
   {role}
   {spellCheck}
   {style}

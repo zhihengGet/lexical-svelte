@@ -1,4 +1,4 @@
-import { SvelteComponent, mount } from "svelte";
+import { SvelteComponent, mount, setContext } from "svelte";
 
 export type pluginTypes = any;
 type Dispatch<A> = (value: A) => void;
@@ -51,4 +51,8 @@ export function useMemo<T>(fn: () => T, dep?: any) {
 }
 export function useRef<T>(param: T) {
   return { current: param };
+}
+
+export function createContext(config) {
+  setContext("", config);
 }

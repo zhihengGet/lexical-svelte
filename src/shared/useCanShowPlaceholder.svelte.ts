@@ -23,7 +23,7 @@ function canShowPlaceholderFromCurrentEditorState(
   return currentCanShowPlaceholder;
 }
 
-export function useCanShowPlaceholder(editor: LexicalEditor): boolean {
+export function useCanShowPlaceholder(editor: LexicalEditor) {
   const [canShowPlaceholder, setCanShowPlaceholder] = useState(() =>
     canShowPlaceholderFromCurrentEditorState(editor)
   );
@@ -45,5 +45,5 @@ export function useCanShowPlaceholder(editor: LexicalEditor): boolean {
     );
   }, [editor]);
 
-  return canShowPlaceholder();
+  return canShowPlaceholder;
 }

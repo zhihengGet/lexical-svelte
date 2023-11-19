@@ -8,6 +8,7 @@
   import Editor from "./Editor.svelte";
   import "./index.css";
   import PlaygroundNodes from "./playground/PlaygroundNodes";
+  import SettingsContext from "./playground/context/SettingsContext.svelte";
   console.warn(
     "If you are profiling the playground app, please ensure you turn off the debug view. You can disable it by pressing on the settings control in the bottom-left of your screen and toggling the debug view setting."
   );
@@ -59,7 +60,7 @@
   }
 
   const initialConfig = {
-    editorState: prepopulatedRichText,
+    editorState: null,
     namespace: "Playground",
     nodes: [...PlaygroundNodes],
     onError: (error: Error) => {
@@ -72,30 +73,13 @@
 
 <main>
   <div />
-  <h1>Vite + Svelte</h1>
-  <LexicalComposer {initialConfig}>
-    <div class="editor-shell">
-      <Editor />
-    </div>
-  </LexicalComposer>
+  <SettingsContext>
+    <LexicalComposer {initialConfig}>
+      <div class="editor-shell">
+        <Editor />
+      </div>
+    </LexicalComposer>
+  </SettingsContext>
 
   <p class="read-the-docs">Click on the Vite and Svelte logos to learn more</p>
 </main>
-
-<style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-  }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-  .read-the-docs {
-    color: #888;
-  }
-</style>

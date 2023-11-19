@@ -45,8 +45,8 @@
 
   let { initialConfig } = $props<Props>();
 
-  const composerContext: [LexicalEditor, LexicalComposerContextType] = useMemo(
-    () => {
+  const composerContext: [LexicalEditor, LexicalComposerContextType] =
+    useMemo(() => {
       const {
         theme,
         namespace,
@@ -61,9 +61,7 @@
         null,
         theme
       );
-
       let editor = initialEditor || null;
-
       if (editor === null) {
         const newEditor = createEditor({
           editable: initialConfig.editable,
@@ -73,20 +71,19 @@
           onError: (error) => onError(error, newEditor),
           theme,
         });
+
         initializeEditor(newEditor, initialEditorState);
 
         editor = newEditor;
+        editor.registerUpdateListener((v) => {
+          console.log(v.editorState.toJSON());
+        });
       }
-      setLexicalComposerContext([editor, context]);
-      editor.setEditable(true);
+      editor?.setEditable(true);
       return [editor, context];
-    },
+    }, []);
 
-    // We only do this for init
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
-
+  setLexicalComposerContext(composerContext);
   //  return [editor, context];
 
   /*   useLayoutEffect(() => {
@@ -128,6 +125,7 @@
           break;
         }
         case "object": {
+          console.log("setting editor state", initialEditorState);
           editor.setEditorState(initialEditorState, HISTORY_MERGE_OPTIONS);
           break;
         }

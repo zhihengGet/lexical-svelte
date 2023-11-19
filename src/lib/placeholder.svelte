@@ -12,6 +12,6 @@
 
 {#if typeof content === "function"}
   {content(editable)}
-{:else}
+{:else if showPlaceholder()}
   {content ?? ""}
 {/if}

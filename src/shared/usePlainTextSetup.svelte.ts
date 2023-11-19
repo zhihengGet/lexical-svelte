@@ -15,6 +15,7 @@ import useLayoutEffect from "shared/useLayoutEffect.svelte";
 
 export function usePlainTextSetup(editor: LexicalEditor): void {
   useLayoutEffect(() => {
+    console.log("registering plain text s", editor);
     return mergeRegister(
       registerPlainText(editor),
       registerDragonSupport(editor)

@@ -7,23 +7,33 @@
   import { useState } from "./react.svelte";
   import LexicalTreeView from "./lib/LexicalTreeView.svelte";
   import TreeViewPlugin from "./playground/plugins/TreeViewPlugin/TreeViewPlugin.svelte";
+  import ContentEditable from "./playground/ui/ContentEditable.svelte";
+  import SettingsContext, {
+    useSettings,
+  } from "./playground/context/SettingsContext.svelte";
 
   const isEditable = true;
   const text = "Enter some plain text...";
   const placeholder = text;
+  const skipCollaborationInit =
+    // @ts-ignore
+    window.parent != null && window.parent.frames.right === window;
 
-  /*   const [isSmallWidthViewport, setIsSmallWidthViewport] =
-    useState<boolean>(false); */
-
-  /*   const cellEditorConfig = {
-    namespace: "Playground",
-    nodes: [...TableCellNodes],
-    onError: (error: Error) => {
-      throw error;
-    },
-    theme: PlaygroundEditorTheme,
-  }; */
-
+  const settings = useSettings();
+  const {
+    isCollab,
+    isAutocomplete,
+    isMaxLength,
+    isCharLimit,
+    isCharLimitUtf8,
+    isRichText,
+    showTreeView,
+    showTableOfContents,
+    shouldUseLexicalContextMenu,
+    tableCellMerge,
+    tableCellBackgroundColor,
+  } = settings.settings();
+  console.log("setting", isRichText, showTreeView);
   $effect(() => {
     const updateViewPortWidth = () => {
       const isNextSmallWidthViewport =
@@ -40,5 +50,11 @@
   // your script goes here
 </script>
 
-<PlainTextPlugin contentEditable={LexicalContentEditable} {placeholder} />
-<TreeViewPlugin />
+<div
+  class={`editor-container ${showTreeView ? "tree-view" : ""} ${
+    !isRichText ? "plain-text" : ""
+  }`}
+>
+  <PlainTextPlugin contentEditable={ContentEditable} {placeholder} />
+  <TreeViewPlugin />
+</div>
