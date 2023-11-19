@@ -22,7 +22,7 @@ import {
   $isTextNode,
   $setSelection,
 } from 'lexical';
-import {useEffect} from 'react';
+import {useEffect} from '../react.svelte';
 import invariant from 'shared/invariant';
 
 type OptionalProps = {

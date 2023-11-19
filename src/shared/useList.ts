@@ -18,7 +18,7 @@ import {
 } from '@lexical/list';
 import {mergeRegister} from '@lexical/utils';
 import {COMMAND_PRIORITY_LOW, INSERT_PARAGRAPH_COMMAND} from 'lexical';
-import {useEffect} from 'react';
+import {useEffect} from '../react.svelte';
 
 export function useList(editor: LexicalEditor): void {
   useEffect(() => {

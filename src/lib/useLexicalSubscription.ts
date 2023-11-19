@@ -1,6 +1,6 @@
 import type { LexicalEditor } from "lexical";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "../react.svelte";
 import useLayoutEffect from "shared/useLayoutEffect.svelte";
 
 export type LexicalSubscription<T> = {

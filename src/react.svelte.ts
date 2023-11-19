@@ -2,15 +2,21 @@ import { SvelteComponent, mount, tick } from "svelte";
 
 export type pluginTypes = any;
 
-export function flushSync(fn) {
-  tick().then(fn);
-}
+type setState<T> = T | ((props: T) => T);
 export function useState<T>(state: T) {
+  if (typeof state == "function") {
+    state = state();
+  }
+
   let s = $state<T>(state);
 
   return [
     () => s,
-    (newValue: T) => {
+    (newValue: setState<T>) => {
+      if (typeof newValue === "function") {
+        //@ts-expect-error
+        return newValue(s);
+      }
       s = newValue;
     },
   ] as const;
@@ -27,7 +33,7 @@ export function createPortal(
   mount(SvelteComponent, { target: element, props: name });
 }
 export function useCallback<T>(fn: T, dep: any) {
-  return fn;
+  return $derived(fn);
 }
 
 export function useMemo(fn, dep: any) {

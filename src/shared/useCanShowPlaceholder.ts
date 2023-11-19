@@ -10,7 +10,7 @@ import type { LexicalEditor } from "lexical";
 
 import { $canShowPlaceholderCurry } from "@lexical/text";
 import { mergeRegister } from "@lexical/utils";
-import { useState } from "react";
+import { useState } from "../react.svelte";
 import useLayoutEffect from "shared/useLayoutEffect.svelte";
 
 function canShowPlaceholderFromCurrentEditorState(

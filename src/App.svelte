@@ -2,6 +2,7 @@
   import { default as LexicalComposer } from "@lexical/react/LexicalComposer.svelte";
   import * as richText from "@lexical/rich-text";
   import * as lexical from "lexical";
+  import "virtual:uno.css";
 
   import Editor from "./Editor.svelte";
 
@@ -56,11 +57,13 @@
       root.append(paragraph4);
     }
   }
+
   const initialConfig = {
     editorState: prepopulatedRichText,
     namespace: "Playground",
     nodes: [...PlaygroundNodes],
     onError: (error: Error) => {
+      console.log("error initialize", error);
       throw error;
     },
     theme: PlaygroundEditorTheme,
@@ -75,13 +78,6 @@
       <Editor />
     </div>
   </LexicalComposer>
-  <p>
-    Check out <a
-      href="https://github.com/sveltejs/kit#readme"
-      target="_blank"
-      rel="noreferrer">SvelteKit</a
-    >, the official Svelte app framework powered by Vite!
-  </p>
 
   <p class="read-the-docs">Click on the Vite and Svelte logos to learn more</p>
 </main>

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-  import { useCallback, useState } from "react";
+  import { useCallback, useState } from "../react.svelte";
 
   const {
     ariaActiveDescendant,

@@ -23,7 +23,7 @@ import {
   LexicalEditor,
   TextNode,
 } from "lexical";
-import { useCallback, useState } from "react";
+import { useCallback, useState } from "../react.svelte";
 
 import useLayoutEffect from "shared/useLayoutEffect";
 import { ComponentType, SvelteComponent } from "svelte";

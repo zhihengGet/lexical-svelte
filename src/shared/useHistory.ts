@@ -10,7 +10,7 @@ import type {HistoryState} from '@lexical/history';
 import type {LexicalEditor} from 'lexical';
 
 import {createEmptyHistoryState, registerHistory} from '@lexical/history';
-import {useEffect, useMemo} from 'react';
+import {useEffect, useMemo} from '../react.svelte';
 
 export function useHistory(
   editor: LexicalEditor,

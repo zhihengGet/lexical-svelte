@@ -42,41 +42,39 @@
 
   let { initialConfig } = $props<Props>();
   const HISTORY_MERGE_OPTIONS = { tag: "history-merge" };
+  const {
+    theme,
+    namespace,
+    editor__DEPRECATED: initialEditor,
+    nodes,
+    onError,
+    editorState: initialEditorState,
+    html,
+  } = initialConfig;
+  const context: LexicalComposerContextType = createLexicalComposerContext(
+    null,
+    theme
+  );
 
-  $effect.pre(() => {
-    const {
-      theme,
-      namespace,
-      editor__DEPRECATED: initialEditor,
-      nodes,
-      onError,
-      editorState: initialEditorState,
+  let editor = initialEditor || null;
+
+  if (editor === null) {
+    const newEditor = createEditor({
+      editable: initialConfig.editable,
       html,
-    } = initialConfig;
+      namespace,
+      nodes,
+      onError: (error) => onError(error, newEditor),
+      theme,
+    });
+    initializeEditor(newEditor, initialEditorState);
 
-    const context: LexicalComposerContextType = createLexicalComposerContext(
-      null,
-      theme
-    );
+    editor = newEditor;
+  }
 
-    let editor = initialEditor || null;
-
-    if (editor === null) {
-      const newEditor = createEditor({
-        editable: initialConfig.editable,
-        html,
-        namespace,
-        nodes,
-        onError: (error) => onError(error, newEditor),
-        theme,
-      });
-      initializeEditor(newEditor, initialEditorState);
-
-      editor = newEditor;
-    }
-    setLexicalComposerContext([editor, context]);
-    //  return [editor, context];
-  });
+  setLexicalComposerContext([editor, context]);
+  editor.setEditable(true);
+  //  return [editor, context];
 
   /*   useLayoutEffect(() => {
     const isEditable = initialConfig.editable;
