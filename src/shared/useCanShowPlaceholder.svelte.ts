@@ -8,7 +8,7 @@
 
 import type { LexicalEditor } from "lexical";
 
-import { $canShowPlaceholderCurry } from "@lexical/text";
+import * as text from "@lexical/text";
 import { mergeRegister } from "@lexical/utils";
 import { useState } from "../react.svelte";
 import useLayoutEffect from "shared/useLayoutEffect.svelte";
@@ -18,7 +18,7 @@ function canShowPlaceholderFromCurrentEditorState(
 ): boolean {
   const currentCanShowPlaceholder = editor
     .getEditorState()
-    .read($canShowPlaceholderCurry(editor.isComposing()));
+    .read(text.$canShowPlaceholderCurry(editor.isComposing()));
 
   return currentCanShowPlaceholder;
 }
@@ -45,5 +45,5 @@ export function useCanShowPlaceholder(editor: LexicalEditor): boolean {
     );
   }, [editor]);
 
-  return canShowPlaceholder;
+  return canShowPlaceholder();
 }

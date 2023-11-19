@@ -9,7 +9,7 @@
 import type { LexicalSubscription } from "./types";
 import type { LexicalEditor } from "lexical";
 
-import { useLexicalSubscription } from "./useLexicalSubscription";
+import { useLexicalSubscription } from "./useLexicalSubscription.svelte";
 
 function subscription(editor: LexicalEditor): LexicalSubscription<boolean> {
   return {

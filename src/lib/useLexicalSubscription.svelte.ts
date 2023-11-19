@@ -1,5 +1,5 @@
 import type { LexicalEditor } from "lexical";
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext.svelte";
 import { useMemo, useRef, useState } from "../react.svelte";
 import useLayoutEffect from "shared/useLayoutEffect.svelte";
 
@@ -19,8 +19,8 @@ export function useLexicalSubscription<T>(
     () => subscription(editor),
     [editor, subscription]
   );
-  const valueRef = useRef<T>(initializedSubscription.initialValueFn());
-  const [value, setValue] = useState<T>(valueRef.current);
+  const valueRef = useRef(initializedSubscription.initialValueFn());
+  const [value, setValue] = useState(valueRef.current);
   useLayoutEffect(() => {
     const { initialValueFn, subscribe } = initializedSubscription;
     const currentValue = initialValueFn();

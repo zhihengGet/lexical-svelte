@@ -7,10 +7,10 @@
    *
    */
 
-  import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+  import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext.svelte";
 
-  import { useDecorators } from "../shared/useDecorators.svelte";
-  import { usePlainTextSetup } from "../shared/usePlainTextSetup";
+  import { useDecorators } from "../shared/useDecorators.svelte.svelte";
+  import { usePlainTextSetup } from "../shared/usePlainTextSetup.svelte";
   import Placeholder from "./placeholder.svelte";
 
   let { contentEditable, placeholder } = $props<{

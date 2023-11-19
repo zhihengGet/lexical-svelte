@@ -18,15 +18,17 @@
   type Props = {
     initialConfig: InitialConfigType;
   };
+  const HISTORY_MERGE_OPTIONS = { tag: "history-merge" };
 </script>
 
 <script lang="ts">
-  import type { LexicalComposerContextType } from "@lexical/react/LexicalComposerContext";
+  /* intialize editor */
+  import type { LexicalComposerContextType } from "@lexical/react/LexicalComposerContext.svelte";
   import * as lex from "lexical";
   import {
     createLexicalComposerContext,
     setLexicalComposerContext,
-  } from "@lexical/react/LexicalComposerContext";
+  } from "@lexical/react/LexicalComposerContext.svelte";
   import {
     createEditor,
     EditorState,
@@ -39,41 +41,52 @@
   } from "lexical";
 
   import { CAN_USE_DOM } from "shared/canUseDOM";
+  import { useMemo } from "react";
 
   let { initialConfig } = $props<Props>();
-  const HISTORY_MERGE_OPTIONS = { tag: "history-merge" };
-  const {
-    theme,
-    namespace,
-    editor__DEPRECATED: initialEditor,
-    nodes,
-    onError,
-    editorState: initialEditorState,
-    html,
-  } = initialConfig;
-  const context: LexicalComposerContextType = createLexicalComposerContext(
-    null,
-    theme
+
+  const composerContext: [LexicalEditor, LexicalComposerContextType] = useMemo(
+    () => {
+      const {
+        theme,
+        namespace,
+        editor__DEPRECATED: initialEditor,
+        nodes,
+        onError,
+        editorState: initialEditorState,
+        html,
+      } = initialConfig;
+
+      const context: LexicalComposerContextType = createLexicalComposerContext(
+        null,
+        theme
+      );
+
+      let editor = initialEditor || null;
+
+      if (editor === null) {
+        const newEditor = createEditor({
+          editable: initialConfig.editable,
+          html,
+          namespace,
+          nodes,
+          onError: (error) => onError(error, newEditor),
+          theme,
+        });
+        initializeEditor(newEditor, initialEditorState);
+
+        editor = newEditor;
+      }
+      setLexicalComposerContext([editor, context]);
+      editor.setEditable(true);
+      return [editor, context];
+    },
+
+    // We only do this for init
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   );
 
-  let editor = initialEditor || null;
-
-  if (editor === null) {
-    const newEditor = createEditor({
-      editable: initialConfig.editable,
-      html,
-      namespace,
-      nodes,
-      onError: (error) => onError(error, newEditor),
-      theme,
-    });
-    initializeEditor(newEditor, initialEditorState);
-
-    editor = newEditor;
-  }
-
-  setLexicalComposerContext([editor, context]);
-  editor.setEditable(true);
   //  return [editor, context];
 
   /*   useLayoutEffect(() => {

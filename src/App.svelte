@@ -3,10 +3,10 @@
   import * as richText from "@lexical/rich-text";
   import * as lexical from "lexical";
   import "virtual:uno.css";
+  import PlaygroundEditorTheme from "./themes/PlaygroundEditorTheme";
 
   import Editor from "./Editor.svelte";
-
-  import PlaygroundEditorTheme from "./themes/PlaygroundEditorTheme";
+  import "./index.css";
   import PlaygroundNodes from "./playground/PlaygroundNodes";
   console.warn(
     "If you are profiling the playground app, please ensure you turn off the debug view. You can disable it by pressing on the settings control in the bottom-left of your screen and toggling the debug view setting."

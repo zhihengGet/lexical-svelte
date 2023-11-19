@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+  import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext.svelte";
   import { useCallback, useState } from "../react.svelte";
 
   const {
@@ -44,11 +44,11 @@
 
 <div
   {...rest}
-  aria-activedescendant={!isEditable ? undefined : ariaActiveDescendant}
-  aria-autocomplete={!isEditable ? "none" : ariaAutoComplete}
-  aria-controls={!isEditable ? undefined : ariaControls}
+  aria-activedescendant={!isEditable() ? undefined : ariaActiveDescendant}
+  aria-autocomplete={!isEditable() ? "none" : ariaAutoComplete}
+  aria-controls={!isEditable() ? undefined : ariaControls}
   aria-describedby={ariaDescribedBy}
-  aria-expanded={!isEditable
+  aria-expanded={!isEditable()
     ? undefined
     : role === "combobox"
     ? !!ariaExpanded
@@ -56,12 +56,12 @@
   aria-label={ariaLabel}
   aria-labelledby={ariaLabelledBy}
   aria-multiline={ariaMultiline}
-  aria-owns={!isEditable ? undefined : ariaOwns}
-  aria-readonly={!isEditable ? true : undefined}
+  aria-owns={!isEditable() ? undefined : ariaOwns}
+  aria-readonly={!isEditable() ? true : undefined}
   aria-required={ariaRequired}
   {autoCapitalize}
   {className}
-  contentEditable={isEditable}
+  contentEditable={isEditable()}
   data-testid={testid}
   {id}
   {ref}

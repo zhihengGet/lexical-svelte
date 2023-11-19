@@ -1,30 +1,38 @@
-import { SvelteComponent, mount, tick } from "svelte";
+import { SvelteComponent, mount } from "svelte";
 
 export type pluginTypes = any;
+type Dispatch<A> = (value: A) => void;
+type SetStateAction<S> = S | ((prevState: S) => S);
 
-type setState<T> = T | ((props: T) => T);
-export function useState<T>(state: T) {
+type temp<T> = (props?: T) => T;
+type setState<T> = T | temp<T>;
+export function useState<T>(state: T | temp<T>) {
+  let value;
   if (typeof state == "function") {
-    state = state();
+    value = state();
+  } else {
+    value = state;
   }
 
-  let s = $state<T>(state);
+  let s = $state<T>(value);
 
   return [
     () => s,
     (newValue: setState<T>) => {
       if (typeof newValue === "function") {
-        //@ts-expect-error
-        return newValue(s);
+        newValue(s);
+        return s;
       }
       s = newValue;
+      return s;
     },
   ] as const;
 }
 
-export function useEffect<D>(func: () => void, dep: D) {
+function useEffect<D>(func: () => void, dep: D) {
   $effect(func);
 }
+export { useEffect };
 export function createPortal(
   SvelteComponent: SvelteComponent,
   element: HTMLElement,
@@ -32,11 +40,12 @@ export function createPortal(
 ) {
   mount(SvelteComponent, { target: element, props: name });
 }
-export function useCallback<T>(fn: T, dep: any) {
-  return $derived(fn);
+export function useCallback<T>(fn: T, dep?: any) {
+  const b = $derived(fn);
+  return b;
 }
 
-export function useMemo(fn, dep: any) {
+export function useMemo<T>(fn: () => T, dep?: any) {
   const r = $derived(fn());
   return r;
 }

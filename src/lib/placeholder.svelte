@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-  import useLexicalEditable from "@lexical/react/useLexicalEditable";
+  import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext.svelte";
+  import useLexicalEditable from "@lexical/react/useLexicalEditable.svelte";
 
-  import { useCanShowPlaceholder } from "../shared/useCanShowPlaceholder";
+  import { useCanShowPlaceholder } from "../shared/useCanShowPlaceholder.svelte";
 
   let { content } = $props<{ content: String }>();
   const [editor] = useLexicalComposerContext();

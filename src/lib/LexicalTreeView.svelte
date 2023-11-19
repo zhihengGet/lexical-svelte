@@ -85,7 +85,7 @@
 
       if (!timeTravelEnabled()) {
         setTimeStampedEditorStates((currentEditorStates) => [
-          ...currentEditorStates,
+          ...(currentEditorStates ?? []),
           [Date.now(), editorState],
         ]);
       }
@@ -220,7 +220,7 @@
         unregisterCommandListeners.forEach((unregister) => unregister());
     }, [editor]);
 
-    return useMemo(() => loggedCommands, [loggedCommands]);
+    return useMemo(() => loggedCommands(), [loggedCommands]);
   }
 
   function printRangeSelection(selection: RangeSelection): string {
@@ -661,7 +661,7 @@
 
 <div class={viewClassName}>
   {#if !showLimited() && isLimited()}
-    <div style="padding:20px;">
+    <div class="p-20">
       <span class="mr-20">
         Detected large EditorState, this can impact debugging performance.
       </span>

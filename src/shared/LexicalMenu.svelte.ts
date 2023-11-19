@@ -6,7 +6,7 @@
  *
  */
 
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext.svelte";
 import { mergeRegister } from "@lexical/utils";
 import {
   $getSelection,
@@ -23,9 +23,9 @@ import {
   LexicalEditor,
   TextNode,
 } from "lexical";
-import { useCallback, useState } from "../react.svelte";
+import { useCallback, useMemo, useState } from "../react.svelte";
 
-import useLayoutEffect from "shared/useLayoutEffect";
+import useLayoutEffect from "shared/useLayoutEffect.svelte";
 import { ComponentType, SvelteComponent } from "svelte";
 
 export type MenuTextMatch = {
@@ -405,16 +405,13 @@ export function LexicalMenu<TOption extends MenuOption>({
         KEY_TAB_COMMAND,
         (payload) => {
           const event = payload;
-          if (
-            options === null ||
-            selectedIndex === null ||
-            options[selectedIndex] == null
-          ) {
+          let v = selectedIndex();
+          if (options === null || v === null || options[v] == null) {
             return false;
           }
           event.preventDefault();
           event.stopImmediatePropagation();
-          selectOptionAndCleanUp(options[selectedIndex]);
+          selectOptionAndCleanUp(options[v]);
           return true;
         },
         commandPriority
@@ -422,34 +419,23 @@ export function LexicalMenu<TOption extends MenuOption>({
       editor.registerCommand(
         KEY_ENTER_COMMAND,
         (event: KeyboardEvent | null) => {
-          if (
-            options === null ||
-            selectedIndex === null ||
-            options[selectedIndex] == null
-          ) {
+          let v = selectedIndex();
+          if (options === null || v === null || options[v] == null) {
             return false;
           }
           if (event !== null) {
             event.preventDefault();
             event.stopImmediatePropagation();
           }
-          selectOptionAndCleanUp(options[selectedIndex]);
+          selectOptionAndCleanUp(options[v]);
           return true;
         },
         commandPriority
       )
     );
-  }, [
-    selectOptionAndCleanUp,
-    close,
-    editor,
-    options,
-    selectedIndex,
-    updateSelectedIndex,
-    commandPriority,
-  ]);
+  });
 
-  const listItemProps = $derived(() => ({
+  const listItemProps = useMemo(() => ({
     options,
     selectOptionAndCleanUp,
     selectedIndex,

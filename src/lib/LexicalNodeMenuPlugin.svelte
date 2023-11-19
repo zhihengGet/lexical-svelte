@@ -17,9 +17,12 @@
 </script>
 
 <script lang="ts">
-  import type { MenuRenderFn, MenuResolution } from "../shared/LexicalMenu";
+  import type {
+    MenuRenderFn,
+    MenuResolution,
+  } from "../shared/LexicalMenu.svelte";
 
-  import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+  import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext.svelte";
   import * as lexical from "lexical";
   import {
     COMMAND_PRIORITY_LOW,
@@ -31,7 +34,7 @@
     LexicalMenu,
     MenuOption,
     useMenuAnchorRef,
-  } from "../shared/LexicalMenu";
+  } from "../shared/LexicalMenu.svelte";
   import { SvelteComponent, tick } from "svelte";
   import { pluginTypes, useState } from "../react.svelte";
 
