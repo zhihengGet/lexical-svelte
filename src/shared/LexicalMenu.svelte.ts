@@ -28,6 +28,7 @@ import { useCallback, useMemo, useState } from "../react.svelte";
 import useLayoutEffect from "shared/useLayoutEffect.svelte";
 import { ComponentType, SvelteComponent } from "svelte";
 import { MutableRefObject } from "../../react";
+import { SvelteRender } from "@lexical/react/types";
 
 export type MenuTextMatch = {
   leadOffset: number;
@@ -67,7 +68,7 @@ export type MenuRenderFn<TOption extends MenuOption> = (
     options: Array<TOption>;
   },
   matchingString: string | null
-) => SvelteComponent;
+) => SvelteRender;
 
 const scrollIntoViewIfNeeded = (target: HTMLElement) => {
   const typeaheadContainerNode = document.getElementById("typeahead-menu");

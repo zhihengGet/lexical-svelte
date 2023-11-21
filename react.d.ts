@@ -55,11 +55,11 @@ declare const UNDEFINED_VOID_ONLY: unique symbol;
 // Destructors are only allowed to return void.
 type Destructor = () => void | { [UNDEFINED_VOID_ONLY]: never };
 type VoidOrUndefinedOnly = void | { [UNDEFINED_VOID_ONLY]: never };
-
+declare global {}
 // tslint:disable-next-line:export-just-namespace
 export = React;
 export as namespace React;
-export declare namespace React {
+declare namespace React {
   //
   // React Elements
   // ----------------------------------------------------------------------

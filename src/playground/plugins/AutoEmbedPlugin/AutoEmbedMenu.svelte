@@ -1,8 +1,19 @@
-<script>
+<script lang="ts">
   import AutoEmbedMenuItem from "./AutoEmbedMenuItem.svelte"; // Adjust the import path as needed
-
+  import {
+    AutoEmbedOption,
+    EmbedConfig,
+    EmbedMatchResult,
+    URL_MATCHER,
+  } from "@lexical/react/LexicalAutoEmbedPlugin.svelte";
+  type t = {
+    selectedItemIndex: number | null;
+    onOptionClick: (option: AutoEmbedOption, index: number) => void;
+    onOptionMouseEnter: (index: number) => void;
+    options: Array<AutoEmbedOption>;
+  };
   let { options, selectedItemIndex, onOptionClick, onOptionMouseEnter } =
-    $props();
+    $props<t>();
 </script>
 
 <div class="typeahead-popover">
@@ -11,9 +22,8 @@
       <AutoEmbedMenuItem
         index={i}
         isSelected={selectedItemIndex === i}
-        on:click={() => onOptionClick(option, i)}
-        on:mouseenter={() => onOptionMouseEnter(i)}
-        key={option.key}
+        onClick={() => onOptionClick(option, i)}
+        onMouseEnter={() => onOptionMouseEnter(i)}
         {option}
       />
     {/each}

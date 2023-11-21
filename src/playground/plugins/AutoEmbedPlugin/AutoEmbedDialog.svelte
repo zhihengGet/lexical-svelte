@@ -16,7 +16,8 @@
       }, delay);
     };
   };
-
+  import { default as DialogActions } from "../../ui/DialogActions.svelte";
+  import Button from "@ui/Button.svelte";
   let { embedConfig, onClose } = $props<{
     embedConfig: PlaygroundEmbedConfig;
     onClose: () => void;
@@ -44,7 +45,7 @@
 
   const onClick = () => {
     if (embedResult != null) {
-      embedConfig.insertNode(editor, embedResult); // Assuming `editor` is available
+      embedConfig.insertNode(editor, embedResult()); // Assuming `editor` is available
       onClose();
     }
   };
@@ -72,7 +73,7 @@
   <DialogActions>
     <Button
       disabled={!embedResult}
-      on:click={onClick}
+      {onClick}
       data-test-id={`${embedConfig.type}-embed-modal-submit-btn`}
     >
       Embed

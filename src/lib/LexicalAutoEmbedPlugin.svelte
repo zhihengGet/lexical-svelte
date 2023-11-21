@@ -59,8 +59,7 @@
       this.onSelect = options.onSelect.bind(this);
     }
   }
-  const b:AutoEmbedOption;
-  b.
+
   export const INSERT_EMBED_COMMAND: lexical.LexicalCommand<
     EmbedConfig["type"]
   > = lexical.createCommand("INSERT_EMBED_COMMAND");

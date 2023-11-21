@@ -8,7 +8,7 @@
 
 import { useCallback, useMemo, useState } from "react";
 
-import { SvelteComponent, mount } from "svelte";
+import { SvelteComponent, mount, onDestroy } from "svelte";
 import Modal from "../ui/Modal.svelte";
 import { SvelteRender } from "@lexical/react/types";
 
@@ -37,7 +37,8 @@ export default function useModal(): [
       props: {
         onClose,
         title: title,
-        closeOnClickOutside: true,
+        child: content,
+        closeOnClickOutside: closeOnClickOutside,
       },
     };
     return modal;

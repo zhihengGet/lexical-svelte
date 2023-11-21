@@ -23,6 +23,7 @@
   } = createDialog({
     forceVisible: true,
   });
+  let { child, snippet, title = t } = $props();
 </script>
 
 <button

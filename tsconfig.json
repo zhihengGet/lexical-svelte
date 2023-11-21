@@ -19,6 +19,7 @@
       "@lexical/react/*": ["./src/lib/*"],
       "@theme/*": ["./src/react.svelte.ts"],
       "@ui/*": ["./src/playground/ui/*"],
+      "react": ["./src/react.svelte.ts"],
       "@nodes/*": ["./src/playground/nodes/*"],
       "@plugins/*": ["./src/playground/plugins/*"]
     },

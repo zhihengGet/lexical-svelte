@@ -1,22 +1,35 @@
 <script lang="ts">
   import { SvelteRender } from "@lexical/react/types";
-  import { createEventDispatcher, onMount } from "svelte";
+  import { usePortal } from "@melt-ui/svelte/internal/actions";
+  import {
+    effect,
+    getPortalDestination,
+  } from "@melt-ui/svelte/internal/helpers";
+  import { createEventDispatcher, onDestroy, onMount } from "svelte";
 
-  let { ...props } = $props<SvelteRender>();
-  const disptach = createEventDispatcher();
-  onMount(() => {
-    disptach("mount", {});
-  });
-  let component;
+  let { snippet,children, ...props } = $props<SvelteRender>();
+
+  function refFn(node: HTMLElement) {
+    let portal = usePortal(node, props.target);
+
+    onDestroy(() => {
+      if (portal && portal.destroy) {
+        portal.destroy();
+      }
+    });
+  }
 </script>
-
 {#if props.component}
-  <!-- content here -->
+
   <svelte:component
     this={props.component}
     {...props}
     bind:this={props.ref.current}
   >
-    {props?.children}
+ 
+   {@render children()}
   </svelte:component>
+
+  {:else if snippet} 
+   {@render snippet({children,refFn,...props })}
 {/if}
