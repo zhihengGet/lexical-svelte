@@ -13,14 +13,18 @@
   import { usePlainTextSetup } from "../shared/usePlainTextSetup.svelte";
   import Placeholder from "./placeholder.svelte";
 
-  let { contentEditable, placeholder } = $props<{
-    contentEditable: any;
-    placeholder: string;
-  }>();
+  let { contentEditable, placeholder, contentEditableProps, placeholderProps } =
+    $props<{
+      contentEditable: any;
+      placeholder: string;
+      contentEditableProps: any;
+      placeholderProps: any;
+    }>();
   const [editor] = useLexicalComposerContext();
   useDecorators(editor);
   usePlainTextSetup(editor);
 </script>
 
-<svelte:component this={contentEditable} />
-<Placeholder content={placeholder} />
+<svelte:component this={contentEditable} {...contentEditableProps} />
+
+<Placeholder content={placeholder} {...placeholderProps} />

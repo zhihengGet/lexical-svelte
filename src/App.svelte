@@ -9,6 +9,8 @@
   import "./index.css";
   import PlaygroundNodes from "./playground/PlaygroundNodes";
   import SettingsContext from "./playground/context/SettingsContext.svelte";
+  import { createHistoryContext } from "./playground/context/SharedHistoryContext";
+  import SharedAutocompleteContext from "./playground/context/SharedAutocompleteContext.svelte";
   console.warn(
     "If you are profiling the playground app, please ensure you turn off the debug view. You can disable it by pressing on the settings control in the bottom-left of your screen and toggling the debug view setting."
   );
@@ -69,16 +71,24 @@
     },
     theme: PlaygroundEditorTheme,
   };
+  createHistoryContext();
 </script>
 
 <main>
   <div />
   <SettingsContext>
-    <LexicalComposer {initialConfig}>
-      <div class="editor-shell">
-        <Editor />
-      </div>
-    </LexicalComposer>
+    <SharedAutocompleteContext>
+      <LexicalComposer {initialConfig}>
+        <header>
+          <a href="https://lexical.dev" target="_blank" rel="noreferrer">
+            header
+          </a>
+        </header>
+        <div class="editor-shell">
+          <Editor />
+        </div>
+      </LexicalComposer>
+    </SharedAutocompleteContext>
   </SettingsContext>
 
   <p class="read-the-docs">Click on the Vite and Svelte logos to learn more</p>

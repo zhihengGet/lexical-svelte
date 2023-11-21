@@ -29,10 +29,17 @@
     "@lexical/utils": "0.12.4",
     "@lexical/yjs": "0.12.4",
     "@types/node": "^20.9.2",
+    "clsx": "^2.0.0",
+    "eslint-plugin-svelte": "^2.35.0",
     "lexical": "^0.12.4",
-    "vite-tsconfig-paths": "^4.2.1"
+    "lucide-svelte": "^0.292.0",
+    "tailwind-merge": "^2.0.0",
+    "vite-tsconfig-paths": "^4.2.1",
+    "y-websocket": "^1.5.0",
+    "yjs": "^13.6.9"
   },
   "devDependencies": {
+    "@melt-ui/svelte": "^0.62.0",
     "@sveltejs/vite-plugin-svelte": "^3.0.0",
     "@tsconfig/svelte": "^5.0.2",
     "svelte": "5.0.0-next.8",

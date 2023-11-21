@@ -27,6 +27,7 @@ import { useCallback, useMemo, useState } from "../react.svelte";
 
 import useLayoutEffect from "shared/useLayoutEffect.svelte";
 import { ComponentType, SvelteComponent } from "svelte";
+import { MutableRefObject } from "../../react";
 
 export type MenuTextMatch = {
   leadOffset: number;
@@ -259,7 +260,7 @@ export function LexicalMenu<TOption extends MenuOption>({
 }: {
   close: () => void;
   editor: LexicalEditor;
-  anchorElementRef: HTMLElement;
+  anchorElementRef: MutableRefObject<HTMLElement>;
   resolution: MenuResolution;
   options: Array<TOption>;
   shouldSplitNodeWithQuery?: boolean;

@@ -14,5 +14,5 @@ export default defineConfig({
       react: path.resolve(__dirname, "src/react.svelte"),
     },
   },
-  plugins: [UnoCSS({}), svelte()],
+  plugins: [tsconfigPaths(), UnoCSS({}), svelte()],
 });

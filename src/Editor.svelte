@@ -11,7 +11,7 @@
   import SettingsContext, {
     useSettings,
   } from "./playground/context/SettingsContext.svelte";
-
+  const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
   const isEditable = true;
   const text = "Enter some plain text...";
   const placeholder = text;
@@ -49,7 +49,7 @@
 
   // your script goes here
 </script>
-
+<ToolbarPlugin setIsLinkEditMode={setIsLinkEditMode} />
 <div
   class={`editor-container ${showTreeView ? "tree-view" : ""} ${
     !isRichText ? "plain-text" : ""
