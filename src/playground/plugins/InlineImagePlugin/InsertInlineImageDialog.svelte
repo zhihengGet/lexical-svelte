@@ -1,48 +1,21 @@
 <script context="module" lang="ts">
-  import type { Position } from "../../nodes/InlineImageNode";
+  import type { Position } from "./InlineImageNode.svelte";
 
-  import "@ui/Checkbox.css";
+  import "../../ui/Checkbox.css";
 
-  import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-  import { $wrapNodeInElement, mergeRegister } from "@lexical/utils";
-  import {
-    $createParagraphNode,
-    $createRangeSelection,
-    $getSelection,
-    $insertNodes,
-    $isNodeSelection,
-    $isRootOrShadowRoot,
-    $setSelection,
-    COMMAND_PRIORITY_EDITOR,
-    COMMAND_PRIORITY_HIGH,
-    COMMAND_PRIORITY_LOW,
-    createCommand,
-    DRAGOVER_COMMAND,
-    DRAGSTART_COMMAND,
-    DROP_COMMAND,
-    LexicalCommand,
-    LexicalEditor,
-  } from "lexical";
+  import { createCommand, LexicalCommand, LexicalEditor } from "lexical";
   import * as React from "react";
   import { useEffect, useRef, useState } from "react";
   import { CAN_USE_DOM } from "shared/canUseDOM";
 
-  import {
-    $createInlineImageNode,
-    $isInlineImageNode,
-    InlineImageNode,
-    InlineImagePayload,
-  } from "../../nodes/InlineImageNode";
-  import Button from "../../ui/Button";
-  import { DialogActions } from "../../ui/Dialog";
-  import FileInput from "../../ui/FileInput";
-  import Select from "../../ui/Select";
-  import TextInput from "../../ui/TextInput";
+  import { InlineImagePayload } from "./InlineImageNode.svelte";
+  import Button from "@ui/Button.svelte";
+  import DialogActions from "@ui/DialogActions.svelte";
+  import FileInput from "@ui/FileInput.svelte";
+  import Select from "@ui/Select.svelte";
+  import TextInput from "@ui/TextInput.svelte";
 
   export type InsertInlineImagePayload = Readonly<InlineImagePayload>;
-
-  const getDOMSelection = (targetWindow: Window | null): Selection | null =>
-    CAN_USE_DOM ? (targetWindow || window).getSelection() : null;
 
   export const INSERT_INLINE_IMAGE_COMMAND: LexicalCommand<InlineImagePayload> =
     createCommand("INSERT_INLINE_IMAGE_COMMAND");
@@ -61,9 +34,9 @@
   const [showCaption, setShowCaption] = useState(false);
   const [position, setPosition] = useState<Position>("left");
 
-  const isDisabled = src === "";
+  const isDisabled = src() === "";
 
-  const handleShowCaptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleShowCaptionChange = (e: React<HTMLInputElement>) => {
     setShowCaption(e.target.checked);
   };
 
@@ -102,7 +75,7 @@
   };
 </script>
 
-<div style={{ marginBottom: "1em" }}>
+<div class="mb-[1em]">
   <FileInput
     label="Image Upload"
     onChange={loadImage}
@@ -110,19 +83,19 @@
     data-test-id="image-modal-file-upload"
   />
 </div>
-<div style={{ marginBottom: "1em" }}>
+<div class="mb-[1em]">
   <TextInput
     label="Alt Text"
     placeholder="Descriptive alternative text"
     onChange={setAltText}
-    value={altText}
+    value={altText()}
     data-test-id="image-modal-alt-text-input"
   />
 </div>
 
 <Select
-  style={{ marginBottom: "1em", width: "290px" }}
   label="Position"
+  class="mb-[1em] w-[290px]"
   name="position"
   id="position-select"
   onChange={handlePositionChange}
@@ -132,14 +105,14 @@
   <option value="full">Full Width</option>
 </Select>
 
-<div className="Input__wrapper">
+<div class="Input__wrapper">
   <input
     id="caption"
     type="checkbox"
-    checked={showCaption}
+    checked={showCaption()}
     onChange={handleShowCaptionChange}
   />
-  <label htmlFor="caption">Show Caption</label>
+  <label for="caption">Show Caption</label>
 </div>
 
 <DialogActions>
