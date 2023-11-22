@@ -17,7 +17,7 @@
     "paths": {
       "shared/*": ["./shared/src/*"],
       "@lexical/react/*": ["./src/lib/*"],
-      "@theme/*": ["./src/react.svelte.ts"],
+      "@theme/*": ["./src/themes/*  "],
       "@ui/*": ["./src/playground/ui/*"],
       "react": ["./src/react.svelte.ts"],
       "@nodes/*": ["./src/playground/nodes/*"],
