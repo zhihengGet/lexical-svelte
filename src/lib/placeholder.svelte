@@ -4,14 +4,19 @@
 
   import { useCanShowPlaceholder } from "../shared/useCanShowPlaceholder.svelte";
 
-  let { content } = $props<{ content: String }>();
+  let { content, class: className } = $props<{
+    content: String;
+    class: string;
+  }>();
   const [editor] = useLexicalComposerContext();
   const showPlaceholder = useCanShowPlaceholder(editor);
   const editable = useLexicalEditable();
 </script>
 
-{#if typeof content === "function"}
-  {content(editable)}
-{:else if showPlaceholder()}
-  {content ?? ""}
-{/if}
+<p class={className}>
+  {#if typeof content === "function"}
+    {content(editable)}
+  {:else if showPlaceholder()}
+    {content ?? ""}
+  {/if}
+</p>

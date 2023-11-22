@@ -9,6 +9,8 @@ export type LexicalSubscription<T> = {
 
 export type SvelteRender = Partial<{
   component?: any;
+  childComponents: SvelteRender[];
+  childSnippet: any;
   snippet?: any;
   props?: any;
   nodeKey?: string;

@@ -19,9 +19,9 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import { useMemo, useState } from "react";
 import * as React from "react";
 
-import useModal from "../../hooks/useModal";
+import useModal from "../../hooks/useModal.svelte";
 import Button from "../../ui/Button";
-import { DialogActions } from "../../ui/Dialog";
+import { DialogActions } from "../../ui/Dropdown";
 import { INSERT_FIGMA_COMMAND } from "../FigmaPlugin";
 import { INSERT_TWEET_COMMAND } from "../TwitterPlugin";
 import { INSERT_YOUTUBE_COMMAND } from "../YouTubePlugin";

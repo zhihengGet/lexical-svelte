@@ -8,14 +8,16 @@
   import { styleString } from "../../utils/css";
   import AutoEmbedMenu from "./AutoEmbedMenu.svelte";
   import { SvelteRender } from "@lexical/react/types";
+  import Modal from "@ui/Modal.svelte";
   const [modal, showModal] = useModal();
 
-  const openEmbedModal = (embedConfig: PlaygroundEmbedConfig) => {
-    showModal(`Embed ${embedConfig.contentName}`, (onClose) => (
-      <AutoEmbedDialog embedConfig={embedConfig} onClose={onClose} />
-    ));
-  };
+ 
 
+  const openEmbedModal = (embedConfig: PlaygroundEmbedConfig) => {
+        showModal(`Embed ${embedConfig.contentName}`, (onClose)=>{
+    return {childSnippet: children}
+        })
+  }
   const getMenuOptions = (
     activeEmbedConfig: PlaygroundEmbedConfig,
     embedFn: () => void,
@@ -31,7 +33,6 @@
     ];
   };
   const fn = (
-
     anchorElementRef: React.MutableRefObject<HTMLElement>,
     { selectedIndex, options, selectOptionAndCleanUp, setHighlightedIndex }
   ): SvelteRender => {
@@ -51,10 +52,19 @@
     };
   };
 </script>
-{#snippet header({children})}
-	{@render children({})}
-	<AutoEmbedDialog embedConfig={embedConfig} onClose={onClose} />
+
+{#snippet children({embedConfig,onClose})}
+
+<AutoEmbedDialog embedConfig={embedConfig} onClose={onClose} />
+
 {/snippet}
+
+
+<Portal {...model}>
+
+
+</Portal>
+
 
 {#snippet SnippetPortal({children,ref, refFn,selectedIndex, options, selectOptionAndCleanUp, setHighlightedIndex,anchorElementRef})}
     <div  

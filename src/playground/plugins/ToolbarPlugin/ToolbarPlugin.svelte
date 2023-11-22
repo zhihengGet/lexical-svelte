@@ -75,20 +75,20 @@
   import useModal from "../../hooks/useModal";
   import catTypingGif from "../../images/cat-typing.gif";
   import { $createStickyNode } from "../../nodes/StickyNode/StickyNode";
-  import DropDown from "../../ui/Dialog/DropDown.svelte";
-  import DropDownItem from "../../ui/Dialog/DropDownItem.svelte";
+  import DropDown from "../../ui/Dropdown/DropDown.svelte";
+  import DropDownItem from "../../ui/Dropdown/DropDownItem.svelte";
   import DropdownColorPicker from "../../ui/DropdownColorPicker.svelte";
   import { getSelectedNode } from "../../utils/getSelectedNode";
   import { sanitizeUrl } from "../../utils/url";
   import { EmbedConfigs } from "../AutoEmbedPlugin/index";
   import { INSERT_COLLAPSIBLE_COMMAND } from "../CollapsiblePlugin";
   import { InsertEquationDialog } from "../EquationsPlugin";
-  import { INSERT_EXCALIDRAW_COMMAND } from "../ExcalidrawPlugin";
+  // import { INSERT_EXCALIDRAW_COMMAND } from "../ExcalidrawPlugin";
   import {
     INSERT_IMAGE_COMMAND,
     InsertImageDialog,
     InsertImagePayload,
-  } from "../ImagesPlugin";
+  } from "../ImagesPlugin/index";
   import { InsertInlineImageDialog } from "../InlineImagePlugin";
   import InsertLayoutDialog from "../LayoutPlugin/InsertLayoutDialog";
   import { INSERT_PAGE_BREAK } from "../PageBreakPlugin";

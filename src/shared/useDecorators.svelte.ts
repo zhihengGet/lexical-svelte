@@ -11,21 +11,20 @@ import type { LexicalEditor } from "lexical";
 import { createPortal, useEffect, useMemo, useState } from "../react.svelte";
 import useLayoutEffect from "shared/useLayoutEffect.svelte";
 import { SvelteComponent, flushSync } from "svelte";
+import { SvelteRender } from "@lexical/react/types";
 
 export function useDecorators(editor: LexicalEditor) {
-  const [decorators, setDecorators] = useState<Record<string, SvelteComponent>>(
-    editor.getDecorators<SvelteComponent>()
+  const [decorators, setDecorators] = useState<Record<string, SvelteRender>>(
+    editor.getDecorators<SvelteRender>()
   );
 
   // Subscribe to changes
   useLayoutEffect(() => {
-    return editor.registerDecoratorListener<SvelteComponent>(
-      (nextDecorators) => {
-        flushSync(() => {
-          setDecorators(nextDecorators);
-        });
-      }
-    );
+    return editor.registerDecoratorListener<SvelteRender>((nextDecorators) => {
+      flushSync(() => {
+        setDecorators(nextDecorators);
+      });
+    });
   });
 
   useEffect(() => {
@@ -37,8 +36,8 @@ export function useDecorators(editor: LexicalEditor) {
 
   // Return decorators defined as React Portals
 
-  $effect(() => {
-    const decoratedPortals = [];
+  return useMemo(() => {
+    const decoratedPortals: SvelteRender[] = [];
     const decoratorKeys = Object.keys(decorators);
 
     for (let i = 0; i < decoratorKeys.length; i++) {
@@ -47,10 +46,10 @@ export function useDecorators(editor: LexicalEditor) {
       const element = editor.getElementByKey(nodeKey);
 
       if (element !== null) {
-        decoratedPortals.push(
-          createPortal(decorators()[nodeKey], element, nodeKey)
-        );
+        decoratedPortals.push((decorators()[nodeKey], element, nodeKey));
       }
     }
-  });
+
+    return decoratedPortals;
+  }, [decorators, editor]);
 }

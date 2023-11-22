@@ -1,24 +1,12 @@
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
 import { useCallback, useMemo, useState } from "react";
 
-import { SvelteComponent, mount, onDestroy } from "svelte";
 import Modal from "../ui/Modal.svelte";
 import { SvelteRender } from "@lexical/react/types";
 
-export default function useModal(): [
-  SvelteRender | null,
-  (title: string, showModal: (onClose: () => void) => SvelteComponent) => void
-] {
+export default function useModal() {
   const [modalContent, setModalContent] = useState<null | {
     closeOnClickOutside: boolean;
-    content: SvelteComponent;
+    content: SvelteRender;
     title: string;
   }>(null);
 
@@ -34,10 +22,10 @@ export default function useModal(): [
 
     const modal: SvelteRender = {
       component: Modal,
+      childSnippet: content,
       props: {
         onClose,
         title: title,
-        child: content,
         closeOnClickOutside: closeOnClickOutside,
       },
     };
@@ -48,7 +36,7 @@ export default function useModal(): [
     (
       title: string,
       // eslint-disable-next-line no-shadow
-      getContent: (onClose: () => void) => SvelteComponent,
+      getContent: (onClose: () => void) => SvelteRender,
       closeOnClickOutside = false
     ) => {
       setModalContent({
@@ -60,5 +48,5 @@ export default function useModal(): [
     [onClose]
   );
 
-  return [modal, showModal];
+  return [modal, showModal] as const;
 }

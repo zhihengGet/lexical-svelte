@@ -9,7 +9,7 @@
 
   import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext.svelte";
 
-  import { useDecorators } from "../shared/useDecorators.svelte.svelte";
+  import { useDecorators } from "../shared/useDecorators.svelte";
   import { usePlainTextSetup } from "../shared/usePlainTextSetup.svelte";
   import Placeholder from "./placeholder.svelte";
 
