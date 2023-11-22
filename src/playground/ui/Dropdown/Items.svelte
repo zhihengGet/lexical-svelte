@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+	import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 	import { getContext, setContext } from 'svelte';
 
 	let { dropDownRef, onClose } = $props<{
 		dropDownRef: any;
 		onClose: () => void;
 	}>();
-	const [items, setItems] = useState<RefObject<HTMLButtonElement>[]>(null);
-	const [highlightedItem, setHighlightedItem] = useState<RefObject<HTMLButtonElement>>(null);
+	const [items, setItems] = useState<React.RefObject<HTMLButtonElement>[]>(null);
+	const [highlightedItem, setHighlightedItem] = useState<React.RefObject<HTMLButtonElement>>(null);
 
 	const registerItem = useCallback(
 		(itemRef: React.RefObject<HTMLButtonElement>) => {

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { useEffect, useMemo, useRef, useState, HTMLAttributes } from 'react';
+	import { useEffect, useMemo, useRef, useState } from 'react';
 
 	interface Position {
 		x: number;
@@ -11,12 +11,10 @@
 		style?: string;
 		onChange: (position: Position) => void;
 	}
-	let { onChange, ...props } = $props<
-		{
-			onChange: any;
-			className: string;
-		} & HTMLAttributes<any>
-	>();
+	let { onChange, ...props } = $props<{
+		onChange: any;
+		className: string;
+	}>();
 
 	let divRef = useRef<HTMLDivElement | null>(null);
 	function clamp(value: number, max: number, min: number) {

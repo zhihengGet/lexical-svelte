@@ -1,9 +1,20 @@
 <script lang="ts">
-	import { SvelteRender } from '@lexical/react/types';
 	import { usePortal } from '@melt-ui/svelte/internal/actions';
 	import { effect, getPortalDestination } from '@melt-ui/svelte/internal/helpers';
 	import { createEventDispatcher, onDestroy, onMount } from 'svelte';
-
+	type SvelteRender = Partial<{
+		component?: any;
+		childComponents: SvelteRender[];
+		childSnippet: any;
+		snippet?: any;
+		props?: any;
+		nodeKey?: string;
+		type?: string;
+		key?: string;
+		target: HTMLElement;
+		ref: { current: HTMLElement };
+		protal: boolean;
+	}>;
 	let { snippet, children, portal, ...props } = $props<SvelteRender & { portal: boolean }>();
 
 	function refFn(node: HTMLElement) {
