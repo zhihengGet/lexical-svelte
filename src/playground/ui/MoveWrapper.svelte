@@ -1,60 +1,60 @@
 <script lang="ts">
-  import { useEffect, useMemo, useRef, useState } from "react";
-  import { HTMLAttributes } from "svelte/elements";
-  interface Position {
-    x: number;
-    y: number;
-  }
+	import { useEffect, useMemo, useRef, useState, HTMLAttributes } from 'react';
 
-  interface MoveWrapperProps {
-    className?: string;
-    style?: string;
-    onChange: (position: Position) => void;
-  }
-  let { onChange, ...props } = $props<
-    {
-      onChange: any;
-      className: string;
-    } & HTMLAttributes<any>
-  >();
+	interface Position {
+		x: number;
+		y: number;
+	}
 
-  let divRef = useRef<HTMLDivElement | null>(null);
-  function clamp(value: number, max: number, min: number) {
-    return value > max ? max : value < min ? min : value;
-  }
-  const move = (e: MouseEvent): void => {
-    if (divRef.current) {
-      const { current: div } = divRef;
-      const { width, height, left, top } = div.getBoundingClientRect();
+	interface MoveWrapperProps {
+		className?: string;
+		style?: string;
+		onChange: (position: Position) => void;
+	}
+	let { onChange, ...props } = $props<
+		{
+			onChange: any;
+			className: string;
+		} & HTMLAttributes<any>
+	>();
 
-      const x = clamp(e.clientX - left, width, 0);
-      const y = clamp(e.clientY - top, height, 0);
+	let divRef = useRef<HTMLDivElement | null>(null);
+	function clamp(value: number, max: number, min: number) {
+		return value > max ? max : value < min ? min : value;
+	}
+	const move = (e: MouseEvent): void => {
+		if (divRef.current) {
+			const { current: div } = divRef;
+			const { width, height, left, top } = div.getBoundingClientRect();
 
-      onChange({ x, y });
-    }
-  };
+			const x = clamp(e.clientX - left, width, 0);
+			const y = clamp(e.clientY - top, height, 0);
 
-  const onMouseDown = (e: MouseEvent): void => {
-    if (e.button !== 0) return;
+			onChange({ x, y });
+		}
+	};
 
-    move(e);
+	const onMouseDown = (e: MouseEvent): void => {
+		if (e.button !== 0) return;
 
-    const onMouseMove = (_e: MouseEvent): void => {
-      move(_e);
-    };
+		move(e);
 
-    const onMouseUp = (_e: MouseEvent): void => {
-      document.removeEventListener("mousemove", onMouseMove, false);
-      document.removeEventListener("mouseup", onMouseUp, false);
+		const onMouseMove = (_e: MouseEvent): void => {
+			move(_e);
+		};
 
-      move(_e);
-    };
+		const onMouseUp = (_e: MouseEvent): void => {
+			document.removeEventListener('mousemove', onMouseMove, false);
+			document.removeEventListener('mouseup', onMouseUp, false);
 
-    document.addEventListener("mousemove", onMouseMove, false);
-    document.addEventListener("mouseup", onMouseUp, false);
-  };
+			move(_e);
+		};
+
+		document.addEventListener('mousemove', onMouseMove, false);
+		document.addEventListener('mouseup', onMouseUp, false);
+	};
 </script>
 
 <div bind:this={divRef.current} {...props} onmousedown={onMouseDown}>
-  <slot />
+	<slot />
 </div>
