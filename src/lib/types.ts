@@ -1,14 +1,10 @@
-import { SvelteComponent } from 'svelte';
-import { MutableRefObject } from '../../react';
-import { SnippetBlock } from 'svelte/compiler';
-
 export type LexicalSubscription<T> = {
 	initialValueFn: () => T;
 	subscribe: (callback: (value: T) => void) => () => void;
 };
 
 export type SvelteRender = Partial<{
-	component?: any;
+	component?: any | null;
 	childComponents: SvelteRender[];
 	childSnippet: any;
 	snippet?: any;
@@ -17,6 +13,6 @@ export type SvelteRender = Partial<{
 	type?: string;
 	key?: string;
 	target: HTMLElement;
-	ref: MutableRefObject<HTMLElement>;
+	ref: React.MutableRefObject<HTMLElement>;
 	protal: boolean;
 }>;

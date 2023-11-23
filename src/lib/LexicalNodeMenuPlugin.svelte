@@ -5,14 +5,12 @@
 	import * as lexical from 'lexical';
 	import {
 		COMMAND_PRIORITY_LOW,
-		CommandListenerPriority,
-		NodeKey,
-		TextNode,
+		type CommandListenerPriority,
 		$getNodeByKey as getNodeByKey
 	} from 'lexical';
 	import { LexicalMenu, MenuOption, useMenuAnchorRef } from '../shared/LexicalMenu.svelte';
-	import { SvelteComponent, tick } from 'svelte';
-	import { pluginTypes, useState } from '../react.svelte';
+	import { tick } from 'svelte';
+	import { useState } from '../react.svelte';
 	export type NodeMenuPluginProps<TOption extends MenuOption> = {
 		onSelectOption: (
 			option: TOption,
@@ -28,7 +26,7 @@
 		anchorClassName?: string;
 		commandPriority?: CommandListenerPriority;
 	};
-	export { MenuOption, MenuRenderFn, MenuResolution };
+	export type { MenuOption, MenuRenderFn, MenuResolution };
 
 	import { useCallback, useEffect } from 'react';
 </script>
@@ -123,5 +121,5 @@
 </script>
 
 {#if resolution() !== null && editor != null}
-	<Portal {...component} />
+	<Portal {...component} portal={false} />
 {/if}

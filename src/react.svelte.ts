@@ -1,5 +1,5 @@
-import { SvelteComponent, createRoot, mount, setContext } from 'svelte';
-/// <reference />
+import { setContext } from 'svelte';
+
 export interface RefObject<T> {
 	readonly current: T | null;
 }
@@ -36,15 +36,7 @@ function useEffect<D>(func: () => void, dep?: D) {
 	$effect(func);
 }
 export { useEffect };
-/* export function createPortal(
-	SvelteComponent: SvelteComponent,
-	element: HTMLElement,
-	name: any,
-	ref
-) {
-	createRoot(Portal, { target: element, props: name });
-	mount(SvelteComponent, { target: element, props: name });
-} */
+
 export function useCallback<T>(fn: T, dep?: any) {
 	const b = $derived(fn);
 	return b;
@@ -58,6 +50,6 @@ export function useRef<T>(param: T) {
 	return { current: param };
 }
 
-export function createContext(config) {
-	setContext('', config);
+export function createContext<T>(config) {
+	return setContext<T>('', config);
 }

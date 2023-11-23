@@ -26,7 +26,7 @@ import { INSERT_EMBED_COMMAND } from '@lexical/react/LexicalAutoEmbedPlugin.svel
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 import { $isDecoratorBlockNode as isDecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode';
 import { INSERT_HORIZONTAL_RULE_COMMAND } from '@lexical/react/LexicalHorizontalRuleNode';
-import {
+import type {
 	$createHeadingNode as createHeadingNode,
 	$createQuoteNode as createQuoteNode,
 	$isHeadingNode as isHeadingNode,
@@ -60,21 +60,21 @@ import {
 	COMMAND_PRIORITY_CRITICAL,
 	COMMAND_PRIORITY_NORMAL,
 	DEPRECATED_$isGridSelection,
-	ElementFormatType,
+	type ElementFormatType,
 	FORMAT_ELEMENT_COMMAND,
 	FORMAT_TEXT_COMMAND,
 	INDENT_CONTENT_COMMAND,
 	KEY_MODIFIER_COMMAND,
-	LexicalEditor,
-	NodeKey,
+	type LexicalEditor,
+	type NodeKey,
 	OUTDENT_CONTENT_COMMAND,
 	REDO_COMMAND,
 	SELECTION_CHANGE_COMMAND,
 	UNDO_COMMAND,
 	TextNode,
-	LexicalCommand,
+	type LexicalCommand,
 	createCommand,
-	CommandListenerPriority,
+	type CommandListenerPriority,
 	COMMAND_PRIORITY_LOW,
 	KEY_ARROW_DOWN_COMMAND,
 	KEY_ARROW_UP_COMMAND,
@@ -87,7 +87,7 @@ import { useCallback, useMemo, useState, useRef, useEffect } from '../react.svel
 
 import useLayoutEffect from 'shared/useLayoutEffect.svelte';
 
-import { SvelteRender } from '@lexical/react/types';
+import type { SvelteRender } from '@lexical/react/types';
 
 export type MenuTextMatch = {
 	leadOffset: number;
@@ -232,7 +232,7 @@ function isTriggerVisibleInNearestScrollContainer(
 
 // Reposition the menu on scroll, window resize, and element resize.
 export function useDynamicPositioning(
-	resolution: typeof $state<MenuResolution | null>,
+	resolution: MenuResolution,
 	targetElement: HTMLElement | null,
 	onReposition: () => void,
 	onVisibilityChange?: (isInView: boolean) => void
@@ -310,7 +310,7 @@ export function LexicalMenu<TOption extends MenuOption>({
 		matchingString: string
 	) => void;
 	commandPriority?: CommandListenerPriority;
-}): SvelteComponent | null {
+}): SvelteRender | null {
 	const [selectedIndex, setHighlightedIndex] = useState<null | number>(null);
 
 	const matchingString = resolution.match && resolution.match.matchingString;
