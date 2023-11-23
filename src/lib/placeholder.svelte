@@ -5,7 +5,7 @@
   import { useCanShowPlaceholder } from "../shared/useCanShowPlaceholder.svelte";
 
   let { content, class: className } = $props<{
-    content: String;
+    content: string;
     class: string;
   }>();
   const [editor] = useLexicalComposerContext();

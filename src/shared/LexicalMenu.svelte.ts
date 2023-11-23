@@ -408,7 +408,7 @@ export function LexicalMenu<TOption extends MenuOption>({
 				KEY_ARROW_UP_COMMAND,
 				(payload) => {
 					const event = payload;
-					let ret = selectedIndex();
+					const ret = selectedIndex();
 					if (options !== null && options.length && ret !== null) {
 						const newSelectedIndex = ret !== 0 ? ret - 1 : options.length - 1;
 						updateSelectedIndex(newSelectedIndex);
@@ -438,7 +438,7 @@ export function LexicalMenu<TOption extends MenuOption>({
 				KEY_TAB_COMMAND,
 				(payload) => {
 					const event = payload;
-					let v = selectedIndex();
+					const v = selectedIndex();
 					if (options === null || v === null || options[v] == null) {
 						return false;
 					}
@@ -452,7 +452,7 @@ export function LexicalMenu<TOption extends MenuOption>({
 			editor.registerCommand(
 				KEY_ENTER_COMMAND,
 				(event: KeyboardEvent | null) => {
-					let v = selectedIndex();
+					const v = selectedIndex();
 					if (options === null || v === null || options[v] == null) {
 						return false;
 					}
