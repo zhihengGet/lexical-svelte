@@ -3,7 +3,12 @@
 	import { usePortal } from '@melt-ui/svelte/internal/actions';
 	import { onDestroy } from 'svelte';
 
-	let { snippet, children, portal, ...props } = $props<SvelteRender & { portal: boolean }>();
+	let {
+		snippet,
+		children,
+		portal = false,
+		...props
+	} = $props<SvelteRender & { portal?: boolean }>();
 
 	function refFn(node: HTMLElement) {
 		if (portal == false) return;

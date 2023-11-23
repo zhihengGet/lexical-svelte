@@ -3,7 +3,7 @@ export type LexicalSubscription<T> = {
 	subscribe: (callback: (value: T) => void) => () => void;
 };
 
-export type SvelteRender = Partial<{
+export type SvelteRender = {
 	component?: any | null;
 	childComponents: SvelteRender[];
 	childSnippet: any;
@@ -13,6 +13,7 @@ export type SvelteRender = Partial<{
 	type?: string;
 	key?: string;
 	target: HTMLElement;
-	ref: React.MutableRefObject<HTMLElement>;
+	// get a ref to the rendered component
+	ref?: React.MutableRefObject<HTMLElement>;
 	protal: boolean;
-}>;
+};
