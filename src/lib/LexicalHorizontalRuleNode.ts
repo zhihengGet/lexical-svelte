@@ -74,7 +74,12 @@ export class HorizontalRuleNode extends DecoratorNode<SvelteRender> {
 		return false;
 	}
 	decorate(): SvelteRender {
-		return { component: LexicalHorizontalRuleComponent, nodeKey: this.__key };
+		return {
+			component: LexicalHorizontalRuleComponent,
+			nodeKey: this.__key,
+			portal: false,
+			target: document.body //TODO
+		};
 	}
 }
 

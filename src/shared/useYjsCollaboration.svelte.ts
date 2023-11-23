@@ -36,7 +36,6 @@ import type { Doc, Transaction, YEvent } from 'yjs';
 import { UndoManager } from 'yjs';
 
 import type { InitialEditorStateType } from '../lib/LexicalComposer.svelte';
-import { mount } from 'svelte';
 import type { SvelteRender } from '@lexical/react/types';
 
 export type CursorsContainerRef = React.MutableRefObject<HTMLElement | null>;

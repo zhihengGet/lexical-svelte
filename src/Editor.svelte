@@ -10,7 +10,15 @@
 	import ContentEditable from './playground/ui/ContentEditable.svelte';
 	import SettingsContext, { useSettings } from './playground/context/SettingsContext.svelte';
 	import ToolbarPlugin from '@plugins/ToolbarPlugin/ToolbarPlugin.svelte';
+	import { HistoryPlugin } from './lib/LexicalHistoryPlugin.svelte';
+	import Portal from '@ui/Portal.svelte';
+	import { useSharedHistoryContext } from './playground/context/SharedHistoryContext';
+	//import { CollaborationPlugin } from './lib/LexicalCollaborationPlugin.svelte';
+	import { createWebsocketProvider } from './playground/collaboration';
+	import { skip } from 'node:test';
+	import LexicalRichTextPlugin from './lib/LexicalRichTextPlugin.svelte';
 	const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
+	const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
 	const isEditable = true;
 	const text = 'Enter some plain text...';
 	const placeholder = text;
@@ -45,14 +53,63 @@
 			window.removeEventListener('resize', updateViewPortWidth);
 		};
 	});
-
+	const { historyState } = useSharedHistoryContext();
+	// get ref to rich text plugin
+	const onRef = (_floatingAnchorElem: HTMLDivElement) => {
+		if (_floatingAnchorElem !== null) {
+			setFloatingAnchorElem(_floatingAnchorElem);
+		}
+	};
 	// your script goes here
 </script>
 
+{#snippet contentEditableRichText()}
+	<div class="editor-scroller">
+		<div class="editor" use:onRef>
+			<ContentEditable />
+		</div>
+	</div>
+{/snippet}
 <ToolbarPlugin {setIsLinkEditMode} />
 <div
 	class={`editor-container ${showTreeView ? 'tree-view' : ''} ${!isRichText ? 'plain-text' : ''}`}
 >
-	<PlainTextPlugin contentEditable={ContentEditable} {placeholder} />
+	{#if isRichText}
+		{#if isCollab}
+			<!-- enable history plugin  -->
+			<!-- <Portal
+				portal={false}
+				target={null}
+				initializor={() =>
+					CollaborationPlugin({
+						id: 'main',
+						providerFactory: createWebsocketProvider,
+						shouldBootstrap: !skipCollaborationInit
+					})}
+			/> -->
+		{:else}
+			<!-- enable history plugin  -->
+			<Portal
+				target={null}
+				portal={false}
+				initializor={() => HistoryPlugin({ externalHistoryState: historyState })}
+			/>
+		{/if}
+
+		<!-- enable rich text -->
+
+		<LexicalRichTextPlugin contentEditable={contentEditableRichText} {placeholder} />
+	{:else}
+		<!-- plain text only -->
+		<PlainTextPlugin contentEditable={ContentEditable} {placeholder} />
+		{#if !isCollab}
+			<!-- enable history plugin  -->
+			<Portal
+				target={null}
+				portal={false}
+				initializor={() => HistoryPlugin({ externalHistoryState: historyState })}
+			/>
+		{/if}
+	{/if}
 	<TreeViewPlugin />
 </div>

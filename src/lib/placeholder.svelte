@@ -1,22 +1,44 @@
 <script lang="ts">
-  import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext.svelte";
-  import useLexicalEditable from "@lexical/react/useLexicalEditable.svelte";
+	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
+	import useLexicalEditable from '@lexical/react/useLexicalEditable.svelte';
 
-  import { useCanShowPlaceholder } from "../shared/useCanShowPlaceholder.svelte";
+	import { useCanShowPlaceholder } from '../shared/useCanShowPlaceholder.svelte';
 
-  let { content, class: className } = $props<{
-    content: string;
-    class: string;
-  }>();
-  const [editor] = useLexicalComposerContext();
-  const showPlaceholder = useCanShowPlaceholder(editor);
-  const editable = useLexicalEditable();
+	let { content, class: className } = $props<{
+		content: string | ((editable: boolean) => string);
+		class: string;
+	}>();
+	const [editor] = useLexicalComposerContext();
+	const showPlaceholder = useCanShowPlaceholder(editor);
+	const editable = useLexicalEditable();
 </script>
 
-<p class={className}>
-  {#if typeof content === "function"}
-    {content(editable)}
-  {:else if showPlaceholder()}
-    {content ?? ""}
-  {/if}
-</p>
+<div class={className || 'Placeholder__root'}>
+	{#if typeof content === 'function'}
+		{content(editable)}
+	{:else if showPlaceholder()}
+		{content ?? ''}
+	{/if}
+</div>
+
+<style>
+	.Placeholder__root {
+		font-size: 15px;
+		color: #999;
+		overflow: hidden;
+		position: absolute;
+		text-overflow: ellipsis;
+		top: 8px;
+		left: 28px;
+		right: 28px;
+		user-select: none;
+		white-space: nowrap;
+		display: inline-block;
+		pointer-events: none;
+	}
+	@media (max-width: 1025px) {
+		.Placeholder__root {
+			left: 8px;
+		}
+	}
+</style>

@@ -24,7 +24,7 @@
 		$createQuoteNode as createQuoteNode,
 		$isHeadingNode as isHeadingNode,
 		$isQuoteNode as isQuoteNode,
-		HeadingTagType
+		type HeadingTagType
 	} from '@lexical/rich-text';
 	import {
 		$getSelectionStyleValueForProperty as getSelectionStyleValueForProperty,
@@ -58,7 +58,7 @@
 		FORMAT_TEXT_COMMAND,
 		INDENT_CONTENT_COMMAND,
 		KEY_MODIFIER_COMMAND,
-		LexicalEditor,
+		type LexicalEditor,
 		OUTDENT_CONTENT_COMMAND,
 		REDO_COMMAND,
 		SELECTION_CHANGE_COMMAND,
@@ -86,7 +86,7 @@
 <script lang="ts">
 	import { Portal } from '@ui/index';
 
-	let { setIsLinkEditMode } = $props<{ setIsLinkEditMode: () => boolean }>();
+	let { setIsLinkEditMode } = $props<{ setIsLinkEditMode: (param: boolean) => boolean }>();
 	const [editor] = useLexicalComposerContext();
 	const [activeEditor, setActiveEditor] = useState(editor);
 	const [blockType, setBlockType] = useState<keyof typeof blockTypeToBlockName>('paragraph');
@@ -340,7 +340,7 @@
 	const onCodeLanguageSelect = useCallback(
 		(value: string) => {
 			activeEditor().update(() => {
-				if (selectedElementKey !== null) {
+				if (selectedElementKey() !== null) {
 					const node = getNodeByKey(selectedElementKey());
 					if (isCodeNode(node)) {
 						node.setLanguage(value);
@@ -357,8 +357,8 @@
 
 <div class="toolbar">
 	<button
-		disabled={!canUndo || !isEditable}
-		onClick={() => {
+		disabled={!canUndo() || !isEditable()}
+		onclick={() => {
 			activeEditor().dispatchCommand(UNDO_COMMAND, undefined);
 		}}
 		title={IS_APPLE ? 'Undo (⌘Z)' : 'Undo (Ctrl+Z)'}
@@ -369,8 +369,8 @@
 		<i class="format undo" />
 	</button>
 	<button
-		disabled={!canRedo || !isEditable}
-		onClick={() => {
+		disabled={!canRedo() || !isEditable()}
+		onclick={() => {
 			activeEditor().dispatchCommand(REDO_COMMAND, undefined);
 		}}
 		title={IS_APPLE ? 'Redo (⌘Y)' : 'Redo (Ctrl+Y)'}
@@ -383,7 +383,7 @@
 	<Divider />
 	{#if blockType() in blockTypeToBlockName && activeEditor() === editor}
 		<BlockFormatDropdown
-			disabled={!isEditable}
+			disabled={!isEditable()}
 			blockType={blockType()}
 			rootType={rootType()}
 			{editor}

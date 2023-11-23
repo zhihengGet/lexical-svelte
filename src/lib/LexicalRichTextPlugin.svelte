@@ -5,22 +5,22 @@
 	import { useCanShowPlaceholder } from '../shared/useCanShowPlaceholder.svelte';
 	import { useDecorators } from '../shared/useDecorators.svelte';
 	import { useRichTextSetup } from '../shared/useRichTextSetup.svelte';
-	import type { SvelteComponent } from 'svelte';
+	import type { Snippet } from 'svelte';
 	import Placeholder from './placeholder.svelte';
 	import Portal from '@ui/Portal.svelte';
 
-	let { contentEditable, placeholder } = $props<{
-		contentEditable: SvelteComponent;
+	let { contentEditable, placeholder, contentEditableProps, placeholderProps } = $props<{
+		contentEditable: Snippet;
 		placeholder: string;
-		contentEditableProps: any;
-		placeholderProps: any;
+		contentEditableProps?: any;
+		placeholderProps?: any;
 	}>();
 	const [editor] = useLexicalComposerContext();
 	const decorators = useDecorators(editor);
 	useRichTextSetup(editor);
 </script>
 
-<Portal component={contentEditable} props={contentEditableProps} />
-{contentEditable}
+<Portal snippet={contentEditable} props={contentEditableProps} portal={false} target={null} />
+
 <Placeholder content={placeholder} {...placeholderProps} />
-<Portal component={decorators} />
+<Portal components={decorators} portal={true} target={null} />
