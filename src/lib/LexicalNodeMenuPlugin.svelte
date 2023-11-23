@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-	import { MenuRenderFn, MenuResolution } from '../shared/LexicalMenu.svelte';
+	import type { MenuRenderFn, MenuResolution } from '../shared/LexicalMenu.svelte';
 
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 	import type * as lexical from 'lexical';
@@ -26,7 +26,7 @@
 		anchorClassName?: string;
 		commandPriority?: CommandListenerPriority;
 	};
-	export type { MenuOption, MenuRenderFn, MenuResolution };
+	export { type MenuRenderFn, MenuOption, type MenuResolution };
 
 	import { useCallback, useEffect } from 'react';
 </script>

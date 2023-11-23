@@ -12,28 +12,10 @@ import type {
 	DOMExportOutput,
 	LexicalCommand,
 	LexicalNode,
-	NodeKey,
 	SerializedLexicalNode
 } from 'lexical';
 
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
-import { useLexicalNodeSelection } from '@lexical/react/useLexicalNodeSelection.svelte';
-import { mergeRegister } from '@lexical/utils';
-import {
-	$applyNodeReplacement,
-	$getNodeByKey,
-	$getSelection,
-	$isNodeSelection,
-	CLICK_COMMAND,
-	COMMAND_PRIORITY_LOW,
-	createCommand,
-	DecoratorNode,
-	KEY_BACKSPACE_COMMAND,
-	KEY_DELETE_COMMAND
-} from 'lexical';
-import * as React from 'react';
-import { useCallback, useEffect } from 'react';
-import { mount, SvelteComponent } from 'svelte';
+import { $applyNodeReplacement, DecoratorNode, createCommand } from 'lexical';
 import LexicalHorizontalRuleComponent from './LexicalHorizontalRuleComponent.svelte';
 import type { SvelteRender } from './types';
 
@@ -43,7 +25,7 @@ export const INSERT_HORIZONTAL_RULE_COMMAND: LexicalCommand<void> = createComman
 	'INSERT_HORIZONTAL_RULE_COMMAND'
 );
 
-export class HorizontalRuleNode extends DecoratorNode<JSX.Element> {
+export class HorizontalRuleNode extends DecoratorNode<SvelteRender> {
 	static getType(): string {
 		return 'horizontalrule';
 	}
