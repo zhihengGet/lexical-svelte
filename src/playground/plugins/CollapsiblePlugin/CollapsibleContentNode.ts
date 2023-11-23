@@ -6,14 +6,15 @@
  *
  */
 
-import {
+import type {
   DOMConversionMap,
   DOMConversionOutput,
   DOMExportOutput,
   EditorConfig,
-  ElementNode,
   LexicalNode,
-  SerializedElementNode,
+  SerializedElementNode} from 'lexical';
+import {
+  ElementNode
 } from 'lexical';
 
 type SerializedCollapsibleContentNode = SerializedElementNode;

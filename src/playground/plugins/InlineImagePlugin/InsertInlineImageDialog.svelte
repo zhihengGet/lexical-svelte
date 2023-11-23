@@ -3,12 +3,13 @@
 
   import "../../ui/Checkbox.css";
 
-  import { createCommand, LexicalCommand, LexicalEditor } from "lexical";
-  import * as React from "react";
+  import type { LexicalCommand, LexicalEditor } from "lexical";
+import { createCommand } from "lexical";
+  import type * as React from "react";
   import { useEffect, useRef, useState } from "react";
   import { CAN_USE_DOM } from "shared/canUseDOM";
 
-  import { InlineImagePayload } from "./InlineImageNode.svelte";
+  import type { InlineImagePayload } from "./InlineImageNode.svelte";
   import Button from "@ui/Button.svelte";
   import DialogActions from "@ui/DialogActions.svelte";
   import FileInput from "@ui/FileInput.svelte";

@@ -5,12 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import type {Position} from '../../nodes/InlineImageNode';
+import type {Position,
+  InlineImagePayload} from '../../nodes/InlineImageNode';
 
 import '../../ui/Checkbox.css';
 
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import {$wrapNodeInElement, mergeRegister} from '@lexical/utils';
+import type {
+  LexicalCommand,
+  LexicalEditor} from 'lexical';
 import {
   $createParagraphNode,
   $createRangeSelection,
@@ -25,9 +29,7 @@ import {
   createCommand,
   DRAGOVER_COMMAND,
   DRAGSTART_COMMAND,
-  DROP_COMMAND,
-  LexicalCommand,
-  LexicalEditor,
+  DROP_COMMAND
 } from 'lexical';
 import * as React from 'react';
 import {useEffect, useRef, useState} from 'react';
@@ -36,8 +38,7 @@ import {CAN_USE_DOM} from 'shared/canUseDOM';
 import {
   $createInlineImageNode,
   $isInlineImageNode,
-  InlineImageNode,
-  InlineImagePayload,
+  InlineImageNode
 } from '../../nodes/InlineImageNode';
 import Button from '../../ui/Button';
 import {DialogActions} from '../../ui/Dialog';

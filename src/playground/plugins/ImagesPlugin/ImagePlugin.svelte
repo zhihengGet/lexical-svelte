@@ -153,16 +153,17 @@
     $wrapNodeInElement as wrapNodeInElement,
     mergeRegister,
   } from "@lexical/utils";
-  import {
+  import type {
+    LexicalCommand,
+    LexicalEditor} from "lexical";
+import {
     COMMAND_PRIORITY_EDITOR,
     COMMAND_PRIORITY_HIGH,
     COMMAND_PRIORITY_LOW,
     createCommand,
     DRAGOVER_COMMAND,
     DRAGSTART_COMMAND,
-    DROP_COMMAND,
-    LexicalCommand,
-    LexicalEditor,
+    DROP_COMMAND
   } from "lexical";
   import { useEffect, useRef, useState } from "react";
   import * as React from "react";
@@ -170,11 +171,12 @@
 
   import landscapeImage from "../../images/landscape.jpg";
   import yellowFlowerImage from "../../images/yellow-flower.jpg";
-  import {
+  import type {
+    ImagePayload} from "./ImageNode";
+import {
     $isImageNode as isImageNode,
     $createImageNode as createImageNode,
-    ImageNode,
-    ImagePayload,
+    ImageNode
   } from "./ImageNode";
   import Button from "@ui/Button.svelte";
   import { default as DialogActions } from "@ui/DialogActions.svelte";

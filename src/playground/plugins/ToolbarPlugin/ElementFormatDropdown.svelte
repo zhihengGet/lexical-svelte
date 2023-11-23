@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  import * as lexical from "lexical";
+  import type * as lexical from "lexical";
   import {
     FORMAT_ELEMENT_COMMAND,
     FORMAT_TEXT_COMMAND,

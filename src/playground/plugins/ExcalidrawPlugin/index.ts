@@ -7,13 +7,15 @@
  */
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $wrapNodeInElement } from '@lexical/utils';
+import type {
+	LexicalCommand
+} from 'lexical';
 import {
 	$createParagraphNode,
 	$insertNodes,
 	$isRootOrShadowRoot,
 	COMMAND_PRIORITY_EDITOR,
-	createCommand,
-	LexicalCommand
+	createCommand
 } from 'lexical';
 import { useEffect } from 'react';
 

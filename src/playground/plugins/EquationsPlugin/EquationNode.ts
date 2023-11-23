@@ -14,12 +14,12 @@ import type {
   NodeKey,
   SerializedLexicalNode,
   Spread,
-} from "lexical";
+ DOMExportOutput } from "lexical";
 
 import katex from "katex";
-import { $applyNodeReplacement, DecoratorNode, DOMExportOutput } from "lexical";
+import { $applyNodeReplacement, DecoratorNode } from "lexical";
 
-import { SvelteRender } from "@lexical/react/types";
+import type { SvelteRender } from "@lexical/react/types";
 
 const EquationComponent =
   // @ts-ignore

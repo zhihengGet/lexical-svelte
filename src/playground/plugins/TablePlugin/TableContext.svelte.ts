@@ -9,15 +9,17 @@
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import type { SvelteRender } from '@lexical/react/types';
 import { INSERT_TABLE_COMMAND } from '@lexical/table';
-import {
-	$insertNodes,
-	COMMAND_PRIORITY_EDITOR,
-	createCommand,
+import type {
 	EditorThemeClasses,
 	Klass,
 	LexicalCommand,
 	LexicalEditor,
 	LexicalNode
+} from 'lexical';
+import {
+	$insertNodes,
+	COMMAND_PRIORITY_EDITOR,
+	createCommand
 } from 'lexical';
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import * as React from 'react';

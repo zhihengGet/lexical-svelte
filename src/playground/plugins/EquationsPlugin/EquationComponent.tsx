@@ -8,13 +8,14 @@
 
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import {mergeRegister} from '@lexical/utils';
+import type {
+  NodeKey} from 'lexical';
 import {
   $getNodeByKey,
   $getSelection,
   $isNodeSelection,
   COMMAND_PRIORITY_HIGH,
   KEY_ESCAPE_COMMAND,
-  NodeKey,
   SELECTION_CHANGE_COMMAND,
 } from 'lexical';
 import * as React from 'react';

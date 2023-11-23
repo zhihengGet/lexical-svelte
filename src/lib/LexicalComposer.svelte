@@ -29,15 +29,16 @@
     createLexicalComposerContext,
     setLexicalComposerContext,
   } from "@lexical/react/LexicalComposerContext.svelte";
-  import {
-    createEditor,
+  import type {
     EditorState,
     EditorThemeClasses,
     HTMLConfig,
     Klass,
     LexicalEditor,
     LexicalNode,
-    LexicalNodeReplacement,
+    LexicalNodeReplacement} from "lexical";
+import {
+    createEditor
   } from "lexical";
 
   import { CAN_USE_DOM } from "shared/canUseDOM";

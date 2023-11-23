@@ -46,6 +46,8 @@ import {
 	$getNearestNodeOfType as getNearestNodeOfType,
 	mergeRegister
 } from '@lexical/utils';
+import type {
+	TextNode} from 'lexical';
 import {
 	$createParagraphNode as createParagraphNode,
 	$getNodeByKey as getNodeByKey,
@@ -71,7 +73,6 @@ import {
 	REDO_COMMAND,
 	SELECTION_CHANGE_COMMAND,
 	UNDO_COMMAND,
-	TextNode,
 	type LexicalCommand,
 	createCommand,
 	type CommandListenerPriority,

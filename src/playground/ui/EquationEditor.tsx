@@ -6,12 +6,12 @@
  *
  */
 
-import type {Ref, RefObject} from 'react';
+import type {Ref, RefObject,ChangeEvent} from 'react';
 
 import './EquationEditor.css';
 
 import * as React from 'react';
-import {ChangeEvent, forwardRef} from 'react';
+import { forwardRef} from 'react';
 
 type BaseEquationEditorProps = {
   equation: string;

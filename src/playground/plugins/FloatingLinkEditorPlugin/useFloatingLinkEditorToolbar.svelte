@@ -13,16 +13,17 @@
     $findMatchingParent as findMatchingParent,
     mergeRegister,
   } from "@lexical/utils";
-  import {
+  import type {
+    GridSelection,
+    LexicalEditor,
+    NodeSelection,
+    RangeSelection} from "lexical";
+import {
     $getSelection as getSelection,
     $isRangeSelection as isRangeSelection,
     COMMAND_PRIORITY_HIGH,
     COMMAND_PRIORITY_LOW,
-    GridSelection,
     KEY_ESCAPE_COMMAND,
-    LexicalEditor,
-    NodeSelection,
-    RangeSelection,
     SELECTION_CHANGE_COMMAND,
   } from "lexical";
   import { useCallback, useEffect, useRef, useState } from "react";

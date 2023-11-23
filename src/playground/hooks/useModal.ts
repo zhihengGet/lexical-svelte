@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 
 import Modal from "../ui/Modal.svelte";
-import { SvelteRender } from "@lexical/react/types";
+import type { SvelteRender } from "@lexical/react/types";
 
 export default function useModal() {
   const [modalContent, setModalContent] = useState<null | {

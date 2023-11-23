@@ -6,18 +6,19 @@
  *
  */
 
-import {
-  $createParagraphNode,
-  $isElementNode,
+import type {
   DOMConversionMap,
   DOMConversionOutput,
   DOMExportOutput,
   EditorConfig,
-  ElementNode,
   LexicalEditor,
   LexicalNode,
   RangeSelection,
-  SerializedElementNode,
+  SerializedElementNode} from 'lexical';
+import {
+  $createParagraphNode,
+  $isElementNode,
+  ElementNode
 } from 'lexical';
 
 import {$isCollapsibleContainerNode} from './CollapsibleContainerNode';

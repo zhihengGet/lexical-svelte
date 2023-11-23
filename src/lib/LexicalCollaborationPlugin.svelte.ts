@@ -10,12 +10,13 @@ import type { Doc } from "yjs";
 
 import { useCollaborationContext } from "@lexical/react/LexicalCollaborationContext.svelte";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext.svelte";
-import { ExcludedProperties, Provider } from "@lexical/yjs";
+import type { ExcludedProperties, Provider } from "@lexical/yjs";
 import { useEffect, useMemo } from "react";
 
-import { InitialEditorStateType } from "../lib/LexicalComposer.svelte";
+import type { InitialEditorStateType } from "../lib/LexicalComposer.svelte";
+import type {
+  CursorsContainerRef} from "../shared/useYjsCollaboration.svelte";
 import {
-  CursorsContainerRef,
   useYjsCollaboration,
   useYjsFocusTracking,
   useYjsHistory,

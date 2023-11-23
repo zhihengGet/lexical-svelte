@@ -32,11 +32,12 @@ import {
 } from 'lexical';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Doc, Transaction, UndoManager, YEvent } from 'yjs';
+import type { Doc, Transaction, YEvent } from 'yjs';
+import { UndoManager } from 'yjs';
 
-import { InitialEditorStateType } from '../lib/LexicalComposer.svelte';
+import type { InitialEditorStateType } from '../lib/LexicalComposer.svelte';
 import { mount } from 'svelte';
-import { SvelteRender } from '@lexical/react/types';
+import type { SvelteRender } from '@lexical/react/types';
 
 export type CursorsContainerRef = React.MutableRefObject<HTMLElement | null>;
 

@@ -32,7 +32,7 @@
   import { useLexicalNodeSelection } from "@lexical/react/useLexicalNodeSelection.svelte";
   import { mergeRegister } from "@lexical/utils";
   import * as lexical from "lexical";
-  import * as React from "react";
+  import type * as React from "react";
   import { useCallback, useEffect, useRef, useState } from "react";
 
   import { createWebsocketProvider } from "../../collaboration";
@@ -57,7 +57,7 @@
     KEY_ESCAPE_COMMAND,
     SELECTION_CHANGE_COMMAND,
   } from "lexical";
-  import type { Position } from "./InlineImageNode";
+  import type { Position , InlineImageNode } from "./InlineImageNode";
   import type {
     GridSelection,
     LexicalEditor,
@@ -89,7 +89,7 @@
     KEY_ESCAPE_COMMAND,
     SELECTION_CHANGE_COMMAND,
   } from "lexical";
-  import * as React from "react";
+  import type * as React from "react";
   import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 
   import useModal from "../../hooks/useModal";
@@ -102,10 +102,10 @@
   import Placeholder from "../ui/Placeholder";
   import Select from "../ui/Select";
   import TextInput from "../ui/TextInput";
-  import { $isInlineImageNode, InlineImageNode } from "./InlineImageNode";
+  import { $isInlineImageNode } from "./InlineImageNode";
   import DialogActions from "@ui/DialogActions.svelte";
   import Button from "@ui/Button.svelte";
-  import { ChangeEvent } from "../../../../react";
+  import type { ChangeEvent } from "../../../../react";
   let { activeEditor, nodeKey, onClose } = $props<{
     activeEditor: LexicalEditor;
     nodeKey: NodeKey;

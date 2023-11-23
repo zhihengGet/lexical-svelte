@@ -33,9 +33,9 @@
 // to 'react/experimental' in their project. See experimental.d.ts's top comment
 // for reference and documentation on how exactly to do it.
 
-import * as CSS from 'csstype';
-import * as PropTypes from 'prop-types';
-import { Interaction as SchedulerInteraction } from 'scheduler/tracing';
+import type * as CSS from 'csstype';
+import type * as PropTypes from 'prop-types';
+import type { Interaction as SchedulerInteraction } from 'scheduler/tracing';
 
 type NativeAnimationEvent = AnimationEvent;
 type NativeClipboardEvent = ClipboardEvent;

@@ -35,7 +35,7 @@ import * as React from 'react';
 import { useCallback, useEffect } from 'react';
 import { mount, SvelteComponent } from 'svelte';
 import LexicalHorizontalRuleComponent from './LexicalHorizontalRuleComponent.svelte';
-import { SvelteRender } from './types';
+import type { SvelteRender } from './types';
 
 export type SerializedHorizontalRuleNode = SerializedLexicalNode;
 

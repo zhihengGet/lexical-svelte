@@ -7,7 +7,9 @@
    *
    */
 
-  import type { RangeSelection, TextFormatType } from "lexical";
+  import type { RangeSelection, TextFormatType ,
+    EditorThemeClasses,
+    LexicalEditor} from "lexical";
 
   import {
     $generateJSONFromSelectedNodes as generateJSONFromSelectedNodes,
@@ -36,7 +38,6 @@
     COPY_COMMAND,
     createEditor,
     CUT_COMMAND,
-    EditorThemeClasses,
     FORMAT_TEXT_COMMAND,
     KEY_ARROW_DOWN_COMMAND,
     KEY_ARROW_LEFT_COMMAND,
@@ -47,7 +48,6 @@
     KEY_ENTER_COMMAND,
     KEY_ESCAPE_COMMAND,
     KEY_TAB_COMMAND,
-    LexicalEditor,
     NodeKey,
     PASTE_COMMAND,
   } from "lexical";
@@ -57,7 +57,10 @@
   import { IS_APPLE } from "shared/environment";
 
   import { CellContext } from "../plugins/TablePlugin";
-  import {
+  import type {
+    Rows,
+    TableNode} from "./TableNode";
+import {
     $isTableNode as isTableNode,
     Cell,
     cellHTMLCache,
@@ -65,9 +68,7 @@
     createRow,
     createUID,
     exportTableCellsToHTML,
-    extractRowsFromHTML,
-    Rows,
-    TableNode,
+    extractRowsFromHTML
   } from "./TableNode";
 
   type SortOptions = { type: "ascending" | "descending"; x: number };

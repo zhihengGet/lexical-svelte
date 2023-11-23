@@ -1,5 +1,5 @@
 <script lang="ts">
-  import {
+  import type {
     EditorState,
     ElementNode,
     GridSelection,
@@ -10,15 +10,17 @@
   } from "lexical";
 
   import * as html from "@lexical/html";
-  import { $isLinkNode as isLinkNode, LinkNode } from "@lexical/link";
+  import type { LinkNode } from "@lexical/link";
+import { $isLinkNode as isLinkNode } from "@lexical/link";
   import { $isMarkNode as isMarkNode } from "@lexical/mark";
   import { mergeRegister } from "@lexical/utils";
-  import {
+  import type {
+    LexicalCommand} from "lexical";
+import {
     $getRoot as getRoot,
     $getSelection as getSelection,
     COMMAND_PRIORITY_HIGH,
-    DEPRECATED_$isGridSelection,
-    LexicalCommand,
+    DEPRECATED_$isGridSelection
   } from "lexical";
 
   import * as lexical from "lexical";

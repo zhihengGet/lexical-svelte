@@ -45,6 +45,9 @@ import {
 	$getNearestNodeOfType as getNearestNodeOfType,
 	mergeRegister
 } from '@lexical/utils';
+import type {
+	LexicalEditor,
+	NodeKey} from 'lexical';
 import {
 	$createParagraphNode as createParagraphNode,
 	$getNodeByKey as getNodeByKey,
@@ -64,8 +67,6 @@ import {
 	FORMAT_TEXT_COMMAND,
 	INDENT_CONTENT_COMMAND,
 	KEY_MODIFIER_COMMAND,
-	LexicalEditor,
-	NodeKey,
 	OUTDENT_CONTENT_COMMAND,
 	REDO_COMMAND,
 	SELECTION_CHANGE_COMMAND,

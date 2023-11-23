@@ -1,17 +1,18 @@
 <script context="module" lang="ts">
-  import type { Position } from "./InlineImageNode.svelte";
+  import type { Position ,
+    InlineImagePayload} from "./InlineImageNode.svelte";
 
   import "../../ui/Checkbox.css";
 
-  import { createCommand, LexicalCommand, LexicalEditor } from "lexical";
-  import * as React from "react";
+  import type { LexicalCommand, LexicalEditor } from "lexical";
+import { createCommand } from "lexical";
+  import type * as React from "react";
   import { useEffect, useRef, useState } from "react";
   import { CAN_USE_DOM } from "shared/canUseDOM";
   import { $wrapNodeInElement as wrapNodeInElement } from "@lexical/utils";
 
   import {
-    InlineImageNode,
-    InlineImagePayload,
+    InlineImageNode
   } from "./InlineImageNode.svelte";
   import Button from "@ui/Button.svelte";
   import DialogActions from "@ui/DialogActions.svelte";

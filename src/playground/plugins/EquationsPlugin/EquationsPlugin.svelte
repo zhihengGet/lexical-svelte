@@ -12,13 +12,14 @@
 
   import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext.svelte";
   import { $wrapNodeInElement as wrapNodeInElement } from "@lexical/utils";
-  import {
+  import type {
+    LexicalCommand} from "lexical";
+import {
     $createParagraphNode as createParagraphNode,
     $insertNodes as insertNodes,
     $isRootOrShadowRoot as isRootOrShadowRoot,
     COMMAND_PRIORITY_EDITOR,
     createCommand,
-    LexicalCommand,
     LexicalEditor,
   } from "lexical";
   import { useCallback, useEffect } from "react";

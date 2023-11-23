@@ -1,7 +1,8 @@
 <script lang="ts">
   import AutoEmbedMenuItem from "./AutoEmbedMenuItem.svelte"; // Adjust the import path as needed
-  import {
-    AutoEmbedOption,
+  import type {
+    AutoEmbedOption} from "@lexical/react/LexicalAutoEmbedPlugin.svelte";
+import {
     EmbedConfig,
     EmbedMatchResult,
     URL_MATCHER,

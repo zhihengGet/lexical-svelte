@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { AutoEmbedOption } from "@lexical/react/LexicalAutoEmbedPlugin.svelte";
+  import type { AutoEmbedOption } from "@lexical/react/LexicalAutoEmbedPlugin.svelte";
 
   type prop = {
     index: number;

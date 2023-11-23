@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { LexicalEditor, LexicalCommand, createCommand } from "lexical";
+  import type { LexicalEditor} from "lexical";
+import { LexicalCommand, createCommand } from "lexical";
   import KatexEquationAlterer from "./KatexEquationAlterer.svelte";
   import { useCallback } from "react";
   import { INSERT_EQUATION_COMMAND } from "./EquationsPlugin.svelte";

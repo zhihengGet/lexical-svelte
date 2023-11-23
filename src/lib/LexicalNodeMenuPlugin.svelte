@@ -1,8 +1,8 @@
 <script context="module" lang="ts">
-	import type { MenuRenderFn, MenuResolution } from '../shared/LexicalMenu.svelte';
+	import { MenuRenderFn, MenuResolution } from '../shared/LexicalMenu.svelte';
 
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
-	import * as lexical from 'lexical';
+	import type * as lexical from 'lexical';
 	import {
 		COMMAND_PRIORITY_LOW,
 		type CommandListenerPriority,

@@ -9,13 +9,14 @@
 import './ExcalidrawModal.css';
 
 import {Excalidraw} from '@excalidraw/excalidraw';
-import {
+import type {
   AppState,
   BinaryFiles,
   ExcalidrawImperativeAPI,
 } from '@excalidraw/excalidraw/types/types';
 import * as React from 'react';
-import {ReactPortal, useEffect, useLayoutEffect, useRef, useState} from 'react';
+import type {ReactPortal} from 'react';
+import { useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 
 import Button from '../../ui/Button';

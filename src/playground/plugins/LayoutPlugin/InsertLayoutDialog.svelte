@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  import { LexicalEditor } from "lexical";
+  import type { LexicalEditor } from "lexical";
   import * as React from "react";
   import { useState } from "react";
 

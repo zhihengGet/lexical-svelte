@@ -2,9 +2,10 @@
   import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext.svelte";
   import { onMount, onDestroy } from "svelte";
   import { useMemo, useState } from "react";
-  import { PlaygroundEmbedConfig } from ".";
-  import {
-    EmbedMatchResult,
+  import type { PlaygroundEmbedConfig } from ".";
+  import type {
+    EmbedMatchResult} from "@lexical/react/LexicalAutoEmbedPlugin.svelte";
+import {
     URL_MATCHER,
   } from "@lexical/react/LexicalAutoEmbedPlugin.svelte";
   const debounce = (callback: (text: string) => void, delay: number) => {

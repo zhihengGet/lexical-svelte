@@ -8,9 +8,15 @@
 import "./index.css";
 
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext.svelte";
-import { SvelteRender } from "@lexical/react/types";
+import type { SvelteRender } from "@lexical/react/types";
 import { useLexicalNodeSelection } from "@lexical/react/useLexicalNodeSelection.svelte";
 import { mergeRegister } from "@lexical/utils";
+import type {
+  DOMConversionMap,
+  DOMConversionOutput,
+  LexicalNode,
+  NodeKey,
+  SerializedLexicalNode} from "lexical";
 import {
   $getNodeByKey,
   $getSelection,
@@ -19,13 +25,8 @@ import {
   COMMAND_PRIORITY_HIGH,
   COMMAND_PRIORITY_LOW,
   DecoratorNode,
-  DOMConversionMap,
-  DOMConversionOutput,
   KEY_BACKSPACE_COMMAND,
-  KEY_DELETE_COMMAND,
-  LexicalNode,
-  NodeKey,
-  SerializedLexicalNode,
+  KEY_DELETE_COMMAND
 } from "lexical";
 import * as React from "react";
 import { useCallback, useEffect } from "react";

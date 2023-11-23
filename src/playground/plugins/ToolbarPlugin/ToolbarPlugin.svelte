@@ -39,7 +39,10 @@
 		$getNearestNodeOfType as getNearestNodeOfType,
 		mergeRegister
 	} from '@lexical/utils';
-	import {
+	import type {
+		ElementFormatType,
+		NodeKey} from 'lexical';
+import {
 		$createParagraphNode as createParagraphNode,
 		$getNodeByKey as getNodeByKey,
 		$getRoot as getRoot,
@@ -53,13 +56,11 @@
 		COMMAND_PRIORITY_CRITICAL,
 		COMMAND_PRIORITY_NORMAL,
 		DEPRECATED_$isGridSelection,
-		ElementFormatType,
 		FORMAT_ELEMENT_COMMAND,
 		FORMAT_TEXT_COMMAND,
 		INDENT_CONTENT_COMMAND,
 		KEY_MODIFIER_COMMAND,
 		LexicalEditor,
-		NodeKey,
 		OUTDENT_CONTENT_COMMAND,
 		REDO_COMMAND,
 		SELECTION_CHANGE_COMMAND,
@@ -71,13 +72,16 @@
 		else return '';
 	}
 	import { useCallback, useEffect, useState } from 'react';
-	import { blockTypeToBlockName, rootTypeToRootName } from '.';
+	import type { rootTypeToRootName } from '.';
+import { blockTypeToBlockName } from '.';
 	import useModal from '../../hooks/useModal';
 	import { getSelectedNode } from '../../utils/getSelectedNode';
 	import { sanitizeUrl } from '../../utils/url';
-	import {
-		INSERT_IMAGE_COMMAND,
+	import type {
 		InsertImagePayload
+	} from '@plugins/ImagesPlugin/InsertImageUriDialogBody.svelte';
+import {
+		INSERT_IMAGE_COMMAND
 	} from '@plugins/ImagesPlugin/InsertImageUriDialogBody.svelte';
 	import { IS_APPLE } from 'shared/environment';
 	import Divider from './Divider.svelte';

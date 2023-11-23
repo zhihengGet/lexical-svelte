@@ -10,19 +10,20 @@
   import { TOGGLE_LINK_COMMAND } from "@lexical/link";
   import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext.svelte";
   import { mergeRegister } from "@lexical/utils";
-  import {
+  import type {
+    LexicalEditor,
+    LexicalCommand} from "lexical";
+import {
     $getSelection as getSelection,
     $isRangeSelection as isRangeSelection,
     COMMAND_PRIORITY_HIGH,
     COMMAND_PRIORITY_LOW,
     GridSelection,
     KEY_ESCAPE_COMMAND,
-    LexicalEditor,
     NodeSelection,
     RangeSelection,
     SELECTION_CHANGE_COMMAND,
     FORMAT_TEXT_COMMAND,
-    LexicalCommand,
     createCommand,
   } from "lexical";
   import { useCallback, useEffect, useRef, useState } from "react";

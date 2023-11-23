@@ -7,8 +7,9 @@
  */
 
 import * as React from 'react';
+import type {
+  ReactNode} from 'react';
 import {
-  ReactNode,
   useCallback,
   useEffect,
   useMemo,

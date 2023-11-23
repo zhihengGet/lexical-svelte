@@ -6,7 +6,7 @@
  *
  */
 
-import { SvelteRender } from "@lexical/react/types";
+import type { SvelteRender } from "@lexical/react/types";
 import type {
   DOMConversionMap,
   DOMConversionOutput,

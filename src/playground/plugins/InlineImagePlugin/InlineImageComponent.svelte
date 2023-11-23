@@ -57,9 +57,10 @@
     KEY_ESCAPE_COMMAND,
     SELECTION_CHANGE_COMMAND,
   } from "lexical";
-  import {
-    $isInlineImageNode as isInlineImageNode,
-    Position,
+  import type {
+    Position} from "./InlineImageNode.svelte";
+import {
+    $isInlineImageNode as isInlineImageNode
   } from "./InlineImageNode.svelte";
   import UpdateInlineImageDialog from "./UpdateInlineImageDialog.svelte";
   import useModal from "../../hooks/useModal";

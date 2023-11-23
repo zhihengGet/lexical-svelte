@@ -7,7 +7,7 @@
   import { INSERT_TABLE_COMMAND } from "@lexical/table";
   import DropDown from "@ui/Dropdown/DropDown.svelte";
   import * as Selection from "@lexical/selection";
-  import { HeadingTagType } from "@lexical/rich-text";
+  import type { HeadingTagType } from "@lexical/rich-text";
   import * as RichText from "@lexical/rich-text";
   import * as Code from "@lexical/code";
   import {

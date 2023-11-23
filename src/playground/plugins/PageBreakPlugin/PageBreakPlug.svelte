@@ -5,12 +5,13 @@
     mergeRegister,
   } from "@lexical/utils";
   import * as lexical from "lexical";
-  import {
+  import type {
+    LexicalCommand} from "lexical";
+import {
     $getSelection as getSelection,
     $isRangeSelection as isRangeSelection,
     COMMAND_PRIORITY_EDITOR,
-    createCommand,
-    LexicalCommand,
+    createCommand
   } from "lexical";
   import { useEffect } from "react";
 

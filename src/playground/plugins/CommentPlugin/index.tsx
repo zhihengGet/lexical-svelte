@@ -54,13 +54,14 @@ import * as React from 'react';
 import {createPortal} from 'react-dom';
 import useLayoutEffect from 'shared/useLayoutEffect';
 
-import {
+import type {
   Comment,
   Comments,
+  Thread} from '../../commenting';
+import {
   CommentStore,
   createComment,
   createThread,
-  Thread,
   useCommentStore,
 } from '../../commenting';
 import useModal from '../../hooks/useModal';

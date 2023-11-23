@@ -5,7 +5,7 @@
 	import { useCanShowPlaceholder } from '../shared/useCanShowPlaceholder.svelte';
 	import { useDecorators } from '../shared/useDecorators.svelte';
 	import { useRichTextSetup } from '../shared/useRichTextSetup.svelte';
-	import { SvelteComponent } from 'svelte';
+	import type { SvelteComponent } from 'svelte';
 	import Placeholder from './placeholder.svelte';
 	import Portal from '@ui/Portal.svelte';
 

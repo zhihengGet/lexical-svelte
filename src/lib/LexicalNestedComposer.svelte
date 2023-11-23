@@ -3,7 +3,7 @@
 
   // import { useCollaborationContext } from "@lexical/react/LexicalCollaborationContext";
   import { createLexicalComposerContext } from "@lexical/react/LexicalComposerContext.svelte";
-  import {
+  import type {
     EditorThemeClasses,
     Klass,
     LexicalEditor,

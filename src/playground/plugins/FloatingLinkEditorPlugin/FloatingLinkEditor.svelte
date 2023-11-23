@@ -11,21 +11,23 @@
   } from "@lexical/link";
   import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
   import { $findMatchingParent, mergeRegister } from "@lexical/utils";
-  import {
+  import type {
+    GridSelection,
+    LexicalEditor,
+    NodeSelection,
+    RangeSelection} from "lexical";
+import {
     $getSelection,
     $isRangeSelection,
     CLICK_COMMAND,
     COMMAND_PRIORITY_CRITICAL,
     COMMAND_PRIORITY_HIGH,
     COMMAND_PRIORITY_LOW,
-    GridSelection,
     KEY_ESCAPE_COMMAND,
-    LexicalEditor,
-    NodeSelection,
-    RangeSelection,
     SELECTION_CHANGE_COMMAND,
   } from "lexical";
-  import { Dispatch, useCallback, useEffect, useRef, useState } from "react";
+  import type { Dispatch} from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
   import { createPortal } from "react-dom";
 
   import { getSelectedNode } from "../../utils/getSelectedNode";
