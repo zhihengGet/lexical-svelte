@@ -46,7 +46,7 @@ export function useMemo<T>(fn: () => T, dep?: any) {
 	const r = $derived(fn());
 	return r;
 }
-export function useRef<T>(param: T) {
+export function useRef<T>(param: T | null) {
 	return { current: param };
 }
 

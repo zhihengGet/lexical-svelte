@@ -39,10 +39,8 @@
 		$getNearestNodeOfType as getNearestNodeOfType,
 		mergeRegister
 	} from '@lexical/utils';
-	import type {
-		ElementFormatType,
-		NodeKey} from 'lexical';
-import {
+	import type { ElementFormatType, NodeKey } from 'lexical';
+	import {
 		$createParagraphNode as createParagraphNode,
 		$getNodeByKey as getNodeByKey,
 		$getRoot as getRoot,
@@ -73,16 +71,12 @@ import {
 	}
 	import { useCallback, useEffect, useState } from 'react';
 	import type { rootTypeToRootName } from '.';
-import { blockTypeToBlockName } from '.';
+	import { blockTypeToBlockName } from '.';
 	import useModal from '../../hooks/useModal';
 	import { getSelectedNode } from '../../utils/getSelectedNode';
 	import { sanitizeUrl } from '../../utils/url';
-	import type {
-		InsertImagePayload
-	} from '@plugins/ImagesPlugin/InsertImageUriDialogBody.svelte';
-import {
-		INSERT_IMAGE_COMMAND
-	} from '@plugins/ImagesPlugin/InsertImageUriDialogBody.svelte';
+	import type { InsertImagePayload } from '@plugins/ImagesPlugin/InsertImageUriDialogBody.svelte';
+	import { INSERT_IMAGE_COMMAND } from '@plugins/ImagesPlugin/InsertImageUriDialogBody.svelte';
 	import { IS_APPLE } from 'shared/environment';
 	import Divider from './Divider.svelte';
 	import BlockFormatDropdown from './BlockFormatDropdown.svelte';
@@ -388,7 +382,12 @@ import {
 	</button>
 	<Divider />
 	{#if blockType() in blockTypeToBlockName && activeEditor() === editor}
-		<BlockFormatDropdown disabled={!isEditable} {blockType} {rootType} {editor} />
+		<BlockFormatDropdown
+			disabled={!isEditable}
+			blockType={blockType()}
+			rootType={rootType()}
+			{editor}
+		/>
 		<Divider />
 	{:else}
 		<!-- Else block content goes here (if needed) -->
