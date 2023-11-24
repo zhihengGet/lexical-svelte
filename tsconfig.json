@@ -16,6 +16,7 @@
 		"checkJs": true,
 		"paths": {
 			"shared/*": ["./shared/src/*"],
+			"@shared/*": ["./src/shared/*"],
 			"@lexical/react/*": ["./src/lib/*"],
 			"@theme/*": ["./src/themes/*  "],
 			"@ui/*": ["./src/playground/ui/*"],

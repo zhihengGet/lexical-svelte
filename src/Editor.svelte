@@ -13,10 +13,10 @@
 	import { HistoryPlugin } from './lib/LexicalHistoryPlugin.svelte';
 	import Portal from '@ui/Portal.svelte';
 	import { useSharedHistoryContext } from './playground/context/SharedHistoryContext';
-	//import { CollaborationPlugin } from './lib/LexicalCollaborationPlugin.svelte';
+	import { CollaborationPlugin } from './lib/LexicalCollaborationPlugin.svelte';
 	import { createWebsocketProvider } from './playground/collaboration';
-	import { skip } from 'node:test';
 	import LexicalRichTextPlugin from './lib/LexicalRichTextPlugin.svelte';
+	import { ListPlugin } from '@plugins/ListPlugin/LexicalListPlugin.svelte';
 	const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
 	const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
 	const isEditable = true;
@@ -60,6 +60,7 @@
 			setFloatingAnchorElem(_floatingAnchorElem);
 		}
 	};
+	console.log('isRichText', isRichText);
 	// your script goes here
 </script>
 
@@ -77,7 +78,7 @@
 	{#if isRichText}
 		{#if isCollab}
 			<!-- enable history plugin  -->
-			<!-- <Portal
+			<Portal
 				portal={false}
 				target={null}
 				initializor={() =>
@@ -86,7 +87,7 @@
 						providerFactory: createWebsocketProvider,
 						shouldBootstrap: !skipCollaborationInit
 					})}
-			/> -->
+			/>
 		{:else}
 			<!-- enable history plugin  -->
 			<Portal
@@ -109,6 +110,7 @@
 				portal={false}
 				initializor={() => HistoryPlugin({ externalHistoryState: historyState })}
 			/>
+			<Portal target={null} initializor={ListPlugin} />
 		{/if}
 	{/if}
 	<TreeViewPlugin />
