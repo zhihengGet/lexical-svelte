@@ -9,7 +9,7 @@
 import type { LexicalEditor } from 'lexical';
 
 import {
-	$handleListInsertParagraph,
+	$handleListInsertParagraph as handleListInsertParagraph,
 	INSERT_ORDERED_LIST_COMMAND,
 	INSERT_UNORDERED_LIST_COMMAND,
 	insertList,
@@ -22,6 +22,7 @@ import { useEffect } from '../react.svelte';
 
 export function useList(editor: LexicalEditor): void {
 	useEffect(() => {
+		console.log('register commands');
 		return mergeRegister(
 			editor.registerCommand(
 				INSERT_ORDERED_LIST_COMMAND,
@@ -50,7 +51,7 @@ export function useList(editor: LexicalEditor): void {
 			editor.registerCommand(
 				INSERT_PARAGRAPH_COMMAND,
 				() => {
-					const hasHandledInsertParagraph = $handleListInsertParagraph();
+					const hasHandledInsertParagraph = handleListInsertParagraph();
 
 					if (hasHandledInsertParagraph) {
 						return true;

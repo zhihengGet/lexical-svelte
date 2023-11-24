@@ -17,6 +17,9 @@
 	import { createWebsocketProvider } from './playground/collaboration';
 	import LexicalRichTextPlugin from './lib/LexicalRichTextPlugin.svelte';
 	import { ListPlugin } from '@plugins/ListPlugin/LexicalListPlugin.svelte';
+	import { CheckListPlugin } from '@plugins/ListPlugin/LexicalCheckListPlugin.svelte';
+	import CodeHighlightPlugin from '@plugins/CodeHighlightPlugin';
+	import CodeActionMenuPlugin from '@plugins/CodeActionMenuPlugin';
 	const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
 	const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
 	const isEditable = true;
@@ -62,6 +65,7 @@
 	};
 	console.log('isRichText', isRichText);
 	// your script goes here
+	$effect(() => console.log('float', floatingAnchorElem()));
 </script>
 
 {#snippet contentEditableRichText()}
@@ -98,7 +102,15 @@
 		{/if}
 
 		<!-- enable rich text -->
+		<Portal target={null} initializor={ListPlugin} />
+		<Portal target={null} initializor={CheckListPlugin} />
+		<Portal target={null} initializor={CodeHighlightPlugin} />
 
+		{#if floatingAnchorElem()}
+			<Portal {...CodeActionMenuPlugin({ anchorElem: floatingAnchorElem() })} />
+		{/if}
+
+		<!-- list -->
 		<LexicalRichTextPlugin contentEditable={contentEditableRichText} {placeholder} />
 	{:else}
 		<!-- plain text only -->
@@ -110,7 +122,6 @@
 				portal={false}
 				initializor={() => HistoryPlugin({ externalHistoryState: historyState })}
 			/>
-			<Portal target={null} initializor={ListPlugin} />
 		{/if}
 	{/if}
 	<TreeViewPlugin />

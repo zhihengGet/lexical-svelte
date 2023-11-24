@@ -70,7 +70,7 @@
 	createHistoryContext();
 </script>
 
-<main>
+<main aria-autocomplete="none">
 	<div />
 	<SettingsContext>
 		<SharedAutocompleteContext>

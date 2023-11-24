@@ -22,6 +22,7 @@
 		});
 	}
 	if (typeof props.initializor == 'function') {
+		console.log('call initializor');
 		props.initializor();
 	}
 	let ref = props.ref ?? { current: undefined };
@@ -37,7 +38,7 @@
 		<div>wait</div>
 	{:then component}
 		{#if props.component && !components}
-			<svelte:component this={component} {...props}>
+			<svelte:component this={component} {...props.props ?? []}>
 				{#each props.childComponents ?? [] as cp}
 					<svelte:component this={cp.component} />
 				{/each}

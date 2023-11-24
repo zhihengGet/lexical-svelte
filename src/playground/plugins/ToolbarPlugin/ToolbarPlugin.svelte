@@ -732,6 +732,11 @@
 		</>
 	)} -->
 	<Divider />
-	<ElementFormatDropdown disabled={!isEditable} value={elementFormat()} {editor} isRTL={isRTL()} />
+	<ElementFormatDropdown
+		disabled={!isEditable()}
+		value={elementFormat()}
+		{editor}
+		isRTL={isRTL()}
+	/>
 	<Portal {...modal} portal={true} />
 </div>
