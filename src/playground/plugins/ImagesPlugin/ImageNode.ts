@@ -171,7 +171,7 @@ export class ImageNode extends DecoratorNode<SvelteRender<comp>> {
 
 	setShowCaption(showCaption: boolean): void {
 		const writable = this.getWritable();
-		writable.__showCaption = showCaption;
+		writable.__showCaption = true;
 	}
 
 	// View
@@ -203,8 +203,8 @@ export class ImageNode extends DecoratorNode<SvelteRender<comp>> {
 			src: this.__src,
 			altText: this.__altText,
 			width: this.__width,
-			height: this.__height,
-			maxWidth: this.__maxWidth,
+			height: this.__height + 'px',
+			maxWidth: this.__maxWidth + 'px',
 			nodeKey: this.getKey(),
 			showCaption: this.__showCaption,
 			caption: this.__caption,

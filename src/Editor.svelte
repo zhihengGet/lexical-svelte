@@ -24,6 +24,10 @@
 	import FloatingTextFormatToolbarPlugin from '@plugins/FloatingTextFormatToolbarPlugin/FloatingTextFormatToolbarPlugin.svelte';
 	import FloatingLinkEditorPlugin from '@plugins/FloatingLinkEditorPlugin/FloatingLinkEditorPlugin.svelte';
 	import ImagePlugin from '@plugins/ImagesPlugin/ImagePlugin.svelte';
+	import { useLexicalComposerContext } from './lib/LexicalComposerContext.svelte';
+	import { INSERT_IMAGE_COMMAND } from '@plugins/ImagesPlugin';
+	import Test from './Test.svelte';
+	import { AutoFocusPlugin } from './lib/LexicalAutoFocusPlugin.svelte';
 	const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
 	const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
 	const isEditable = true;
@@ -110,7 +114,10 @@
 		<Portal target={null} initializor={CheckListPlugin} />
 		<Portal target={null} initializor={CodeHighlightPlugin} />
 		<Portal target={null} initializor={CodeHighlightPlugin} />
+		<Portal target={null} initializor={AutoFocusPlugin} />
+
 		<ImagePlugin captionsEnabled={true} />
+
 		<!-- Links -->
 		<LinkPlugin />
 		<!-- 	<FloatingLinkEditorPlugin /> -->
@@ -140,5 +147,6 @@
 			/>
 		{/if}
 	{/if}
+	<Test />
 	<TreeViewPlugin />
 </div>

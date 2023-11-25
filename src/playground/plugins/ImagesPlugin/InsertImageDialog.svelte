@@ -41,6 +41,7 @@
 	import InsertImageUploadedDialogBody from './InsertImageUploadedDialogBody.svelte';
 	import InsertImageUriDialogBody from './InsertImageUriDialogBody.svelte';
 	import { INSERT_IMAGE_COMMAND } from '.';
+	import { onMount } from 'svelte';
 	const [mode, setMode] = useState<null | 'url' | 'file'>(null);
 	const hasModifier = useRef(false);
 	let { activeEditor, onClose } = $props<{

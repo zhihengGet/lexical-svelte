@@ -43,13 +43,15 @@ export function useDecorators(editor: LexicalEditor) {
 			const element = editor.getElementByKey(nodeKey);
 
 			if (element !== null) {
+				//	console.log(element);
 				let node = decorators[nodeKey];
 				node.target = element;
 				node.nodeKey = nodeKey;
+				node.portal = true;
 				decoratedPortals.push(node);
 			}
 		}
-		console.log('to be rendered');
+		//console.log('to be rendered');
 		return decoratedPortals;
 	});
 

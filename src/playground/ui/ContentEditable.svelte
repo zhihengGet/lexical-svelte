@@ -1,9 +1,9 @@
 <script lang="ts">
-  import "./ContentEditable.css";
+	import './ContentEditable.css';
 
-  import ContentEditable from "@lexical/react/LexicalContentEditable.svelte";
+	import ContentEditable from '@lexical/react/LexicalContentEditable.svelte';
 
-  let { className } = $props<{ className?: string }>();
+	let { className, class: cl = '' } = $props<{ className?: string; class?: string }>();
 </script>
 
-<ContentEditable class={className || "ContentEditable__root"} />
+<ContentEditable class={className + ' ' + cl || 'ContentEditable__root'} />

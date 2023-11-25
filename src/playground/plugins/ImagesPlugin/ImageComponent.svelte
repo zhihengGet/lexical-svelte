@@ -58,6 +58,7 @@
 		KEY_ESCAPE_COMMAND,
 		SELECTION_CHANGE_COMMAND
 	} from 'lexical';
+	import { flushSync, onMount, untrack } from 'svelte';
 	let {
 		src,
 		altText,
@@ -154,6 +155,7 @@
 
 	const onClick = useCallback(
 		(payload: MouseEvent) => {
+			console.log('clicked');
 			const event = payload;
 
 			if (isResizing()) {
@@ -192,50 +194,60 @@
 	);
 
 	useEffect(() => {
-		let isMounted = true;
-		const rootElement = editor.getRootElement();
-		const unregister = mergeRegister(
-			editor.registerUpdateListener(({ editorState }) => {
-				if (isMounted) {
-					setSelection(editorState.read(() => lexical.$getSelection()));
-				}
-			}),
-			editor.registerCommand(
-				SELECTION_CHANGE_COMMAND,
-				(_, activeEditor) => {
-					activeEditorRef.current = activeEditor;
-					return false;
-				},
-				COMMAND_PRIORITY_LOW
-			),
-			editor.registerCommand<MouseEvent>(CLICK_COMMAND, onClick, COMMAND_PRIORITY_LOW),
-			editor.registerCommand<MouseEvent>(RIGHT_CLICK_IMAGE_COMMAND, onClick, COMMAND_PRIORITY_LOW),
-			editor.registerCommand(
-				DRAGSTART_COMMAND,
-				(event) => {
-					if (event.target === imageRef.current) {
-						// TODO This is just a temporary workaround for FF to behave like other browsers.
-						// Ideally, this handles drag & drop too (and all browsers).
-						event.preventDefault();
-						return true;
+		untrack(() => {
+			let isMounted = true;
+			const rootElement = editor.getRootElement();
+			const unregister = mergeRegister(
+				editor.registerUpdateListener(({ editorState }) => {
+					if (isMounted) {
+						setSelection(editorState.read(() => lexical.$getSelection()));
 					}
-					return false;
-				},
-				COMMAND_PRIORITY_LOW
-			),
-			editor.registerCommand(KEY_DELETE_COMMAND, onDelete, COMMAND_PRIORITY_LOW),
-			editor.registerCommand(lexical.KEY_BACKSPACE_COMMAND, onDelete, lexical.COMMAND_PRIORITY_LOW),
-			editor.registerCommand(lexical.KEY_ENTER_COMMAND, onEnter, COMMAND_PRIORITY_LOW),
-			editor.registerCommand(lexical.KEY_ESCAPE_COMMAND, onEscape, COMMAND_PRIORITY_LOW)
-		);
+				}),
+				editor.registerCommand(
+					SELECTION_CHANGE_COMMAND,
+					(_, activeEditor) => {
+						activeEditorRef.current = activeEditor;
+						return false;
+					},
+					COMMAND_PRIORITY_LOW
+				),
+				editor.registerCommand<MouseEvent>(CLICK_COMMAND, onClick, COMMAND_PRIORITY_LOW),
+				editor.registerCommand<MouseEvent>(
+					RIGHT_CLICK_IMAGE_COMMAND,
+					onClick,
+					COMMAND_PRIORITY_LOW
+				),
+				editor.registerCommand(
+					DRAGSTART_COMMAND,
+					(event) => {
+						if (event.target === imageRef.current) {
+							// TODO This is just a temporary workaround for FF to behave like other browsers.
+							// Ideally, this handles drag & drop too (and all browsers).
+							event.preventDefault();
+							return true;
+						}
+						return false;
+					},
+					COMMAND_PRIORITY_LOW
+				),
+				editor.registerCommand(KEY_DELETE_COMMAND, onDelete, COMMAND_PRIORITY_LOW),
+				editor.registerCommand(
+					lexical.KEY_BACKSPACE_COMMAND,
+					onDelete,
+					lexical.COMMAND_PRIORITY_LOW
+				),
+				editor.registerCommand(lexical.KEY_ENTER_COMMAND, onEnter, COMMAND_PRIORITY_LOW),
+				editor.registerCommand(lexical.KEY_ESCAPE_COMMAND, onEscape, COMMAND_PRIORITY_LOW)
+			);
 
-		rootElement?.addEventListener('contextmenu', onRightClick);
+			rootElement?.addEventListener('contextmenu', onRightClick);
 
-		return () => {
-			isMounted = false;
-			unregister();
-			rootElement?.removeEventListener('contextmenu', onRightClick);
-		};
+			return () => {
+				isMounted = false;
+				unregister();
+				rootElement?.removeEventListener('contextmenu', onRightClick);
+			};
+		});
 	}, [
 		clearSelection,
 		editor,
@@ -285,46 +297,59 @@
 	const draggable = isSelected && lexical.$isNodeSelection(selection) && !isResizing();
 	const isFocused = isSelected || isResizing();
 
-	$effect(() => {
-		AutoFocusPlugin({});
-		EmojisPlugin();
-		HashtagPlugin();
-		KeywordsPlugin();
-		HistoryPlugin({ externalHistoryState: historyState });
-	});
-	console.log('calling image c');
+	/* 	$effect(() => {
+		console.log('calling image; loading image plugin');
+		untrack(() => {
+			AutoFocusPlugin({});
+			//EmojisPlugin();
+			HashtagPlugin();
+			//KeywordsPlugin();
+
+			HistoryPlugin({ externalHistoryState: historyState });
+		});
+	}); */
+
+	/* onMount(() =>
+		setTimeout(() => {
+			flushSync();
+			setShowCaption();
+			return;
+		}, 500)
+	); */
 </script>
 
-<div class="bg-red">hello world</div>
-
-<div {draggable}>
+<span {draggable} class="flex flex-col">
 	<img
-		class={isFocused ? `focused ${lexical.$isNodeSelection(selection) ? 'draggable' : ''}` : null}
+		class={isFocused
+			? `focused leading-0 mx-1 ${lexical.$isNodeSelection(selection()) ? 'draggable' : ''}`
+			: null}
 		{src}
 		alt={altText}
 		bind:this={imageRef.current}
 		{width}
 		{height}
 		style={'max-width:' + maxWidth}
+		onclick={() => setShowCaption()}
 	/>
-</div>
+	{#if showCaption}
+		<!-- <div class="image-caption-container"> -->
+		<LexicalNestedComposer initialEditor={caption}>
+			<LinkPlugin />
+			<RichTextPlugin
+				contentEditable={Caption}
+				contentEditableProps={{}}
+				placeholderProps={{ class: 'ImageNode__placeholder' }}
+				placeholder=" Enter a caption..."
+			/>
+		</LexicalNestedComposer>
+		<!-- 	</div> -->
+	{/if}
+</span>
 {#snippet Caption()}
-	<ContentEditable className="ImageNode__contentEditable" />
+	<ContentEditable className="ImageNode__contentEditable" class="bg-green" />
 {/snippet}
-<div class="image-caption-container">
-	<LexicalNestedComposer initialEditor={caption}>
-		<LinkPlugin />
 
-		<RichTextPlugin
-			contentEditable={Caption}
-			contentEditableProps={{ class: 'ImageNode__contentEditable' }}
-			placeholderProps={{ class: 'ImageNode__placeholder' }}
-			placeholder=" Enter a caption..."
-		/>
-	</LexicalNestedComposer>
-</div>
-
-{#if resizable && lexical.$isNodeSelection(selection) && isFocused}
+{#if (resizable && lexical.$isNodeSelection(selection()) && isFocused) || true}
 	<ImageResizer
 		{showCaption}
 		{setShowCaption}

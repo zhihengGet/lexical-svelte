@@ -3,6 +3,7 @@
 
 	import type * as React from 'react';
 	import { useRef } from 'react';
+	import { onMount } from 'svelte';
 
 	function clamp(value: number, min: number, max: number) {
 		return Math.min(Math.max(value, min), max);
@@ -113,9 +114,9 @@
 		}
 	};
 
-	const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>, direction: number) => {
+	const handlePointerDown = (event: PointerEvent, direction: number) => {
 		if (!editor.isEditable()) {
-			return;
+			return console.error('not editble editor, cant resize');
 		}
 
 		const image = imageRef.current;
@@ -124,7 +125,11 @@
 		if (image !== null && controlWrapper !== null) {
 			event.preventDefault();
 			const { width, height } = image.getBoundingClientRect();
+
 			const positioning = positioningRef.current;
+
+			if (!positioning) return console.error('positioning is empty 128');
+
 			positioning.startWidth = width;
 			positioning.startHeight = height;
 			positioning.ratio = width / height;
@@ -135,6 +140,7 @@
 			positioning.isResizing = true;
 			positioning.direction = direction;
 
+			console.log('handlePointerDown', positioning, event.clientX);
 			setStartCursor(direction);
 			onResizeStart();
 
@@ -149,7 +155,7 @@
 	const handlePointerMove = (event: PointerEvent) => {
 		const image = imageRef.current;
 		const positioning = positioningRef.current;
-
+		if (!positioning) return console.error('positioning is empty');
 		const isHorizontal = positioning.direction & (Direction.east | Direction.west);
 		const isVertical = positioning.direction & (Direction.south | Direction.north);
 
@@ -166,6 +172,7 @@
 				image.style.height = `${height}px`;
 				positioning.currentHeight = height;
 				positioning.currentWidth = width;
+				console.log('updated position', image.style.width);
 			} else if (isVertical) {
 				let diff = Math.floor(positioning.startY - event.clientY);
 				diff = positioning.direction & Direction.south ? -diff : diff;
@@ -188,6 +195,7 @@
 	const handlePointerUp = () => {
 		const image = imageRef.current;
 		const positioning = positioningRef.current;
+		if (!positioning) return console.error('positioning is empty 192');
 		const controlWrapper = controlWrapperRef.current;
 		if (image !== null && controlWrapper !== null && positioning.isResizing) {
 			const width = positioning.currentWidth;
@@ -210,64 +218,69 @@
 			document.removeEventListener('pointerup', handlePointerUp);
 		}
 	};
+	/* onMount(() => {
+		controlWrapperRef.current.style.width = imageRef.current?.style.width;
+		controlWrapperRef.current.style.height = imageRef.current?.style.height;
+	}); */
 </script>
 
-<div bind:this={controlWrapperRef.current}>
-	<button
+<div bind:this={controlWrapperRef.current} class="h-0 bg-green relative">
+	<!-- <button
 		class="image-caption-button"
 		bind:this={buttonRef.current}
-		onClick={() => {
+		onclick={() => {
 			setShowCaption(!showCaption);
 		}}
 	>
 		Add Caption
 	</button>
-
+ -->
 	<div
 		class="image-resizer image-resizer-n"
-		onPointerDown={(event) => {
+		onpointerdown={(event) => {
 			handlePointerDown(event, Direction.north);
 		}}
 	/>
 	<div
 		class="image-resizer image-resizer-ne"
-		onPointerDown={(event) => {
+		onpointerdown={(event) => {
 			handlePointerDown(event, Direction.north | Direction.east);
 		}}
 	/>
 	<div
 		class="image-resizer image-resizer-e"
-		onPointerDown={(event) => {
+		onpointerdown={(event) => {
 			handlePointerDown(event, Direction.east);
 		}}
 	/>
 	<div
 		class="image-resizer image-resizer-se"
-		onPointerDown={(event) => {
+		onpointerdown={(event) => {
+			console.log('se');
 			handlePointerDown(event, Direction.south | Direction.east);
 		}}
 	/>
 	<div
 		class="image-resizer image-resizer-s"
-		onPointerDown={(event) => {
+		onpointerdown={(event) => {
 			handlePointerDown(event, Direction.south);
 		}}
 	/>
 	<div
 		class="image-resizer image-resizer-sw"
-		onPointerDown={(event) => {
+		onpointerdown={(event) => {
 			handlePointerDown(event, Direction.south | Direction.west);
 		}}
 	/>
 	<div
 		class="image-resizer image-resizer-w"
-		onPointerDown={(event) => {
+		onpointerdown={(event) => {
 			handlePointerDown(event, Direction.west);
 		}}
 	/>
 	<div
 		class="image-resizer image-resizer-nw"
-		onPointerDown={(event) => {
+		onpointerdown={(event) => {
 			handlePointerDown(event, Direction.north | Direction.west);
 		}}
 	/>

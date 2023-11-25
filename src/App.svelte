@@ -1,8 +1,10 @@
 <script lang="ts">
+	import '@unocss/reset/normalize.css';
+	import 'virtual:uno.css';
 	import { default as LexicalComposer } from '@lexical/react/LexicalComposer.svelte';
 	import * as richText from '@lexical/rich-text';
 	import * as lexical from 'lexical';
-	import 'virtual:uno.css';
+
 	import PlaygroundEditorTheme from './themes/PlaygroundEditorTheme';
 
 	import Editor from './Editor.svelte';

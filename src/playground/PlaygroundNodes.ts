@@ -17,6 +17,7 @@ import { OverflowNode } from '@lexical/overflow';
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { TableCellNode, TableNode, TableRowNode } from '@lexical/table';
 import { ImageNode } from '@plugins/ImagesPlugin/ImageNode';
+//import { EmojiNode } from '@plugins/EmojisPlugin/EmojiNode';
 
 const PlaygroundNodes: Array<Klass<LexicalNode>> = [
 	HeadingNode,
@@ -34,6 +35,7 @@ const PlaygroundNodes: Array<Klass<LexicalNode>> = [
 	OverflowNode,
 	ImageNode,
 	MarkNode
+	//EmojiNode
 ];
 
 export default PlaygroundNodes;

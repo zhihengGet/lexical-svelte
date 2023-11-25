@@ -24,5 +24,5 @@
 <Portal snippet={contentEditable} props={contentEditableProps} portal={false} target={null} />
 
 <Placeholder content={placeholder} {...placeholderProps} />
-{JSON.stringify(decorators())}
+
 <Portal components={decorators()} portal={false} target={null} />
