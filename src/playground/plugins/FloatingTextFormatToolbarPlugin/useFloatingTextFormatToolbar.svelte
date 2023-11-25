@@ -1,32 +1,37 @@
-<script context="module" lang="ts">
+<script lang="ts" context="module">
 	import './index.css';
-</script>
 
-<script lang="ts">
-	import { $isCodeHighlightNode } from '@lexical/code';
-	import { $isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
+	import { $isCodeHighlightNode as isCodeHighlightNode } from '@lexical/code';
+	import { $isLinkNode as isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
+	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 	import { mergeRegister } from '@lexical/utils';
-	import type { LexicalEditor } from 'lexical';
 	import {
-		$getSelection,
-		$isParagraphNode,
-		$isRangeSelection,
-		$isTextNode,
+		$getSelection as getSelection,
+		$isParagraphNode as isParagraphNode,
+		$isRangeSelection as isRangeSelection,
+		$isTextNode as isTextNode,
 		COMMAND_PRIORITY_LOW,
 		FORMAT_TEXT_COMMAND,
+		type LexicalEditor,
 		SELECTION_CHANGE_COMMAND
 	} from 'lexical';
 	import { useCallback, useEffect, useRef, useState } from 'react';
+	import * as React from 'react';
 
+	import { getDOMRangeRect } from '../../utils/getDOMRangeRect';
 	import { getSelectedNode } from '../../utils/getSelectedNode';
-	import TextFormatFloatingToolbar from '@plugins/FloatingLinkEditorPlugin/TextFormatFloatingToolbar.svelte';
-	import Portal from '@ui/Portal.svelte';
+	import { setFloatingElemPosition } from '../../utils/setFloatingElemPosition';
+</script>
 
-	type props = {
+<script lang="ts">
+	import { Portal } from '@ui/index';
+	import TextFormatFloatingToolbar from '@plugins/FloatingLinkEditorPlugin/TextFormatFloatingToolbar.svelte';
+
+	type Props = {
 		editor: LexicalEditor;
 		anchorElem: HTMLElement;
 	};
-	let { editor, anchorElem } = $props<props>();
+	let { editor, anchorElem } = $props<Props>();
 	const [isText, setIsText] = useState(false);
 	const [isLink, setIsLink] = useState(false);
 	const [isBold, setIsBold] = useState(false);
@@ -43,13 +48,13 @@
 			if (editor.isComposing()) {
 				return;
 			}
-			const selection = $getSelection();
+			const selection = getSelection();
 			const nativeSelection = window.getSelection();
 			const rootElement = editor.getRootElement();
 
 			if (
 				nativeSelection !== null &&
-				(!$isRangeSelection(selection) ||
+				(!isRangeSelection(selection) ||
 					rootElement === null ||
 					!rootElement.contains(nativeSelection.anchorNode))
 			) {
@@ -57,7 +62,7 @@
 				return;
 			}
 
-			if (!$isRangeSelection(selection)) {
+			if (!isRangeSelection(selection)) {
 				return;
 			}
 
@@ -74,14 +79,14 @@
 
 			// Update links
 			const parent = node.getParent();
-			if ($isLinkNode(parent) || $isLinkNode(node)) {
+			if (isLinkNode(parent) || isLinkNode(node)) {
 				setIsLink(true);
 			} else {
 				setIsLink(false);
 			}
 
-			if (!$isCodeHighlightNode(selection.anchor.getNode()) && selection.getTextContent() !== '') {
-				setIsText($isTextNode(node) || $isParagraphNode(node));
+			if (!isCodeHighlightNode(selection.anchor.getNode()) && selection.getTextContent() !== '') {
+				setIsText(isTextNode(node) || isParagraphNode(node));
 			} else {
 				setIsText(false);
 			}
@@ -113,26 +118,24 @@
 			})
 		);
 	}, [editor, updatePopup]);
-
-	if (!isText) {
-		return null;
-	}
 </script>
 
-<Portal
-	portal={true}
-	target={anchorElem}
-	component={TextFormatFloatingToolbar}
-	props="{{
-		editor,
-		anchorElem,
-		isLink: isLink(),
-		isBold: isBold(),
-		isItalic: isItalic(),
-		isStrikethrough: isStrikethrough(),
-		isSubscript: isSubscript(),
-		isSuperscript: isSuperscript(),
-		isUnderline: isUnderline(),
-		isCode: isCode()
-	}},"
-/>
+{#if isText()}
+	<Portal
+		portal={true}
+		target={anchorElem}
+		component={TextFormatFloatingToolbar}
+		props={{
+			editor,
+			anchorElem,
+			isLink: isLink(),
+			isBold: isBold(),
+			isItalic: isItalic(),
+			isStrikethrough: isStrikethrough(),
+			isSubscript: isSubscript(),
+			isSuperscript: isSuperscript(),
+			isUnderline: isUnderline(),
+			isCode: isCode()
+		}}
+	/>
+{/if}

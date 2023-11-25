@@ -1,6 +1,16 @@
 const a = `
 
 
+import {
+	$getSelection,
+	$isParagraphNode,
+	$isRangeSelection,
+	$isTextNode,
+	COMMAND_PRIORITY_LOW,
+	FORMAT_TEXT_COMMAND,
+	LexicalEditor,
+	SELECTION_CHANGE_COMMAND
+} from 'lexical';
 
 
 `;
@@ -16,11 +26,12 @@ async function process(filename) {
 	const jsfiles = await glob('**/' + filename, { ignore: 'node_modules/**' });
 	console.log(jsfiles);
 	const content = await readFile(jsfiles[0], { encoding: 'utf-8' });
-	//console.log(content);
-	const r = /^(import)(.|\n)* from ('.*';)/gm;
+	console.log(content);
+	const r = /^(\s*import)(.|\n)* from ('.*';)/gm;
 	const dollar = /\$[a-zA-Z|_]+/gm;
 
 	const sp = content.match(r);
+	console.log(sp);
 	const importLines = sp.join('\n');
 
 	console.log(chalk.green(importLines));
@@ -40,7 +51,10 @@ async function process(filename) {
 		new_imports = new_imports.replaceAll(word, word + ' as ' + new_word);
 		rest = rest.replaceAll(word, new_word);
 	}
-
+	new_imports = new_imports.replace(
+		'@lexical/react/LexicalComposerContext',
+		'@lexical/react/LexicalComposerContext.svelte'
+	);
 	await writeFile(jsfiles[0].replace('tsx', 'tsx'), new_imports + rest, () => console.log('wrote'));
 }
-process('CodeActionMenuPlugin/*.tsx');
+process('FloatingTextFormatToolbarPlugin/index.tsx');

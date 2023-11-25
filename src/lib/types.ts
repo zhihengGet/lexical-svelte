@@ -1,14 +1,14 @@
-import type { ComponentType, SvelteComponent } from 'svelte';
+import type { ComponentProps, ComponentType, SvelteComponent } from 'svelte';
 
 export type LexicalSubscription<T> = {
 	initialValueFn: () => T;
 	subscribe: (callback: (value: T) => void) => () => void;
 };
 
-export type SvelteRender = {
-	component?: ComponentType<SvelteComponent> | null;
+export type SvelteRender<T extends SvelteComponent> = {
+	component?: ComponentType<T> | null | Promise<ComponentType<T>>;
 	snippet?: any;
-	props?: unknown;
+	props?: ComponentProps<T>;
 	nodeKey?: string;
 	type?: string;
 	key?: string;
@@ -17,6 +17,6 @@ export type SvelteRender = {
 	// get a ref to the rendered component
 	ref?: React.MutableRefObject<HTMLElement>;
 	portal?: boolean;
-	childComponents?: SvelteRender[]; // nested in current component
-	components?: SvelteRender[] | null; // sibling components
+	childComponents?: SvelteRender<any>[]; // nested in current component
+	components?: SvelteRender<any>[] | null; // sibling components
 };

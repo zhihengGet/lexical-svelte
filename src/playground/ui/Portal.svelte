@@ -1,7 +1,7 @@
-<script lang="ts">
+<script lang="ts" generics="T extends SvelteComponent">
 	import type { SvelteRender } from '@lexical/react/types';
 	import { usePortal } from '@melt-ui/svelte/internal/actions';
-	import { onDestroy, type Snippet } from 'svelte';
+	import { onDestroy, type SvelteComponent, type Snippet } from 'svelte';
 
 	let {
 		components,
@@ -9,7 +9,7 @@
 		children,
 		portal = false,
 		...props
-	} = $props<SvelteRender & { children?: Snippet }>();
+	} = $props<SvelteRender<T> & { children?: Snippet }>();
 
 	function refFn(node: HTMLElement) {
 		if (portal === false || !props.target) return;
