@@ -22,6 +22,7 @@
 	import CodeActionMenuPlugin from '@plugins/CodeActionMenuPlugin';
 	import { LinkPlugin } from '@plugins/LinkPlugin';
 	import FloatingTextFormatToolbarPlugin from '@plugins/FloatingTextFormatToolbarPlugin/FloatingTextFormatToolbarPlugin.svelte';
+	import FloatingLinkEditorPlugin from '@plugins/FloatingLinkEditorPlugin/FloatingLinkEditorPlugin.svelte';
 	const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
 	const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
 	const isEditable = true;
@@ -115,6 +116,11 @@
 		<!-- Images -->
 		{#if floatingAnchorElem()}
 			<Portal {...CodeActionMenuPlugin({ anchorElem: floatingAnchorElem() })} />
+			<FloatingLinkEditorPlugin
+				anchorElem={floatingAnchorElem()}
+				isLinkEditMode={isLinkEditMode()}
+				{setIsLinkEditMode}
+			/>
 			<FloatingTextFormatToolbarPlugin anchorElem={floatingAnchorElem()} />
 		{/if}
 

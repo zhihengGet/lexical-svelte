@@ -37,7 +37,7 @@ function useEffect<D>(func: () => void, dep?: D) {
 }
 export { useEffect };
 
-//TODO cant just return an value
+//TODO cant just return an value, wont be reactive
 export function useCallback<T>(fn: T, dep?: any) {
 	const b = $derived(fn);
 	return b;

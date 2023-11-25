@@ -1,16 +1,35 @@
 const a = `
 
+* LICENSE file in the root directory of this source tree.
+*
+*/
+import './index.css';
 
+import {$isAutoLinkNode, $isLinkNode, TOGGLE_LINK_COMMAND} from '@lexical/link';
+import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
+import {$findMatchingParent, mergeRegister} from '@lexical/utils';
 import {
-	$getSelection,
-	$isParagraphNode,
-	$isRangeSelection,
-	$isTextNode,
-	COMMAND_PRIORITY_LOW,
-	FORMAT_TEXT_COMMAND,
-	LexicalEditor,
-	SELECTION_CHANGE_COMMAND
+ $getSelection,
+ $isRangeSelection,
+ CLICK_COMMAND,
+ COMMAND_PRIORITY_CRITICAL,
+ COMMAND_PRIORITY_HIGH,
+ COMMAND_PRIORITY_LOW,
+ GridSelection,
+ KEY_ESCAPE_COMMAND,
+ LexicalEditor,
+ NodeSelection,
+ RangeSelection,
+ SELECTION_CHANGE_COMMAND,
 } from 'lexical';
+import {Dispatch, useCallback, useEffect, useRef, useState} from 'react';
+import * as React from 'react';
+import {createPortal} from 'react-dom';
+
+import {getSelectedNode} from '../../utils/getSelectedNode';
+import {setFloatingElemPositionForLinkEditor} from '../../utils/setFloatingElemPositionForLinkEditor';
+import {sanitizeUrl} from '../../utils/url';
+
 
 
 `;
@@ -25,7 +44,7 @@ async function process(filename) {
 	// all js files, but don't look in node_modules
 	const jsfiles = await glob('**/' + filename, { ignore: 'node_modules/**' });
 	console.log(jsfiles);
-	const content = await readFile(jsfiles[0], { encoding: 'utf-8' });
+	const content = a || (await readFile(jsfiles[0], { encoding: 'utf-8' }));
 	console.log(content);
 	const r = /^(\s*import)(.|\n)* from ('.*';)/gm;
 	const dollar = /\$[a-zA-Z|_]+/gm;
@@ -57,4 +76,4 @@ async function process(filename) {
 	);
 	await writeFile(jsfiles[0].replace('tsx', 'tsx'), new_imports + rest, () => console.log('wrote'));
 }
-process('FloatingTextFormatToolbarPlugin/index.tsx');
+process('FloatingLinkEditorPlugin/index.tsx');
