@@ -1,6 +1,6 @@
 export const styleString = (style: object) =>
 	Object.entries(style)
-		.map(([k, v]) => `${k.replace('Color', '-color')}:${typeof v == 'number' ? v + 'px' : v} `)
+		.map(([k, v]) => `${k.replace('Color', '-color')}:${typeof v == 'number' ? v + 'px' : v}`)
 		.join(';');
 
 import { type ClassValue, clsx } from 'clsx';

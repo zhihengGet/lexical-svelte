@@ -44,12 +44,9 @@
 		y: ((100 - selfColor().hsv.v) / 100) * HEIGHT
 	});
 
-	const huePosition = useMemo(
-		() => ({
-			x: (selfColor().hsv.h / 360) * WIDTH
-		}),
-		[selfColor().hsv]
-	);
+	const huePosition = $derived({
+		x: (selfColor().hsv.h / 360) * WIDTH
+	});
 
 	const onSetHex = (hex: string) => {
 		setInputColor(hex);
@@ -245,7 +242,7 @@
 	</div>
 	<MoveWrapper
 		class="color-picker-saturation"
-		style="background-color: hsl({selfColor().hsv.h}, 100%, 50%) }"
+		style="background-color: hsl({selfColor().hsv.h}, 100%, 50%)"
 		onChange={onMoveSaturation}
 	>
 		<div

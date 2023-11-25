@@ -20,6 +20,8 @@
 	import { CheckListPlugin } from '@plugins/ListPlugin/LexicalCheckListPlugin.svelte';
 	import CodeHighlightPlugin from '@plugins/CodeHighlightPlugin';
 	import CodeActionMenuPlugin from '@plugins/CodeActionMenuPlugin';
+	import { LinkPlugin } from '@plugins/LinkPlugin';
+	import FloatingTextFormatToolbarPlugin from '@plugins/FloatingTextFormatToolbarPlugin/FloatingTextFormatToolbarPlugin.svelte';
 	const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
 	const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
 	const isEditable = true;
@@ -105,9 +107,15 @@
 		<Portal target={null} initializor={ListPlugin} />
 		<Portal target={null} initializor={CheckListPlugin} />
 		<Portal target={null} initializor={CodeHighlightPlugin} />
+		<Portal target={null} initializor={CodeHighlightPlugin} />
+		<!-- Links -->
+		<LinkPlugin />
+		<!-- 	<FloatingLinkEditorPlugin /> -->
 
+		<!-- Images -->
 		{#if floatingAnchorElem()}
 			<Portal {...CodeActionMenuPlugin({ anchorElem: floatingAnchorElem() })} />
+			<FloatingTextFormatToolbarPlugin anchorElem={floatingAnchorElem()} />
 		{/if}
 
 		<!-- list -->

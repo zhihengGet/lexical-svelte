@@ -334,7 +334,7 @@
 	);
 
 	const insertLink = useCallback(() => {
-		if (!isLink) {
+		if (!isLink()) {
 			editor.dispatchCommand(TOGGLE_LINK_COMMAND, sanitizeUrl('https://'));
 		} else {
 			editor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
@@ -469,7 +469,7 @@
 		</button>
 		<button
 			disabled={!isEditable()}
-			onClick={insertLink}
+			onclick={insertLink}
 			class={'toolbar-item spaced ' + (isLink() ? 'active' : '')}
 			aria-label="Insert link"
 			title="Insert link"
@@ -485,6 +485,15 @@
 			color={fontColor()}
 			onChange={onFontColorSelect}
 			title="text color"
+		/>
+		<DropdownColorPicker
+			disabled={!isEditable()}
+			buttonClassName="toolbar-item color-picker"
+			buttonAriaLabel="Formatting background color"
+			buttonIconClassName="icon bg-color"
+			color={bgColor()}
+			onChange={onBgColorSelect}
+			title="bg color"
 		/>
 	{/if}
 	<!-- {blockType === 'code' ? (

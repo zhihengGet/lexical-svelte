@@ -6,9 +6,12 @@
  *
  */
 
-import { LinkPlugin as LexicalLinkPlugin } from "@lexical/react/LexicalLinkPlugin.svelte";
-import * as React from "react";
+import { LinkPlugin as LexicalLinkPlugin } from '@lexical/react/LexicalLinkPlugin.svelte';
 
-import { validateUrl } from "../../utils/url";
+import { validateUrl } from '../../utils/url';
 
-export { default as LinkPlugin } from "./LinkPlugin.svelte";
+/* export default function LinkPlugin() {
+	LexicalLinkPlugin({ validateUrl });
+} */
+
+export { default as LinkPlugin } from './LinkPlugin.svelte';

@@ -37,13 +37,14 @@ function useEffect<D>(func: () => void, dep?: D) {
 }
 export { useEffect };
 
+//TODO cant just return an value
 export function useCallback<T>(fn: T, dep?: any) {
 	const b = $derived(fn);
 	return b;
 }
-
+//TODO , cant just return an value
 export function useMemo<T>(fn: () => T, dep?: any) {
-	const data = $derived(fn(dep));
+	const data = $derived(fn());
 	return data;
 }
 export function useRef<T>(param: T | null) {

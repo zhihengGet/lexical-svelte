@@ -52,6 +52,7 @@
 	};
 </script>
 
-<div bind:this={divRef.current} {...props} onmousedown={onMouseDown}>
+<!-- {props.style} -->
+<div bind:this={divRef.current} {...props} style={props.style} onmousedown={onMouseDown}>
 	<slot />
 </div>
