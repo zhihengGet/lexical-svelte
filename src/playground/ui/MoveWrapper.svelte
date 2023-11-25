@@ -1,5 +1,7 @@
 <script lang="ts">
+	import { debounce } from 'lodash-es';
 	import { useEffect, useMemo, useRef, useState } from 'react';
+	import { onMount, type Snippet } from 'svelte';
 
 	interface Position {
 		x: number;
@@ -7,14 +9,12 @@
 	}
 
 	interface MoveWrapperProps {
-		className?: string;
+		class?: string;
 		style?: string;
 		onChange: (position: Position) => void;
+		children: Snippet;
 	}
-	let { onChange, ...props } = $props<{
-		onChange: any;
-		className: string;
-	}>();
+	let { onChange, ...props } = $props<MoveWrapperProps>();
 
 	let divRef = useRef<HTMLDivElement | null>(null);
 	function clamp(value: number, max: number, min: number) {
@@ -31,8 +31,7 @@
 			onChange({ x, y });
 		}
 	};
-
-	const onMouseDown = (e: MouseEvent): void => {
+	const onMouseDown = (e: React.MouseEvent): void => {
 		if (e.button !== 0) return;
 
 		move(e);

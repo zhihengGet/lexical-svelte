@@ -199,7 +199,7 @@
 								if (newState.length > 10) {
 									newState.shift();
 								}
-
+								console.log('log', newState);
 								return newState;
 							});
 

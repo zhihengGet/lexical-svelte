@@ -17,7 +17,7 @@
 	);
 
 	const handleKeyDown = (event: KeyboardEvent) => {
-		if (!items) return;
+		if (!items()) return;
 
 		const key = event.key;
 
@@ -50,7 +50,7 @@
 	setContext('dialog', contextValue);
 
 	export const getDialogContext = () => {
-		getContext('dialog');
+		getContext('dialog') as typeof contextValue;
 	};
 	useEffect(() => {
 		if (items() && !highlightedItem()) {
@@ -60,7 +60,7 @@
 		if (highlightedItem() && highlightedItem().current) {
 			highlightedItem().current?.focus();
 		}
-	}, [items, highlightedItem]);
+	}, [items(), highlightedItem()]);
 </script>
 
 <div class="dropdown" bind:this={dropDownRef.current} onKeyDown={handleKeyDown}>

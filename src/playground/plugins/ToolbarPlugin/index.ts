@@ -1,4 +1,5 @@
 import { CODE_LANGUAGE_FRIENDLY_NAME_MAP } from '@lexical/code';
+import type { ElementFormatType } from 'lexical';
 
 const blockTypeToBlockName = {
 	bullet: 'Bulleted List',

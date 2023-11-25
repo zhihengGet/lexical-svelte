@@ -98,7 +98,7 @@
 	{disabled}
 	aria-label={buttonAriaLabel || buttonLabel}
 	class={buttonClassName}
-	on:click={() => setShowDropDown(!showDropDown())}
+	onclick={() => setShowDropDown(!showDropDown())}
 	bind:this={buttonRef.current}
 >
 	{#if buttonIconClassName}

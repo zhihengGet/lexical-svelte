@@ -1,4 +1,4 @@
-import { setContext } from 'svelte';
+import { setContext, untrack } from 'svelte';
 
 export interface RefObject<T> {
 	readonly current: T | null;
@@ -21,9 +21,9 @@ export function useState<T>(state: T | temp<T>) {
 
 	return [
 		() => s,
-		(newValue: setState<T>) => {
+		(newValue: setState<T>): T => {
 			if (typeof newValue === 'function') {
-				newValue(s);
+				s = newValue(s);
 				return s;
 			}
 			s = newValue;
@@ -43,8 +43,8 @@ export function useCallback<T>(fn: T, dep?: any) {
 }
 
 export function useMemo<T>(fn: () => T, dep?: any) {
-	const r = $derived(fn());
-	return r;
+	const data = $derived(fn(dep));
+	return data;
 }
 export function useRef<T>(param: T | null) {
 	return { current: param };

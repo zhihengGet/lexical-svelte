@@ -71,7 +71,7 @@
 	}
 	import { useCallback, useEffect, useState } from 'react';
 	import type { rootTypeToRootName } from '.';
-	import { blockTypeToBlockName } from '.';
+	import { CODE_LANGUAGE_OPTIONS, blockTypeToBlockName } from '.';
 	import useModal from '../../hooks/useModal';
 	import { getSelectedNode } from '../../utils/getSelectedNode';
 	import { sanitizeUrl } from '../../utils/url';
@@ -84,7 +84,9 @@
 </script>
 
 <script lang="ts">
-	import { Portal } from '@ui/index';
+	import { DropDown, Portal, DropDownItem, DropdownColorPicker } from '@ui/index';
+	import FontDropDown from './FontDropDown.svelte';
+	import { untrack } from 'svelte';
 
 	let { setIsLinkEditMode } = $props<{ setIsLinkEditMode: (param: boolean) => boolean }>();
 	const [editor] = useLexicalComposerContext();
@@ -317,6 +319,8 @@
 
 	const onFontColorSelect = useCallback(
 		(value: string) => {
+			console.log('called', value);
+			//	debugger;
 			applyStyleText({ color: value });
 		},
 		[applyStyleText]
@@ -392,38 +396,111 @@
 	{:else}
 		<!-- Else block content goes here (if needed) -->
 	{/if}
-
-	<!-- {blockType === 'code' ? (
+	{#if blockType() == 'code'}
+		<!-- content here -->
 		<DropDown
-			disabled={!isEditable}
+			disabled={!isEditable()}
 			buttonClassName="toolbar-item code-language"
-			buttonLabel={getLanguageFriendlyName(codeLanguage)}
+			buttonLabel={getLanguageFriendlyName(codeLanguage())}
 			buttonAriaLabel="Select language"
 		>
-			{CODE_LANGUAGE_OPTIONS.map(([value, name]) => {
-				return (
-					<DropDownItem
-						class={`item ${dropDownActiveClass(value === codeLanguage)}`}
-						onClick={() => onCodeLanguageSelect(value)}
-						key={value}
-					>
-						<span class="text">{name}</span>
-					</DropDownItem>
-				);
-			})}
+			{#each CODE_LANGUAGE_OPTIONS as [value, name]}
+				<!-- content here -->
+				<DropDownItem
+					class={`item ${dropDownActiveClass(value === codeLanguage())}`}
+					onClick={() => onCodeLanguageSelect(value)}
+				>
+					<span class="text">{name}</span>
+				</DropDownItem>
+			{/each}
 		</DropDown>
+	{/if}
+	{#if blockType() !== 'code'}
+		<!-- content here -->
+		<FontDropDown disabled={!isEditable()} style={'font-family'} value={fontFamily()} {editor} />
+		<Divider />
+		<button
+			disabled={!isEditable()}
+			onClick={() => {
+				activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'bold');
+			}}
+			class={'toolbar-item spaced ' + (isBold() ? 'active' : '')}
+			title={IS_APPLE ? 'Bold (⌘B)' : 'Bold (Ctrl+B)'}
+			type="button"
+			aria-label={`Format text as bold. Shortcut: ${IS_APPLE ? '⌘B' : 'Ctrl+B'}`}
+		>
+			<i class="format bold" />
+		</button>
+		<button
+			disabled={!isEditable()}
+			onClick={() => {
+				activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'italic');
+			}}
+			class={'toolbar-item spaced ' + (isItalic() ? 'active' : '')}
+			title={IS_APPLE ? 'Italic (⌘I)' : 'Italic (Ctrl+I)'}
+			type="button"
+			aria-label={`Format text as italics. Shortcut: ${IS_APPLE ? '⌘I' : 'Ctrl+I'}`}
+		>
+			<i class="format italic" />
+		</button>
+		<button
+			disabled={!isEditable()}
+			onClick={() => {
+				activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'underline');
+			}}
+			class={'toolbar-item spaced ' + (isUnderline() ? 'active' : '')}
+			title={IS_APPLE ? 'Underline (⌘U)' : 'Underline (Ctrl+U)'}
+			type="button"
+			aria-label={`Format text to underlined. Shortcut: ${IS_APPLE ? '⌘U' : 'Ctrl+U'}`}
+		>
+			<i class="format underline" />
+		</button>
+		<button
+			disabled={!isEditable()}
+			onClick={() => {
+				activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'code');
+			}}
+			class={'toolbar-item spaced ' + (isCode() ? 'active' : '')}
+			title="Insert code block"
+			type="button"
+			aria-label="Insert code block"
+		>
+			<i class="format code" />
+		</button>
+		<button
+			disabled={!isEditable()}
+			onClick={insertLink}
+			class={'toolbar-item spaced ' + (isLink() ? 'active' : '')}
+			aria-label="Insert link"
+			title="Insert link"
+			type="button"
+		>
+			<i class="format link" />
+		</button>
+		<DropdownColorPicker
+			disabled={!isEditable()}
+			buttonClassName="toolbar-item color-picker"
+			buttonAriaLabel="Formatting text color"
+			buttonIconClassName="icon font-color"
+			color={fontColor()}
+			onChange={onFontColorSelect}
+			title="text color"
+		/>
+	{/if}
+	<!-- {blockType === 'code' ? (
+	
 	) : (
 		<>
 			<FontDropDown
-				disabled={!isEditable}
+				disabled={!isEditable()}
 				style={'font-family'}
 				value={fontFamily}
 				editor={editor}
 			/>
-			<FontDropDown disabled={!isEditable} style={'font-size'} value={fontSize} editor={editor} />
+			<FontDropDown disabled={!isEditable()} style={'font-size'} value={fontSize} editor={editor} />
 			<Divider />
 			<button
-				disabled={!isEditable}
+				disabled={!isEditable()}
 				onClick={() => {
 					activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'bold');
 				}}
@@ -435,7 +512,7 @@
 				<i class="format bold" />
 			</button>
 			<button
-				disabled={!isEditable}
+				disabled={!isEditable()}
 				onClick={() => {
 					activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'italic');
 				}}
@@ -447,7 +524,7 @@
 				<i class="format italic" />
 			</button>
 			<button
-				disabled={!isEditable}
+				disabled={!isEditable()}
 				onClick={() => {
 					activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'underline');
 				}}
@@ -459,7 +536,7 @@
 				<i class="format underline" />
 			</button>
 			<button
-				disabled={!isEditable}
+				disabled={!isEditable()}
 				onClick={() => {
 					activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'code');
 				}}
@@ -471,7 +548,7 @@
 				<i class="format code" />
 			</button>
 			<button
-				disabled={!isEditable}
+				disabled={!isEditable()}
 				onClick={insertLink}
 				class={'toolbar-item spaced ' + (isLink ? 'active' : '')}
 				aria-label="Insert link"
@@ -481,7 +558,7 @@
 				<i class="format link" />
 			</button>
 			<DropdownColorPicker
-				disabled={!isEditable}
+				disabled={!isEditable()}
 				buttonClassName="toolbar-item color-picker"
 				buttonAriaLabel="Formatting text color"
 				buttonIconClassName="icon font-color"
@@ -490,7 +567,7 @@
 				title="text color"
 			/>
 			<DropdownColorPicker
-				disabled={!isEditable}
+				disabled={!isEditable()}
 				buttonClassName="toolbar-item color-picker"
 				buttonAriaLabel="Formatting background color"
 				buttonIconClassName="icon bg-color"
@@ -499,7 +576,7 @@
 				title="bg color"
 			/>
 			<DropDown
-				disabled={!isEditable}
+				disabled={!isEditable()}
 				buttonClassName="toolbar-item spaced"
 				buttonLabel=""
 				buttonAriaLabel="Formatting options for additional text styles"
@@ -552,7 +629,7 @@
 			{rootType === 'table' && (
 				<>
 					<DropDown
-						disabled={!isEditable}
+						disabled={!isEditable()}
 						buttonClassName="toolbar-item spaced"
 						buttonLabel="Table"
 						buttonAriaLabel="Open table toolkit"
@@ -571,7 +648,7 @@
 				</>
 			)}
 			<DropDown
-				disabled={!isEditable}
+				disabled={!isEditable()}
 				buttonClassName="toolbar-item spaced"
 				buttonLabel="Insert"
 				buttonAriaLabel="Insert specialized editor node"
