@@ -18,9 +18,11 @@
 	const [editor] = useLexicalComposerContext();
 	const decorators = useDecorators(editor);
 	useRichTextSetup(editor);
+	$effect(() => console.log('decorators', decorators()));
 </script>
 
 <Portal snippet={contentEditable} props={contentEditableProps} portal={false} target={null} />
 
 <Placeholder content={placeholder} {...placeholderProps} />
-<Portal components={decorators()} portal={true} target={null} />
+{JSON.stringify(decorators())}
+<Portal components={decorators()} portal={false} target={null} />

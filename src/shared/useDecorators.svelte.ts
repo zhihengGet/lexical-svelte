@@ -36,8 +36,7 @@ export function useDecorators(editor: LexicalEditor) {
 	const toRender = $derived(() => {
 		const decoratedPortals: SvelteRender[] = [];
 		const decoratorKeys = Object.keys(decorators);
-		console.log('to be rendered', decorators);
-		debugger;
+
 		for (let i = 0; i < decoratorKeys.length; i++) {
 			const nodeKey = decoratorKeys[i];
 
@@ -50,7 +49,7 @@ export function useDecorators(editor: LexicalEditor) {
 				decoratedPortals.push(node);
 			}
 		}
-
+		console.log('to be rendered');
 		return decoratedPortals;
 	});
 

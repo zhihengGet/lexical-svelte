@@ -295,7 +295,8 @@
 	console.log('calling image c');
 </script>
 
-{@debug draggable}
+<div class="bg-red">hello world</div>
+
 <div {draggable}>
 	<img
 		class={isFocused ? `focused ${lexical.$isNodeSelection(selection) ? 'draggable' : ''}` : null}

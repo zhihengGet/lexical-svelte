@@ -21,12 +21,12 @@ import type {
 } from 'lexical';
 
 import { $applyNodeReplacement, createEditor, DecoratorNode } from 'lexical';
-import type { ImageComponent as comp } from '.';
+import { ImageComponent as comp } from '.';
 import type { ComponentType } from 'svelte';
 
 const ImageComponent =
 	// @ts-ignore
-	() => import('./ImageComponent.svelte');
+	() => import('./ImageComponent.svelte').then((v) => v.default);
 
 export interface ImagePayload {
 	altText: string;
@@ -62,7 +62,7 @@ export type SerializedImageNode = Spread<
 	SerializedLexicalNode
 >;
 
-export class ImageNode extends DecoratorNode<SvelteRender<any>> {
+export class ImageNode extends DecoratorNode<SvelteRender<comp>> {
 	__src: string;
 	__altText: string;
 	__width: 'inherit' | number;
@@ -199,7 +199,6 @@ export class ImageNode extends DecoratorNode<SvelteRender<any>> {
 	}
 
 	decorate() {
-		console.log('decorate');
 		const myObject = {
 			src: this.__src,
 			altText: this.__altText,
@@ -213,7 +212,7 @@ export class ImageNode extends DecoratorNode<SvelteRender<any>> {
 			resizable: true
 		};
 
-		return { component: ImageComponent, props: myObject, portal: false, target: null };
+		return { component: ImageComponent(), props: myObject, portal: false, target: null };
 	}
 }
 

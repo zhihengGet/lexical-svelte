@@ -26,28 +26,35 @@
 		props.initializor();
 	}
 	let ref = props.ref ?? { current: undefined };
+	$effect(() => {
+		console.log('in portal Portal render', components);
+	});
 </script>
 
-<div use:refFn bind:this={ref.current} data-id="svelt-render">
-	<!-- render decorators -->
-	{#each components ?? [] as decorator}
-		<svelte:self {...decorator} />
-	{/each}
-	<!-- render regular svelte components -->
-	{#await props.component}
-		<div>wait</div>
-	{:then component}
-		{#if props.component && !components}
-			<svelte:component this={component} {...props.props ?? []}>
-				{#each props.childComponents ?? [] as cp}
-					<svelte:self {...cp} />
-				{/each}
-				<!-- {#if children}
+{#each components ?? [] as decorator}
+	<svelte:self {...decorator} />
+{/each}
+
+{#if !components || components.length == 0}
+	<div use:refFn bind:this={ref.current} data-id="svelt-render">
+		<!-- render decorators -->
+		<!-- render regular svelte components -->
+		{#await props.component}
+			<div>wait</div>
+		{:then component}
+			{#if component && !components}
+				<!-- {@debug component} -->
+				<svelte:component this={component} {...props.props ?? []}>
+					{#each props.childComponents ?? [] as cp}
+						<svelte:self {...cp} />
+					{/each}
+					<!-- {#if children}
 					{@render children()}
 				{/if} -->
-			</svelte:component>
-		{:else if snippet}
-			{@render snippet({ refFn, ...props })}
-		{/if}
-	{/await}
-</div>
+				</svelte:component>
+			{:else if snippet}
+				{@render snippet({ refFn, ...props })}
+			{/if}
+		{/await}
+	</div>
+{/if}
