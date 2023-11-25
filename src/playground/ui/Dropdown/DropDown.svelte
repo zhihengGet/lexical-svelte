@@ -9,6 +9,7 @@
 
 	import { useEffect, useMemo, useRef, useState } from 'react';
 	import DropDownItems from './Items.svelte';
+	import type { Snippet } from 'svelte';
 	const dropDownPadding = 4;
 
 	let {
@@ -17,8 +18,10 @@
 		buttonAriaLabel,
 		buttonClassName,
 		buttonIconClassName,
-		stopCloseOnClickSelf
+		stopCloseOnClickSelf,
+		children
 	} = $props<{
+		children?: Snippet;
 		disabled?: boolean;
 		buttonAriaLabel?: string;
 		buttonClassName: string;

@@ -23,4 +23,4 @@
 <Portal snippet={contentEditable} props={contentEditableProps} portal={false} target={null} />
 
 <Placeholder content={placeholder} {...placeholderProps} />
-<Portal components={decorators} portal={true} target={null} />
+<Portal components={decorators()} portal={true} target={null} />

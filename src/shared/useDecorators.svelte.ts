@@ -8,48 +8,51 @@
 
 import type { LexicalEditor } from 'lexical';
 
-import { useEffect, useMemo, useState } from '../react.svelte';
-import useLayoutEffect from 'shared/useLayoutEffect.svelte';
-import { flushSync } from 'svelte';
+import { flushSync, onMount } from 'svelte';
 import type { SvelteRender } from '@lexical/react/types';
 
 export function useDecorators(editor: LexicalEditor) {
-	const [decorators, setDecorators] = useState<Record<string, SvelteRender>>(
+	let decorators = $state(editor.getDecorators<SvelteRender>());
+	/* 	const [decoratorss, setDecorators] =$state()  useState<Record<string, SvelteRender>>(
 		editor.getDecorators<SvelteRender>()
 	);
-
+ */
 	// Subscribe to changes
-	useLayoutEffect(() => {
-		return editor.registerDecoratorListener<SvelteRender>((nextDecorators) => {
+
+	// If the content editable mounts before the subscription is added, then
+	// nothing will be rendered on initial pass. We can get around that by
+	// ensuring that we set the value.
+	onMount(() => {
+		decorators = editor.getDecorators();
+		editor.registerDecoratorListener<SvelteRender>((nextDecorators) => {
 			flushSync(() => {
-				setDecorators(nextDecorators);
+				decorators = { ...nextDecorators };
 			});
 		});
 	});
 
-	useEffect(() => {
-		// If the content editable mounts before the subscription is added, then
-		// nothing will be rendered on initial pass. We can get around that by
-		// ensuring that we set the value.
-		setDecorators(editor.getDecorators());
-	}, [editor]);
+	// Return decorators defined as React Portals/
 
-	// Return decorators defined as React Portals
-
-	return useMemo(() => {
+	const toRender = $derived(() => {
 		const decoratedPortals: SvelteRender[] = [];
 		const decoratorKeys = Object.keys(decorators);
-
+		console.log('to be rendered', decorators);
+		debugger;
 		for (let i = 0; i < decoratorKeys.length; i++) {
 			const nodeKey = decoratorKeys[i];
 
 			const element = editor.getElementByKey(nodeKey);
 
 			if (element !== null) {
-				decoratedPortals.push((decorators()[nodeKey], element, nodeKey));
+				let node = decorators[nodeKey];
+				node.target = element;
+				node.nodeKey = nodeKey;
+				decoratedPortals.push(node);
 			}
 		}
 
 		return decoratedPortals;
-	}, [decorators, editor]);
+	});
+
+	return toRender;
 }

@@ -1,40 +1,44 @@
 <script lang="ts">
-	import { createDialog, melt } from '@melt-ui/svelte';
+	import { createDialog } from '@melt-ui/svelte';
 	/** Internal helpers */
 	import { flyAndScale } from '..//utils/css';
 	import { X } from 'lucide-svelte';
 	import { fade } from 'svelte/transition';
+	export function setChild() {}
 	type temp = {
 		closeOnClickOutside?: boolean;
 		onClose: () => void;
 		title: string;
+		children: any;
 	};
-	let { title: t, onClose } = $props<temp>();
+	let { title: t, onClose, children } = $props<temp>();
 
 	const {
 		elements: { trigger, overlay, content, title, description, close, portalled },
 		states: { open }
 	} = createDialog({
 		forceVisible: true,
-		onOpenChange: ({ curr, next }) => {
+		defaultOpen: true
+		/* 	onOpenChange: ({ curr, next }) => {
 			if (next == false) {
-				onClose();
+				//debugger;
+				//onClose();
 			}
 			return next;
-		}
+		} */
 	});
 </script>
 
-<button
+<!-- <button
 	{...$trigger}
 	use:trigger
 	class="inline-flex items-center justify-center rounded-xl bg-white px-4 py-3
   font-medium leading-none text-magnum-700 shadow hover:opacity-75"
 >
 	{t}
-</button>
+</button> -->
 
-<div {...$portalled} use:portalled>
+<div class="modal">
 	{#if $open}
 		<div
 			{...$overlay}
@@ -42,6 +46,7 @@
 			class="fixed inset-0 z-50 bg-black/50"
 			transition:fade={{ duration: 150 }}
 		/>
+		<h1>{title}</h1>
 		<div
 			class="fixed left-[50%] top-[50%] z-50 max-h-[85vh] w-[90vw]
             max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-xl bg-white
@@ -54,48 +59,7 @@
 			{...$content}
 			use:content
 		>
-			<slot />
-			<h2 {...$title} use:title class="m-0 text-lg font-medium text-black">Edit profile</h2>
-			<p {...$description} use:description class="mb-5 mt-2 leading-normal text-zinc-600">
-				Make changes to your profile here. Click save when you're done.
-			</p>
-
-			<fieldset class="mb-4 flex items-center gap-5">
-				<label class="w-[90px] text-right text-black" for="name"> Name </label>
-				<input
-					class="inline-flex h-8 w-full flex-1 items-center justify-center
-                    rounded-sm border border-solid px-3 leading-none text-black"
-					id="name"
-					value="Thomas G. Lopes"
-				/>
-			</fieldset>
-			<fieldset class="mb-4 flex items-center gap-5">
-				<label class="w-[90px] text-right text-black" for="username"> Username </label>
-				<input
-					class="inline-flex h-8 w-full flex-1 items-center justify-center
-                    rounded-sm border border-solid px-3 leading-none text-black"
-					id="username"
-					value="@thomasglopes"
-				/>
-			</fieldset>
-			<div class="mt-6 flex justify-end gap-4">
-				<button
-					{...$close}
-					use:close
-					class="inline-flex h-8 items-center justify-center rounded-sm
-                    bg-zinc-100 px-4 font-medium leading-none text-zinc-600"
-				>
-					Cancel
-				</button>
-				<button
-					{...$close}
-					use:close
-					class="inline-flex h-8 items-center justify-center rounded-sm
-                    bg-magnum-100 px-4 font-medium leading-none text-magnum-900"
-				>
-					Save changes
-				</button>
-			</div>
+			{@render children()}
 			<button
 				{...$close}
 				use:close

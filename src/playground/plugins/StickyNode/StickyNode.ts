@@ -18,11 +18,10 @@ import type {
 } from 'lexical';
 
 import { $setSelection, createEditor, DecoratorNode } from 'lexical';
-import * as React from 'react';
 
 const StickyComponent =
 	// @ts-ignore
-	() => import('./StickyComponent');
+	() => import('./StickyComponent.svelte');
 
 type StickyNoteColor = 'pink' | 'yellow';
 
@@ -36,7 +35,7 @@ export type SerializedStickyNode = Spread<
 	SerializedLexicalNode
 >;
 
-export class StickyNode extends DecoratorNode<SvelteRender> {
+export class StickyNode extends DecoratorNode<SvelteRender<any>> {
 	__x: number;
 	__y: number;
 	__color: StickyNoteColor;

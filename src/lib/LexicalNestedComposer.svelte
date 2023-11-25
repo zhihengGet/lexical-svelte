@@ -1,125 +1,127 @@
 <script lang="ts">
-  import type { LexicalComposerContextType } from "@lexical/react/LexicalComposerContext.svelte";
+	import type { LexicalComposerContextType } from '@lexical/react/LexicalComposerContext.svelte';
 
-  // import { useCollaborationContext } from "@lexical/react/LexicalCollaborationContext";
-  import { createLexicalComposerContext } from "@lexical/react/LexicalComposerContext.svelte";
-  import type {
-    EditorThemeClasses,
-    Klass,
-    LexicalEditor,
-    LexicalNode,
-    LexicalNodeReplacement,
-  } from "lexical";
-  import * as React from "react";
-  import { useEffect, useMemo, useRef } from "react";
-  import invariant from "shared/invariant";
-  import { useLexicalComposerContext } from "./LexicalComposerContext.svelte";
-  import { useCollaborationContext } from "./LexicalCollaborationContext.svelte";
-  let {
-    initialEditor,
+	// import { useCollaborationContext } from "@lexical/react/LexicalCollaborationContext";
+	import {
+		createLexicalComposerContext,
+		setLexicalComposerContext
+	} from '@lexical/react/LexicalComposerContext.svelte';
+	import type {
+		EditorThemeClasses,
+		Klass,
+		LexicalEditor,
+		LexicalNode,
+		LexicalNodeReplacement
+	} from 'lexical';
 
-    initialNodes,
-    initialTheme,
-    skipCollabChecks,
-  } = $props<{
-    initialEditor: LexicalEditor;
-    initialTheme?: EditorThemeClasses;
-    initialNodes?: ReadonlyArray<Klass<LexicalNode> | LexicalNodeReplacement>;
-    skipCollabChecks?: true;
-  }>();
+	import { useEffect, useMemo, useRef } from 'react';
+	import invariant from 'shared/invariant';
+	import { useLexicalComposerContext } from './LexicalComposerContext.svelte';
+	import { useCollaborationContext } from './LexicalCollaborationContext.svelte';
+	let {
+		initialEditor,
 
-  const wasCollabPreviouslyReadyRef = useRef(false);
-  const parentContext = useLexicalComposerContext();
+		initialNodes,
+		initialTheme,
+		skipCollabChecks
+	} = $props<{
+		initialEditor: LexicalEditor;
+		initialTheme?: EditorThemeClasses;
+		initialNodes?: ReadonlyArray<Klass<LexicalNode> | LexicalNodeReplacement>;
+		skipCollabChecks?: true;
+	}>();
 
-  if (parentContext == null) {
-    invariant(false, "Unexpected parent context null on a nested composer");
-  }
+	const wasCollabPreviouslyReadyRef = useRef(false);
+	const parentContext = useLexicalComposerContext();
 
-  const [parentEditor, { getTheme: getParentTheme }] = parentContext;
+	if (parentContext == null) {
+		invariant(false, 'Unexpected parent context null on a nested composer');
+	}
 
-  const composerContext: [LexicalEditor, LexicalComposerContextType] = useMemo(
-    () => {
-      const composerTheme: EditorThemeClasses | undefined =
-        initialTheme || getParentTheme() || undefined;
+	const [parentEditor, { getTheme: getParentTheme }] = parentContext;
 
-      const context: LexicalComposerContextType = createLexicalComposerContext(
-        parentContext,
-        composerTheme
-      );
+	const composerContext: [LexicalEditor, LexicalComposerContextType] = useMemo(
+		() => {
+			const composerTheme: EditorThemeClasses | undefined =
+				initialTheme || getParentTheme() || undefined;
 
-      if (composerTheme !== undefined) {
-        initialEditor._config.theme = composerTheme;
-      }
+			const context: LexicalComposerContextType = createLexicalComposerContext(
+				parentContext,
+				composerTheme
+			);
 
-      initialEditor._parentEditor = parentEditor;
+			if (composerTheme !== undefined) {
+				initialEditor._config.theme = composerTheme;
+			}
 
-      if (!initialNodes) {
-        const parentNodes = (initialEditor._nodes = new Map(
-          parentEditor._nodes
-        ));
-        for (const [type, entry] of parentNodes) {
-          initialEditor._nodes.set(type, {
-            klass: entry.klass,
-            replace: entry.replace,
-            replaceWithKlass: entry.replaceWithKlass,
-            transforms: new Set(),
-          });
-        }
-      } else {
-        for (let klass of initialNodes) {
-          let replace = null;
-          let replaceWithKlass = null;
+			initialEditor._parentEditor = parentEditor;
 
-          if (typeof klass !== "function") {
-            const options = klass;
-            klass = options.replace;
-            replace = options.with;
-            replaceWithKlass = options.withKlass || null;
-          }
+			if (!initialNodes) {
+				const parentNodes = (initialEditor._nodes = new Map(parentEditor._nodes));
+				for (const [type, entry] of parentNodes) {
+					initialEditor._nodes.set(type, {
+						klass: entry.klass,
+						replace: entry.replace,
+						replaceWithKlass: entry.replaceWithKlass,
+						transforms: new Set()
+					});
+				}
+			} else {
+				for (let klass of initialNodes) {
+					let replace = null;
+					let replaceWithKlass = null;
 
-          initialEditor._nodes.set(klass.getType(), {
-            klass,
-            replace,
-            replaceWithKlass,
-            transforms: new Set(),
-          });
-        }
-      }
+					if (typeof klass !== 'function') {
+						const options = klass;
+						klass = options.replace;
+						replace = options.with;
+						replaceWithKlass = options.withKlass || null;
+					}
 
-      initialEditor._config.namespace = parentEditor._config.namespace;
+					initialEditor._nodes.set(klass.getType(), {
+						klass,
+						replace,
+						replaceWithKlass,
+						transforms: new Set()
+					});
+				}
+			}
 
-      initialEditor._editable = parentEditor._editable;
+			initialEditor._config.namespace = parentEditor._config.namespace;
 
-      return [initialEditor, context];
-    },
+			initialEditor._editable = parentEditor._editable;
 
-    // We only do this for init
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
+			return [initialEditor, context];
+		},
 
-  // If collaboration is enabled, make sure we don't render the children until the collaboration subdocument is ready.
-  const { isCollabActive, yjsDocMap } = useCollaborationContext();
+		// We only do this for init
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[]
+	);
 
-  const isCollabReady =
-    skipCollabChecks ||
-    wasCollabPreviouslyReadyRef.current ||
-    yjsDocMap.has(initialEditor.getKey());
+	// If collaboration is enabled, make sure we don't render the children until the collaboration subdocument is ready.
+	const { isCollabActive, yjsDocMap } = useCollaborationContext();
 
-  useEffect(() => {
-    if (isCollabReady) {
-      wasCollabPreviouslyReadyRef.current = true;
-    }
-  }, [isCollabReady]);
+	setLexicalComposerContext(composerContext);
+	const isCollabReady =
+		skipCollabChecks ||
+		wasCollabPreviouslyReadyRef.current ||
+		yjsDocMap.has(initialEditor.getKey());
 
-  // Update `isEditable` state of nested editor in response to the same change on parent editor.
-  useEffect(() => {
-    return parentEditor.registerEditableListener((editable) => {
-      initialEditor.setEditable(editable);
-    });
-  }, [initialEditor, parentEditor]);
+	useEffect(() => {
+		if (isCollabReady) {
+			wasCollabPreviouslyReadyRef.current = true;
+		}
+	}, [isCollabReady]);
+
+	// Update `isEditable` state of nested editor in response to the same change on parent editor.
+	useEffect(() => {
+		return parentEditor.registerEditableListener((editable) => {
+			initialEditor.setEditable(editable);
+		});
+	}, [initialEditor, parentEditor]);
 </script>
 
 {#if !isCollabActive || isCollabReady}
-  <slot />
+	<slot />
 {/if}

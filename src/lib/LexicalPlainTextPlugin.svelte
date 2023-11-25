@@ -12,6 +12,7 @@
 	import { useDecorators } from '../shared/useDecorators.svelte';
 	import { usePlainTextSetup } from '../shared/usePlainTextSetup.svelte';
 	import Placeholder from './placeholder.svelte';
+	import Portal from '@ui/Portal.svelte';
 
 	let { contentEditable, placeholder, contentEditableProps, placeholderProps } = $props<{
 		contentEditable: any;
@@ -20,10 +21,9 @@
 		placeholderProps?: any;
 	}>();
 	const [editor] = useLexicalComposerContext();
-	useDecorators(editor);
-	usePlainTextSetup(editor);
+	let fn = useDecorators(editor);
 </script>
 
 <svelte:component this={contentEditable} {...contentEditableProps} />
-
+<Portal components={fn()} target={null} />
 <Placeholder content={placeholder} {...placeholderProps} />

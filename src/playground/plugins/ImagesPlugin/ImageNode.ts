@@ -21,6 +21,8 @@ import type {
 } from 'lexical';
 
 import { $applyNodeReplacement, createEditor, DecoratorNode } from 'lexical';
+import type { ImageComponent as comp } from '.';
+import type { ComponentType } from 'svelte';
 
 const ImageComponent =
 	// @ts-ignore
@@ -60,7 +62,7 @@ export type SerializedImageNode = Spread<
 	SerializedLexicalNode
 >;
 
-export class ImageNode extends DecoratorNode<SvelteRender> {
+export class ImageNode extends DecoratorNode<SvelteRender<any>> {
 	__src: string;
 	__altText: string;
 	__width: 'inherit' | number;
@@ -197,6 +199,7 @@ export class ImageNode extends DecoratorNode<SvelteRender> {
 	}
 
 	decorate() {
+		console.log('decorate');
 		const myObject = {
 			src: this.__src,
 			altText: this.__altText,
@@ -210,7 +213,7 @@ export class ImageNode extends DecoratorNode<SvelteRender> {
 			resizable: true
 		};
 
-		return { component: ImageComponent, props: myObject };
+		return { component: ImageComponent, props: myObject, portal: false, target: null };
 	}
 }
 

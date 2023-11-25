@@ -23,6 +23,7 @@
 	import { LinkPlugin } from '@plugins/LinkPlugin';
 	import FloatingTextFormatToolbarPlugin from '@plugins/FloatingTextFormatToolbarPlugin/FloatingTextFormatToolbarPlugin.svelte';
 	import FloatingLinkEditorPlugin from '@plugins/FloatingLinkEditorPlugin/FloatingLinkEditorPlugin.svelte';
+	import ImagePlugin from '@plugins/ImagesPlugin/ImagePlugin.svelte';
 	const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
 	const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
 	const isEditable = true;
@@ -109,6 +110,7 @@
 		<Portal target={null} initializor={CheckListPlugin} />
 		<Portal target={null} initializor={CodeHighlightPlugin} />
 		<Portal target={null} initializor={CodeHighlightPlugin} />
+		<ImagePlugin captionsEnabled={true} />
 		<!-- Links -->
 		<LinkPlugin />
 		<!-- 	<FloatingLinkEditorPlugin /> -->

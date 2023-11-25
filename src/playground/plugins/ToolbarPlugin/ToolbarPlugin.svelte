@@ -84,9 +84,16 @@
 </script>
 
 <script lang="ts">
-	import { DropDown, Portal, DropDownItem, DropdownColorPicker } from '@ui/index';
+	import { DropDown, Portal, DropDownItem, DropdownColorPicker, Modal } from '@ui/index';
 	import FontDropDown from './FontDropDown.svelte';
 	import { untrack } from 'svelte';
+	import InsertEquationDialog from '@plugins/EquationsPlugin/InsertEquationDialog.svelte';
+	import { INSERT_COLLAPSIBLE_COMMAND } from '@plugins/CollapsiblePlugin';
+	import { $createStickyNode as createStickyNode } from '@plugins/StickyNode/StickyNode';
+	//import { INSERT_EXCALIDRAW_COMMAND } from '@plugins/ExcalidrawPlugin';
+	import InsertImageDialog from '@plugins/ImagesPlugin/InsertImageDialog.svelte';
+	import InsertInlineImageDialog from '@plugins/InlineImagePlugin/InsertInlineImageDialog.svelte';
+	import { INSERT_PAGE_BREAK } from '@plugins/PageBreakPlugin/PageBreakPlug.svelte';
 
 	let { setIsLinkEditMode } = $props<{ setIsLinkEditMode: (param: boolean) => boolean }>();
 	const [editor] = useLexicalComposerContext();
@@ -495,6 +502,181 @@
 			onChange={onBgColorSelect}
 			title="bg color"
 		/>
+		<DropDown
+			disabled={!isEditable()}
+			buttonclass="toolbar-item spaced"
+			buttonLabel=""
+			buttonAriaLabel="Formatting options for additional text styles"
+			buttonIconclass="icon dropdown-more"
+		>
+			<DropDownItem
+				onClick={() => {
+					activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough');
+				}}
+				class={'item ' + dropDownActiveClass(isStrikethrough())}
+				title="Strikethrough"
+				aria-label="Format text with a strikethrough"
+			>
+				<i class="icon strikethrough" />
+				<span class="text">Strikethrough</span>
+			</DropDownItem>
+			<DropDownItem
+				onClick={() => {
+					activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript');
+				}}
+				class={'item ' + dropDownActiveClass(isSubscript())}
+				title="Subscript"
+				aria-label="Format text with a subscript"
+			>
+				<i class="icon subscript" />
+				<span class="text">Subscript</span>
+			</DropDownItem>
+			<DropDownItem
+				onClick={() => {
+					activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'superscript');
+				}}
+				class={'item ' + dropDownActiveClass(isSuperscript())}
+				title="Superscript"
+				aria-label="Format text with a superscript"
+			>
+				<i class="icon superscript" />
+				<span class="text">Superscript</span>
+			</DropDownItem>
+			<DropDownItem
+				onClick={clearFormatting}
+				class="item"
+				title="Clear text formatting"
+				aria-label="Clear all text formatting"
+			>
+				<i class="icon clear" />
+				<span class="text">Clear Formatting</span>
+			</DropDownItem>
+		</DropDown>
+
+		<Divider />
+
+		<!-- insert -->
+		<DropDown
+			disabled={!isEditable}
+			buttonClassName="toolbar-item spaced"
+			buttonLabel="Insert"
+			buttonAriaLabel="Insert specialized editor node"
+			buttonIconClassName="icon plus"
+		>
+			<DropDownItem
+				onClick={() => {
+					activeEditor().dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined);
+				}}
+				class="item"
+			>
+				<i class="icon horizontal-rule" />
+				<span class="text">Horizontal Rule</span>
+			</DropDownItem>
+			<DropDownItem
+				onClick={() => {
+					activeEditor().dispatchCommand(INSERT_PAGE_BREAK, undefined);
+				}}
+				class="item"
+			>
+				<i class="icon page-break" />
+				<span class="text">Page Break</span>
+			</DropDownItem>
+			<DropDownItem
+				onClick={() => {
+					showModal('Insert Image', (onClose) => {
+						return [
+							{
+								component: InsertImageDialog,
+								props: { activeEditor: activeEditor(), onClose },
+								portal: false,
+								target: undefined
+							}
+						];
+					});
+				}}
+				class="item"
+			>
+				<i class="icon image" />
+				<span class="text">Image</span>
+			</DropDownItem>
+			<DropDownItem
+				onClick={() => {
+					showModal('Insert Image', (onClose) => {
+						return [
+							{
+								component: InsertInlineImageDialog,
+								props: { activeEditor: activeEditor(), onClose },
+								onClose
+							}
+						];
+					});
+				}}
+				class="item"
+			>
+				<i class="icon image" />
+				<span class="text">Inline Image</span>
+			</DropDownItem>
+			<DropDownItem
+				onClick={() =>
+					insertGifOnClick({
+						altText: 'Cat typing on a laptop',
+						src: 'https://images.unsplash.com/photo-1682686581498-5e85c7228119?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+					})}
+				class="item"
+			>
+				<i class="icon gif" />
+				<span class="text">GIF</span>
+			</DropDownItem>
+			<!-- 	<DropDownItem
+				onClick={() => {
+					activeEditor().dispatchCommand(INSERT_EXCALIDRAW_COMMAND, undefined);
+				}}
+				class="item"
+			>
+				<i class="icon diagram-2" />
+				<span class="text">Excalidraw</span>
+			</DropDownItem> -->
+
+			<DropDownItem
+				onClick={() => {
+					showModal('Insert Equation', (onClose) => [
+						{
+							component: InsertEquationDialog,
+							props: {
+								activeEditor: activeEditor(),
+								onClose
+							}
+						}
+					]);
+				}}
+				class="item"
+			>
+				<i class="icon equation" />
+				<span class="text">Equation</span>
+			</DropDownItem>
+			<!-- 	<DropDownItem
+				onClick={() => {
+					editor.update(() => {
+						const root = getRoot();
+						const stickyNode = createStickyNode(0, 0);
+						root.append(stickyNode);
+					});
+				}}
+				class="item"
+			>
+				<i class="icon sticky" />
+				<span class="text">Sticky Note</span>
+			</DropDownItem> -->
+			<DropDownItem
+				onClick={() => {
+					editor.dispatchCommand(INSERT_COLLAPSIBLE_COMMAND, undefined);
+				}}
+				class="item"
+			>
+				<i class="icon caret-right" />
+				<span class="text">Collapsible container</span>
+			</DropDownItem>
+		</DropDown>
 	{/if}
 	<!-- {blockType === 'code' ? (
 	
@@ -568,28 +750,28 @@
 			</button>
 			<DropdownColorPicker
 				disabled={!isEditable()}
-				buttonClassName="toolbar-item color-picker"
+				buttonclass="toolbar-item color-picker"
 				buttonAriaLabel="Formatting text color"
-				buttonIconClassName="icon font-color"
+				buttonIconclass="icon font-color"
 				color={fontColor}
 				onChange={onFontColorSelect}
 				title="text color"
 			/>
 			<DropdownColorPicker
 				disabled={!isEditable()}
-				buttonClassName="toolbar-item color-picker"
+				buttonclass="toolbar-item color-picker"
 				buttonAriaLabel="Formatting background color"
-				buttonIconClassName="icon bg-color"
+				buttonIconclass="icon bg-color"
 				color={bgColor}
 				onChange={onBgColorSelect}
 				title="bg color"
 			/>
 			<DropDown
 				disabled={!isEditable()}
-				buttonClassName="toolbar-item spaced"
+				buttonclass="toolbar-item spaced"
 				buttonLabel=""
 				buttonAriaLabel="Formatting options for additional text styles"
-				buttonIconClassName="icon dropdown-more"
+				buttonIconclass="icon dropdown-more"
 			>
 				<DropDownItem
 					onClick={() => {
@@ -639,10 +821,10 @@
 				<>
 					<DropDown
 						disabled={!isEditable()}
-						buttonClassName="toolbar-item spaced"
+						buttonclass="toolbar-item spaced"
 						buttonLabel="Table"
 						buttonAriaLabel="Open table toolkit"
-						buttonIconClassName="icon table secondary"
+						buttonIconclass="icon table secondary"
 					>
 						<DropDownItem
 							onClick={() => {
@@ -658,10 +840,10 @@
 			)}
 			<DropDown
 				disabled={!isEditable()}
-				buttonClassName="toolbar-item spaced"
+				buttonclass="toolbar-item spaced"
 				buttonLabel="Insert"
 				buttonAriaLabel="Insert specialized editor node"
-				buttonIconClassName="icon plus"
+				buttonIconclass="icon plus"
 			>
 				<DropDownItem
 					onClick={() => {
@@ -824,5 +1006,5 @@
 		{editor}
 		isRTL={isRTL()}
 	/>
-	<Portal {...modal} portal={true} />
+	<Portal {...modal()} />
 </div>

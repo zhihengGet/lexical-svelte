@@ -28,7 +28,7 @@
 	let ref = props.ref ?? { current: undefined };
 </script>
 
-<div use:refFn bind:this={ref.current}>
+<div use:refFn bind:this={ref.current} data-id="svelt-render">
 	<!-- render decorators -->
 	{#each components ?? [] as decorator}
 		<svelte:self {...decorator} />
@@ -40,11 +40,14 @@
 		{#if props.component && !components}
 			<svelte:component this={component} {...props.props ?? []}>
 				{#each props.childComponents ?? [] as cp}
-					<svelte:component this={cp.component} />
+					<svelte:self {...cp} />
 				{/each}
+				<!-- {#if children}
+					{@render children()}
+				{/if} -->
 			</svelte:component>
 		{:else if snippet}
-			{@render snippet({ children, refFn, ...props })}
+			{@render snippet({ refFn, ...props })}
 		{/if}
 	{/await}
 </div>

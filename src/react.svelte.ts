@@ -33,7 +33,12 @@ export function useState<T>(state: T | temp<T>) {
 }
 
 function useEffect<D>(func: () => void, dep?: D) {
-	$effect(func);
+	/* if (dep) {
+		$effect(() => {
+			dep; // track dep
+			untrack(func);
+		});
+	} else */ $effect(func);
 }
 export { useEffect };
 
@@ -46,6 +51,12 @@ export function useCallback<T>(fn: T, dep?: any) {
 export function useMemo<T>(fn: () => T, dep?: any) {
 	const data = $derived(fn());
 	return data;
+}
+
+//TODO , cant just return an value
+export function useMemoed<T>(fn: () => T, dep?: any) {
+	const data = $derived(fn());
+	return () => data;
 }
 export function useRef<T>(param: T | null) {
 	return { current: param };

@@ -9,6 +9,7 @@
 		title
 	} = $props<{
 		class: string;
+		children?: any;
 		onClick: () => any;
 		title?: string;
 		'aria-label'?: string;
