@@ -26,7 +26,7 @@
 	import ImagePlugin from '@plugins/ImagesPlugin/ImagePlugin.svelte';
 	import { useLexicalComposerContext } from './lib/LexicalComposerContext.svelte';
 	import Test from './Test.svelte';
-	import { AutoFocusPlugin } from './lib/LexicalAutoFocusPlugin.svelte';
+	import { AutoFocusPlugin } from './playground/plugins/AutoFocus/LexicalAutoFocusPlugin.svelte';
 	import PageBreakPlug from '@plugins/PageBreakPlugin/PageBreakPlug.svelte';
 	const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
 	const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement>(null);
