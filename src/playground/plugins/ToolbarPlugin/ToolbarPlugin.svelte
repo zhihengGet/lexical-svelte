@@ -18,7 +18,7 @@
 	import { INSERT_EMBED_COMMAND } from '@lexical/react/LexicalAutoEmbedPlugin.svelte';
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 	import { $isDecoratorBlockNode as isDecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode';
-	import { INSERT_HORIZONTAL_RULE_COMMAND } from '../HorizontalPlugin/LexicalHorizontalRulePlugin.svelte';
+	import { INSERT_HORIZONTAL_RULE_COMMAND } from '../HorizontalPlugin/index';
 	import {
 		$createHeadingNode as createHeadingNode,
 		$createQuoteNode as createQuoteNode,

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 	import { useCallback, useState } from '../react.svelte';
-	import { AutoFocusPlugin } from './LexicalAutoFocusPlugin.svelte';
 
 	const {
 		ariaActiveDescendant,

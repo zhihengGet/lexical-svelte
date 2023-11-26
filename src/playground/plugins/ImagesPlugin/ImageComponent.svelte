@@ -10,7 +10,7 @@
 
 	import './ImageNode.css';
 
-	import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin.svelte';
+	import { AutoFocusPlugin } from '@plugins/AutoFocus/LexicalAutoFocusPlugin.svelte';
 	import { useCollaborationContext } from '@lexical/react/LexicalCollaborationContext.svelte';
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 	import { HashtagPlugin } from '@lexical/react/LexicalHashtagPlugin';

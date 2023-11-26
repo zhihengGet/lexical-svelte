@@ -7,13 +7,11 @@
  */
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
-import {
-	$createHorizontalRuleNode,
-	INSERT_HORIZONTAL_RULE_COMMAND
-} from './/LexicalHorizontalRuleNode';
+import { $createHorizontalRuleNode } from './/LexicalHorizontalRuleNode';
 import { $insertNodeToNearestRoot } from '@lexical/utils';
 import { $getSelection, $isRangeSelection, COMMAND_PRIORITY_EDITOR } from 'lexical';
 import { useEffect } from 'react';
+import { INSERT_HORIZONTAL_RULE_COMMAND } from '.';
 
 export function HorizontalRulePlugin(): null {
 	const [editor] = useLexicalComposerContext();
