@@ -1,16 +1,4 @@
 <script context="module" lang="ts">
-	type CommandPayload = {
-		equation: string;
-		inline: boolean;
-	};
-	const imageCache = new Set();
-	//TODO cache image
-	export const RIGHT_CLICK_IMAGE_COMMAND: LexicalCommand<MouseEvent> = lexical.createCommand(
-		'RIGHT_CLICK_IMAGE_COMMAND'
-	);
-</script>
-
-<script lang="ts">
 	import type {
 		GridSelection,
 		LexicalCommand,
@@ -24,30 +12,19 @@
 
 	import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin.svelte';
 	import { useCollaborationContext } from '@lexical/react/LexicalCollaborationContext.svelte';
-	import { CollaborationPlugin } from '@lexical/react/LexicalCollaborationPlugin.svelte';
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
-	import { HashtagPlugin } from '@lexical/react/LexicalHashtagPlugin.svelte';
+	import { HashtagPlugin } from '@lexical/react/LexicalHashtagPlugin';
 	import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin.svelte';
 	import { default as LexicalNestedComposer } from '@lexical/react/LexicalNestedComposer.svelte';
 	import { default as RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin.svelte';
 	import { useLexicalNodeSelection } from '@lexical/react/useLexicalNodeSelection.svelte';
 	import { mergeRegister } from '@lexical/utils';
-	import * as lexical from 'lexical';
-	import * as React from 'react';
-	import { useCallback, useEffect, useRef, useState } from 'react';
-
-	import { createWebsocketProvider } from '../../collaboration';
-	import { useSettings } from '../../context/SettingsContext.svelte';
-	import EmojisPlugin from '../EmojisPlugin';
-	import KeywordsPlugin from '../KeywordsPlugin';
-	import { LinkPlugin } from '../LinkPlugin';
-	// import MentionsPlugin from "../plugins/MentionsPlugin";
-	//import TreeViewPlugin from "../../plugins/TreeViewPlugin.svelte";
-	import ContentEditable from '@ui/ContentEditable.svelte';
-	import ImageResizer from './ImageResizer.svelte';
-	import { $isImageNode as isImageNode } from './ImageNode';
-	import { useSharedHistoryContext } from '../../context/SharedHistoryContext';
 	import {
+		$getNodeByKey as getNodeByKey,
+		$getSelection as getSelection,
+		$isNodeSelection as isNodeSelection,
+		$isRangeSelection as isRangeSelection,
+		$setSelection as setSelection,
 		CLICK_COMMAND,
 		COMMAND_PRIORITY_LOW,
 		createCommand,
@@ -58,7 +35,27 @@
 		KEY_ESCAPE_COMMAND,
 		SELECTION_CHANGE_COMMAND
 	} from 'lexical';
-	import { flushSync, onMount, untrack } from 'svelte';
+	import { useCallback, useEffect, useRef, useState } from 'react';
+
+	import { useSettings } from '../../context/SettingsContext.svelte';
+	import { useSharedHistoryContext } from '../../context/SharedHistoryContext';
+	import EmojisPlugin from '@plugins/EmojisPlugin';
+	import KeywordsPlugin from '@plugins/KeywordsPlugin';
+	import LinkPlugin from '@plugins/LinkPlugin/LinkPlugin.svelte';
+	//import MentionsPlugin from '@plugins/MentionsPlugin/MentionsPlugin.svelte';
+	import TreeViewPlugin from '@plugins/TreeViewPlugin/TreeViewPlugin.svelte';
+	import ContentEditable from '../../ui/ContentEditable.svelte';
+	import ImageResizer from './ImageResizer.svelte';
+	import Placeholder from '../../ui/Placeholder.svelte';
+	import { $isImageNode as isImageNode } from './ImageNode';
+	import Portal from '@ui/Portal.svelte';
+	export const RIGHT_CLICK_IMAGE_COMMAND: LexicalCommand<MouseEvent> = createCommand(
+		'RIGHT_CLICK_IMAGE_COMMAND'
+	);
+	const imageCache = new Set();
+</script>
+
+<script lang="ts">
 	let {
 		src,
 		altText,
@@ -82,7 +79,6 @@
 		width: 'inherit' | number;
 		captionsEnabled: boolean;
 	}>();
-	//TODO lazy image
 	const imageRef = useRef<null | HTMLImageElement>(null);
 	const buttonRef = useRef<HTMLButtonElement | null>(null);
 	const [isSelected, setSelected, clearSelection] = useLexicalNodeSelection(nodeKey);
@@ -96,10 +92,10 @@
 
 	const onDelete = useCallback(
 		(payload: KeyboardEvent) => {
-			if (isSelected && lexical.$isNodeSelection(lexical.$getSelection())) {
+			if (isSelected() && isNodeSelection(getSelection())) {
 				const event: KeyboardEvent = payload;
 				event.preventDefault();
-				const node = lexical.$getNodeByKey(nodeKey);
+				const node = getNodeByKey(nodeKey);
 				if (isImageNode(node)) {
 					node.remove();
 				}
@@ -111,16 +107,16 @@
 
 	const onEnter = useCallback(
 		(event: KeyboardEvent) => {
-			const latestSelection = lexical.$getSelection();
+			const latestSelection = getSelection();
 			const buttonElem = buttonRef.current;
 			if (
-				isSelected &&
-				lexical.$isNodeSelection(latestSelection) &&
+				isSelected() &&
+				isNodeSelection(latestSelection) &&
 				latestSelection.getNodes().length === 1
 			) {
 				if (showCaption) {
 					// Move focus into nested editor
-					lexical.$setSelection(null);
+					setSelection(null);
 					event.preventDefault();
 					caption.focus();
 					return true;
@@ -138,7 +134,7 @@
 	const onEscape = useCallback(
 		(event: KeyboardEvent) => {
 			if (activeEditorRef.current === caption || buttonRef.current === event.target) {
-				lexical.$setSelection(null);
+				setSelection(null);
 				editor.update(() => {
 					setSelected(true);
 					const parentRootElement = editor.getRootElement();
@@ -155,7 +151,6 @@
 
 	const onClick = useCallback(
 		(payload: MouseEvent) => {
-			console.log('clicked');
 			const event = payload;
 
 			if (isResizing()) {
@@ -179,11 +174,11 @@
 	const onRightClick = useCallback(
 		(event: MouseEvent): void => {
 			editor.getEditorState().read(() => {
-				const latestSelection = lexical.$getSelection();
+				const latestSelection = getSelection();
 				const domElement = event.target as HTMLElement;
 				if (
 					domElement.tagName === 'IMG' &&
-					lexical.$isRangeSelection(latestSelection) &&
+					isRangeSelection(latestSelection) &&
 					latestSelection.getNodes().length === 1
 				) {
 					editor.dispatchCommand(RIGHT_CLICK_IMAGE_COMMAND, event as MouseEvent);
@@ -194,60 +189,50 @@
 	);
 
 	useEffect(() => {
-		untrack(() => {
-			let isMounted = true;
-			const rootElement = editor.getRootElement();
-			const unregister = mergeRegister(
-				editor.registerUpdateListener(({ editorState }) => {
-					if (isMounted) {
-						setSelection(editorState.read(() => lexical.$getSelection()));
+		let isMounted = true;
+		const rootElement = editor.getRootElement();
+		const unregister = mergeRegister(
+			editor.registerUpdateListener(({ editorState }) => {
+				if (isMounted) {
+					setSelection(editorState.read(() => getSelection()));
+				}
+			}),
+			editor.registerCommand(
+				SELECTION_CHANGE_COMMAND,
+				(_, activeEditor) => {
+					activeEditorRef.current = activeEditor;
+					return false;
+				},
+				COMMAND_PRIORITY_LOW
+			),
+			editor.registerCommand<MouseEvent>(CLICK_COMMAND, onClick, COMMAND_PRIORITY_LOW),
+			editor.registerCommand<MouseEvent>(RIGHT_CLICK_IMAGE_COMMAND, onClick, COMMAND_PRIORITY_LOW),
+			editor.registerCommand(
+				DRAGSTART_COMMAND,
+				(event) => {
+					if (event.target === imageRef.current) {
+						// TODO This is just a temporary workaround for FF to behave like other browsers.
+						// Ideally, this handles drag & drop too (and all browsers).
+						event.preventDefault();
+						return true;
 					}
-				}),
-				editor.registerCommand(
-					SELECTION_CHANGE_COMMAND,
-					(_, activeEditor) => {
-						activeEditorRef.current = activeEditor;
-						return false;
-					},
-					COMMAND_PRIORITY_LOW
-				),
-				editor.registerCommand<MouseEvent>(CLICK_COMMAND, onClick, COMMAND_PRIORITY_LOW),
-				editor.registerCommand<MouseEvent>(
-					RIGHT_CLICK_IMAGE_COMMAND,
-					onClick,
-					COMMAND_PRIORITY_LOW
-				),
-				editor.registerCommand(
-					DRAGSTART_COMMAND,
-					(event) => {
-						if (event.target === imageRef.current) {
-							// TODO This is just a temporary workaround for FF to behave like other browsers.
-							// Ideally, this handles drag & drop too (and all browsers).
-							event.preventDefault();
-							return true;
-						}
-						return false;
-					},
-					COMMAND_PRIORITY_LOW
-				),
-				editor.registerCommand(KEY_DELETE_COMMAND, onDelete, COMMAND_PRIORITY_LOW),
-				editor.registerCommand(
-					lexical.KEY_BACKSPACE_COMMAND,
-					onDelete,
-					lexical.COMMAND_PRIORITY_LOW
-				),
-				editor.registerCommand(lexical.KEY_ENTER_COMMAND, onEnter, COMMAND_PRIORITY_LOW),
-				editor.registerCommand(lexical.KEY_ESCAPE_COMMAND, onEscape, COMMAND_PRIORITY_LOW)
-			);
+					return false;
+				},
+				COMMAND_PRIORITY_LOW
+			),
+			editor.registerCommand(KEY_DELETE_COMMAND, onDelete, COMMAND_PRIORITY_LOW),
+			editor.registerCommand(KEY_BACKSPACE_COMMAND, onDelete, COMMAND_PRIORITY_LOW),
+			editor.registerCommand(KEY_ENTER_COMMAND, onEnter, COMMAND_PRIORITY_LOW),
+			editor.registerCommand(KEY_ESCAPE_COMMAND, onEscape, COMMAND_PRIORITY_LOW)
+		);
 
-			rootElement?.addEventListener('contextmenu', onRightClick);
+		rootElement?.addEventListener('contextmenu', onRightClick);
 
-			return () => {
-				isMounted = false;
-				unregister();
-				rootElement?.removeEventListener('contextmenu', onRightClick);
-			};
-		});
+		return () => {
+			isMounted = false;
+			unregister();
+			rootElement?.removeEventListener('contextmenu', onRightClick);
+		};
 	}, [
 		clearSelection,
 		editor,
@@ -264,7 +249,7 @@
 
 	const setShowCaption = () => {
 		editor.update(() => {
-			const node = lexical.$getNodeByKey(nodeKey);
+			const node = getNodeByKey(nodeKey);
 			if (isImageNode(node)) {
 				node.setShowCaption(true);
 			}
@@ -278,7 +263,7 @@
 		}, 200);
 
 		editor.update(() => {
-			const node = lexical.$getNodeByKey(nodeKey);
+			const node = getNodeByKey(nodeKey);
 			if (isImageNode(node)) {
 				node.setWidthAndHeight(nextWidth, nextHeight);
 			}
@@ -294,62 +279,42 @@
 		settings: { showNestedEditorTreeView }
 	} = useSettings();
 
-	const draggable = isSelected && lexical.$isNodeSelection(selection) && !isResizing();
-	const isFocused = isSelected || isResizing();
-
-	/* 	$effect(() => {
-		console.log('calling image; loading image plugin');
-		untrack(() => {
-			AutoFocusPlugin({});
-			//EmojisPlugin();
-			HashtagPlugin();
-			//KeywordsPlugin();
-
-			HistoryPlugin({ externalHistoryState: historyState });
-		});
-	}); */
-
-	/* onMount(() =>
-		setTimeout(() => {
-			flushSync();
-			setShowCaption();
-			return;
-		}, 500)
-	); */
+	//const draggable = isSelected && isNodeSelection(selection) && !isResizing;
+	let isFocused = $derived(isSelected() || isResizing());
 </script>
 
-<span {draggable} class="flex flex-col">
+<div draggable="true">
 	<img
-		class={isFocused
-			? `focused leading-0 mx-1 ${lexical.$isNodeSelection(selection()) ? 'draggable' : ''}`
-			: null}
 		{src}
 		alt={altText}
 		bind:this={imageRef.current}
 		{width}
 		{height}
 		style={'max-width:' + maxWidth}
-		onclick={() => setShowCaption()}
 	/>
-	{#if showCaption}
-		<!-- <div class="image-caption-container"> -->
+</div>
+{#snippet Caption()}
+	<ContentEditable class="ImageNode__contentEditable" />
+{/snippet}
+<!-- {#if showCaption}
+	<div class="image-caption-container">
 		<LexicalNestedComposer initialEditor={caption}>
 			<LinkPlugin />
+			<Portal initializor={HashtagPlugin} />
+			<Portal initializor={HashtagPlugin} />
+			<Portal initializor={AutoFocusPlugin} />
+			<Portal initializor={() => HistoryPlugin({ externalHistoryState: historyState })} />
+
 			<RichTextPlugin
 				contentEditable={Caption}
-				contentEditableProps={{}}
-				placeholderProps={{ class: 'ImageNode__placeholder' }}
-				placeholder=" Enter a caption..."
+				placeholder="Enter a caption..."
+				placeholderProps={{ class: 'leading-normal' }}
 			/>
 		</LexicalNestedComposer>
-		<!-- 	</div> -->
-	{/if}
-</span>
-{#snippet Caption()}
-	<ContentEditable className="ImageNode__contentEditable" class="bg-green" />
-{/snippet}
+	</div>
+{/if}
 
-{#if (resizable && lexical.$isNodeSelection(selection()) && isFocused) || true}
+{#if resizable && isNodeSelection(selection()) && isFocused}
 	<ImageResizer
 		{showCaption}
 		{setShowCaption}
@@ -362,3 +327,4 @@
 		{captionsEnabled}
 	/>
 {/if}
+ -->

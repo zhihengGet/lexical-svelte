@@ -6,85 +6,25 @@
  *
  */
 
-import {
-	$createCodeNode as createCodeNode,
-	$isCodeNode as isCodeNode,
-	CODE_LANGUAGE_FRIENDLY_NAME_MAP,
-	CODE_LANGUAGE_MAP,
-	getLanguageFriendlyName
-} from '@lexical/code';
-import { $isLinkNode as isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
-import {
-	$isListNode as isListNode,
-	INSERT_CHECK_LIST_COMMAND,
-	INSERT_ORDERED_LIST_COMMAND,
-	INSERT_UNORDERED_LIST_COMMAND,
-	ListNode,
-	REMOVE_LIST_COMMAND
-} from '@lexical/list';
-import { INSERT_EMBED_COMMAND } from '@lexical/react/LexicalAutoEmbedPlugin.svelte';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
-import { $isDecoratorBlockNode as isDecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode';
-import { INSERT_HORIZONTAL_RULE_COMMAND } from '@lexical/react/LexicalHorizontalRuleNode';
-import type {
-	$createHeadingNode as createHeadingNode,
-	$createQuoteNode as createQuoteNode,
-	$isHeadingNode as isHeadingNode,
-	$isQuoteNode as isQuoteNode,
-	HeadingTagType
-} from '@lexical/rich-text';
+import { mergeRegister } from '@lexical/utils';
+import type { TextNode } from 'lexical';
 import {
-	$getSelectionStyleValueForProperty as getSelectionStyleValueForProperty,
-	$isParentElementRTL as isParentElementRTL,
-	$patchStyleText as patchStyleText,
-	$setBlocksType as setBlocksType
-} from '@lexical/selection';
-import { $isTableNode as isTableNode } from '@lexical/table';
-import {
-	$findMatchingParent as findMatchingParent,
-	$getNearestBlockElementAncestorOrThrow as getNearestBlockElementAncestorOrThrow,
-	$getNearestNodeOfType as getNearestNodeOfType,
-	mergeRegister
-} from '@lexical/utils';
-import type {
-	TextNode} from 'lexical';
-import {
-	$createParagraphNode as createParagraphNode,
-	$getNodeByKey as getNodeByKey,
-	$getRoot as getRoot,
-	$getSelection as getSelection,
-	$isElementNode as isElementNode,
-	$isRangeSelection as isRangeSelection,
-	$isRootOrShadowRoot as isRootOrShadowRoot,
-	$isTextNode as isTextNode,
-	CAN_REDO_COMMAND,
-	CAN_UNDO_COMMAND,
-	COMMAND_PRIORITY_CRITICAL,
-	COMMAND_PRIORITY_NORMAL,
-	DEPRECATED_$isGridSelection,
-	type ElementFormatType,
-	FORMAT_ELEMENT_COMMAND,
-	FORMAT_TEXT_COMMAND,
-	INDENT_CONTENT_COMMAND,
-	KEY_MODIFIER_COMMAND,
-	type LexicalEditor,
-	type NodeKey,
-	OUTDENT_CONTENT_COMMAND,
-	REDO_COMMAND,
-	SELECTION_CHANGE_COMMAND,
-	UNDO_COMMAND,
-	type LexicalCommand,
-	createCommand,
-	type CommandListenerPriority,
 	COMMAND_PRIORITY_LOW,
 	KEY_ARROW_DOWN_COMMAND,
 	KEY_ARROW_UP_COMMAND,
 	KEY_ENTER_COMMAND,
 	KEY_ESCAPE_COMMAND,
-	KEY_TAB_COMMAND
+	KEY_TAB_COMMAND,
+	createCommand,
+	$getSelection as getSelection,
+	$isRangeSelection as isRangeSelection,
+	type CommandListenerPriority,
+	type LexicalCommand,
+	type LexicalEditor
 } from 'lexical';
 
-import { useCallback, useMemo, useState, useRef, useEffect } from '../react.svelte';
+import { useCallback, useEffect, useMemo, useRef, useState } from '../react.svelte';
 
 import useLayoutEffect from 'shared/useLayoutEffect.svelte';
 

@@ -32,15 +32,11 @@
 		KEY_BACKSPACE_COMMAND,
 		KEY_DELETE_COMMAND
 	} from 'lexical';
-	import * as React from 'react';
+
 	import { useCallback, useEffect } from 'react';
 	import { HorizontalRuleNode } from './LexicalHorizontalRuleNode';
 
 	export type SerializedHorizontalRuleNode = SerializedLexicalNode;
-
-	export const INSERT_HORIZONTAL_RULE_COMMAND: LexicalCommand<void> = createCommand(
-		'INSERT_HORIZONTAL_RULE_COMMAND'
-	);
 
 	function convertHorizontalRuleElement(): DOMConversionOutput {
 		return { node: createHorizontalRuleNode() };
@@ -64,7 +60,7 @@
 
 	const onDelete = useCallback(
 		(event: KeyboardEvent) => {
-			if (isSelected && isNodeSelection(getSelection())) {
+			if (isSelected() && isNodeSelection(getSelection())) {
 				event.preventDefault();
 				const node = getNodeByKey(nodeKey);
 				if (isHorizontalRuleNode(node)) {
@@ -103,7 +99,7 @@
 	useEffect(() => {
 		const hrElem = editor.getElementByKey(nodeKey);
 		if (hrElem !== null) {
-			hrElem.className = isSelected ? 'selected' : '';
+			hrElem.className = isSelected() ? 'selected' : '';
 		}
 	}, [editor, isSelected, nodeKey]);
 </script>

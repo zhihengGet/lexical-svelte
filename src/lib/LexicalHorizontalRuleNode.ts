@@ -10,20 +10,15 @@ import type {
 	DOMConversionMap,
 	DOMConversionOutput,
 	DOMExportOutput,
-	LexicalCommand,
 	LexicalNode,
 	SerializedLexicalNode
 } from 'lexical';
 
-import { $applyNodeReplacement, DecoratorNode, createCommand } from 'lexical';
+import { $applyNodeReplacement, DecoratorNode } from 'lexical';
 import LexicalHorizontalRuleComponent from './LexicalHorizontalRuleComponent.svelte';
 import type { SvelteRender } from './types';
 
 export type SerializedHorizontalRuleNode = SerializedLexicalNode;
-
-export const INSERT_HORIZONTAL_RULE_COMMAND: LexicalCommand<void> = createCommand(
-	'INSERT_HORIZONTAL_RULE_COMMAND'
-);
 
 export class HorizontalRuleNode extends DecoratorNode<SvelteRender> {
 	static getType(): string {
@@ -78,7 +73,7 @@ export class HorizontalRuleNode extends DecoratorNode<SvelteRender> {
 			component: LexicalHorizontalRuleComponent,
 			nodeKey: this.__key,
 			portal: false,
-			target: document.body //TODO
+			target: null //TODO
 		};
 	}
 }

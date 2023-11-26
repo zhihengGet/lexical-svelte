@@ -32,7 +32,7 @@ export function useDecorators(editor: LexicalEditor) {
 	});
 
 	// Return decorators defined as React Portals/
-
+	const rendered = new Set();
 	const toRender = $derived(() => {
 		const decoratedPortals: SvelteRender[] = [];
 		const decoratorKeys = Object.keys(decorators);
@@ -44,11 +44,12 @@ export function useDecorators(editor: LexicalEditor) {
 
 			if (element !== null) {
 				//	console.log(element);
-				let node = decorators[nodeKey];
+				const node = decorators[nodeKey];
 				node.target = element;
 				node.nodeKey = nodeKey;
 				node.portal = true;
 				decoratedPortals.push(node);
+				//rendered.add(element);
 			}
 		}
 		//console.log('to be rendered');

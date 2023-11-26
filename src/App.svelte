@@ -76,9 +76,6 @@
 	<SettingsContext>
 		<SharedAutocompleteContext>
 			<LexicalComposer {initialConfig}>
-				<header>
-					<a href="https://lexical.dev" target="_blank" rel="noreferrer"> header </a>
-				</header>
 				<div class="editor-shell">
 					<Editor />
 				</div>

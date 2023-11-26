@@ -6,77 +6,15 @@
  *
  */
 
-import {
-	$createCodeNode as createCodeNode,
-	$isCodeNode as isCodeNode,
-	CODE_LANGUAGE_FRIENDLY_NAME_MAP,
-	CODE_LANGUAGE_MAP,
-	getLanguageFriendlyName
-} from '@lexical/code';
-import {
-	$isLinkNode as isLinkNode,
-	LinkNode,
-	TOGGLE_LINK_COMMAND,
-	toggleLink
-} from '@lexical/link';
-import {
-	$isListNode as isListNode,
-	INSERT_CHECK_LIST_COMMAND,
-	INSERT_ORDERED_LIST_COMMAND,
-	INSERT_UNORDERED_LIST_COMMAND,
-	ListNode,
-	REMOVE_LIST_COMMAND
-} from '@lexical/list';
-import { INSERT_EMBED_COMMAND } from '@lexical/react/LexicalAutoEmbedPlugin.svelte';
+import { LinkNode, TOGGLE_LINK_COMMAND, toggleLink } from '@lexical/link';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
-import { $isDecoratorBlockNode as isDecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode';
-import { INSERT_HORIZONTAL_RULE_COMMAND } from '@lexical/react/LexicalHorizontalRuleNode';
+import { mergeRegister } from '@lexical/utils';
 import {
-	$createHeadingNode as createHeadingNode,
-	$createQuoteNode as createQuoteNode,
-	$isHeadingNode as isHeadingNode,
-	$isQuoteNode as isQuoteNode,
-	HeadingTagType
-} from '@lexical/rich-text';
-import {
-	$getSelectionStyleValueForProperty as getSelectionStyleValueForProperty,
-	$isParentElementRTL as isParentElementRTL,
-	$patchStyleText as patchStyleText,
-	$setBlocksType as setBlocksType
-} from '@lexical/selection';
-import { $isTableNode as isTableNode } from '@lexical/table';
-import {
-	$findMatchingParent as findMatchingParent,
-	$getNearestBlockElementAncestorOrThrow as getNearestBlockElementAncestorOrThrow,
-	$getNearestNodeOfType as getNearestNodeOfType,
-	mergeRegister
-} from '@lexical/utils';
-import {
-	$createParagraphNode as createParagraphNode,
-	$getNodeByKey as getNodeByKey,
-	$getRoot as getRoot,
+	COMMAND_PRIORITY_LOW,
+	PASTE_COMMAND,
 	$getSelection as getSelection,
 	$isElementNode as isElementNode,
-	$isRangeSelection as isRangeSelection,
-	$isRootOrShadowRoot as isRootOrShadowRoot,
-	$isTextNode as isTextNode,
-	CAN_REDO_COMMAND,
-	CAN_UNDO_COMMAND,
-	COMMAND_PRIORITY_CRITICAL,
-	COMMAND_PRIORITY_NORMAL,
-	type ElementFormatType,
-	FORMAT_ELEMENT_COMMAND,
-	FORMAT_TEXT_COMMAND,
-	INDENT_CONTENT_COMMAND,
-	KEY_MODIFIER_COMMAND,
-	type LexicalEditor,
-	type NodeKey,
-	OUTDENT_CONTENT_COMMAND,
-	REDO_COMMAND,
-	SELECTION_CHANGE_COMMAND,
-	UNDO_COMMAND,
-	COMMAND_PRIORITY_LOW,
-	PASTE_COMMAND
+	$isRangeSelection as isRangeSelection
 } from 'lexical';
 import { useEffect } from 'react';
 
