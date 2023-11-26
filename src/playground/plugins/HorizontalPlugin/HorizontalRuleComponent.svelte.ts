@@ -1,5 +1,5 @@
 import {
-	$getNodeByKey,
+	$getNodeByKey as getNodeByKey,
 	type NodeKey,
 	$getSelection as getSelection,
 	$isNodeSelection as isNodeSelection,
@@ -8,11 +8,11 @@ import {
 	KEY_BACKSPACE_COMMAND,
 	KEY_DELETE_COMMAND
 } from 'lexical';
-import { $isHorizontalRuleNode } from './LexicalHorizontalRuleNode';
+import { $isHorizontalRuleNode as isHorizontalRuleNode } from './LexicalHorizontalRuleNode';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 import { useLexicalNodeSelection } from '@lexical/react/useLexicalNodeSelection.svelte';
 import { useCallback } from 'react';
-import { useEffect } from '../../../../react';
+import { useEffect } from 'react';
 import { mergeRegister } from '@lexical/utils';
 
 export function HorizontalRuleComponent({ nodeKey }: { nodeKey: NodeKey }) {
@@ -23,8 +23,8 @@ export function HorizontalRuleComponent({ nodeKey }: { nodeKey: NodeKey }) {
 		(event: KeyboardEvent) => {
 			if (isSelected() && isNodeSelection(getSelection())) {
 				event.preventDefault();
-				const node = $getNodeByKey(nodeKey);
-				if ($isHorizontalRuleNode(node)) {
+				const node = getNodeByKey(nodeKey);
+				if (isHorizontalRuleNode(node)) {
 					node.remove();
 				}
 			}
