@@ -88,7 +88,7 @@
 	import FontDropDown from './FontDropDown.svelte';
 	import { untrack } from 'svelte';
 	import InsertEquationDialog from '@plugins/EquationsPlugin/InsertEquationDialog.svelte';
-	import { INSERT_COLLAPSIBLE_COMMAND } from '@plugins/CollapsiblePlugin/index.svelte';
+	import { INSERT_COLLAPSIBLE_COMMAND } from '@plugins/CollapsiblePlugin/CollapsiblePlugin.svelte';
 	import { $createStickyNode as createStickyNode } from '@plugins/StickyNode/StickyNode';
 	//import { INSERT_EXCALIDRAW_COMMAND } from '@plugins/ExcalidrawPlugin';
 	import InsertImageDialog from '@plugins/ImagesPlugin/InsertImageDialog.svelte';

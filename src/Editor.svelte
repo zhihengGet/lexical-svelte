@@ -29,7 +29,7 @@
 	import { AutoFocusPlugin } from './playground/plugins/AutoFocus/LexicalAutoFocusPlugin.svelte';
 	import PageBreakPlug from '@plugins/PageBreakPlugin/PageBreakPlug.svelte';
 	import { HorizontalRulePlugin } from '@plugins/HorizontalPlugin/LexicalHorizontalRulePlugin';
-	import CollapsiblePlugin from '@plugins/CollapsiblePlugin/index.svelte';
+	import CollapsiblePlugin from '@plugins/CollapsiblePlugin/CollapsiblePlugin.svelte';
 	const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
 	const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement>(null);
 	const isEditable = true;
@@ -89,6 +89,7 @@
 <div
 	class={`editor-container ${showTreeView ? 'tree-view' : ''} ${!isRichText ? 'plain-text' : ''}`}
 >
+	<Portal target={null} initializor={CollapsiblePlugin} />
 	<PageBreakPlug />
 	<Portal target={null} initializor={HorizontalRulePlugin} />
 	{#if !isRichText}
@@ -117,8 +118,6 @@
 		<Portal target={null} initializor={ListPlugin} />
 		<Portal target={null} initializor={CheckListPlugin} />
 		<Portal target={null} initializor={CodeHighlightPlugin} />
-		<Portal target={null} initializor={CodeHighlightPlugin} />
-		<Portal target={null} initializor={CollapsiblePlugin} />
 
 		<ImagePlugin captionsEnabled={true} />
 		<LinkPlugin />
