@@ -29,6 +29,8 @@
 		"@lexical/text": "0.12.4",
 		"@lexical/utils": "0.12.4",
 		"@lexical/yjs": "0.12.4",
+		"@myriaddreamin/typst-ts-renderer": "0.4.1-rc2",
+		"@myriaddreamin/typst.ts": "0.4.1-rc2",
 		"@types/katex": "^0.16.7",
 		"@types/lodash-es": "^4.17.12",
 		"@types/node": "^20.9.3",

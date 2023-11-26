@@ -23,6 +23,7 @@ import { PageBreakNode } from '@plugins/PageBreakPlugin/PageBreakNode';
 import { CollapsibleContainerNode } from '@plugins/CollapsiblePlugin/CollapsibleContainerNode';
 import { CollapsibleContentNode } from '@plugins/CollapsiblePlugin/CollapsibleContentNode';
 import { CollapsibleTitleNode } from '@plugins/CollapsiblePlugin/CollapsibleTitleNode';
+import { EquationNode } from '@plugins/EquationsPlugin/EquationNode';
 //import { EmojiNode } from '@plugins/EmojisPlugin/EmojiNode';
 
 const PlaygroundNodes: Array<Klass<LexicalNode>> = [
@@ -44,7 +45,8 @@ const PlaygroundNodes: Array<Klass<LexicalNode>> = [
 	KeywordNode,
 	ParagraphNode,
 	HorizontalRuleNode,
-	PageBreakNode
+	PageBreakNode,
+	EquationNode
 
 	//EmojiNode
 ];

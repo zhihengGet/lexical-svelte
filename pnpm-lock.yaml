@@ -59,6 +59,12 @@ dependencies:
   '@lexical/yjs':
     specifier: 0.12.4
     version: 0.12.4(lexical@0.12.4)(yjs@13.6.10)
+  '@myriaddreamin/typst-ts-renderer':
+    specifier: 0.4.1-rc2
+    version: 0.4.1-rc2
+  '@myriaddreamin/typst.ts':
+    specifier: 0.4.1-rc2
+    version: 0.4.1-rc2(@myriaddreamin/typst-ts-renderer@0.4.1-rc2)
   '@types/katex':
     specifier: ^0.16.7
     version: 0.16.7
@@ -1011,6 +1017,25 @@ packages:
       nanoid: 4.0.2
       svelte: 5.0.0-next.12
     dev: true
+
+  /@myriaddreamin/typst-ts-renderer@0.4.1-rc2:
+    resolution: {integrity: sha512-DadghY1KraLBDI/fzyBvlUS7rlZmf44JxSaCedvbze2zXNp2Ut/ywLSjgQMNfXnIR3V38XI9toq0eUT2oVmcWQ==}
+    dev: false
+
+  /@myriaddreamin/typst.ts@0.4.1-rc2(@myriaddreamin/typst-ts-renderer@0.4.1-rc2):
+    resolution: {integrity: sha512-MiXbSBOP2D9Py0Y6XHfgYBYNIC1XbLPBWwhp6IzjfMnx+pQ7tEkE6Q9UCHjW+Bb1Hg0bB7W0ne3bFXVosB6cJw==}
+    peerDependencies:
+      '@myriaddreamin/typst-ts-renderer': ^0.4.0
+      '@myriaddreamin/typst-ts-web-compiler': ^0.4.0
+    peerDependenciesMeta:
+      '@myriaddreamin/typst-ts-renderer':
+        optional: true
+      '@myriaddreamin/typst-ts-web-compiler':
+        optional: true
+    dependencies:
+      '@myriaddreamin/typst-ts-renderer': 0.4.1-rc2
+      idb: 7.1.1
+    dev: false
 
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -2341,6 +2366,10 @@ packages:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}
     engines: {node: '>=10.17.0'}
     dev: true
+
+  /idb@7.1.1:
+    resolution: {integrity: sha512-gchesWBzyvGHRO9W8tzUWFDycow5gwjvFKfyV9FF32Y7F50yZMp7mP+T2mJIWFx49zicqyC4uefHM17o6xKIVQ==}
+    dev: false
 
   /ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
