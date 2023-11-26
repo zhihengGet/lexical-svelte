@@ -3,10 +3,11 @@
 	import useLexicalEditable from '@lexical/react/useLexicalEditable.svelte';
 
 	import { useCanShowPlaceholder } from '../shared/useCanShowPlaceholder.svelte';
+	import type { HTMLAttributes } from 'svelte/elements';
 
 	let { content, class: className } = $props<{
 		content: string | ((editable: boolean) => string);
-		class: string;
+		class?: string | null | undefined;
 	}>();
 	const [editor] = useLexicalComposerContext();
 	const showPlaceholder = useCanShowPlaceholder(editor);

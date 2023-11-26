@@ -45,9 +45,7 @@ import {
 	$getNearestNodeOfType as getNearestNodeOfType,
 	mergeRegister
 } from '@lexical/utils';
-import type {
-	LexicalEditor,
-	NodeKey} from 'lexical';
+import type { LexicalEditor, NodeKey } from 'lexical';
 import {
 	$createParagraphNode as createParagraphNode,
 	$getNodeByKey as getNodeByKey,
@@ -95,7 +93,7 @@ function isNodeSelected(editor: LexicalEditor, key: NodeKey): boolean {
 
 export function useLexicalNodeSelection(
 	key: NodeKey
-): [boolean, (arg0: boolean) => void, () => void] {
+): [() => boolean, (arg0: boolean) => void, () => void] {
 	const [editor] = useLexicalComposerContext();
 
 	const [isSelected, setIsSelected] = useState(() => isNodeSelected(editor, key));
@@ -144,5 +142,5 @@ export function useLexicalNodeSelection(
 		});
 	}, [editor]);
 
-	return [isSelected(), setSelected, clearSelected];
+	return [isSelected, setSelected, clearSelected];
 }

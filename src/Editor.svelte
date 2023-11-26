@@ -29,7 +29,7 @@
 	import Test from './Test.svelte';
 	import { AutoFocusPlugin } from './lib/LexicalAutoFocusPlugin.svelte';
 	const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
-	const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
+	const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement>(null);
 	const isEditable = true;
 	const text = 'Enter some plain text...';
 	const placeholder = text;
@@ -73,7 +73,6 @@
 	};
 	console.log('isRichText', isRichText);
 	// your script goes here
-	$effect(() => console.log('float', floatingAnchorElem()));
 </script>
 
 {#snippet contentEditableRichText()}
@@ -84,10 +83,12 @@
 	</div>
 {/snippet}
 <ToolbarPlugin {setIsLinkEditMode} />
+
 <div
 	class={`editor-container ${showTreeView ? 'tree-view' : ''} ${!isRichText ? 'plain-text' : ''}`}
 >
-	{#if isRichText}
+	<ImagePlugin captionsEnabled={true} />
+	{#if !isRichText}
 		{#if isCollab}
 			<!-- enable history plugin  -->
 			<Portal
@@ -109,20 +110,14 @@
 			/>
 		{/if}
 
-		<!-- enable rich text -->
+		<!-- enable rich text features -->
 		<Portal target={null} initializor={ListPlugin} />
 		<Portal target={null} initializor={CheckListPlugin} />
 		<Portal target={null} initializor={CodeHighlightPlugin} />
 		<Portal target={null} initializor={CodeHighlightPlugin} />
-		<Portal target={null} initializor={AutoFocusPlugin} />
 
-		<ImagePlugin captionsEnabled={true} />
-
-		<!-- Links -->
 		<LinkPlugin />
-		<!-- 	<FloatingLinkEditorPlugin /> -->
 
-		<!-- Images -->
 		{#if floatingAnchorElem()}
 			<Portal {...CodeActionMenuPlugin({ anchorElem: floatingAnchorElem() })} />
 			<FloatingLinkEditorPlugin
@@ -138,15 +133,21 @@
 	{:else}
 		<!-- plain text only -->
 		<PlainTextPlugin contentEditable={ContentEditable} {placeholder} />
-		{#if !isCollab}
-			<!-- enable history plugin  -->
-			<Portal
-				target={null}
-				portal={false}
-				initializor={() => HistoryPlugin({ externalHistoryState: historyState })}
-			/>
-		{/if}
+
+		<!-- enable history plugin  -->
+		<Portal
+			target={null}
+			portal={false}
+			initializor={() => HistoryPlugin({ externalHistoryState: historyState })}
+		/>
 	{/if}
+	<Portal
+		target={null}
+		initializor={() => {
+			console.log('initialized auto focus');
+			AutoFocusPlugin({ defaultSelection: 'rootEnd' });
+		}}
+	/>
 	<Test />
 	<TreeViewPlugin />
 </div>

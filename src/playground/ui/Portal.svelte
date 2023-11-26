@@ -15,15 +15,6 @@
 		if (portal === false || !props.target) return;
 		let p = usePortal(node, props.target);
 
-		let child = node.children;
-		if (child) {
-			/* const react = child.item(0)?.getBoundingClientRect();
-			console.log(react, child);
-			node.style.width = react?.width ?? 0;
-			node.style.height = react?.heights ?? 0;
-			debugger; */
-		}
-
 		onDestroy(() => {
 			if (p && p.destroy) {
 				p.destroy();
@@ -36,7 +27,7 @@
 	}
 	let ref = props.ref ?? { current: undefined };
 	$effect(() => {
-		console.log('in portal Portal render', components);
+		console.log('in portal components:', components);
 	});
 </script>
 
@@ -44,20 +35,19 @@
 	<svelte:self {...decorator} />
 {/each}
 
-{#if !components || components.length == 0}
-	<div
+{#if (!components || components.length == 0) && (props.component || snippet)}
+	<span
+		class="inline-block mx-1 !p-0 leading-0"
 		use:refFn
 		bind:this={ref.current}
 		data-id="svelt-render"
-		data-portal={props.component?.name}
-		class="overflow-hidden inline m-0 p-0 inline-flex flex-col"
 	>
 		<!-- render decorators -->
 		<!-- render regular svelte components -->
 		{#await props.component}
 			<div>wait</div>
 		{:then component}
-			{#if component && !components}
+			{#if component}
 				<!-- {@debug component} -->
 				<svelte:component this={component} {...props.props ?? []}>
 					{#each props.childComponents ?? [] as cp}
@@ -71,7 +61,7 @@
 				{@render snippet({ refFn, ...props.props })}
 			{/if}
 		{/await}
-	</div>
+	</span>
 {/if}
 
 <style>

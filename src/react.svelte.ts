@@ -49,7 +49,14 @@ export function useCallback<T>(fn: T, dep?: any) {
 }
 //TODO , cant just return an value
 export function useMemo<T>(fn: () => T, dep?: any) {
-	const data = $derived(fn());
+	const closure = () => {
+		if (dep) {
+			dep;
+			return untrack(fn);
+		}
+		return fn();
+	};
+	const data = $derived(closure());
 	return data;
 }
 

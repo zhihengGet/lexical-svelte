@@ -46,7 +46,7 @@
 			class="fixed inset-0 z-50 bg-black/50"
 			transition:fade={{ duration: 150 }}
 		/>
-		<h1>{title}</h1>
+
 		<div
 			class="fixed left-[50%] top-[50%] z-50 max-h-[85vh] w-[90vw]
             max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-xl bg-white
@@ -59,6 +59,7 @@
 			{...$content}
 			use:content
 		>
+			<h1>{t}</h1>
 			{@render children()}
 			<button
 				{...$close}

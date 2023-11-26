@@ -32,23 +32,3 @@ module.exports = {
 		}
 	]
 };
-// customRule.js
-const rename$ = {
-	meta: {
-		type: 'problem',
-		docs: {
-			description: 'Description of the rule'
-		},
-		fixable: 'code',
-		schema: [] // no options
-	},
-	create: function (context) {
-		return {
-			Identifier: () => {}
-			// callback functions
-		};
-	}
-};
-
-const plugin = { rules: { 'enforce-dollar-sign': rename$ } };
-module.exports = plugin;

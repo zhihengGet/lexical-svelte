@@ -76,7 +76,7 @@
 	import { getSelectedNode } from '../../utils/getSelectedNode';
 	import { sanitizeUrl } from '../../utils/url';
 	import type { InsertImagePayload } from '@plugins/ImagesPlugin/InsertImageUriDialogBody.svelte';
-	import { INSERT_IMAGE_COMMAND } from '@plugins/ImagesPlugin/InsertImageUriDialogBody.svelte';
+	import { INSERT_IMAGE_COMMAND } from '@plugins/ImagesPlugin';
 	import { IS_APPLE } from 'shared/environment';
 	import Divider from './Divider.svelte';
 	import BlockFormatDropdown from './BlockFormatDropdown.svelte';

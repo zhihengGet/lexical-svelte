@@ -60,11 +60,11 @@
 	}
 
 	const initialConfig = {
-		editorState: null,
+		editorState: prepopulatedRichText,
 		namespace: 'Playground',
 		nodes: [...PlaygroundNodes],
 		onError: (error: Error) => {
-			console.log('error initialize', error);
+			console.error('error initialize', error);
 			throw error;
 		},
 		theme: PlaygroundEditorTheme
@@ -73,7 +73,6 @@
 </script>
 
 <main aria-autocomplete="none">
-	<div />
 	<SettingsContext>
 		<SharedAutocompleteContext>
 			<LexicalComposer {initialConfig}>
@@ -86,6 +85,4 @@
 			</LexicalComposer>
 		</SharedAutocompleteContext>
 	</SettingsContext>
-
-	<p class="read-the-docs">Click on the Vite and Svelte logos to learn more</p>
 </main>

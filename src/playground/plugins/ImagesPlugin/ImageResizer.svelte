@@ -224,8 +224,8 @@
 	}); */
 </script>
 
-<div bind:this={controlWrapperRef.current} class="h-0 bg-green relative">
-	<!-- <button
+<div bind:this={controlWrapperRef.current} class=" bg-green">
+	<button
 		class="image-caption-button"
 		bind:this={buttonRef.current}
 		onclick={() => {
@@ -234,7 +234,7 @@
 	>
 		Add Caption
 	</button>
- -->
+
 	<div
 		class="image-resizer image-resizer-n"
 		onpointerdown={(event) => {

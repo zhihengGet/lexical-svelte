@@ -12,7 +12,7 @@ export type SvelteRender<T = {}> = {
 	nodeKey?: string;
 	type?: string;
 	key?: string;
-	target: HTMLElement | null;
+	target?: HTMLElement | null;
 	initializor?: () => unknown;
 	// get a ref to the rendered component
 	ref?: React.MutableRefObject<HTMLElement>;

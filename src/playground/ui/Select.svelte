@@ -4,7 +4,7 @@
 
 <div class="Input__wrapper">
 	<label class="Input__label">{label}</label>
-	<select {...other} class={className || 'select'}>
+	<select {...other}>
 		{@render children()}
 	</select>
 </div>

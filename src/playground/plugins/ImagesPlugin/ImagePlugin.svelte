@@ -180,6 +180,7 @@
 	const [editor] = useLexicalComposerContext();
 
 	useEffect(() => {
+		console.log('calling image plug effect');
 		if (!editor.hasNodes([ImageNode])) {
 			throw new Error('ImagesPlugin: ImageNode not registered on editor');
 		}
@@ -188,7 +189,9 @@
 			editor.registerCommand<InsertImagePayload>(
 				INSERT_IMAGE_COMMAND,
 				(payload) => {
+					console.log('inserting image node');
 					const imageNode = createImageNode(payload);
+
 					lexical.$insertNodes([imageNode]);
 					if (lexical.$isRootOrShadowRoot(imageNode.getParentOrThrow())) {
 						wrapNodeInElement(imageNode, lexical.$createParagraphNode).selectEnd();
@@ -221,4 +224,5 @@
 			)
 		);
 	}, [captionsEnabled, editor]);
+	console.log('image plugin loaded');
 </script>

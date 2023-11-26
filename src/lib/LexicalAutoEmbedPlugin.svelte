@@ -3,10 +3,8 @@
 
 	import { $isLinkNode as isLinkNode, AutoLinkNode, LinkNode } from '@lexical/link';
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
-	import type {
-		MenuRenderFn
-	} from '@lexical/react/LexicalNodeMenuPlugin.svelte';
-import {
+	import type { MenuRenderFn } from '@lexical/react/LexicalNodeMenuPlugin.svelte';
+	import {
 		default as LexicalNodeMenuPlugin,
 		MenuOption
 	} from '@lexical/react/LexicalNodeMenuPlugin.svelte';

@@ -20,11 +20,9 @@ const KEYWORDS_REGEX =
 export default function KeywordsPlugin(): JSX.Element | null {
 	const [editor] = useLexicalComposerContext();
 
-	useEffect(() => {
-		if (!editor.hasNodes([KeywordNode])) {
-			throw new Error('KeywordsPlugin: KeywordNode not registered on editor');
-		}
-	}, [editor]);
+	if (!editor.hasNodes([KeywordNode])) {
+		throw new Error('KeywordsPlugin: KeywordNode not registered on editor');
+	}
 
 	const createKeywordNode = useCallback((textNode: TextNode): KeywordNode => {
 		return $createKeywordNode(textNode.getTextContent());

@@ -11,7 +11,6 @@ import type { TextNode } from 'lexical';
 import { $createHashtagNode as createHashtagNode$, HashtagNode } from '@lexical/hashtag';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 import { useLexicalTextEntity } from '@lexical/react/useLexicalTextEntity';
-import { useCallback, useEffect } from 'react';
 
 function getHashtagRegexStringChars(): Readonly<{
 	alpha: string;
@@ -248,20 +247,18 @@ function getHashtagRegexString(): string {
 
 const REGEX = new RegExp(getHashtagRegexString(), 'i');
 
-export function HashtagPlugin(): JSX.Element | null {
+export function HashtagPlugin() {
 	const [editor] = useLexicalComposerContext();
 
-	useEffect(() => {
-		if (!editor.hasNodes([HashtagNode])) {
-			throw new Error('HashtagPlugin: HashtagNode not registered on editor');
-		}
-	}, [editor]);
+	if (!editor.hasNodes([HashtagNode])) {
+		throw new Error('HashtagPlugin: HashtagNode not registered on editor');
+	}
 
-	const createHashtagNode = useCallback((textNode: TextNode): HashtagNode => {
+	const createHashtagNode = (textNode: TextNode): HashtagNode => {
 		return createHashtagNode$(textNode.getTextContent());
-	}, []);
+	};
 
-	const getHashtagMatch = useCallback((text: string) => {
+	const getHashtagMatch = (text: string) => {
 		const matchArr = REGEX.exec(text);
 
 		if (matchArr === null) {
@@ -275,7 +272,7 @@ export function HashtagPlugin(): JSX.Element | null {
 			end: endOffset,
 			start: startOffset
 		};
-	}, []);
+	};
 
 	useLexicalTextEntity<HashtagNode>(getHashtagMatch, HashtagNode, createHashtagNode);
 
