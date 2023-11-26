@@ -18,8 +18,11 @@ import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { TableCellNode, TableNode, TableRowNode } from '@lexical/table';
 import { ImageNode } from '@plugins/ImagesPlugin/ImageNode';
 import { KeywordNode } from '@plugins/KeywordsPlugin/KeywordNode';
-import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
+import { HorizontalRuleNode } from '@plugins/HorizontalPlugin/LexicalHorizontalRuleNode';
 import { PageBreakNode } from '@plugins/PageBreakPlugin/PageBreakNode';
+import { CollapsibleContainerNode } from '@plugins/CollapsiblePlugin/CollapsibleContainerNode';
+import { CollapsibleContentNode } from '@plugins/CollapsiblePlugin/CollapsibleContentNode';
+import { CollapsibleTitleNode } from '@plugins/CollapsiblePlugin/CollapsibleTitleNode';
 //import { EmojiNode } from '@plugins/EmojisPlugin/EmojiNode';
 
 const PlaygroundNodes: Array<Klass<LexicalNode>> = [
@@ -42,6 +45,7 @@ const PlaygroundNodes: Array<Klass<LexicalNode>> = [
 	ParagraphNode,
 	HorizontalRuleNode,
 	PageBreakNode
+
 	//EmojiNode
 ];
 

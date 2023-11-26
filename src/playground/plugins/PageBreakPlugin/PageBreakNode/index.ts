@@ -79,14 +79,14 @@ function PageBreakComponent({ nodeKey }: { nodeKey: NodeKey }) {
 	useEffect(() => {
 		const pbElem = editor.getElementByKey(nodeKey);
 		if (pbElem !== null) {
-			pbElem.className = isSelected ? 'selected' : '';
+			pbElem.className = isSelected() ? 'selected' : '';
 		}
 	}, [editor, isSelected, nodeKey]);
 
 	return null;
 }
 
-export class PageBreakNode extends DecoratorNode<SvelteRender> {
+export class PageBreakNode extends DecoratorNode<SvelteRender<any>> {
 	static getType(): string {
 		return 'page-break';
 	}
@@ -139,8 +139,8 @@ export class PageBreakNode extends DecoratorNode<SvelteRender> {
 		return false;
 	}
 
-	decorate() {
-		return { component: PageBreakComponent, props: { nodeKey: this.__key } };
+	decorate(): SvelteRender {
+		return { initializor: () => PageBreakComponent({ nodeKey: this.__key }) };
 	}
 }
 

@@ -44,7 +44,7 @@ export function HorizontalRuleComponent({ nodeKey }: { nodeKey: NodeKey }) {
 						if (!event.shiftKey) {
 							clearSelection();
 						}
-						setSelected(!isSelected);
+						setSelected(!isSelected());
 						return true;
 					}
 

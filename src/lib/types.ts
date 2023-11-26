@@ -1,4 +1,4 @@
-import type { ComponentProps, ComponentType, Snippet, SvelteComponent } from 'svelte';
+import type { ComponentProps, Snippet } from 'svelte';
 
 export type LexicalSubscription<T> = {
 	initialValueFn: () => T;

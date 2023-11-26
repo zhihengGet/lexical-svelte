@@ -38,13 +38,19 @@ async function process(filename) {
 	// all js files, but don't look in node_modules
 	const jsfiles = await glob('**/' + filename, { ignore: 'node_modules/**' });
 	console.log(jsfiles);
-	const content = a || (await readFile(jsfiles[0], { encoding: 'utf-8' }));
+	const content = (await readFile(jsfiles[0], { encoding: 'utf-8' })).replaceAll('\r\n', '\n');
 	//console.log(content);
-	const r = /^(\s*import)(.|\n)* from ('.*';)/gm;
+	const r = /^(\s*import)(.|\n|\0)* from '.*';/gm;
 	const dollar = /\$[a-zA-Z|_]+/gm;
 
 	const sp = content.match(r);
-	//	console.log(sp);
+	console.log(sp);
+	/* let result;
+
+	while ((result = r.exec(content)) !== null) {
+		console.log(result);
+	}
+ */
 	const importLines = sp.join('\n');
 
 	console.log(chalk.green(importLines));
@@ -70,4 +76,4 @@ async function process(filename) {
 	);
 	await writeFile(jsfiles[0].replace('tsx', 'tsx'), new_imports + rest, () => console.log('wrote'));
 }
-process('/LexicalHorizontalRulePlugin.*');
+process('/index.svelte.ts');
