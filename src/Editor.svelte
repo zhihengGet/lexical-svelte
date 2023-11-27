@@ -84,42 +84,22 @@
 		</div>
 	</div>
 {/snippet}
-<ToolbarPlugin {setIsLinkEditMode} />
 
+{isRichText ? 'RichTExt' : 'Plain'}
+<ToolbarPlugin {setIsLinkEditMode} />
 <div
 	class={`editor-container ${showTreeView ? 'tree-view' : ''} ${!isRichText ? 'plain-text' : ''}`}
 >
-	<Portal target={null} initializor={CollapsiblePlugin} />
-	<PageBreakPlug />
-	<Portal target={null} initializor={HorizontalRulePlugin} />
-	{#if !isRichText}
-		{#if isCollab}
-			<!-- enable history plugin  -->
-			<Portal
-				portal={false}
-				target={null}
-				initializor={() =>
-					CollaborationPlugin({
-						id: 'main',
-						providerFactory: createWebsocketProvider,
-						shouldBootstrap: !skipCollaborationInit
-					})}
-			/>
-		{:else}
-			<!-- enable history plugin  -->
-			<Portal
-				target={null}
-				portal={false}
-				initializor={() => HistoryPlugin({ externalHistoryState: historyState })}
-			/>
-		{/if}
-
-		<!-- enable rich text features -->
+	{#if isRichText}
+		<LexicalRichTextPlugin contentEditable={contentEditableRichText} {placeholder} />
+		<PageBreakPlug />
+		<ImagePlugin captionsEnabled={true} />
+		<Portal target={null} initializor={HorizontalRulePlugin} />
+		<Portal target={null} initializor={CollapsiblePlugin} />
+		<Portal target={null} initializor={AutoFocusPlugin} />
 		<Portal target={null} initializor={ListPlugin} />
 		<Portal target={null} initializor={CheckListPlugin} />
 		<Portal target={null} initializor={CodeHighlightPlugin} />
-
-		<ImagePlugin captionsEnabled={true} />
 		<LinkPlugin />
 
 		{#if floatingAnchorElem()}
@@ -131,9 +111,6 @@
 			/>
 			<FloatingTextFormatToolbarPlugin anchorElem={floatingAnchorElem()} />
 		{/if}
-
-		<!-- list -->
-		<LexicalRichTextPlugin contentEditable={contentEditableRichText} {placeholder} />
 	{:else}
 		<!-- plain text only -->
 		<PlainTextPlugin contentEditable={ContentEditable} {placeholder} />
@@ -145,13 +122,27 @@
 			initializor={() => HistoryPlugin({ externalHistoryState: historyState })}
 		/>
 	{/if}
-	<Portal
-		target={null}
-		initializor={() => {
-			console.log('initialized auto focus');
-			AutoFocusPlugin({ defaultSelection: 'rootEnd' });
-		}}
-	/>
+	{#if isCollab}
+		<!-- enable history plugin  -->
+		<Portal
+			portal={false}
+			target={null}
+			initializor={() =>
+				CollaborationPlugin({
+					id: 'main',
+					providerFactory: createWebsocketProvider,
+					shouldBootstrap: !skipCollaborationInit
+				})}
+		/>
+	{:else}
+		<!-- enable history plugin  -->
+		<Portal
+			target={null}
+			portal={false}
+			initializor={() => HistoryPlugin({ externalHistoryState: historyState })}
+		/>
+	{/if}
+
 	<Test />
 	<TreeViewPlugin />
 </div>

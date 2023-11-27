@@ -504,10 +504,10 @@
 		/>
 		<DropDown
 			disabled={!isEditable()}
-			buttonclass="toolbar-item spaced"
+			buttonClassName="toolbar-item spaced"
 			buttonLabel=""
 			buttonAriaLabel="Formatting options for additional text styles"
-			buttonIconclass="icon dropdown-more"
+			buttonIconClassName="icon dropdown-more"
 		>
 			<DropDownItem
 				onClick={() => {

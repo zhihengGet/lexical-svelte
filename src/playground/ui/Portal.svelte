@@ -36,26 +36,15 @@
 {/each}
 
 {#if (!components || components.length == 0) && (props.component || snippet)}
-	<span
-		class="inline-block mx-1 !p-0 leading-0"
-		use:refFn
-		bind:this={ref.current}
-		data-id="svelt-render"
-	>
-		<!-- render decorators -->
-		<!-- render regular svelte components -->
+	<span class="inline-block" use:refFn bind:this={ref.current} data-id="svelt-render">
 		{#await props.component}
 			<div>wait</div>
 		{:then component}
 			{#if component}
-				<!-- {@debug component} -->
 				<svelte:component this={component} {...props.props ?? []}>
 					{#each props.childComponents ?? [] as cp}
 						<svelte:self {...cp} />
 					{/each}
-					<!-- {#if children}
-					{@render children()}
-				{/if} -->
 				</svelte:component>
 			{:else if snippet}
 				{@render snippet({ refFn, ...props.props })}

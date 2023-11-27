@@ -29,7 +29,7 @@
 	const [editor] = useLexicalComposerContext();
 	const [equationValue, setEquationValue] = useState(equation);
 	const [showEquationEditor, setShowEquationEditor] = useState<boolean>(false);
-	const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
+	const inputRef = useRef<HTMLInputElement>(null);
 
 	const onHide = useCallback(
 		(restoreSelection?: boolean) => {
@@ -106,8 +106,7 @@
 		equation={equationValue()}
 		setEquation={setEquationValue}
 		{inline}
-		forwardedRef={inputRef.current}
-		bind:this={inputRef.current}
+		forwardedRef={inputRef}
 	/>
 {:else}
 	<KatexRenderer

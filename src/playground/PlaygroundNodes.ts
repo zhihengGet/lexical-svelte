@@ -46,8 +46,10 @@ const PlaygroundNodes: Array<Klass<LexicalNode>> = [
 	ParagraphNode,
 	HorizontalRuleNode,
 	PageBreakNode,
-	EquationNode
-
+	// collapsible
+	CollapsibleContainerNode,
+	CollapsibleContentNode,
+	CollapsibleTitleNode
 	//EmojiNode
 ];
 

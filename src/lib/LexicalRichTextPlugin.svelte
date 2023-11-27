@@ -18,6 +18,7 @@
 	const [editor] = useLexicalComposerContext();
 	const decorators = useDecorators(editor);
 	useRichTextSetup(editor);
+	console.log('setting update rich text editor', editor);
 	$effect(() => console.log('decorators', decorators()));
 </script>
 

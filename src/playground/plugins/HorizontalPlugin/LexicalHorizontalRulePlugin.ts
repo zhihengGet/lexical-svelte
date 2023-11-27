@@ -20,7 +20,6 @@ export function HorizontalRulePlugin(): null {
 		return editor.registerCommand(
 			INSERT_HORIZONTAL_RULE_COMMAND,
 			(type) => {
-				debugger;
 				const selection = $getSelection();
 
 				if (!$isRangeSelection(selection)) {

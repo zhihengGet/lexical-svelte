@@ -16,8 +16,8 @@ type Props = {
 export function AutoFocusPlugin({ defaultSelection }: Props = {}): null {
 	const [editor] = useLexicalComposerContext();
 
-	onMount(() => {
-		//	console.log(typeof editor, 'editor is ?', editor._rootElement);
+	$effect(() => {
+		console.log(typeof editor, 'editor is ?', editor._rootElement);
 
 		editor.focus(
 			() => {
