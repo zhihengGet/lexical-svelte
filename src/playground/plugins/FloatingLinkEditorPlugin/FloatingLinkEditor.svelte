@@ -202,7 +202,7 @@
 				}}
 			/>
 			<div>
-				<button
+				<div
 					class="link-cancel"
 					role="button"
 					tabIndex={0}
@@ -212,7 +212,7 @@
 					}}
 				/>
 
-				<button
+				<div
 					class="link-confirm"
 					role="button"
 					tabIndex={0}
@@ -225,7 +225,7 @@
 				<a href={sanitizeUrl(linkUrl())} target="_blank" rel="noopener noreferrer">
 					{linkUrl()}
 				</a>
-				<button
+				<div
 					class="link-edit"
 					role="button"
 					tabIndex={0}
@@ -235,16 +235,15 @@
 						setIsLinkEditMode(true);
 					}}
 				/>
-				<button
+				<div
 					class="link-trash"
-					role="button"
 					tabIndex={0}
+					class="bg-transparent w-5 h-5"
 					onMouseDown={(event) => event.preventDefault()}
 					onclick={() => {
 						editor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
 					}}
-					><TrashIcon />
-				</button>
+				/>
 			</div>
 		{/if}
 	{/if}
