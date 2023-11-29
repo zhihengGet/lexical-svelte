@@ -63,5 +63,5 @@
 	{spellCheck}
 	{style}
 	{tabIndex}
-	style="min-width:20px;caret-color: purple;"
+	style="caret-color: purple;"
 />

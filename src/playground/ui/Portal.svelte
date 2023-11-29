@@ -12,7 +12,19 @@
 	} = $props<SvelteRender<T> & { children?: Snippet }>();
 
 	function refFn(node: HTMLElement) {
-		if (portal === false || !props.target) return;
+		if (portal === false || !props.target) {
+			// if we dont need to portal then remove the div that is wrapper it
+			let child = node.childNodes;
+			let parent = node.parentElement;
+			if (parent && child) {
+				parent?.removeChild(node);
+				parent.append(...child);
+			} else if (parent) {
+				parent.removeChild(node);
+			}
+
+			return;
+		}
 		let p = usePortal(node, props.target);
 
 		onDestroy(() => {
@@ -34,9 +46,8 @@
 {#each components ?? [] as decorator}
 	<svelte:self {...decorator} />
 {/each}
-
-{#if (!components || components.length == 0) && (props.component || snippet)}
-	<span class="inline-block" use:refFn bind:this={ref.current} data-id="svelt-render">
+{#snippet El()}
+	<svelte:fragment>
 		{#await props.component}
 			<div>wait</div>
 		{:then component}
@@ -50,7 +61,16 @@
 				{@render snippet({ refFn, ...props.props })}
 			{/if}
 		{/await}
-	</span>
+	</svelte:fragment>
+{/snippet}
+{#if (!components || components.length == 0) && (props.component || snippet)}
+	{#if portal == false || !props.target}
+		{@render El()}
+	{:else}
+		<div class="inline-block" use:refFn bind:this={ref.current} data-id="svelt-render">
+			{@render El()}
+		</div>
+	{/if}
 {/if}
 
 <style>

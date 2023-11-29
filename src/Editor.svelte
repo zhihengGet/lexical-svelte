@@ -144,5 +144,5 @@
 	{/if}
 
 	<Test />
-	<TreeViewPlugin />
 </div>
+<TreeViewPlugin />

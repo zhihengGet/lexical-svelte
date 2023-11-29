@@ -16,10 +16,11 @@
 	import { createContext, useCallback, useMemo, useState } from 'react';
 
 	import { DEFAULT_SETTINGS } from '../appSettings';
-	import { getContext, setContext } from 'svelte';
+	import { getContext, setContext, type Snippet } from 'svelte';
 
 	totalComponents += 1;
 
+	const { children } = $props<{ children: Snippet }>();
 	const [settings, setSettings] = useState(DEFAULT_SETTINGS);
 	const setOption = useCallback((setting: SettingName, value: boolean) => {
 		setSettings((options) => ({
@@ -57,4 +58,4 @@
 	}
 </script>
 
-<slot />
+{@render children()}
