@@ -30,6 +30,7 @@
 	import PageBreakPlug from '@plugins/PageBreakPlugin/PageBreakPlug.svelte';
 	import { HorizontalRulePlugin } from '@plugins/HorizontalPlugin/LexicalHorizontalRulePlugin';
 	import CollapsiblePlugin from '@plugins/CollapsiblePlugin/CollapsiblePlugin.svelte';
+	import EquationsPlugin from '@plugins/EquationsPlugin/EquationsPlugin.svelte';
 	const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
 	const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement>(null);
 	const isEditable = true;
@@ -100,6 +101,7 @@
 		<Portal target={null} initializor={ListPlugin} />
 		<Portal target={null} initializor={CheckListPlugin} />
 		<Portal target={null} initializor={CodeHighlightPlugin} />
+		<EquationsPlugin />
 		<LinkPlugin />
 
 		{#if floatingAnchorElem()}

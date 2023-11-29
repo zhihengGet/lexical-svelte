@@ -11,6 +11,7 @@
 		...props
 	} = $props<SvelteRender<T> & { children?: Snippet }>();
 
+	console.log('portal'.props);
 	function refFn(node: HTMLElement) {
 		if (portal === false || !props.target) {
 			// if we dont need to portal then remove the div that is wrapper it

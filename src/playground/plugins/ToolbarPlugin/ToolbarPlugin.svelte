@@ -599,7 +599,7 @@
 				<i class="icon image" />
 				<span class="text">Image</span>
 			</DropDownItem>
-			<DropDownItem
+			<!-- 	<DropDownItem
 				onClick={() => {
 					showModal('Insert Image', (onClose) => {
 						return [
@@ -615,8 +615,8 @@
 			>
 				<i class="icon image" />
 				<span class="text">Inline Image</span>
-			</DropDownItem>
-			<DropDownItem
+			</DropDownItem> -->
+			<!-- 	<DropDownItem
 				onClick={() =>
 					insertGifOnClick({
 						altText: 'Cat typing on a laptop',
@@ -626,7 +626,7 @@
 			>
 				<i class="icon gif" />
 				<span class="text">GIF</span>
-			</DropDownItem>
+			</DropDownItem> -->
 			<!-- 	<DropDownItem
 				onClick={() => {
 					activeEditor().dispatchCommand(INSERT_EXCALIDRAW_COMMAND, undefined);
@@ -637,7 +637,7 @@
 				<span class="text">Excalidraw</span>
 			</DropDownItem> -->
 
-			<DropDownItem
+			<!-- 	<DropDownItem
 				onClick={() => {
 					showModal('Insert Equation', (onClose) => [
 						{
@@ -653,7 +653,7 @@
 			>
 				<i class="icon equation" />
 				<span class="text">Equation</span>
-			</DropDownItem>
+			</DropDownItem> -->
 			<!-- 	<DropDownItem
 				onClick={() => {
 					editor.update(() => {

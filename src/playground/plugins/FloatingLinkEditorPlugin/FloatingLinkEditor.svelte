@@ -33,6 +33,8 @@
 </script>
 
 <script lang="ts">
+	import { TrashIcon } from 'lucide-svelte';
+
 	let { editor, isLink, setIsLink, anchorElem, isLinkEditMode, setIsLinkEditMode } = $props<{
 		editor: LexicalEditor;
 		isLink: boolean;
@@ -41,6 +43,7 @@
 		isLinkEditMode: boolean;
 		setIsLinkEditMode: React.Dispatch<boolean>;
 	}>();
+	console.log('props', isLink);
 	const editorRef = useRef<HTMLDivElement | null>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [linkUrl, setLinkUrl] = useState('');
@@ -176,8 +179,9 @@
 	};
 
 	const handleLinkSubmission = () => {
-		if (lastSelection !== null) {
+		if (lastSelection() !== null) {
 			if (linkUrl() !== '') {
+				console.log('editedLinkUrl', editedLinkUrl());
 				editor.dispatchCommand(TOGGLE_LINK_COMMAND, sanitizeUrl(editedLinkUrl()));
 			}
 			setEditedLinkUrl('https://');
@@ -192,15 +196,13 @@
 			<input
 				bind:this={inputRef.current}
 				class="link-input"
-				onchange={(event) => {
-					setEditedLinkUrl(event.target.value);
-				}}
+				value={editedLinkUrl()}
 				onkeydown={(event) => {
 					monitorInputInteraction(event);
 				}}
 			/>
 			<div>
-				<div
+				<button
 					class="link-cancel"
 					role="button"
 					tabIndex={0}
@@ -210,7 +212,7 @@
 					}}
 				/>
 
-				<div
+				<button
 					class="link-confirm"
 					role="button"
 					tabIndex={0}
@@ -223,7 +225,7 @@
 				<a href={sanitizeUrl(linkUrl())} target="_blank" rel="noopener noreferrer">
 					{linkUrl()}
 				</a>
-				<div
+				<button
 					class="link-edit"
 					role="button"
 					tabIndex={0}
@@ -233,7 +235,7 @@
 						setIsLinkEditMode(true);
 					}}
 				/>
-				<div
+				<button
 					class="link-trash"
 					role="button"
 					tabIndex={0}
@@ -241,7 +243,8 @@
 					onclick={() => {
 						editor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
 					}}
-				/>
+					><TrashIcon />
+				</button>
 			</div>
 		{/if}
 	{/if}

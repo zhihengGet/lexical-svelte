@@ -2,58 +2,54 @@
 </script>
 
 <script lang="ts">
-  type Props = {
-    initialEquation?: string;
-    onConfirm: (equation: string, inline: boolean) => void;
-  };
-  import "./KatexEquationAlterer.css";
-  import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext.svelte";
-  import * as React from "react";
-  import { useCallback, useState } from "react";
+	type Props = {
+		initialEquation?: string;
+		onConfirm: (equation: string, inline: boolean) => void;
+	};
+	import './KatexEquationAlterer.css';
+	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
+	import * as React from 'react';
+	import { useCallback, useState } from 'react';
 
-  import Button from "@ui/Button.svelte";
-  import KatexRenderer from "./KatexRenderer.svelte";
+	import Button from '@ui/Button.svelte';
+	import KatexRenderer from './KatexRenderer.svelte';
 
-  let { onConfirm, initialEquation = "" } = $props<Props>();
-  const [editor] = useLexicalComposerContext();
-  const [equation, setEquation] = useState<string>(initialEquation);
-  const [inline, setInline] = useState<boolean>(true);
+	let { onConfirm, initialEquation = '' } = $props<Props>();
+	const [editor] = useLexicalComposerContext();
+	const [equation, setEquation] = useState<string>(initialEquation);
+	const [inline, setInline] = useState<boolean>(true);
 
-  const onClick = useCallback(() => {
-    onConfirm(equation(), inline());
-  }, [onConfirm, equation, inline]);
+	const onClick = useCallback(() => {
+		onConfirm(equation(), inline());
+	}, [onConfirm, equation, inline]);
 
-  const onCheckboxChange = useCallback(() => {
-    setInline(!inline);
-  }, [setInline, inline]);
+	const onCheckboxChange = useCallback(() => {
+		setInline(!inline());
+	}, [setInline, inline]);
 </script>
 
 <div class="KatexEquationAlterer_defaultRow">
-  Inline
-  <input type="checkbox" checked={inline()} onChange={onCheckboxChange} />
+	Inline
+	<input type="checkbox" checked={inline()} onChange={onCheckboxChange} />
 </div>
 <div class="KatexEquationAlterer_defaultRow">Equation</div>
 <div class="KatexEquationAlterer_centerRow">
-  {#if inline()}
-    <input
-      oninput={(event) => setEquation(event.target.value)}
-      class="KatexEquationAlterer_textArea"
-    />
-  {:else}
-    <textarea
-      oninput={(event) => setEquation(event.target.value)}
-      class="KatexEquationAlterer_textArea"
-    />
-  {/if}
+	{#if inline()}
+		<input
+			oninput={(event) => setEquation(event.target.value)}
+			class="KatexEquationAlterer_textArea"
+		/>
+	{:else}
+		<textarea
+			oninput={(event) => setEquation(event.target.value)}
+			class="KatexEquationAlterer_textArea"
+		/>
+	{/if}
 </div>
 <div class="KatexEquationAlterer_defaultRow">Visualization</div>
 <div class="KatexEquationAlterer_centerRow">
-  <KatexRenderer
-    equation={equation()}
-    inline={false}
-    onDoubleClick={() => null}
-  />
+	<KatexRenderer equation={equation()} inline={false} onDoubleClick={() => null} />
 </div>
 <div class="KatexEquationAlterer_dialogActions">
-  <Button {onClick}>Confirm</Button>
+	<Button {onClick}>Confirm</Button>
 </div>
