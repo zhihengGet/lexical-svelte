@@ -280,7 +280,8 @@
 	} = useSettings();
 
 	//const draggable = isSelected && isNodeSelection(selection) && !isResizing;
-	let isFocused = $derived(isSelected() || isResizing());
+	let openImageResizer = $derived((isSelected() || isResizing()) && resizable);
+	const mw = maxWidth;
 </script>
 
 <div draggable="true">
@@ -293,11 +294,11 @@
 		style={'max-width:' + maxWidth}
 	/>
 </div>
-{#snippet Caption()}
-	<ContentEditable class="ImageNode__contentEditable" />
+<!-- {#snippet Caption()}
+	<ContentEditable class="w-full mx-1 h-25px leading-normal border-0 outline-none" />
 {/snippet}
-<!-- {#if showCaption}
-	<div class="image-caption-container">
+{#if showCaption}
+	<div class="block relative p-0 m-0 overflow-hidden" style="width:{imageRef.current.style.width}">
 		<LexicalNestedComposer initialEditor={caption}>
 			<LinkPlugin />
 			<Portal initializor={HashtagPlugin} />
@@ -308,23 +309,24 @@
 			<RichTextPlugin
 				contentEditable={Caption}
 				placeholder="Enter a caption..."
-				placeholderProps={{ class: 'leading-normal' }}
+				placeholderProps={{
+					class:
+						'select-none leading-normal inline-block absolute bottom-0 left-0 w-full pointer-events-none bg-neutral-200 border-0 outline-none overflow-hidden text-ellipsis text-coolGray pl-5 cursor-cell bg-transparent'
+				}}
 			/>
 		</LexicalNestedComposer>
 	</div>
 {/if}
 
-{#if resizable && isNodeSelection(selection()) && isFocused}
+{#if isNodeSelection(selection()) && openImageResizer}
 	<ImageResizer
-		{showCaption}
 		{setShowCaption}
 		{editor}
 		{buttonRef}
 		{imageRef}
-		{maxWidth}
+		maxWidth={10000}
 		{onResizeStart}
 		{onResizeEnd}
-		{captionsEnabled}
 	/>
 {/if}
  -->

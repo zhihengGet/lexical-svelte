@@ -3,7 +3,7 @@
 
 	import type * as React from 'react';
 	import { useRef } from 'react';
-	import { onMount } from 'svelte';
+	import { onMount, untrack } from 'svelte';
 
 	function clamp(value: number, min: number, max: number) {
 		return Math.min(Math.max(value, min), max);
@@ -29,15 +29,16 @@
 	};
 </script>
 
+<!-- WARN: maxWidth will cause image to not being able -->
 <script lang="ts">
 	let {
+		showCaption,
 		onResizeStart,
 		onResizeEnd,
 		buttonRef,
 		imageRef,
 		maxWidth,
 		editor,
-		showCaption,
 		setShowCaption,
 		captionsEnabled
 	} = $props<p>();
@@ -154,6 +155,9 @@
 	};
 	const handlePointerMove = (event: PointerEvent) => {
 		const image = imageRef.current;
+		/* 	const className = image?.className;
+		image?.classList.remove('w-100');
+		image?.classList.remove('h-100'); */
 		const positioning = positioningRef.current;
 		if (!positioning) return console.error('positioning is empty');
 		const isHorizontal = positioning.direction & (Direction.east | Direction.west);
@@ -172,7 +176,7 @@
 				image.style.height = `${height}px`;
 				positioning.currentHeight = height;
 				positioning.currentWidth = width;
-				console.log('updated position', image.style.width);
+				//console.log('updated position', image.style.width);
 			} else if (isVertical) {
 				let diff = Math.floor(positioning.startY - event.clientY);
 				diff = positioning.direction & Direction.south ? -diff : diff;
@@ -212,24 +216,24 @@
 			controlWrapper.classList.remove('image-control-wrapper--resizing');
 
 			setEndCursor();
+
 			onResizeEnd(width, height);
 
 			document.removeEventListener('pointermove', handlePointerMove);
 			document.removeEventListener('pointerup', handlePointerUp);
 		}
 	};
-	/* onMount(() => {
-		controlWrapperRef.current.style.width = imageRef.current?.style.width;
-		controlWrapperRef.current.style.height = imageRef.current?.style.height;
-	}); */
+
+	console.log('rerendered image transfomer');
 </script>
 
-<div bind:this={controlWrapperRef.current} class=" bg-green">
+<div bind:this={controlWrapperRef.current} class="absolute w-100% h-full top-0 bottom-0">
 	<button
-		class="image-caption-button"
+		data-id="image-caption-button"
+		class="absolute top-0 bg-transparent opacity-50 hover:opacity-80"
 		bind:this={buttonRef.current}
 		onclick={() => {
-			setShowCaption(!showCaption);
+			setShowCaption();
 		}}
 	>
 		Add Caption

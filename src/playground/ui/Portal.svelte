@@ -11,23 +11,23 @@
 		...props
 	} = $props<SvelteRender<T> & { children?: Snippet }>();
 
-	console.log('portal'.props);
+	console.log('portal', props);
 	function refFn(node: HTMLElement) {
 		if (portal === false || !props.target) {
 			// if we dont need to portal then remove the div that is wrapper it
-			let child = node.childNodes;
-			let parent = node.parentElement;
-			if (parent && child) {
-				parent?.removeChild(node);
-				parent.append(...child);
-			} else if (parent) {
-				parent.removeChild(node);
-			}
-
 			return;
 		}
 		let p = usePortal(node, props.target);
+		let parent = node.parentElement;
+		let child = node.childNodes;
+		if (parent && child) {
+			parent?.removeChild(node);
+			parent.append(...child);
+		} else if (parent) {
+			parent.removeChild(node);
+		}
 
+		return;
 		onDestroy(() => {
 			if (p && p.destroy) {
 				p.destroy();

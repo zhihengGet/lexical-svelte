@@ -2,8 +2,6 @@
 	import '@unocss/reset/normalize.css';
 	import 'virtual:uno.css';
 	import { default as LexicalComposer } from '@lexical/react/LexicalComposer.svelte';
-	import * as richText from '@lexical/rich-text';
-	import * as lexical from 'lexical';
 
 	import PlaygroundEditorTheme from './themes/PlaygroundEditorTheme';
 
@@ -16,51 +14,43 @@
 	console.warn(
 		'If you are profiling the playground app, please ensure you turn off the debug view. You can disable it by pressing on the settings control in the bottom-left of your screen and toggling the debug view setting.'
 	);
-
-	function prepopulatedRichText() {
-		const root = lexical.$getRoot();
-		if (root.getFirstChild() === null) {
-			const heading = richText.$createHeadingNode('h1');
-			heading.append(lexical.$createTextNode('Welcome to the playground'));
-			root.append(heading);
-
-			const paragraph = lexical.$createParagraphNode();
-			paragraph.append(
-				lexical.$createTextNode('The playground is a demo environment built with '),
-				lexical.$createTextNode('@lexical/react').toggleFormat('code'),
-				lexical.$createTextNode('.'),
-				lexical.$createTextNode(' Try typing in '),
-				lexical.$createTextNode('some text').toggleFormat('bold'),
-				lexical.$createTextNode(' with '),
-				lexical.$createTextNode('different').toggleFormat('italic'),
-				lexical.$createTextNode(' formats.')
-			);
-			root.append(paragraph);
-			const paragraph2 = lexical.$createParagraphNode();
-			paragraph2.append(
-				lexical.$createTextNode(
-					'Make sure to check out the various plugins in the toolbar. You can also use #hashtags or @-mentions too!'
-				)
-			);
-			root.append(paragraph2);
-			const paragraph3 = lexical.$createParagraphNode();
-			paragraph3.append(
-				lexical.$createTextNode(`If you'd like to find out more about Lexical, you can:`)
-			);
-			root.append(paragraph3);
-
-			const paragraph4 = lexical.$createParagraphNode();
-			paragraph4.append(
-				lexical.$createTextNode(
-					`Lastly, we're constantly adding cool new features to this playground. So make sure you check back here when you next get a chance :).`
-				)
-			);
-			root.append(paragraph4);
-		}
-	}
-
 	const initialConfig = {
-		editorState: prepopulatedRichText,
+		editorState: JSON.stringify(
+			{
+				editorState: {
+					root: {
+						children: [
+							{
+								children: [
+									{
+										detail: 0,
+										format: 0,
+										mode: 'normal',
+										style: '',
+										text: '2e',
+										type: 'text',
+										version: 1
+									}
+								],
+								direction: 'ltr',
+								format: '',
+								indent: 0,
+								type: 'paragraph',
+								version: 1
+							}
+						],
+						direction: 'ltr',
+						format: '',
+						indent: 0,
+						type: 'root',
+						version: 1
+					}
+				},
+				lastSaved: 1701226322214,
+				source: 'Playground',
+				version: '0.12.4'
+			}.editorState
+		),
 		namespace: 'Playground',
 		nodes: [...PlaygroundNodes],
 		onError: (error: Error) => {
@@ -72,14 +62,12 @@
 	createHistoryContext();
 </script>
 
-<main aria-autocomplete="none">
-	<SettingsContext>
-		<SharedAutocompleteContext>
-			<LexicalComposer {initialConfig}>
-				<div class="editor-shell">
-					<Editor />
-				</div>
-			</LexicalComposer>
-		</SharedAutocompleteContext>
-	</SettingsContext>
-</main>
+<SettingsContext>
+	<SharedAutocompleteContext>
+		<LexicalComposer {initialConfig}>
+			<div class="editor-shell">
+				<Editor />
+			</div>
+		</LexicalComposer>
+	</SharedAutocompleteContext>
+</SettingsContext>

@@ -203,7 +203,7 @@ export class ImageNode extends DecoratorNode<SvelteRender<comp>> {
 			src: this.__src,
 			altText: this.__altText,
 			width: this.__width,
-			height: this.__height + 'px',
+			height: this.__height,
 			maxWidth: this.__maxWidth + 'px',
 			nodeKey: this.getKey(),
 			showCaption: this.__showCaption,

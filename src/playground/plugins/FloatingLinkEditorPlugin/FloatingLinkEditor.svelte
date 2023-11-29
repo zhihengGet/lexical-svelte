@@ -28,7 +28,7 @@
 
 	import { setFloatingElemPositionForLinkEditor } from '../../utils/setFloatingElemPositionForLinkEditor';
 
-	import { sanitizeUrl } from '../../utils/url';
+	import { sanitizeUrl, validateUrl } from '../../utils/url';
 	import { untrack } from 'svelte';
 </script>
 
@@ -199,6 +199,9 @@
 				value={editedLinkUrl()}
 				onkeydown={(event) => {
 					monitorInputInteraction(event);
+				}}
+				oninput={(e) => {
+					setEditedLinkUrl(e.target.value);
 				}}
 			/>
 			<div>
