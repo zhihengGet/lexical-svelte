@@ -31,6 +31,8 @@
 	import { HorizontalRulePlugin } from '@plugins/HorizontalPlugin/LexicalHorizontalRulePlugin';
 	import CollapsiblePlugin from '@plugins/CollapsiblePlugin/CollapsiblePlugin.svelte';
 	import EquationsPlugin from '@plugins/EquationsPlugin/EquationsPlugin.svelte';
+	import { HashtagPlugin } from './lib/LexicalHashtagPlugin';
+	import AutocompletePlugin from '@plugins/AutocompletePlugin/AutocompletePlugin.svelte';
 	const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
 	const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement>(null);
 	const isEditable = true;
@@ -101,6 +103,8 @@
 		<Portal target={null} initializor={ListPlugin} />
 		<Portal target={null} initializor={CheckListPlugin} />
 		<Portal target={null} initializor={CodeHighlightPlugin} />
+		<Portal target={null} initializor={HashtagPlugin} />
+		<Portal target={null} initializor={AutocompletePlugin} />
 		<EquationsPlugin />
 		<LinkPlugin />
 
@@ -144,7 +148,6 @@
 			initializor={() => HistoryPlugin({ externalHistoryState: historyState })}
 		/>
 	{/if}
-
-	<Test />
+	<!-- 	<Test /> -->
 </div>
 <TreeViewPlugin />

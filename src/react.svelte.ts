@@ -1,3 +1,4 @@
+import { has } from 'lodash-es';
 import { setContext, untrack } from 'svelte';
 
 export interface RefObject<T> {
@@ -19,8 +20,12 @@ export function useState<T>(state: T | temp<T>) {
 
 	let s = $state<T>(value);
 
+	const getState = function () {
+		return s;
+	};
+	getState._custom_source = 'svelte';
 	return [
-		() => s,
+		getState,
 		(newValue: setState<T>): T => {
 			if (typeof newValue === 'function') {
 				s = newValue(s);
@@ -32,13 +37,17 @@ export function useState<T>(state: T | temp<T>) {
 	] as const;
 }
 
-function useEffect<D>(func: () => void, dep?: D) {
-	/* if (dep) {
+function useEffect<D>(func: () => void, dep?: any[]) {
+	if (dep) {
 		$effect(() => {
-			dep; // track dep
+			for (let d of dep) {
+				if (has(d, '_custom_source')) {
+					d();
+				}
+			}
 			untrack(func);
 		});
-	} else */ $effect(func);
+	} else $effect(func);
 }
 export { useEffect };
 

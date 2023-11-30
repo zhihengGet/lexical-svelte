@@ -24,6 +24,7 @@ import { CollapsibleContainerNode } from '@plugins/CollapsiblePlugin/Collapsible
 import { CollapsibleContentNode } from '@plugins/CollapsiblePlugin/CollapsibleContentNode';
 import { CollapsibleTitleNode } from '@plugins/CollapsiblePlugin/CollapsibleTitleNode';
 import { EquationNode } from '@plugins/EquationsPlugin/EquationNode';
+import { AutocompleteNode } from '@plugins/AutocompletePlugin';
 //import { EmojiNode } from '@plugins/EmojisPlugin/EmojiNode';
 
 const PlaygroundNodes: Array<Klass<LexicalNode>> = [
@@ -51,8 +52,37 @@ const PlaygroundNodes: Array<Klass<LexicalNode>> = [
 	CollapsibleContentNode,
 	CollapsibleTitleNode,
 	//EmojiNode
+	AutocompleteNode,
+	EquationNode
+];
+export const SimpleNodes: Array<Klass<LexicalNode>> = [
+	HeadingNode,
+	ListNode,
+	ListItemNode,
+	QuoteNode,
+	CodeNode,
+	//TableNode,
+	//TableCellNode,
+	//TableRowNode,
+	HashtagNode,
+	CodeHighlightNode,
+	AutoLinkNode,
+	LinkNode,
+	OverflowNode,
+	//ImageNode,
+	MarkNode,
+	KeywordNode,
+	ParagraphNode,
+	HorizontalRuleNode,
+	//PageBreakNode,
+	// collapsible
+	CollapsibleContainerNode,
+	CollapsibleContentNode,
+	CollapsibleTitleNode,
+	//EmojiNode
 
 	EquationNode
 ];
-
 export default PlaygroundNodes;
+
+export { PlaygroundNodes as EditorNodes };

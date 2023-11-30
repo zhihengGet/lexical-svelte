@@ -275,6 +275,6 @@ export function HashtagPlugin() {
 	};
 
 	useLexicalTextEntity<HashtagNode>(getHashtagMatch, HashtagNode, createHashtagNode);
-
+	console.log('hash tag plugin added');
 	return null;
 }

@@ -10,14 +10,19 @@
 		namespace: string;
 		nodes?: ReadonlyArray<Klass<LexicalNode> | LexicalNodeReplacement>;
 		onError: (error: Error, editor: LexicalEditor) => void;
+		onInput: (html: string, json?: string) => void;
+		query: (query: string) => string[];
 		editable?: boolean;
 		theme?: EditorThemeClasses;
 		editorState?: InitialEditorStateType;
 		html?: HTMLConfig;
+		isHTML: boolean; //is initial state html
 	}>;
 	type Props = {
 		initialConfig: InitialConfigType;
 	};
+	import { $generateNodesFromDOM as generateNodesFromDOM } from '@lexical/html';
+
 	const HISTORY_MERGE_OPTIONS = { tag: 'history-merge' };
 </script>
 
@@ -38,12 +43,14 @@
 		LexicalNode,
 		LexicalNodeReplacement
 	} from 'lexical';
-	import { createEditor } from 'lexical';
+	import { createEditor, $getRoot as getRoot } from 'lexical';
 
 	import { CAN_USE_DOM } from 'shared/canUseDOM';
 	import { useMemo } from 'react';
+	import { $generateHtmlFromNodes as generateHtmlFromNodes } from '@lexical/html';
+	import type { Snippet } from 'svelte';
 
-	let { initialConfig } = $props<Props>();
+	let { initialConfig, children } = $props<Props & { children: Snippet }>();
 
 	const composerContext: [LexicalEditor, LexicalComposerContextType] = useMemo(() => {
 		const {
@@ -71,8 +78,20 @@
 			initializeEditor(newEditor, initialEditorState);
 
 			editor = newEditor;
-			editor.registerUpdateListener((v) => {
-				console.log(v.editorState.toJSON());
+			editor.registerUpdateListener(({ editorState }) => {
+				// In the browser you can use the native DOMParser API to parse the HTML string.
+				// The latest EditorState can be found as `editorState`.
+				// To read the contents of the EditorState, use the following API:
+
+				editorState.read(() => {
+					// Just like editor.update(), .read() expects a closure where you can use
+					// the $ prefixed helper functions.
+					if (editor) {
+						const htmlString = generateHtmlFromNodes(editor);
+						initialConfig.onInput(htmlString);
+					}
+					console.log(editorState.toJSON());
+				});
 			});
 		}
 		//    editor?.setEditable(true);
@@ -115,8 +134,26 @@
 		} else if (initialEditorState !== null) {
 			switch (typeof initialEditorState) {
 				case 'string': {
-					const parsedEditorState = editor.parseEditorState(initialEditorState);
-					editor.setEditorState(parsedEditorState, HISTORY_MERGE_OPTIONS);
+					if (initialConfig.isHTML) {
+						editor.update(() => {
+							// In the browser you can use the native DOMParser API to parse the HTML string.
+							const parser = new DOMParser();
+							const dom = parser.parseFromString(initialEditorState, 'text/html');
+
+							// Once you have the DOM instance it's easy to generate LexicalNodes.
+							const nodes = generateNodesFromDOM(editor, dom);
+
+							// Select the root
+							lex.$getRoot().select();
+
+							// Insert them at a selection.
+							lex.$insertNodes(nodes);
+						});
+					} else {
+						const parsedEditorState = editor.parseEditorState(initialEditorState);
+						editor.setEditorState(parsedEditorState, HISTORY_MERGE_OPTIONS);
+					}
+
 					break;
 				}
 				case 'object': {
