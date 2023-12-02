@@ -8,8 +8,9 @@
 		snippet,
 		children,
 		portal = false,
+		enable = true,
 		...props
-	} = $props<SvelteRender<T> & { children?: Snippet }>();
+	} = $props<SvelteRender<T> & { children?: Snippet; enable?: boolean }>();
 
 	console.log('portal', props);
 	function refFn(node: HTMLElement) {
@@ -36,7 +37,7 @@
 	}
 	if (typeof props.initializor == 'function') {
 		console.log('call initializor');
-		props.initializor();
+		if (enable) props.initializor();
 	}
 	let ref = props.ref ?? { current: undefined };
 	$effect(() => {

@@ -55,7 +55,7 @@
 		shouldUseLexicalContextMenu,
 		tableCellMerge,
 		tableCellBackgroundColor
-	} = settings.settings();
+	} = settings();
 	console.log('setting', isRichText, showTreeView);
 	$effect(() => {
 		const updateViewPortWidth = () => {
@@ -104,11 +104,12 @@
 		<Portal target={null} initializor={CheckListPlugin} />
 		<Portal target={null} initializor={CodeHighlightPlugin} />
 		<Portal target={null} initializor={HashtagPlugin} />
-		<Portal target={null} initializor={AutocompletePlugin} />
+		<Portal target={null} initializor={AutocompletePlugin} enable={isAutocomplete} />
+
 		<EquationsPlugin />
 		<LinkPlugin />
 
-		{#if floatingAnchorElem()}
+		{#if floatingAnchorElem() && isEditable}
 			<Portal {...CodeActionMenuPlugin({ anchorElem: floatingAnchorElem() })} />
 			<FloatingLinkEditorPlugin
 				anchorElem={floatingAnchorElem()}

@@ -1,26 +1,4 @@
 <script context="module" lang="ts">
-	export type InitialEditorStateType =
-		| null
-		| string
-		| EditorState
-		| ((editor: LexicalEditor) => void);
-
-	export type InitialConfigType = Readonly<{
-		editor__DEPRECATED?: LexicalEditor | null;
-		namespace: string;
-		nodes?: ReadonlyArray<Klass<LexicalNode> | LexicalNodeReplacement>;
-		onError: (error: Error, editor: LexicalEditor) => void;
-		onInput: (html: string, json?: string) => void;
-		query: (query: string) => string[];
-		editable?: boolean;
-		theme?: EditorThemeClasses;
-		editorState?: InitialEditorStateType;
-		html?: HTMLConfig;
-		isHTML: boolean; //is initial state html
-	}>;
-	type Props = {
-		initialConfig: InitialConfigType;
-	};
 	import { $generateNodesFromDOM as generateNodesFromDOM } from '@lexical/html';
 
 	const HISTORY_MERGE_OPTIONS = { tag: 'history-merge' };
@@ -30,6 +8,7 @@
 	/* intialize editor */
 	import type { LexicalComposerContextType } from '@lexical/react/LexicalComposerContext.svelte';
 	import * as lex from 'lexical';
+
 	import {
 		createLexicalComposerContext,
 		setLexicalComposerContext
@@ -49,25 +28,31 @@
 	import { useMemo } from 'react';
 	import { $generateHtmlFromNodes as generateHtmlFromNodes } from '@lexical/html';
 	import type { Snippet } from 'svelte';
+	import { useSettings } from '../playground/context/SettingsContext.svelte';
+	import { CustomParagraphNode } from '@nodes/CustomParagrahNode';
+	import type { InitialEditorStateType } from '../playground/appSettings';
 
-	let { initialConfig, children } = $props<Props & { children: Snippet }>();
-
-	const composerContext: [LexicalEditor, LexicalComposerContextType] = useMemo(() => {
+	let setting = useSettings();
+	useMemo(() => {
 		const {
-			theme,
-			namespace,
-			editor__DEPRECATED: initialEditor,
-			nodes,
-			onError,
-			editorState: initialEditorState,
-			html
-		} = initialConfig;
+			onInput,
+			config: {
+				theme,
+				namespace,
+				editor__DEPRECATED: initialEditor,
+				nodes,
+				onError,
+				editorState: initialEditorState,
+				html,
+				editable
+			}
+		} = setting();
 
 		const context: LexicalComposerContextType = createLexicalComposerContext(null, theme);
 		let editor = initialEditor || null;
 		if (editor === null) {
 			const newEditor = createEditor({
-				editable: initialConfig.editable,
+				editable: editable,
 				html,
 				namespace,
 				nodes,
@@ -75,9 +60,25 @@
 				theme
 			});
 
-			initializeEditor(newEditor, initialEditorState);
+			//initializeEditor(newEditor, initialEditorState);
 
 			editor = newEditor;
+
+			editor.update(() => {
+				// In the browser you can use the native DOMParser API to parse the HTML string.
+				const parser = new DOMParser();
+				const dom = parser.parseFromString('<p data-id="213">hi</p>', 'text/html');
+
+				// Once you have the DOM instance it's easy to generate LexicalNodes.
+				const nodes = generateNodesFromDOM(editor, dom);
+
+				// Select the root
+				lex.$getRoot().select();
+				// Insert them at a selection.
+				lex.$insertNodes(nodes);
+
+				// Insert them at a selection.
+			});
 			editor.registerUpdateListener(({ editorState }) => {
 				// In the browser you can use the native DOMParser API to parse the HTML string.
 				// The latest EditorState can be found as `editorState`.
@@ -88,27 +89,17 @@
 					// the $ prefixed helper functions.
 					if (editor) {
 						const htmlString = generateHtmlFromNodes(editor);
-						initialConfig.onInput(htmlString);
+						onInput(htmlString);
+						console.log('html', htmlString);
 					}
 					console.log(editorState.toJSON());
 				});
 			});
 		}
+		setLexicalComposerContext([editor, context]);
 		//    editor?.setEditable(true);
 		return [editor, context];
 	}, []);
-
-	setLexicalComposerContext(composerContext);
-	//  return [editor, context];
-
-	/*   useLayoutEffect(() => {
-    const isEditable = initialConfig.editable;
-    const [editor] = composerContext;
-    editor.setEditable(isEditable !== undefined ? isEditable : true);
-
-    // We only do this for init
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }); */
 
 	function initializeEditor(
 		editor: LexicalEditor,

@@ -94,6 +94,7 @@
 
 <style>
 	.auto_selected {
-		background-color: aquamarine;
+		background-color: yellow;
+		text-decoration: underline;
 	}
 </style>
