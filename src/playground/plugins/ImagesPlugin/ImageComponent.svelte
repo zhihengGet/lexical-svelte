@@ -275,10 +275,7 @@
 	};
 
 	const { historyState } = useSharedHistoryContext();
-	const {
-		settings: { showNestedEditorTreeView }
-	} = useSettings();
-
+	const settings = useSettings();
 	//const draggable = isSelected && isNodeSelection(selection) && !isResizing;
 	let openImageResizer = $derived((isSelected() || isResizing()) && resizable);
 	const mw = maxWidth;

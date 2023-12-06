@@ -149,6 +149,6 @@
 			initializor={() => HistoryPlugin({ externalHistoryState: historyState })}
 		/>
 	{/if}
-	<!-- 	<Test /> -->
+	<Test />
 </div>
 <TreeViewPlugin />
