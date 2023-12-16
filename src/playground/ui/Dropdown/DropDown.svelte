@@ -44,13 +44,13 @@
 	useEffect(() => {
 		const button = buttonRef.current;
 		const dropDown = dropDownRef.current;
-
+		console.log();
 		if (showDropDown() && button !== null && dropDown !== null) {
 			const { top, left } = button.getBoundingClientRect();
 			dropDown.style.top = `${top + button.offsetHeight + dropDownPadding}px`;
 			dropDown.style.left = `${Math.min(left, window.innerWidth - dropDown.offsetWidth - 20)}px`;
 		}
-	}, [dropDownRef, buttonRef, showDropDown()]);
+	}, [dropDownRef, buttonRef, showDropDown]);
 
 	useEffect(() => {
 		const button = buttonRef.current;
@@ -115,6 +115,6 @@
 
 {#if showDropDown()}
 	<DropDownItems {dropDownRef} onClose={handleClose}>
-		{@render children()}
+		<slot />
 	</DropDownItems>
 {/if}
