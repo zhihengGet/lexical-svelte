@@ -32,6 +32,5 @@
 		oninput={(e) => {
 			onChange(e.target.value);
 		}}
-		data-test-id={dataTestId}
 	/>
 </div>

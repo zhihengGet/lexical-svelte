@@ -61,7 +61,6 @@ export const DEFAULT_SETTINGS = {
 	onInput: (html) => {},
 	initialHTML: '<p>Hi</p>',
 	allowedAttributesOnParagraph: [''],
-	showNestedEditorTreeView: false,
 	config: {
 		query: async () => [],
 		editable: true,

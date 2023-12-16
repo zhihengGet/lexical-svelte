@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-	import { getContext, setContext } from 'svelte';
+	import { getContext, setContext, type Snippet } from 'svelte';
 
-	let { dropDownRef, onClose } = $props<{
+	let { dropDownRef, onClose, children } = $props<{
 		dropDownRef: any;
+		children: Snippet;
 		onClose: () => void;
 	}>();
 	const [items, setItems] = useState<React.RefObject<HTMLButtonElement>[]>(null);

@@ -8,7 +8,7 @@
 
 import type { LexicalEditor } from 'lexical';
 
-import { flushSync, onMount } from 'svelte';
+import { flushSync, onMount, unstate, untrack } from 'svelte';
 import type { SvelteRender } from '@lexical/react/types';
 
 export function useDecorators(editor: LexicalEditor) {
@@ -24,10 +24,11 @@ export function useDecorators(editor: LexicalEditor) {
 	// ensuring that we set the value.
 	onMount(() => {
 		decorators = editor.getDecorators();
-		editor.registerDecoratorListener<SvelteRender>((nextDecorators) => {
-			flushSync(() => {
-				decorators = { ...nextDecorators };
-			});
+	});
+
+	editor.registerDecoratorListener<SvelteRender>((nextDecorators) => {
+		flushSync(() => {
+			decorators = nextDecorators;
 		});
 	});
 
@@ -35,7 +36,7 @@ export function useDecorators(editor: LexicalEditor) {
 	const rendered = new Set();
 	const toRender = $derived(() => {
 		const decoratedPortals: SvelteRender[] = [];
-		const decoratorKeys = Object.keys(decorators);
+		const decoratorKeys = Object.keys(unstate(decorators));
 
 		for (let i = 0; i < decoratorKeys.length; i++) {
 			const nodeKey = decoratorKeys[i];

@@ -5,6 +5,9 @@
 		"useDefineForClassFields": true,
 		"module": "ESNext",
 		"resolveJsonModule": true,
+		"moduleResolution": "Bundler",
+		"composite": true,
+		"declaration": true,
 		"verbatimModuleSyntax": true,
 		/**
 		 * Typecheck JS in `.svelte` and `.js` files by default.

@@ -56,12 +56,11 @@
 	aria-required={ariaRequired}
 	autocapitalize={autoCapitalize}
 	contentEditable={isEditable()}
-	data-testid={testid}
+	data-testid={'editor'}
 	id="editor_center"
 	use:ref
 	{role}
 	{spellCheck}
-	{style}
 	{tabIndex}
-	style="caret-color: purple;"
+	{style}
 />

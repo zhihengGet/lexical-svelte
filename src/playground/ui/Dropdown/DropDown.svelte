@@ -115,6 +115,6 @@
 
 {#if showDropDown()}
 	<DropDownItems {dropDownRef} onClose={handleClose}>
-		<slot />
+		{@render children()}
 	</DropDownItems>
 {/if}

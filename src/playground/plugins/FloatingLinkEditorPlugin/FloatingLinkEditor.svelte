@@ -1,4 +1,4 @@
-<script context="module">
+<script context="module" lang="ts">
 	import {
 		$isAutoLinkNode as isAutoLinkNode,
 		$isLinkNode as isLinkNode,
@@ -241,8 +241,7 @@
 				<div
 					class="link-trash"
 					tabIndex={0}
-					class="bg-transparent w-5 h-5"
-					onMouseDown={(event) => event.preventDefault()}
+					onmousedown={(event) => event.preventDefault()}
 					onclick={() => {
 						editor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
 					}}

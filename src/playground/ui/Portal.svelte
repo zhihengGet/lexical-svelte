@@ -49,21 +49,19 @@
 	<svelte:self {...decorator} />
 {/each}
 {#snippet El()}
-	<svelte:fragment>
-		{#await props.component}
-			<div>wait</div>
-		{:then component}
-			{#if component}
-				<svelte:component this={component} {...props.props ?? []}>
-					{#each props.childComponents ?? [] as cp}
-						<svelte:self {...cp} />
-					{/each}
-				</svelte:component>
-			{:else if snippet}
-				{@render snippet({ refFn, ...props.props })}
-			{/if}
-		{/await}
-	</svelte:fragment>
+	{#await props.component}
+		<div>wait</div>
+	{:then component}
+		{#if component}
+			<svelte:component this={component} {...props.props ?? []}>
+				{#each props.childComponents ?? [] as cp}
+					<svelte:self {...cp} />
+				{/each}
+			</svelte:component>
+		{:else if snippet}
+			{@render snippet({ refFn, ...props.props })}
+		{/if}
+	{/await}
 {/snippet}
 {#if (!components || components.length == 0) && (props.component || snippet)}
 	{#if portal == false || !props.target}
