@@ -13,7 +13,7 @@
 
 	import { useCallback, useEffect, useRef, useState } from 'react';
 
-	import EquationEditor from './EquationEditor.svelte';
+	import EquationEditor from './ui/EquationEditor.svelte';
 	import KatexRenderer from './KatexRenderer.svelte';
 	import { $isEquationNode as isEquationNode } from './EquationNode';
 
