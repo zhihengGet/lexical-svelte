@@ -203,8 +203,8 @@
 				isElementNode(matchingParent)
 					? matchingParent.getFormatType()
 					: isElementNode(node)
-					  ? node.getFormatType()
-					  : parent?.getFormatType() || 'left'
+					? node.getFormatType()
+					: parent?.getFormatType() || 'left'
 			);
 		}
 	}, [activeEditor()]);
@@ -359,7 +359,7 @@
 				}
 			});
 		},
-		[activeEditor(), selectedElementKey]
+		[activeEditor, selectedElementKey]
 	);
 	const insertGifOnClick = (payload: InsertImagePayload) => {
 		activeEditor().dispatchCommand(INSERT_IMAGE_COMMAND, payload);
