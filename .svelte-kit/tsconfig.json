@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"paths": {
 			"shared/*": [
-				"../shared/src/*"
+				"../src/utils/*"
 			],
 			"@shared/*": [
 				"../src/shared/*"
@@ -11,7 +11,7 @@
 				"../src/lib/*"
 			],
 			"@theme/*": [
-				"../src/themes/*  /*"
+				"../src/themes/*"
 			],
 			"@ui/*": [
 				"../src/playground/ui/*"

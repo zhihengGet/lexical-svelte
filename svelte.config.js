@@ -17,7 +17,7 @@ export default {
 			'shared/*': './src/utils/*',
 			'@shared/*': './src/shared/*',
 			'@lexical/react/*': './src/lib/*',
-			'@theme/*': './src/themes/*  ',
+			'@theme/*': './src/themes/*',
 			'@ui/*': './src/playground/ui/*',
 			react: './src/react.svelte.ts',
 			'@nodes/*': './src/playground/nodes/*',
