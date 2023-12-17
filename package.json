@@ -9,7 +9,8 @@
 		"preview": "vite preview",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"fix": "eslint --fix .",
-		"tsc": "tsc"
+		"tsc": "tsc",
+		"package": "svelte-package --input src/"
 	},
 	"dependencies": {
 		"@lexical/clipboard": "0.12.5",
@@ -67,6 +68,8 @@
 		"tslib": "^2.6.2",
 		"typescript": "^5.3.3",
 		"unocss": "^0.58.0",
-		"vite": "^5.0.10"
+		"vite": "^5.0.10",
+		"@sveltejs/kit": "1.16.3",
+		"@sveltejs/package": "latest"
 	}
 }

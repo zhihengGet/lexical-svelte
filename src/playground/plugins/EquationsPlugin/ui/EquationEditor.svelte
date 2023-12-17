@@ -7,7 +7,7 @@
 	 *
 	 */
 
-	import './EquationEditor.css';
+	import '../EquationEditor.css';
 
 	type BaseEquationEditorProps = {
 		equation: string;

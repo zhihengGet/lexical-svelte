@@ -23,8 +23,10 @@ export default defineConfig({
 		lib: {
 			entry: path.resolve(__dirname, './src/App.svelte'),
 			name: 'MyLib',
+			formats: ['es'],
 			// the proper extensions will be added
 			fileName: 'index.svelte'
-		}
+		},
+		rollupOptions: {}
 	}
 });
