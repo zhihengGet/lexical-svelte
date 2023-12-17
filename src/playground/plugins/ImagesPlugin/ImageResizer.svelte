@@ -1,11 +1,9 @@
 <script context="module" lang="ts">
 	import type { LexicalEditor } from 'lexical';
 
-	import type * as React from 'react';
 	import { useRef } from 'react';
-	import { onMount, untrack } from 'svelte';
-
-	function clamp(value: number, min: number, max: number) {
+	
+function clamp(value: number, min: number, max: number) {
 		return Math.min(Math.max(value, min), max);
 	}
 

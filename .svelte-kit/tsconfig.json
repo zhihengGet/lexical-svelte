@@ -1,6 +1,12 @@
 {
 	"compilerOptions": {
 		"paths": {
+			"@nodes/*": [
+				"../src/playground/nodes/*"
+			],
+			"@plugins/*": [
+				"../src/playground/plugins/*"
+			],
 			"shared/*": [
 				"../src/utils/*"
 			],
@@ -17,13 +23,7 @@
 				"../src/playground/ui/*"
 			],
 			"react": [
-				"../src/react.svelte.ts"
-			],
-			"@nodes/*": [
-				"../src/playground/nodes/*"
-			],
-			"@plugins/*": [
-				"../src/playground/plugins/*"
+				"../src/react.svelte.js"
 			],
 			"$lib": [
 				"../src/lib"

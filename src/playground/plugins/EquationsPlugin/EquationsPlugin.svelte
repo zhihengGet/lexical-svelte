@@ -18,16 +18,13 @@
 		$insertNodes as insertNodes,
 		$isRootOrShadowRoot as isRootOrShadowRoot,
 		COMMAND_PRIORITY_EDITOR,
-		createCommand,
-		LexicalEditor
+		createCommand
 	} from 'lexical';
-	import { useCallback, useEffect } from 'react';
-	import * as React from 'react';
-
-	import { $createEquationNode as createEquationNode, EquationNode } from './EquationNode';
-	import KatexEquationAlterer from './KatexEquationAlterer.svelte';
-
-	const [editor] = useLexicalComposerContext();
+	import { useEffect } from 'react';
+	
+import { $createEquationNode as createEquationNode, EquationNode } from './EquationNode';
+	
+const [editor] = useLexicalComposerContext();
 
 	useEffect(() => {
 		if (!editor.hasNodes([EquationNode])) {

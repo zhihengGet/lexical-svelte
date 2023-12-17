@@ -10,11 +10,7 @@ module.exports = {
 	rules: {
 		'@typescript-eslint/consistent-type-imports': 'error',
 		'no-unused-vars': 'off', // or "@typescript-eslint/no-unused-vars": "off",
-		'unused-imports/no-unused-imports': 'error',
-		'unused-imports/no-unused-vars': [
-			'warn',
-			{ vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_' }
-		]
+		'unused-imports/no-unused-imports': 'error'
 	},
 	parser: '@typescript-eslint/parser',
 	plugins: ['@typescript-eslint', 'unused-imports'],

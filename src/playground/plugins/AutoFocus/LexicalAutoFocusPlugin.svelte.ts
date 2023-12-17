@@ -7,7 +7,6 @@
  */
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
-import { onMount } from 'svelte';
 
 type Props = {
 	defaultSelection?: 'rootStart' | 'rootEnd';

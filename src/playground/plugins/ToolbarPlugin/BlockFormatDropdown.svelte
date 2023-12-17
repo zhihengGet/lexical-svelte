@@ -1,10 +1,5 @@
 <script context="module" lang="ts">
 	import * as lexical from 'lexical';
-	import { createContext, useEffect, useMemo, useState } from 'react';
-	import Button from '../../ui/Button.svelte';
-	import DialogActions from '../../ui/DialogActions.svelte';
-	import TextInput from '@ui/TextInput.svelte';
-	import { INSERT_TABLE_COMMAND } from '@lexical/table';
 	import DropDown from '@ui/Dropdown/DropDown.svelte';
 	import * as Selection from '@lexical/selection';
 	import type { HeadingTagType } from '@lexical/rich-text';

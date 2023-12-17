@@ -1,6 +1,5 @@
 <script context="module" lang="ts">
 	let totalComponents = 0;
-	import { useEffect, useMemo, useState } from 'react';
 	import { getContext, setContext } from 'svelte';
 	totalComponents += 1;
 	let contextkey = totalComponents + 'AutoCompleteContext';

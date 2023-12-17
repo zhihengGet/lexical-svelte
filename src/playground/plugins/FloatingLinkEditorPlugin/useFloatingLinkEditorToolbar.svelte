@@ -8,7 +8,6 @@
     $isLinkNode as isLinkNode,
     TOGGLE_LINK_COMMAND,
   } from "@lexical/link";
-  import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext.svelte";
   import {
     $findMatchingParent as findMatchingParent,
     mergeRegister,

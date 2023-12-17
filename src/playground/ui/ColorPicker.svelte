@@ -1,7 +1,7 @@
 <script lang="ts">
 	import './ColorPicker.css';
 
-	import { useEffect, useMemo, useRef, useState } from 'react';
+	import { useEffect, useRef, useState } from 'react';
 
 	import TextInput from './TextInput.svelte';
 	import MoveWrapper from './MoveWrapper.svelte';

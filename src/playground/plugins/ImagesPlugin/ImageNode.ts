@@ -22,7 +22,6 @@ import type {
 
 import { $applyNodeReplacement, createEditor, DecoratorNode } from 'lexical';
 import type { ImageComponent as comp } from '.';
-import type { ComponentType } from 'svelte';
 
 const ImageComponent =
 	// @ts-ignore

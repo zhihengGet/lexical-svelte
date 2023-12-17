@@ -6,14 +6,11 @@
 	import { useSharedAutocompleteContext } from '../../context/SharedAutocompleteContext.svelte';
 	import {
 		COMMAND_PRIORITY_LOW,
-		COMMAND_PRIORITY_NORMAL,
 		KEY_ARROW_DOWN_COMMAND,
-		KEY_ARROW_UP_COMMAND,
-		KEY_ENTER_COMMAND
+		KEY_ARROW_UP_COMMAND
 	} from 'lexical';
 	import { SELECTED_CLASSNAME } from '.';
-	import { addClassNamesToElement, removeClassNamesFromElement } from '@lexical/utils';
-	import { onDestroy, onMount } from 'svelte';
+	import { onDestroy } from 'svelte';
 
 	const data = useSharedAutocompleteContext();
 	const userAgentData = window.navigator.userAgentData;

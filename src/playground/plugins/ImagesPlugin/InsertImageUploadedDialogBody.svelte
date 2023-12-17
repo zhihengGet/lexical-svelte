@@ -6,20 +6,12 @@
 </script>
 
 <script lang="ts">
-	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
-	import { mergeRegister } from '@lexical/utils';
-	import type { LexicalCommand } from 'lexical';
-	import {
-		COMMAND_PRIORITY_EDITOR,
-		COMMAND_PRIORITY_HIGH,
-		COMMAND_PRIORITY_LOW,
-		createCommand
-	} from 'lexical';
-	import { useEffect, useRef, useState } from 'react';
+	
+
+import { useState } from 'react';
 	import { CAN_USE_DOM } from 'shared/canUseDOM';
 
 	import type { ImagePayload } from './ImageNode';
-	import { ImageNode } from './ImageNode';
 	import Button from '@ui/Button.svelte';
 	import { default as DialogActions } from '@ui/DialogActions.svelte';
 	import FileInput from '@ui/FileInput.svelte';

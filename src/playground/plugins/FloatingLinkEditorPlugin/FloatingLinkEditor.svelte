@@ -1,14 +1,11 @@
 <script context="module" lang="ts">
 	import {
-		$isAutoLinkNode as isAutoLinkNode,
 		$isLinkNode as isLinkNode,
 		TOGGLE_LINK_COMMAND
 	} from '@lexical/link';
 	import {
 		$getSelection as getSelection,
 		$isRangeSelection as isRangeSelection,
-		CLICK_COMMAND,
-		COMMAND_PRIORITY_CRITICAL,
 		COMMAND_PRIORITY_HIGH,
 		COMMAND_PRIORITY_LOW,
 		type GridSelection,
@@ -18,9 +15,8 @@
 		type RangeSelection,
 		SELECTION_CHANGE_COMMAND
 	} from 'lexical';
-	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
-
-	import { $findMatchingParent as findMatchingParent, mergeRegister } from '@lexical/utils';
+	
+import { $findMatchingParent as findMatchingParent, mergeRegister } from '@lexical/utils';
 
 	import { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -28,14 +24,13 @@
 
 	import { setFloatingElemPositionForLinkEditor } from '../../utils/setFloatingElemPositionForLinkEditor';
 
-	import { sanitizeUrl, validateUrl } from '../../utils/url';
+	import { sanitizeUrl } from '../../utils/url';
 	import { untrack } from 'svelte';
 </script>
 
 <script lang="ts">
-	import { TrashIcon } from 'lucide-svelte';
-
-	let { editor, isLink, setIsLink, anchorElem, isLinkEditMode, setIsLinkEditMode } = $props<{
+	
+let { editor, isLink, setIsLink, anchorElem, isLinkEditMode, setIsLinkEditMode } = $props<{
 		editor: LexicalEditor;
 		isLink: boolean;
 		setIsLink: React.Dispatch<boolean>;

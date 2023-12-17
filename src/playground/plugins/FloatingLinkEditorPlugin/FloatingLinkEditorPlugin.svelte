@@ -4,22 +4,19 @@
 <script lang="ts">
 	import './index.css';
 
-	import { TOGGLE_LINK_COMMAND, $isLinkNode as isLinkNode } from '@lexical/link';
+	import { $isLinkNode as isLinkNode } from '@lexical/link';
 	import { $findMatchingParent as findMatchingParent, mergeRegister } from '@lexical/utils';
 	import {
 		$getSelection as getSelection,
 		$isRangeSelection as isRangeSelection,
 		CLICK_COMMAND,
 		COMMAND_PRIORITY_CRITICAL,
-		COMMAND_PRIORITY_HIGH,
 		COMMAND_PRIORITY_LOW,
 		SELECTION_CHANGE_COMMAND
 	} from 'lexical';
-	import { useCallback, useEffect, useRef, useState } from 'react';
+	import { useEffect, useState } from 'react';
 
 	import { getSelectedNode } from '../../utils/getSelectedNode';
-	import { setFloatingElemPositionForLinkEditor } from '../../utils/setFloatingElemPositionForLinkEditor';
-	import { sanitizeUrl } from '../../utils/url';
 	import Portal from '@ui/Portal.svelte';
 	import FloatingLinkEditor from './FloatingLinkEditor.svelte';
 	import { $isAutoLinkNode as isAutoLinkNode } from '@lexical/link';

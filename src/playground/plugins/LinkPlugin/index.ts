@@ -6,9 +6,7 @@
  *
  */
 
-import { LinkPlugin as LexicalLinkPlugin } from '@lexical/react/LexicalLinkPlugin.svelte';
 
-import { validateUrl } from '../../utils/url';
 
 /* export default function LinkPlugin() {
 	LexicalLinkPlugin({ validateUrl });

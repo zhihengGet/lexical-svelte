@@ -14,22 +14,14 @@
 		setLexicalComposerContext
 	} from '@lexical/react/LexicalComposerContext.svelte';
 	import type {
-		EditorState,
-		EditorThemeClasses,
-		HTMLConfig,
-		Klass,
-		LexicalEditor,
-		LexicalNode,
-		LexicalNodeReplacement
+		LexicalEditor
 	} from 'lexical';
-	import { createEditor, $getRoot as getRoot } from 'lexical';
+	import { createEditor } from 'lexical';
 
 	import { CAN_USE_DOM } from 'shared/canUseDOM';
 	import { useMemo } from 'react';
 	import { $generateHtmlFromNodes as generateHtmlFromNodes } from '@lexical/html';
-	import type { Snippet } from 'svelte';
 	import { useSettings } from '../playground/context/SettingsContext.svelte';
-	import { CustomParagraphNode } from '@nodes/CustomParagrahNode';
 	import type { InitialEditorStateType } from '../playground/appSettings';
 
 	let setting = useSettings();

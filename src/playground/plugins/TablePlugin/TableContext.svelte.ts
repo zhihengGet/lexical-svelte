@@ -6,9 +6,7 @@
  *
  */
 
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import type { SvelteRender } from '@lexical/react/types';
-import { INSERT_TABLE_COMMAND } from '@lexical/table';
 import type {
 	EditorThemeClasses,
 	Klass,
@@ -17,13 +15,9 @@ import type {
 	LexicalNode
 } from 'lexical';
 import {
-	$insertNodes,
-	COMMAND_PRIORITY_EDITOR,
 	createCommand
 } from 'lexical';
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import * as React from 'react';
-import invariant from 'shared/invariant';
+import { useMemo, useState } from 'react';
 import { getContext, setContext } from 'svelte';
 
 export type InsertTableCommandPayload = Readonly<{

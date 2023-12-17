@@ -10,13 +10,8 @@
 
 	import './ImageNode.css';
 
-	import { AutoFocusPlugin } from '@plugins/AutoFocus/LexicalAutoFocusPlugin.svelte';
 	import { useCollaborationContext } from '@lexical/react/LexicalCollaborationContext.svelte';
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
-	import { HashtagPlugin } from '@lexical/react/LexicalHashtagPlugin';
-	import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin.svelte';
-	import { default as LexicalNestedComposer } from '@lexical/react/LexicalNestedComposer.svelte';
-	import { default as RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin.svelte';
 	import { useLexicalNodeSelection } from '@lexical/react/useLexicalNodeSelection.svelte';
 	import { mergeRegister } from '@lexical/utils';
 	import {
@@ -39,16 +34,8 @@
 
 	import { useSettings } from '../../context/SettingsContext.svelte';
 	import { useSharedHistoryContext } from '../../context/SharedHistoryContext';
-	import EmojisPlugin from '@plugins/EmojisPlugin';
-	import KeywordsPlugin from '@plugins/KeywordsPlugin';
-	import LinkPlugin from '@plugins/LinkPlugin/LinkPlugin.svelte';
 	//import MentionsPlugin from '@plugins/MentionsPlugin/MentionsPlugin.svelte';
-	import TreeViewPlugin from '@plugins/TreeViewPlugin/TreeViewPlugin.svelte';
-	import ContentEditable from '../../ui/ContentEditable.svelte';
-	import ImageResizer from './ImageResizer.svelte';
-	import Placeholder from '../../ui/Placeholder.svelte';
 	import { $isImageNode as isImageNode } from './ImageNode';
-	import Portal from '@ui/Portal.svelte';
 	export const RIGHT_CLICK_IMAGE_COMMAND: LexicalCommand<MouseEvent> = createCommand(
 		'RIGHT_CLICK_IMAGE_COMMAND'
 	);

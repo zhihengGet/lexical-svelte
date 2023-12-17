@@ -1,9 +1,7 @@
 <script lang="ts">
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
-	import useLexicalEditable from '@lexical/react/useLexicalEditable.svelte';
-
-	import { useCanShowPlaceholder } from '../shared/useCanShowPlaceholder.svelte';
-	import { useDecorators } from '../shared/useDecorators.svelte';
+	
+import { useDecorators } from '../shared/useDecorators.svelte';
 	import { useRichTextSetup } from '../shared/useRichTextSetup.svelte';
 	import type { Snippet } from 'svelte';
 	import Placeholder from './placeholder.svelte';

@@ -8,7 +8,6 @@
 
 import type { Doc } from 'yjs';
 
-import { createContext } from 'react';
 import { getContext, setContext } from 'svelte';
 
 type CollaborationContextType = {

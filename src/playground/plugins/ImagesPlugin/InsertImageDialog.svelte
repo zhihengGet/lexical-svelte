@@ -1,31 +1,11 @@
 <script context="module" lang="ts">
-	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
-	import { $wrapNodeInElement as wrapNodeInElement, mergeRegister } from '@lexical/utils';
 	import {
-		$createParagraphNode as createParagraphNode,
-		$createRangeSelection as createRangeSelection,
-		$getSelection as getSelection,
-		$insertNodes as insertNodes,
-		$isNodeSelection as isNodeSelection,
-		$isRootOrShadowRoot as isRootOrShadowRoot,
-		$setSelection as setSelection,
-		COMMAND_PRIORITY_EDITOR,
-		COMMAND_PRIORITY_HIGH,
-		COMMAND_PRIORITY_LOW,
-		createCommand,
-		DRAGOVER_COMMAND,
-		DRAGSTART_COMMAND,
-		DROP_COMMAND,
-		type LexicalCommand,
 		type LexicalEditor
 	} from 'lexical';
 	import { useEffect, useRef, useState } from 'react';
 	import { CAN_USE_DOM } from 'shared/canUseDOM';
 
 	import {
-		$createImageNode as createImageNode,
-		$isImageNode as isImageNode,
-		ImageNode,
 		type ImagePayload
 	} from '@plugins/ImagesPlugin/ImageNode';
 	import Button from '@ui/Button.svelte';
@@ -41,7 +21,6 @@
 	import InsertImageUploadedDialogBody from './InsertImageUploadedDialogBody.svelte';
 	import InsertImageUriDialogBody from './InsertImageUriDialogBody.svelte';
 	import { INSERT_IMAGE_COMMAND } from '.';
-	import { onMount } from 'svelte';
 	const [mode, setMode] = useState<null | 'url' | 'file'>(null);
 	const hasModifier = useRef(false);
 	let { activeEditor, onClose } = $props<{

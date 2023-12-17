@@ -8,10 +8,7 @@
 	 */
 
 	import type {
-		DOMConversionMap,
 		DOMConversionOutput,
-		DOMExportOutput,
-		LexicalCommand,
 		LexicalNode,
 		NodeKey,
 		SerializedLexicalNode
@@ -27,8 +24,6 @@
 		$isNodeSelection as isNodeSelection,
 		CLICK_COMMAND,
 		COMMAND_PRIORITY_LOW,
-		createCommand,
-		DecoratorNode,
 		KEY_BACKSPACE_COMMAND,
 		KEY_DELETE_COMMAND
 	} from 'lexical';

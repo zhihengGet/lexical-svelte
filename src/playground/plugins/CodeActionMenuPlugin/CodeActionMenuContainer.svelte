@@ -8,7 +8,6 @@
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 	import { $getNearestNodeFromDOMNode as getNearestNodeFromDOMNode } from 'lexical';
 	import { useEffect, useRef, useState } from 'react';
-	import * as React from 'react';
 	import { CopyButton } from '.';
 	import { PrettierButton } from '.';
 	import { useDebounce } from './utils';

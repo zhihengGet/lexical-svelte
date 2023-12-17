@@ -9,7 +9,7 @@
 import type { Spread } from 'lexical';
 
 import type { EditorConfig, NodeKey, SerializedLexicalNode } from 'lexical';
-import { DecoratorNode, LexicalNode } from 'lexical';
+import { DecoratorNode } from 'lexical';
 
 import { uuid as UUID } from '.';
 import type { SvelteRender } from '@lexical/react/types';

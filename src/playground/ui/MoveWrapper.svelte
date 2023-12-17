@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { debounce } from 'lodash-es';
-	import { useEffect, useMemo, useRef, useState } from 'react';
-	import { onMount, type Snippet } from 'svelte';
+	import { useRef } from 'react';
+	import { type Snippet } from 'svelte';
 
 	interface Position {
 		x: number;

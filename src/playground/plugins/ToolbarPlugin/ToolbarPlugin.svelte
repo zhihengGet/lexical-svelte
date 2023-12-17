@@ -1,36 +1,25 @@
 <script context="module" lang="ts">
 	import {
-		$createCodeNode as createCodeNode,
 		$isCodeNode as isCodeNode,
-		CODE_LANGUAGE_FRIENDLY_NAME_MAP,
 		CODE_LANGUAGE_MAP,
 		getLanguageFriendlyName
 	} from '@lexical/code';
 	import { $isLinkNode as isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
 	import {
 		$isListNode as isListNode,
-		INSERT_CHECK_LIST_COMMAND,
-		INSERT_ORDERED_LIST_COMMAND,
-		INSERT_UNORDERED_LIST_COMMAND,
-		ListNode,
-		REMOVE_LIST_COMMAND
+		ListNode
 	} from '@lexical/list';
-	import { INSERT_EMBED_COMMAND } from '@lexical/react/LexicalAutoEmbedPlugin.svelte';
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 	import { $isDecoratorBlockNode as isDecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode';
 	import { INSERT_HORIZONTAL_RULE_COMMAND } from '../HorizontalPlugin/index';
 	import {
-		$createHeadingNode as createHeadingNode,
-		$createQuoteNode as createQuoteNode,
 		$isHeadingNode as isHeadingNode,
-		$isQuoteNode as isQuoteNode,
-		type HeadingTagType
+		$isQuoteNode as isQuoteNode
 	} from '@lexical/rich-text';
 	import {
 		$getSelectionStyleValueForProperty as getSelectionStyleValueForProperty,
 		$isParentElementRTL as isParentElementRTL,
-		$patchStyleText as patchStyleText,
-		$setBlocksType as setBlocksType
+		$patchStyleText as patchStyleText
 	} from '@lexical/selection';
 	import { $isTableNode as isTableNode } from '@lexical/table';
 	import {
@@ -43,7 +32,6 @@
 	import {
 		$createParagraphNode as createParagraphNode,
 		$getNodeByKey as getNodeByKey,
-		$getRoot as getRoot,
 		$getSelection as getSelection,
 		$isElementNode as isElementNode,
 		$isRangeSelection as isRangeSelection,
@@ -54,12 +42,8 @@
 		COMMAND_PRIORITY_CRITICAL,
 		COMMAND_PRIORITY_NORMAL,
 		DEPRECATED_$isGridSelection,
-		FORMAT_ELEMENT_COMMAND,
 		FORMAT_TEXT_COMMAND,
-		INDENT_CONTENT_COMMAND,
 		KEY_MODIFIER_COMMAND,
-		type LexicalEditor,
-		OUTDENT_CONTENT_COMMAND,
 		REDO_COMMAND,
 		SELECTION_CHANGE_COMMAND,
 		UNDO_COMMAND
@@ -84,15 +68,11 @@
 </script>
 
 <script lang="ts">
-	import { DropDown, Portal, DropDownItem, DropdownColorPicker, Modal } from '@ui/index';
+	import { DropDown, Portal, DropDownItem, DropdownColorPicker } from '@ui/index';
 	import FontDropDown from './FontDropDown.svelte';
-	import { untrack } from 'svelte';
-	import InsertEquationDialog from '@plugins/EquationsPlugin/InsertEquationDialog.svelte';
 	import { INSERT_COLLAPSIBLE_COMMAND } from '@plugins/CollapsiblePlugin/CollapsiblePlugin.svelte';
-	import { $createStickyNode as createStickyNode } from '@plugins/StickyNode/StickyNode';
 	//import { INSERT_EXCALIDRAW_COMMAND } from '@plugins/ExcalidrawPlugin';
 	import InsertImageDialog from '@plugins/ImagesPlugin/InsertImageDialog.svelte';
-	import InsertInlineImageDialog from '@plugins/InlineImagePlugin/InsertInlineImageDialog.svelte';
 	import { INSERT_PAGE_BREAK } from '@plugins/PageBreakPlugin/PageBreakPlug.svelte';
 
 	let { setIsLinkEditMode } = $props<{ setIsLinkEditMode: (param: boolean) => boolean }>();

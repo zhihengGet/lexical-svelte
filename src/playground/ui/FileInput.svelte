@@ -1,9 +1,8 @@
 <script lang="ts">
   import "./Input.css";
 
-  import * as React from "react";
-
-  type Props = Readonly<{
+  
+type Props = Readonly<{
     "data-test-id"?: string;
     accept?: string;
     label: string;

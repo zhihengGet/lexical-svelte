@@ -13,12 +13,10 @@
   import { $getNodeByKey as getNodeByKey } from "lexical";
   import { useEffect, useRef } from "react";
   import useLayoutEffect from "shared/useLayoutEffect.svelte";
-  import * as lexical from "lexical";
   import { createWebsocketProvider } from "../../collaboration";
   import { useSharedHistoryContext } from "../../context/SharedHistoryContext";
   import StickyEditorTheme from "../../../themes/StickyEditorTheme";
   import ContentEditable from "../../ui/ContentEditable.svelte";
-  import Placeholder from "@ui/Placeholder.svelte";
   import { $isStickyNode as isStickyNode } from "./StickyNode";
   import Portal from "@ui/Portal.svelte";
 

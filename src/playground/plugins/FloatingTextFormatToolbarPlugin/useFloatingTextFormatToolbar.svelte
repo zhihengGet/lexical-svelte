@@ -2,26 +2,19 @@
 	import './index.css';
 
 	import { $isCodeHighlightNode as isCodeHighlightNode } from '@lexical/code';
-	import { $isLinkNode as isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
-	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
+	import { $isLinkNode as isLinkNode } from '@lexical/link';
 	import { mergeRegister } from '@lexical/utils';
 	import {
 		$getSelection as getSelection,
 		$isParagraphNode as isParagraphNode,
 		$isRangeSelection as isRangeSelection,
 		$isTextNode as isTextNode,
-		COMMAND_PRIORITY_LOW,
-		FORMAT_TEXT_COMMAND,
-		type LexicalEditor,
-		SELECTION_CHANGE_COMMAND
+		type LexicalEditor
 	} from 'lexical';
-	import { useCallback, useEffect, useRef, useState } from 'react';
-	import * as React from 'react';
-
-	import { getDOMRangeRect } from '../../utils/getDOMRangeRect';
-	import { getSelectedNode } from '../../utils/getSelectedNode';
-	import { setFloatingElemPosition } from '../../utils/setFloatingElemPosition';
-</script>
+	import { useCallback, useEffect, useState } from 'react';
+	
+import { getSelectedNode } from '../../utils/getSelectedNode';
+	</script>
 
 <script lang="ts">
 	import { Portal } from '@ui/index';

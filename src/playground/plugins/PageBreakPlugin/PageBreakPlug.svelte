@@ -4,7 +4,6 @@
     $insertNodeToNearestRoot as insertNodeToNearestRoot,
     mergeRegister,
   } from "@lexical/utils";
-  import * as lexical from "lexical";
   import type {
     LexicalCommand} from "lexical";
 import {

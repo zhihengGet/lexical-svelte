@@ -6,7 +6,6 @@
  *
  */
 
-import { CAN_USE_DOM } from "shared/canUseDOM";
 
 const useLayoutEffectImpl = (a: () => void, b?: any) => {
   $effect(a);

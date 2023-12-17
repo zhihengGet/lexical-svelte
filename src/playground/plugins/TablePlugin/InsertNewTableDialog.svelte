@@ -1,16 +1,12 @@
 <script context="module" lang="ts">
   import type { LexicalEditor } from "lexical";
   import {
-    createContext,
-    useContext,
     useEffect,
-    useMemo,
     useState,
   } from "react";
   import Button from "../../ui/Button.svelte";
   import DialogActions from "../../ui/DialogActions.svelte";
   import TextInput from "@ui/TextInput.svelte";
-  import { INSERT_TABLE_COMMAND } from "@lexical/table";
   import { INSERT_NEW_TABLE_COMMAND } from "./TableContext.svelte";
 </script>
 

@@ -14,11 +14,6 @@ import { createCommand } from "lexical";
   import {
     InlineImageNode
   } from "./InlineImageNode.svelte";
-  import Button from "@ui/Button.svelte";
-  import DialogActions from "@ui/DialogActions.svelte";
-  import FileInput from "@ui/FileInput.svelte";
-  import Select from "@ui/Select.svelte";
-  import TextInput from "@ui/TextInput.svelte";
   import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext.svelte";
   import { mergeRegister } from "@lexical/utils";
   import {

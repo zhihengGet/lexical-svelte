@@ -5,27 +5,17 @@
 
 <script lang="ts">
 	import { TOGGLE_LINK_COMMAND } from '@lexical/link';
-	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 	import { mergeRegister } from '@lexical/utils';
 	import type { LexicalEditor, LexicalCommand } from 'lexical';
 	import {
 		$getSelection as getSelection,
-		$isRangeSelection as isRangeSelection,
-		COMMAND_PRIORITY_HIGH,
 		COMMAND_PRIORITY_LOW,
-		GridSelection,
-		KEY_ESCAPE_COMMAND,
-		NodeSelection,
-		RangeSelection,
 		SELECTION_CHANGE_COMMAND,
 		FORMAT_TEXT_COMMAND,
 		createCommand
 	} from 'lexical';
-	import { useCallback, useEffect, useRef, useState } from 'react';
+	import { useCallback, useEffect, useRef } from 'react';
 
-	import { getSelectedNode } from '../../utils/getSelectedNode';
-	import { setFloatingElemPositionForLinkEditor } from '../../utils/setFloatingElemPositionForLinkEditor';
-	import { sanitizeUrl } from '../../utils/url';
 	import { getDOMRangeRect } from '../../utils/getDOMRangeRect';
 	import { setFloatingElemPosition } from '../../utils/setFloatingElemPosition';
 

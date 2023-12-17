@@ -1,23 +1,11 @@
 <script context="module" lang="ts">
 	import * as lexical from 'lexical';
-	import { createContext, useCallback, useEffect, useMemo, useState } from 'react';
-	import Button from '../../ui/Button.svelte';
-	import DialogActions from '../../ui/DialogActions.svelte';
-	import TextInput from '@ui/TextInput.svelte';
-	import { INSERT_TABLE_COMMAND } from '@lexical/table';
+	import { useCallback } from 'react';
 	import DropDown from '@ui/Dropdown/DropDown.svelte';
 	import * as Selection from '@lexical/selection';
-	import { type HeadingTagType } from '@lexical/rich-text';
-	import * as RichText from '@lexical/rich-text';
-	import * as Code from '@lexical/code';
-	import {
-		INSERT_CHECK_LIST_COMMAND,
-		INSERT_ORDERED_LIST_COMMAND,
-		INSERT_UNORDERED_LIST_COMMAND,
-		REMOVE_LIST_COMMAND
-	} from '@lexical/list';
-	import { DropDownItem } from '@ui/index';
-	import Select from '@ui/Select.svelte';
+	
+
+import { DropDownItem } from '@ui/index';
 	import { FONT_FAMILY_OPTIONS, FONT_SIZE_OPTIONS } from '.';
 	export const blockTypeToBlockName = {
 		bullet: 'Bulleted List',

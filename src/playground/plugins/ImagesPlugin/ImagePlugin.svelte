@@ -147,17 +147,16 @@
 <script lang="ts">
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 	import { $wrapNodeInElement as wrapNodeInElement, mergeRegister } from '@lexical/utils';
-	import type { LexicalCommand, LexicalEditor } from 'lexical';
+	import type { LexicalEditor } from 'lexical';
 	import {
 		COMMAND_PRIORITY_EDITOR,
 		COMMAND_PRIORITY_HIGH,
 		COMMAND_PRIORITY_LOW,
-		createCommand,
 		DRAGOVER_COMMAND,
 		DRAGSTART_COMMAND,
 		DROP_COMMAND
 	} from 'lexical';
-	import { useEffect, useRef, useState } from 'react';
+	import { useEffect, useState } from 'react';
 	import { CAN_USE_DOM } from 'shared/canUseDOM';
 
 	import type { ImagePayload } from './ImageNode';
@@ -166,10 +165,6 @@
 		$createImageNode as createImageNode,
 		ImageNode
 	} from './ImageNode';
-	import Button from '@ui/Button.svelte';
-	import { default as DialogActions } from '@ui/DialogActions.svelte';
-	import FileInput from '@ui/FileInput.svelte';
-	import TextInput from '@ui/TextInput.svelte';
 	import { INSERT_IMAGE_COMMAND } from '.';
 	const [src, setSrc] = useState('');
 	const [altText, setAltText] = useState('');

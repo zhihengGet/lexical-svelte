@@ -3,11 +3,8 @@ import type { NodeKey } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 import { mergeRegister } from '@lexical/utils';
 import {
-	CLICK_COMMAND,
 	COMMAND_PRIORITY_CRITICAL,
-	COMMAND_PRIORITY_HIGH,
 	COMMAND_PRIORITY_LOW,
-	KEY_ARROW_DOWN_COMMAND,
 	KEY_ARROW_RIGHT_COMMAND,
 	KEY_ENTER_COMMAND,
 	KEY_TAB_COMMAND,

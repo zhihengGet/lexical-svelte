@@ -18,7 +18,6 @@ import type {
 } from 'lexical';
 
 import { $setSelection, createEditor, DecoratorNode } from 'lexical';
-import * as React from 'react';
 
 const StickyComponent =
 	// @ts-ignore

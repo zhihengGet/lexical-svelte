@@ -7,68 +7,31 @@
    *
    */
 
-  import type { RangeSelection, TextFormatType ,
+  import type { RangeSelection, 
     EditorThemeClasses,
     LexicalEditor} from "lexical";
 
-  import {
-    $generateJSONFromSelectedNodes as generateJSONFromSelectedNodes,
-    $generateNodesFromSerializedNodes as generateNodesFromSerializedNodes,
-    $insertGeneratedNodes as insertGeneratedNodes,
-  } from "@lexical/clipboard";
-  import {
+  
+
+import {
     $generateHtmlFromNodes as generateHtmlFromNodes,
-    $generateNodesFromDOM as generateNodesFromDOM,
   } from "@lexical/html";
-  import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext.svelte";
-  import LexicalNestedComposer from "@lexical/react/LexicalNestedComposer.svelte";
-  import { useLexicalNodeSelection } from "@lexical/react/useLexicalNodeSelection.svelte";
-  import { mergeRegister } from "@lexical/utils";
   import {
     $addUpdateTag as addUpdateTag,
-    $createParagraphNode as createParagraphNode,
     $createRangeSelection as createRangeSelection,
-    $getNodeByKey as getNodeByKey,
     $getRoot as getRoot,
-    $getSelection as getSelection,
-    $isNodeSelection as isNodeSelection,
-    $isRangeSelection as isRangeSelection,
-    CLICK_COMMAND,
-    COMMAND_PRIORITY_LOW,
-    COPY_COMMAND,
-    createEditor,
-    CUT_COMMAND,
-    FORMAT_TEXT_COMMAND,
-    KEY_ARROW_DOWN_COMMAND,
-    KEY_ARROW_LEFT_COMMAND,
-    KEY_ARROW_RIGHT_COMMAND,
-    KEY_ARROW_UP_COMMAND,
-    KEY_BACKSPACE_COMMAND,
-    KEY_DELETE_COMMAND,
-    KEY_ENTER_COMMAND,
-    KEY_ESCAPE_COMMAND,
-    KEY_TAB_COMMAND,
-    NodeKey,
-    PASTE_COMMAND,
   } from "lexical";
-  import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-  import * as React from "react";
+  
+import { IS_APPLE } from "shared/environment";
 
-  import { IS_APPLE } from "shared/environment";
-
-  import { CellContext } from "../plugins/TablePlugin";
   import type {
     Rows,
     TableNode} from "./TableNode";
 import {
-    $isTableNode as isTableNode,
-    Cell,
     cellHTMLCache,
     cellTextContentCache,
     createRow,
-    createUID,
-    exportTableCellsToHTML,
-    extractRowsFromHTML
+    createUID
   } from "./TableNode";
 
   type SortOptions = { type: "ascending" | "descending"; x: number };

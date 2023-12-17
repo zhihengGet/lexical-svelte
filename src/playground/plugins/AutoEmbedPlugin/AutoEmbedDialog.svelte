@@ -1,6 +1,6 @@
 <script lang="ts">
   import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext.svelte";
-  import { onMount, onDestroy } from "svelte";
+  import { onDestroy } from "svelte";
   import { useMemo, useState } from "react";
   import type { PlaygroundEmbedConfig } from ".";
   import type {

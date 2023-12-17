@@ -1,6 +1,5 @@
 <script context="module" lang="ts">
   import type { LexicalEditor } from "lexical";
-  import * as React from "react";
   import { useState } from "react";
 
   import Button from "@ui/Button.svelte";

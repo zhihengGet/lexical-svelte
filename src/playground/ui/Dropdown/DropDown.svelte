@@ -7,7 +7,7 @@
 	 *
 	 */
 
-	import { useEffect, useMemo, useRef, useState } from 'react';
+	import { useEffect, useRef, useState } from 'react';
 	import DropDownItems from './Items.svelte';
 	import type { Snippet } from 'svelte';
 	const dropDownPadding = 4;

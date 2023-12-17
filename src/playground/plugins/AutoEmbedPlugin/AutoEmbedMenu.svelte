@@ -2,12 +2,9 @@
   import AutoEmbedMenuItem from "./AutoEmbedMenuItem.svelte"; // Adjust the import path as needed
   import type {
     AutoEmbedOption} from "@lexical/react/LexicalAutoEmbedPlugin.svelte";
-import {
-    EmbedConfig,
-    EmbedMatchResult,
-    URL_MATCHER,
-  } from "@lexical/react/LexicalAutoEmbedPlugin.svelte";
-  type t = {
+
+
+type t = {
     selectedItemIndex: number | null;
     onOptionClick: (option: AutoEmbedOption, index: number) => void;
     onOptionMouseEnter: (index: number) => void;

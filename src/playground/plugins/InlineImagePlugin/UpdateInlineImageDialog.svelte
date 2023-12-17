@@ -15,43 +15,18 @@
 
 	import './ImageNode.css';
 
-	import { useCollaborationContext } from '@lexical/react/LexicalCollaborationContext.svelte';
-	import { CollaborationPlugin } from '@lexical/react/LexicalCollaborationPlugin.svelte';
-	import { HashtagPlugin } from '@lexical/react/LexicalHashtagPlugin';
-	import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin.svelte';
 	import * as lexical from 'lexical';
 	import type * as React from 'react';
-	import { useCallback, useEffect, useRef, useState } from 'react';
+	import { useState } from 'react';
 
-	import { createWebsocketProvider } from '../../collaboration';
-	import { useSettings } from '../../context/SettingsContext.svelte';
-	import EmojisPlugin from '../EmojisPlugin';
-	import KeywordsPlugin from '../KeywordsPlugin';
-	import { LinkPlugin } from '../LinkPlugin';
 	// import MentionsPlugin from "../plugins/MentionsPlugin";
 	//import TreeViewPlugin from "../../plugins/TreeViewPlugin.svelte";
-	import ContentEditable from '@ui/ContentEditable.svelte';
-	import ImageResizer from '../ImagesPlugin/ImageResizer.svelte';
-	import { $isImageNode as isImageNode } from '../ImagesPlugin/ImageNode';
-	import { useSharedHistoryContext } from '../../context/SharedHistoryContext';
-	import {
-		CLICK_COMMAND,
-		COMMAND_PRIORITY_LOW,
-		createCommand,
-		DRAGSTART_COMMAND,
-		KEY_BACKSPACE_COMMAND,
-		KEY_DELETE_COMMAND,
-		KEY_ENTER_COMMAND,
-		KEY_ESCAPE_COMMAND,
-		SELECTION_CHANGE_COMMAND
-	} from 'lexical';
-	import type { Position, InlineImageNode } from './InlineImageNode.svelte';
+	
+
+import type { Position, InlineImageNode } from './InlineImageNode.svelte';
 	import type {
-		GridSelection,
 		LexicalEditor,
-		NodeKey,
-		NodeSelection,
-		RangeSelection
+		NodeKey
 	} from 'lexical';
 
 	import './InlineImageNode.css';

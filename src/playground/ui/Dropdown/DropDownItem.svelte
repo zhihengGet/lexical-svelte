@@ -1,7 +1,6 @@
 <script lang="ts">
-	import * as React from 'react';
-	import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-	import { getContext, setContext } from 'svelte';
+	import { useRef } from 'react';
+	import { getContext } from 'svelte';
 
 	let {
 		class: className,

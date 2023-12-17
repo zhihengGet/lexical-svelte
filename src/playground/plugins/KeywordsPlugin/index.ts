@@ -10,7 +10,7 @@ import type { TextNode } from 'lexical';
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 import { useLexicalTextEntity } from '@lexical/react/useLexicalTextEntity';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 
 import { $createKeywordNode, KeywordNode } from './KeywordNode';
 

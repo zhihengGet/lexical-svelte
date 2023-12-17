@@ -28,7 +28,6 @@ import type {
 } from "lexical";
 
 import { $applyNodeReplacement, createEditor, DecoratorNode } from "lexical";
-import * as React from "react";
 
 const InlineImageComponent = () => import("./InlineImageComponent.svelte");
 

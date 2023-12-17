@@ -8,7 +8,6 @@
 	};
 	import './KatexEquationAlterer.css';
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
-	import * as React from 'react';
 	import { useCallback, useState } from 'react';
 
 	import Button from '@ui/Button.svelte';
