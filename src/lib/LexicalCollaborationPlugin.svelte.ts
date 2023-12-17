@@ -13,7 +13,7 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import type { ExcludedProperties, Provider } from '@lexical/yjs';
 import { useEffect, useMemo } from 'react';
 
-import type { InitialEditorStateType } from '../lib/LexicalComposer.svelte';
+import type { InitialEditorStateType } from '../playground/appSettings';
 import type { CursorsContainerRef } from '../shared/useYjsCollaboration.svelte';
 import {
 	useYjsCollaboration,

@@ -8,7 +8,8 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
-		"fix": "eslint --fix ."
+		"fix": "eslint --fix .",
+		"tsc": "tsc"
 	},
 	"dependencies": {
 		"@lexical/clipboard": "0.12.5",
@@ -55,6 +56,8 @@
 	"devDependencies": {
 		"@melt-ui/svelte": "^0.65.2",
 		"@sveltejs/vite-plugin-svelte": "^3.0.1",
+		"@swc/cli": "^0.1.63",
+		"@swc/core": "^1.3.100",
 		"@tsconfig/svelte": "^5.0.2",
 		"@typescript-eslint/eslint-plugin": "^6.14.0",
 		"@typescript-eslint/parser": "^6.14.0",

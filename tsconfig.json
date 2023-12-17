@@ -4,6 +4,7 @@
 		"target": "ESNext",
 		"useDefineForClassFields": true,
 		"module": "ESNext",
+		"outDir": "dist",
 		"resolveJsonModule": true,
 		"moduleResolution": "Bundler",
 		"composite": true,
@@ -29,6 +30,7 @@
 		},
 		"isolatedModules": true
 	},
-	"include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte"],
+	"exclude": ["src/playground/plugins/AutoEmbedPlugin/*"],
+	"include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte", "shared/**/*.ts"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

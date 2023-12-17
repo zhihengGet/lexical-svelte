@@ -18,5 +18,13 @@ export default defineConfig({
 			'@plugins': path.resolve(__dirname, './src/playground/plugins/')
 		}
 	},
-	plugins: [tsconfigPaths({ loose: true }), UnoCSS({}), svelte()]
+	plugins: [tsconfigPaths({ loose: true }), UnoCSS({}), svelte()],
+	build: {
+		lib: {
+			entry: path.resolve(__dirname, './src/App.svelte'),
+			name: 'MyLib',
+			// the proper extensions will be added
+			fileName: 'index.svelte'
+		}
+	}
 });

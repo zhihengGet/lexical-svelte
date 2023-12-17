@@ -27,27 +27,25 @@
 	import { CAN_USE_DOM } from 'shared/canUseDOM';
 	import { useMemo } from 'react';
 	import { $generateHtmlFromNodes as generateHtmlFromNodes } from '@lexical/html';
-	import type { Snippet } from 'svelte';
 	import { useSettings } from '../playground/context/SettingsContext.svelte';
-	import { CustomParagraphNode } from '@nodes/CustomParagrahNode';
 	import type { InitialEditorStateType } from '../playground/appSettings';
 
 	let setting = useSettings();
+	const {
+		onInput,
+		config: {
+			theme,
+			namespace,
+			editor__DEPRECATED: initialEditor,
+			nodes,
+			onError,
+			editorState: initialEditorState,
+			html,
+			editable
+		},
+		initialHTML
+	} = setting();
 	useMemo(() => {
-		const {
-			onInput,
-			config: {
-				theme,
-				namespace,
-				editor__DEPRECATED: initialEditor,
-				nodes,
-				onError,
-				editorState: initialEditorState,
-				html,
-				editable
-			}
-		} = setting();
-
 		const context: LexicalComposerContextType = createLexicalComposerContext(null, theme);
 		let editor = initialEditor || null;
 		if (editor === null) {
@@ -125,7 +123,7 @@
 		} else if (initialEditorState !== null) {
 			switch (typeof initialEditorState) {
 				case 'string': {
-					if (initialConfig.isHTML) {
+					if (initialHTML) {
 						editor.update(() => {
 							// In the browser you can use the native DOMParser API to parse the HTML string.
 							const parser = new DOMParser();
