@@ -14,7 +14,7 @@ export default {
 		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
 		adapter: adapter(),
 		alias: {
-			'shared/*': './shared/src/*',
+			'shared/*': './src/utils/*',
 			'@shared/*': './src/shared/*',
 			'@lexical/react/*': './src/lib/*',
 			'@theme/*': './src/themes/*  ',
