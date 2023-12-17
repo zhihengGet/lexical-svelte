@@ -1,0 +1,38 @@
+{
+	"$schema": "https://json.schemastore.org/swcrc",
+
+	"jsc": {
+		"parser": {
+			"syntax": "ecmascript",
+			"jsx": false,
+			"dynamicImport": true,
+			"privateMethod": false,
+			"functionBind": false,
+			"exportDefaultFrom": false,
+			"exportNamespaceFrom": false,
+			"decorators": false,
+			"decoratorsBeforeExport": false,
+			"topLevelAwait": false,
+			"importMeta": false
+		},
+
+		"baseUrl": "./",
+		"transform": null,
+		"target": "esnext",
+		"loose": false,
+		"externalHelpers": false,
+		"paths": {
+			"shared/*": ["./shared/src/*"],
+			"@shared/*": ["./src/shared/*"],
+			"@lexical/react/*": ["./src/lib/*"],
+			"@theme/*": ["./src/themes/*  "],
+			"@ui/*": ["./src/playground/ui/*"],
+			"react": ["./src/react.svelte.ts"],
+			"@nodes/*": ["./src/playground/nodes/*"],
+			"@plugins/*": ["./src/playground/plugins/*"]
+		},
+		// Requires v1.2.50 or upper and requires target to be es2016 or upper.
+		"keepClassNames": false
+	},
+	"minify": false
+}
