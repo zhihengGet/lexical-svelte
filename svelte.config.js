@@ -6,7 +6,7 @@ import adapter from '@sveltejs/adapter-auto';
 export default {
 	// Consult https://svelte.dev/docs#compile-time-svelte-preprocess
 	// for more information about preprocessors
-	preprocess: vitePreprocess({ enableSourcemap: true }),
+	preprocess: vitePreprocess(),
 
 	kit: {
 		// adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.
@@ -14,14 +14,14 @@ export default {
 		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
 		adapter: adapter(),
 		alias: {
-			'@nodes/*': 'src/playground/nodes/*',
-			'@plugins/*': 'src/playground/plugins/*',
-			'shared/*': 'src/utils/*',
-			'@shared/*': 'src/shared/*',
-			'@lexical/react/*': 'src/lib/*',
-			'@theme/*': 'src/themes/*',
-			'@ui/*': 'src/playground/ui/*',
-			react: 'src/react.svelte.js'
+			'@nodes/': 'src/playground/nodes/',
+			'@plugins/': 'src/playground/plugins/',
+			'shared/': 'src/utils/',
+			'@shared/': 'src/shared/',
+			'@lexical/react/': 'src/lib/',
+			'@theme/': 'src/themes/',
+			'@ui/': 'src/playground/ui/',
+			react: 'src/react.svelte'
 		},
 		typescript: {
 			config: (config) => {
