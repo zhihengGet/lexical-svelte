@@ -5,7 +5,7 @@
 </script>
 
 <script lang="ts">
-	/* intialize editor */
+	/* initialize editor */
 	import type { LexicalComposerContextType } from '@lexical/react/LexicalComposerContext.svelte';
 	import * as lex from 'lexical';
 
@@ -33,21 +33,21 @@
 	import type { InitialEditorStateType } from '../playground/appSettings';
 
 	let setting = useSettings();
+	const {
+		onInput,
+		config: {
+			theme,
+			namespace,
+			editor__DEPRECATED: initialEditor,
+			nodes,
+			onError,
+			editorState,
+			html,
+			editable
+		},
+		initialHTML
+	} = setting();
 	useMemo(() => {
-		const {
-			onInput,
-			config: {
-				theme,
-				namespace,
-				editor__DEPRECATED: initialEditor,
-				nodes,
-				onError,
-				editorState: initialEditorState,
-				html,
-				editable
-			}
-		} = setting();
-
 		const context: LexicalComposerContextType = createLexicalComposerContext(null, theme);
 		let editor = initialEditor || null;
 		if (editor === null) {
@@ -125,7 +125,7 @@
 		} else if (initialEditorState !== null) {
 			switch (typeof initialEditorState) {
 				case 'string': {
-					if (initialConfig.isHTML) {
+					if (initialHTML) {
 						editor.update(() => {
 							// In the browser you can use the native DOMParser API to parse the HTML string.
 							const parser = new DOMParser();

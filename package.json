@@ -8,7 +8,21 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
-		"fix": "eslint --fix ."
+		"fix": "eslint --fix .",
+		"package": " svelte-kit sync && svelte-package --input src/ --output dist && publint"
+	},
+	"files": [
+		"dist"
+	],
+	"exports": {
+		".": {
+			"types": "./dist/App.svelte.d.ts",
+			"svelte": "./dist/App.svelte",
+			"default": "./dist/App.svelte"
+		}
+	},
+	"peerDependencies": {
+		"svelte": "^5.0.0-next.25"
 	},
 	"dependencies": {
 		"@lexical/clipboard": "0.12.5",
@@ -65,6 +79,7 @@
 		"eslint": "^8.56.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.30.0",
+		"eslint-plugin-unused-imports": "^3.0.0",
 		"prettier": "^3.1.1",
 		"prettier-plugin-svelte": "^3.1.2",
 		"publint": "^0.1.16",

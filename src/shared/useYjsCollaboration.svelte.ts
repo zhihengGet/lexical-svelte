@@ -35,7 +35,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { Doc, Transaction, YEvent } from 'yjs';
 import { UndoManager } from 'yjs';
 
-import type { InitialEditorStateType } from '../lib/LexicalComposer.svelte';
 import type { SvelteRender } from '@lexical/react/types';
 
 export type CursorsContainerRef = React.MutableRefObject<HTMLElement | null>;
@@ -302,6 +301,7 @@ export function useYjsHistory(editor: LexicalEditor, binding: Binding): () => vo
 	return clearHistory;
 }
 import * as lexical from 'lexical';
+import type { InitialEditorStateType } from '../playground/appSettings';
 function initializeEditor(
 	editor: LexicalEditor,
 	initialEditorState?: InitialEditorStateType

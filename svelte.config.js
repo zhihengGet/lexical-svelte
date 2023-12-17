@@ -14,14 +14,28 @@ export default {
 		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
 		adapter: adapter(),
 		alias: {
-			'shared/*': './src/utils/*',
-			'@shared/*': './src/shared/*',
-			'@lexical/react/*': './src/lib/*',
-			'@theme/*': './src/themes/*',
-			'@ui/*': './src/playground/ui/*',
-			react: './src/react.svelte.ts',
-			'@nodes/*': './src/playground/nodes/*',
-			'@plugins/*': './src/playground/plugins/*'
+			'shared/*': 'src/utils/*',
+			'@shared/*': 'src/shared/*',
+			'@lexical/react/*': 'src/lib/*',
+			'@theme/*': 'src/themes/*',
+			'@ui/*': 'src/playground/ui/*',
+			react: 'src/react.svelte.ts',
+			'@nodes/*': 'src/playground/nodes/*',
+			'@plugins/*': 'src/playground/plugins/*'
+		},
+		typescript: {
+			config: (config) => {
+				return {
+					compilerOptions: {
+						...config.compilerOptions,
+						baseUrl: '.',
+						paths: {
+							...config.compilerOptions.paths
+						}
+					},
+					include: [...config.include, '**/*.test.ts']
+				};
+			}
 		}
 	}
 };

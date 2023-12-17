@@ -1,5 +1,6 @@
 import { $isCodeNode as isCodeNode } from '@lexical/code';
-import { $getNearestNodeFromDOMNode as getNearestNodeFromDOMNode, $getSelection as getSelection, $setSelection as setSelection, LexicalEditor } from 'lexical';
+import type { LexicalEditor } from 'lexical';
+import { $getNearestNodeFromDOMNode as getNearestNodeFromDOMNode, $getSelection as getSelection, $setSelection as setSelection } from 'lexical';
 import * as React from 'react';
 import { useState } from 'react';
 import { useDebounce } from '../../utils';

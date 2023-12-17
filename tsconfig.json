@@ -1,12 +1,11 @@
 {
-	"extends": "@tsconfig/svelte/tsconfig.json",
+	"extends": "./.svelte-kit/tsconfig.json",
 	"compilerOptions": {
 		"target": "ESNext",
 		"useDefineForClassFields": true,
 		"module": "ESNext",
 		"resolveJsonModule": true,
 		"moduleResolution": "Bundler",
-		"composite": true,
 		"declaration": true,
 		"verbatimModuleSyntax": true,
 		/**
@@ -17,16 +16,6 @@
 		 */
 		"allowJs": true,
 		"checkJs": true,
-		"paths": {
-			"shared/*": ["./shared/src/*"],
-			"@shared/*": ["./src/shared/*"],
-			"@lexical/react/*": ["./src/lib/*"],
-			"@theme/*": ["./src/themes/*  "],
-			"@ui/*": ["./src/playground/ui/*"],
-			"react": ["./src/react.svelte.ts"],
-			"@nodes/*": ["./src/playground/nodes/*"],
-			"@plugins/*": ["./src/playground/plugins/*"]
-		},
 		"isolatedModules": true
 	},
 	"include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte"],

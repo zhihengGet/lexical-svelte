@@ -1,7 +1,8 @@
 import './index.css';
 import { $isCodeNode as isCodeNode } from '@lexical/code';
-import { $getNearestNodeFromDOMNode as getNearestNodeFromDOMNode, LexicalEditor } from 'lexical';
-import { Options } from 'prettier';
+import type { LexicalEditor } from 'lexical';
+import { $getNearestNodeFromDOMNode as getNearestNodeFromDOMNode } from 'lexical';
+import type { Options } from 'prettier';
 import * as React from 'react';
 import { useState } from 'react';
 

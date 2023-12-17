@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-	import type { MenuRenderFn, MenuResolution } from '../shared/LexicalMenu.svelte';
+	import { MenuRenderFn, MenuResolution } from '../shared/LexicalMenu.svelte';
 
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 	import type * as lexical from 'lexical';

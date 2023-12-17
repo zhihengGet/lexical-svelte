@@ -46,7 +46,8 @@
 		"moduleResolution": "bundler",
 		"module": "esnext",
 		"noEmit": true,
-		"target": "esnext"
+		"target": "esnext",
+		"baseUrl": "."
 	},
 	"include": [
 		"ambient.d.ts",
@@ -59,12 +60,7 @@
 		"../src/**/*.svelte",
 		"../tests/**/*.js",
 		"../tests/**/*.ts",
-		"../tests/**/*.svelte"
-	],
-	"exclude": [
-		"../node_modules/**",
-		"../src/service-worker.js",
-		"../src/service-worker.ts",
-		"../src/service-worker.d.ts"
+		"../tests/**/*.svelte",
+		"**/*.test.ts"
 	]
 }
