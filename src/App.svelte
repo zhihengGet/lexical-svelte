@@ -2,17 +2,12 @@
 	import '@unocss/reset/tailwind.css';
 	import 'virtual:uno.css';
 
-	import PlaygroundEditorTheme from './themes/PlaygroundEditorTheme';
-
 	import Editor from './Editor.svelte';
 	import './index.css';
-	import PlaygroundNodes from './playground/PlaygroundNodes';
-	import SettingsContext from './playground/context/SettingsContext.svelte';
-	import { createHistoryContext } from './playground/context/SharedHistoryContext';
-	import SharedAutocompleteContext from './playground/context/SharedAutocompleteContext.svelte';
-	import { ParagraphNode, type LexicalNode } from 'lexical';
-	import { CustomParagraphNode } from '@nodes/CustomParagrahNode';
 	import LexicalComposer from './lib/LexicalComposer.svelte';
+	import SettingsContext from './playground/context/SettingsContext.svelte';
+	import SharedAutocompleteContext from './playground/context/SharedAutocompleteContext.svelte';
+	import { createHistoryContext } from './playground/context/SharedHistoryContext';
 	console.warn(
 		'If you are profiling the playground app, please ensure you turn off the debug view. You can disable it by pressing on the settings control in the bottom-left of your screen and toggling the debug view setting.'
 	);

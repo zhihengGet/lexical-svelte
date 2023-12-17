@@ -40,7 +40,7 @@ export function useState<T>(state: T | temp<T>) {
 function useEffect<D>(func: () => void, dep?: any[]) {
 	if (dep) {
 		$effect(() => {
-			for (let d of dep) {
+			for (const d of dep) {
 				if (has(d, '_custom_source')) {
 					d();
 				}
