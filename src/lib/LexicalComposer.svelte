@@ -27,8 +27,7 @@
 	import { CAN_USE_DOM } from 'shared/canUseDOM';
 	import { useMemo } from 'react';
 	import { $generateHtmlFromNodes as generateHtmlFromNodes } from '@lexical/html';
-	import { useSettings } from '../playground/context/SettingsContext.svelte';
-	import type { InitialEditorStateType } from '../playground/appSettings';
+	import { useSettings, type InitialEditorStateType } from '../playground/appSettings';
 
 	let setting = useSettings();
 	const {
@@ -65,7 +64,7 @@
 			editor.update(() => {
 				// In the browser you can use the native DOMParser API to parse the HTML string.
 				const parser = new DOMParser();
-				const dom = parser.parseFromString('<p data-id="213">hi</p>', 'text/html');
+				const dom = parser.parseFromString(initialHTML ?? '<p data-id="213">hi</p>', 'text/html');
 
 				// Once you have the DOM instance it's easy to generate LexicalNodes.
 				const nodes = generateNodesFromDOM(editor, dom);

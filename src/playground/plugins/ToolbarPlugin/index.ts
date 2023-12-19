@@ -13,7 +13,8 @@ const blockTypeToBlockName = {
 	h6: 'Heading 6',
 	number: 'Numbered List',
 	paragraph: 'Normal',
-	quote: 'Quote'
+	quote: 'Quote',
+	'custom-paragraph': 'Normal'
 };
 
 const rootTypeToRootName = {

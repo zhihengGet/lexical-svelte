@@ -131,7 +131,7 @@
 					: findMatchingParent(anchorNode, (e) => {
 							const parent = e.getParent();
 							return parent !== null && isRootOrShadowRoot(parent);
-					  });
+						});
 
 			if (element === null) {
 				element = anchorNode.getTopLevelElementOrThrow();
@@ -174,6 +174,7 @@
 					setBlockType(type);
 				} else {
 					const type = isHeadingNode(element) ? element.getTag() : element.getType();
+					console.log('update editor', type, element);
 					if (type in blockTypeToBlockName) {
 						setBlockType(type as keyof typeof blockTypeToBlockName);
 					}
@@ -203,11 +204,11 @@
 				isElementNode(matchingParent)
 					? matchingParent.getFormatType()
 					: isElementNode(node)
-					? node.getFormatType()
-					: parent?.getFormatType() || 'left'
+						? node.getFormatType()
+						: parent?.getFormatType() || 'left'
 			);
 		}
-	}, [activeEditor()]);
+	}, [activeEditor]);
 
 	useEffect(() => {
 		return editor.registerCommand(
@@ -248,7 +249,7 @@
 				COMMAND_PRIORITY_CRITICAL
 			)
 		);
-	}, [updateToolbar, activeEditor(), editor]);
+	}, [updateToolbar, activeEditor, editor]);
 
 	useEffect(() => {
 		return activeEditor().registerCommand(
@@ -270,7 +271,7 @@
 			},
 			COMMAND_PRIORITY_NORMAL
 		);
-	}, [activeEditor(), isLink, setIsLinkEditMode]);
+	}, [activeEditor, isLink, setIsLinkEditMode]);
 
 	const applyStyleText = useCallback(
 		(styles: Record<string, string>) => {
@@ -281,7 +282,7 @@
 				}
 			});
 		},
-		[activeEditor()]
+		[activeEditor]
 	);
 
 	const clearFormatting = useCallback(() => {
@@ -366,6 +367,7 @@
 	};
 </script>
 
+{blockType()}
 <div class="toolbar">
 	<button
 		disabled={!canUndo() || !isEditable()}

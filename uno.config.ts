@@ -1,9 +1,8 @@
 // uno.config.ts
 import { defineConfig, presetAttributify, presetUno } from 'unocss';
-import {} from 'unocss';
 export default defineConfig({
 	cli: {
-		entry: { patterns: ['src/**/*.svelte'], outFile: 'dist/virtual:uno.css' } // CliEntryItem | CliEntryItem[]
+		entry: [{ patterns: ['src/**/*.svelte'], outFile: 'dist/uno.css' }] // CliEntryItem | CliEntryItem[]
 	},
 	presets: [
 		presetAttributify({

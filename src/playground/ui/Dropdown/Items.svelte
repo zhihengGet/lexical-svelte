@@ -18,6 +18,7 @@
 	);
 
 	const handleKeyDown = (event: KeyboardEvent) => {
+		console.log('on close dropdwon', event.key);
 		if (!items()) return;
 
 		const key = event.key;
@@ -61,9 +62,9 @@
 		if (highlightedItem() && highlightedItem().current) {
 			highlightedItem().current?.focus();
 		}
-	}, [items(), highlightedItem()]);
+	}, [items, highlightedItem]);
 </script>
 
-<div class="dropdown" bind:this={dropDownRef.current} onKeyDown={handleKeyDown}>
+<div class="dropdown" bind:this={dropDownRef.current} onkeydown={handleKeyDown}>
 	<slot />
 </div>

@@ -21,6 +21,7 @@ import PlaygroundEditorTheme from '../themes/PlaygroundEditorTheme';
 import { CustomParagraphNode } from '@nodes/CustomParagrahNode';
 import { ParagraphNode } from 'lexical';
 import PlaygroundNodes from './PlaygroundNodes';
+import { getContext, setContext } from 'svelte';
 const hostName = window.location.hostname;
 export const isDevPlayground: boolean =
 	hostName !== 'playground.lexical.dev' && hostName !== 'lexical-playground.vercel.app';
@@ -123,4 +124,11 @@ export type SettingName = keyof typeof DEFAULT_SETTINGS;
 
 export type Settings = Omit<typeof DEFAULT_SETTINGS, 'config'> & { config: InitialConfigType } & {
 	onInput: (s: string) => unknown;
+};
+const context = 'setting context';
+export const useSettings = () => {
+	return getContext(context) as () => Settings;
+};
+export const settingContext = (config: () => Settings) => {
+	setContext(context, config);
 };

@@ -4,10 +4,8 @@
 		"target": "ESNext",
 		"useDefineForClassFields": true,
 		"module": "ESNext",
-		"outDir": "dist",
 		"resolveJsonModule": true,
 		"moduleResolution": "Bundler",
-		"composite": true,
 		"declaration": true,
 		"verbatimModuleSyntax": true,
 		/**
@@ -19,10 +17,10 @@
 		"allowJs": true,
 		"checkJs": true,
 		"paths": {
-			"shared/*": ["./shared/src/*"],
+			"shared/*": ["./src/util/src/*"],
 			"@shared/*": ["./src/shared/*"],
 			"@lexical/react/*": ["./src/lib/*"],
-			"@theme/*": ["./src/themes/*  "],
+			"@theme/*": ["./src/themes/*"],
 			"@ui/*": ["./src/playground/ui/*"],
 			"react": ["./src/react.svelte.ts"],
 			"@nodes/*": ["./src/playground/nodes/*"],
@@ -31,6 +29,6 @@
 		"isolatedModules": true
 	},
 	"exclude": ["src/playground/plugins/AutoEmbedPlugin/*"],
-	"include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte", "shared/**/*.ts"],
+	"include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

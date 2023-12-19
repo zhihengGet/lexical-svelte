@@ -8,7 +8,7 @@
 	import LexicalTreeView from './lib/LexicalTreeView.svelte';
 	import TreeViewPlugin from './playground/plugins/TreeViewPlugin/TreeViewPlugin.svelte';
 	import ContentEditable from './playground/ui/ContentEditable.svelte';
-	import SettingsContext, { useSettings } from './playground/context/SettingsContext.svelte';
+	import { useSettings } from './playground/appSettings';
 	import ToolbarPlugin from '@plugins/ToolbarPlugin/ToolbarPlugin.svelte';
 	import { HistoryPlugin } from './lib/LexicalHistoryPlugin.svelte';
 	import Portal from '@ui/Portal.svelte';

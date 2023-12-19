@@ -9,7 +9,7 @@ export default defineConfig({
 	base: './',
 	resolve: {
 		alias: {
-			shared: path.resolve(__dirname, 'shared/src/'),
+			shared: path.resolve(__dirname, './src/util/src/'),
 			'@lexical/react': path.resolve(__dirname, 'src/lib/'),
 			react: path.resolve(__dirname, 'src/react.svelte'),
 			'@theme': path.resolve(__dirname, './src/themes/'),

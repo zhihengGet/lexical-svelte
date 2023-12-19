@@ -1,27 +1,15 @@
 <script context="module" lang="ts">
 	let totalComponents = 0;
-	type SettingsContextShape = {
-		setOption: (name: SettingName, value: boolean) => void;
-		settings: () => Record<SettingName, boolean>;
-	};
+
+	import { useState } from 'react';
+
+	import type { CreateEditorArgs } from 'lexical';
+	import { setContext, type Snippet } from 'svelte';
+	import { DEFAULT_SETTINGS, useSettings } from '../appSettings';
 	let context = 'setting context';
-	export const useSettings = () => {
-		return getContext(context) as () => Settings;
-	};
-	export const settingContext = (config: () => Settings) => {
-		setContext(context, config);
-	};
 </script>
 
 <script lang="ts">
-	import type { SettingName, Settings } from '../appSettings';
-
-	import { createContext, useCallback, useMemo, useState } from 'react';
-
-	import { DEFAULT_SETTINGS } from '../appSettings';
-	import { getContext, setContext, type Snippet } from 'svelte';
-	import type { CreateEditorArgs } from 'lexical';
-
 	totalComponents += 1;
 
 	const text = useSettings();

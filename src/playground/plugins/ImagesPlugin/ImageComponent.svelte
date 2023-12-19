@@ -37,7 +37,7 @@
 	} from 'lexical';
 	import { useCallback, useEffect, useRef, useState } from 'react';
 
-	import { useSettings } from '../../context/SettingsContext.svelte';
+	import { useSettings } from '../../appSettings';
 	import { useSharedHistoryContext } from '../../context/SharedHistoryContext';
 	import EmojisPlugin from '@plugins/EmojisPlugin';
 	import KeywordsPlugin from '@plugins/KeywordsPlugin';

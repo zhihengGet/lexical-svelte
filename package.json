@@ -1,7 +1,7 @@
 {
 	"name": "lexical-svelte-runes",
 	"private": false,
-	"version": "0.1.2",
+	"version": "0.1.2-beta.4",
 	"type": "module",
 	"author": {
 		"name": "whateverhack@qq.com"
@@ -13,18 +13,19 @@
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"fix": "eslint --fix .",
 		"tsc": "tsc",
-		"package": "svelte-package --input src/",
+		"package": "svelte-package --input src/ && npx unocss",
 		"uno": "echo 123 "
 	},
 	"exports": {
 		".": {
-			"default": "./dist/App.svelte"
+			"default": "./dist/App.svelte",
+			"types": "./dist/App.svelte.d.ts"
 		}
 	},
 	"files": [
 		"dist"
 	],
-	"peerDependencies": {
+	"peerDDependencies": {
 		"svelte": "^5.0.0-next.25"
 	},
 	"dependencies": {
