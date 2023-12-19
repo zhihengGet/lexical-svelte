@@ -14,8 +14,11 @@
 
 	console.log('portal', props);
 	function refFn(node: HTMLElement) {
+		if (portal == true) {
+			console.warn('rendering', props.tree);
+		}
 		if (portal === false || !props.target) {
-			// if we dont need to portal then remove the div that is wrapper it
+			// if we don't need to portal then remove the div that is wrapper it
 			return;
 		}
 		let p = usePortal(node, props.target);
@@ -63,12 +66,15 @@
 		{/if}
 	{/await}
 {/snippet}
-{#if (!components || components.length == 0) && (props.component || snippet)}
+{#if (!components || components.length == 0) && (props.component || snippet || children)}
 	{#if portal == false || !props.target}
 		{@render El()}
 	{:else}
 		<div class="inline-block" use:refFn bind:this={ref.current} data-id="svelt-render">
 			{@render El()}
+			{#if children}
+				{@render children()}
+			{/if}
 		</div>
 	{/if}
 {/if}

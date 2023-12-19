@@ -36,6 +36,7 @@
 	import LexicalCharacterLimitPlugin from '@plugins/CharacterLimitPlugin/LexicalCharacterLimitPlugin.svelte';
 	import { MaxLengthPlugin } from '@plugins/MaxLengthPlugin/MaxLengthPlugin.svelte';
 	import TableOfContentsPlugin from '@plugins/TableOfContentsPlugin/TableOfContentsPlugin.svelte';
+	import MeltTree from '@plugins/TableOfContentsPlugin/MeltTree.svelte';
 	const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
 	const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
 	const isEditable = true;
@@ -156,5 +157,6 @@
 	{/if}
 	<TableOfContentsPlugin />
 	<Test />
+	<MeltTree />
 </div>
 <TreeViewPlugin />
