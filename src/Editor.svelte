@@ -33,8 +33,10 @@
 	import EquationsPlugin from '@plugins/EquationsPlugin/EquationsPlugin.svelte';
 	import { HashtagPlugin } from './lib/LexicalHashtagPlugin';
 	import AutocompletePlugin from '@plugins/AutocompletePlugin/AutocompletePlugin.svelte';
+	import LexicalCharacterLimitPlugin from '@plugins/LexicalCharacterLimitPlugin/CharacterLimitPlugin.svelte';
+	import { MaxLengthPlugin } from '@plugins/MaxLengthPlugin/MaxLengthPlugin.svelte';
 	const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
-	const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement>(null);
+	const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
 	const isEditable = true;
 	const text = 'Enter some plain text...';
 	const placeholder = text;
@@ -104,19 +106,21 @@
 		<Portal target={null} initializor={CheckListPlugin} />
 		<Portal target={null} initializor={CodeHighlightPlugin} />
 		<Portal target={null} initializor={HashtagPlugin} />
+		<Portal target={null} initializor={() => MaxLengthPlugin({ maxLength: 11 })} />
 		<Portal target={null} initializor={AutocompletePlugin} enable={isAutocomplete} />
-
+		<LexicalCharacterLimitPlugin charset="UTF-8" maxLength={10} />
 		<EquationsPlugin />
 		<LinkPlugin />
 
-		{#if floatingAnchorElem() && isEditable}
-			<Portal {...CodeActionMenuPlugin({ anchorElem: floatingAnchorElem() })} />
+		{@const el = floatingAnchorElem()}
+		{#if el && isEditable}
+			<Portal {...CodeActionMenuPlugin({ anchorElem: el })} />
 			<FloatingLinkEditorPlugin
-				anchorElem={floatingAnchorElem()}
+				anchorElem={el}
 				isLinkEditMode={isLinkEditMode()}
 				{setIsLinkEditMode}
 			/>
-			<FloatingTextFormatToolbarPlugin anchorElem={floatingAnchorElem()} />
+			<FloatingTextFormatToolbarPlugin anchorElem={el} />
 		{/if}
 	{:else}
 		<!-- plain text only -->

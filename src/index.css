@@ -820,7 +820,9 @@ i.page-break,
 .icon.paragraph {
 	background-image: url(images/icons/text-paragraph.svg);
 }
-
+.icon.custom-paragraph {
+	background-image: url(images/icons/text-paragraph.svg);
+}
 .icon.h1 {
 	background-image: url(images/icons/type-h1.svg);
 }

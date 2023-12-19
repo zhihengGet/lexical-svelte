@@ -137,8 +137,8 @@
 				}
 		});
 	});
-	const normalizedLang = normalizeCodeLang(lang());
-	const codeFriendlyName = getLanguageFriendlyName(lang());
+	const normalizedLang = $derived(normalizeCodeLang(lang()));
+	const codeFriendlyName = $derived(getLanguageFriendlyName(lang()));
 
 	let style = $derived(styleString(position()));
 </script>

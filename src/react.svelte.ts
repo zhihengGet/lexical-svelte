@@ -20,7 +20,7 @@ export function useState<T>(state: T | temp<T>) {
 
 	let s = $state<T>(value);
 
-	const getState = function () {
+	const getState: () => T = function () {
 		return s;
 	};
 	getState._custom_source = 'svelte';

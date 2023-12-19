@@ -107,8 +107,9 @@
 	{#if buttonIconClassName}
 		<span class={buttonIconClassName} />
 	{/if}
+
 	{#if buttonLabel}
-		<span class="text dropdown-button-text">{buttonLabel}</span>
+		<span class="text-sm text-center">{buttonLabel}</span>
 	{/if}
 	<i class="chevron-down" />
 </button>

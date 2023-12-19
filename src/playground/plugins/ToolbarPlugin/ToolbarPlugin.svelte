@@ -94,6 +94,7 @@
 	import InsertImageDialog from '@plugins/ImagesPlugin/InsertImageDialog.svelte';
 	import InsertInlineImageDialog from '@plugins/InlineImagePlugin/InsertInlineImageDialog.svelte';
 	import { INSERT_PAGE_BREAK } from '@plugins/PageBreakPlugin/PageBreakPlug.svelte';
+	import { useSettings } from '../../appSettings';
 
 	let { setIsLinkEditMode } = $props<{ setIsLinkEditMode: (param: boolean) => boolean }>();
 	const [editor] = useLexicalComposerContext();
@@ -365,11 +366,13 @@
 	const insertGifOnClick = (payload: InsertImagePayload) => {
 		activeEditor().dispatchCommand(INSERT_IMAGE_COMMAND, payload);
 	};
+	const settings = useSettings();
 </script>
 
 {blockType()}
 <div class="toolbar">
 	<button
+		class:hidden={settings().isUndoRedo == false}
 		disabled={!canUndo() || !isEditable()}
 		onclick={() => {
 			activeEditor().dispatchCommand(UNDO_COMMAND, undefined);

@@ -1,26 +1,19 @@
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
 
 import type {LexicalEditor, LexicalNode} from 'lexical';
 
 import {
-  $createOverflowNode,
-  $isOverflowNode,
+  $createOverflowNode as createOverflowNode,
+  $isOverflowNode as isOverflowNode,
   OverflowNode,
 } from '@lexical/overflow';
-import {$rootTextContent} from '@lexical/text';
-import {$dfs, mergeRegister} from '@lexical/utils';
+import {$rootTextContent as rootTextContent} from '@lexical/text';
+import {$dfs as dfs, mergeRegister} from '@lexical/utils';
 import {
-  $getSelection,
-  $isLeafNode,
-  $isRangeSelection,
-  $isTextNode,
-  $setSelection,
+  $getSelection as getSelection,
+  $isLeafNode as isLeafNode,
+  $isRangeSelection as isRangeSelection,
+  $isTextNode as isTextNode,
+  $setSelection as setSelection,
 } from 'lexical';
 import {useEffect} from '../react.svelte';
 import invariant from 'shared/invariant';
@@ -53,7 +46,7 @@ export function useCharacterLimit(
   }, [editor]);
 
   useEffect(() => {
-    let text = editor.getEditorState().read($rootTextContent);
+    let text = editor.getEditorState().read(rootTextContent);
     let lastComputedTextLength = 0;
 
     return mergeRegister(
@@ -82,7 +75,7 @@ export function useCharacterLimit(
           const offset = findOffset(text, maxCharacters, strlen);
           editor.update(
             () => {
-              $wrapOverflowedNodes(offset);
+              wrapOverflowedNodes(offset);
             },
             {
               tag: 'history-merge',
@@ -140,15 +133,15 @@ function findOffset(
   return offsetUtf16;
 }
 
-function $wrapOverflowedNodes(offset: number): void {
-  const dfsNodes = $dfs();
+function wrapOverflowedNodes(offset: number): void {
+  const dfsNodes = dfs();
   const dfsNodesLength = dfsNodes.length;
   let accumulatedLength = 0;
 
   for (let i = 0; i < dfsNodesLength; i += 1) {
     const {node} = dfsNodes[i];
 
-    if ($isOverflowNode(node)) {
+    if (isOverflowNode(node)) {
       const previousLength = accumulatedLength;
       const nextLength = accumulatedLength + node.getTextContentSize();
 
@@ -156,18 +149,18 @@ function $wrapOverflowedNodes(offset: number): void {
         const parent = node.getParent();
         const previousSibling = node.getPreviousSibling();
         const nextSibling = node.getNextSibling();
-        $unwrapNode(node);
-        const selection = $getSelection();
+        unwrapNode(node);
+        const selection = getSelection();
 
         // Restore selection when the overflow children are removed
         if (
-          $isRangeSelection(selection) &&
+          isRangeSelection(selection) &&
           (!selection.anchor.getNode().isAttached() ||
             !selection.focus.getNode().isAttached())
         ) {
-          if ($isTextNode(previousSibling)) {
+          if (isTextNode(previousSibling)) {
             previousSibling.select();
-          } else if ($isTextNode(nextSibling)) {
+          } else if (isTextNode(nextSibling)) {
             nextSibling.select();
           } else if (parent !== null) {
             parent.select();
@@ -181,39 +174,39 @@ function $wrapOverflowedNodes(offset: number): void {
         // For simple text we can redimension the overflow into a smaller and more accurate
         // container
         const firstDescendantIsSimpleText =
-          $isTextNode(descendant) && descendant.isSimpleText();
+          isTextNode(descendant) && descendant.isSimpleText();
         const firstDescendantDoesNotOverflow =
           previousPlusDescendantLength <= offset;
 
         if (firstDescendantIsSimpleText || firstDescendantDoesNotOverflow) {
-          $unwrapNode(node);
+          unwrapNode(node);
         }
       }
-    } else if ($isLeafNode(node)) {
+    } else if (isLeafNode(node)) {
       const previousAccumulatedLength = accumulatedLength;
       accumulatedLength += node.getTextContentSize();
 
-      if (accumulatedLength > offset && !$isOverflowNode(node.getParent())) {
-        const previousSelection = $getSelection();
+      if (accumulatedLength > offset && !isOverflowNode(node.getParent())) {
+        const previousSelection = getSelection();
         let overflowNode;
 
         // For simple text we can improve the limit accuracy by splitting the TextNode
         // on the split point
         if (
           previousAccumulatedLength < offset &&
-          $isTextNode(node) &&
+          isTextNode(node) &&
           node.isSimpleText()
         ) {
           const [, overflowedText] = node.splitText(
             offset - previousAccumulatedLength,
           );
-          overflowNode = $wrapNode(overflowedText);
+          overflowNode = wrapNode(overflowedText);
         } else {
-          overflowNode = $wrapNode(node);
+          overflowNode = wrapNode(node);
         }
 
         if (previousSelection !== null) {
-          $setSelection(previousSelection);
+          setSelection(previousSelection);
         }
 
         mergePrevious(overflowNode);
@@ -222,14 +215,14 @@ function $wrapOverflowedNodes(offset: number): void {
   }
 }
 
-function $wrapNode(node: LexicalNode): OverflowNode {
-  const overflowNode = $createOverflowNode();
+function wrapNode(node: LexicalNode): OverflowNode {
+  const overflowNode = createOverflowNode();
   node.insertBefore(overflowNode);
   overflowNode.append(node);
   return overflowNode;
 }
 
-function $unwrapNode(node: OverflowNode): LexicalNode | null {
+function unwrapNode(node: OverflowNode): LexicalNode | null {
   const children = node.getChildren();
   const childrenLength = children.length;
 
@@ -244,7 +237,7 @@ function $unwrapNode(node: OverflowNode): LexicalNode | null {
 export function mergePrevious(overflowNode: OverflowNode): void {
   const previousNode = overflowNode.getPreviousSibling();
 
-  if (!$isOverflowNode(previousNode)) {
+  if (!isOverflowNode(previousNode)) {
     return;
   }
 
@@ -260,9 +253,9 @@ export function mergePrevious(overflowNode: OverflowNode): void {
     }
   }
 
-  const selection = $getSelection();
+  const selection = getSelection();
 
-  if ($isRangeSelection(selection)) {
+  if (isRangeSelection(selection)) {
     const anchor = selection.anchor;
     const anchorNode = anchor.getNode();
     const focus = selection.focus;
