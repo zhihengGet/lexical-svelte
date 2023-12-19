@@ -1,8 +1,9 @@
-<script lang="ts" context="module">
+<script lang="ts">
+	import type { TableOfContentsEntry } from './LexicalTableOfContents.svelte';
 	import type { HeadingTagType } from '@lexical/rich-text';
 	import type { NodeKey } from 'lexical';
 
-	import { type TableOfContentsEntry } from './LexicalTableOfContents.svelte';
+	import './index.css';
 
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 	import { useEffect, useRef, useState } from 'react';
@@ -34,13 +35,11 @@
 		const elementYPosition = element?.getClientRects()[0].y;
 		return elementYPosition >= MARGIN_ABOVE_EDITOR + HEADING_WIDTH;
 	}
-</script>
-
-<script lang="ts">
 	type props = {
 		tableOfContents: Array<TableOfContentsEntry>;
 	};
 	let { tableOfContents } = $props<props>();
+
 	const [selectedKey, setSelectedKey] = useState('');
 	const selectedIndex = useRef(0);
 	const [editor] = useLexicalComposerContext();
@@ -62,7 +61,7 @@
 				if (tableOfContents.length !== 0 && selectedIndex.current < tableOfContents.length - 1) {
 					let currentHeading = editor.getElementByKey(tableOfContents[selectedIndex.current][0]);
 					if (currentHeading !== null) {
-						if (isHeadingBelowTheTopOfThePage(currentHeading) && selectedIndex.current !== null) {
+						if (isHeadingBelowTheTopOfThePage(currentHeading)) {
 							//On natural scroll, user is scrolling up
 							while (
 								currentHeading !== null &&
@@ -124,3 +123,5 @@
 		return () => document.removeEventListener('scroll', onScroll);
 	}, [tableOfContents, editor]);
 </script>
+
+<!-- add toc -->
