@@ -33,8 +33,9 @@
 	import EquationsPlugin from '@plugins/EquationsPlugin/EquationsPlugin.svelte';
 	import { HashtagPlugin } from './lib/LexicalHashtagPlugin';
 	import AutocompletePlugin from '@plugins/AutocompletePlugin/AutocompletePlugin.svelte';
-	import LexicalCharacterLimitPlugin from '@plugins/LexicalCharacterLimitPlugin/CharacterLimitPlugin.svelte';
+	import LexicalCharacterLimitPlugin from '@plugins/CharacterLimitPlugin/LexicalCharacterLimitPlugin.svelte';
 	import { MaxLengthPlugin } from '@plugins/MaxLengthPlugin/MaxLengthPlugin.svelte';
+	import TableOfContentsPlugin from '@plugins/TableOfContentsPlugin/TableOfContentsPlugin.svelte';
 	const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
 	const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
 	const isEditable = true;
@@ -106,7 +107,7 @@
 		<Portal target={null} initializor={CheckListPlugin} />
 		<Portal target={null} initializor={CodeHighlightPlugin} />
 		<Portal target={null} initializor={HashtagPlugin} />
-		<Portal target={null} initializor={() => MaxLengthPlugin({ maxLength: 11 })} />
+		<Portal target={null} initializor={() => MaxLengthPlugin({ maxLength: 11 })} enable={false} />
 		<Portal target={null} initializor={AutocompletePlugin} enable={isAutocomplete} />
 		<LexicalCharacterLimitPlugin charset="UTF-8" maxLength={10} />
 		<EquationsPlugin />
@@ -153,6 +154,7 @@
 			initializor={() => HistoryPlugin({ externalHistoryState: historyState })}
 		/>
 	{/if}
+	<TableOfContentsPlugin />
 	<Test />
 </div>
 <TreeViewPlugin />

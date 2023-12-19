@@ -12,7 +12,8 @@ import { flushSync, onMount, unstate, untrack } from 'svelte';
 import type { SvelteRender } from '@lexical/react/types';
 
 export function useDecorators(editor: LexicalEditor) {
-	let decorators = $state(editor.getDecorators<SvelteRender>());
+	let isUpdated = $state(false);
+	let decorators = editor.getDecorators<SvelteRender>();
 	/* 	const [decoratorss, setDecorators] =$state()  useState<Record<string, SvelteRender>>(
 		editor.getDecorators<SvelteRender>()
 	);
@@ -30,11 +31,15 @@ export function useDecorators(editor: LexicalEditor) {
 		flushSync(() => {
 			decorators = nextDecorators;
 		});
+		isUpdated = true;
 	});
 
 	// Return decorators defined as React Portals/
-	const rendered = new Set();
 	const toRender = $derived(() => {
+		if (!isUpdated) {
+			return;
+		}
+
 		const decoratedPortals: SvelteRender[] = [];
 		const decoratorKeys = Object.keys(unstate(decorators));
 
@@ -53,6 +58,9 @@ export function useDecorators(editor: LexicalEditor) {
 				//rendered.add(element);
 			}
 		}
+		untrack(() => {
+			isUpdated = false;
+		});
 		//console.log('to be rendered');
 		return decoratedPortals;
 	});

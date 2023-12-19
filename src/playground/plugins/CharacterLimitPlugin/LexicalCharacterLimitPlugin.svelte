@@ -1,9 +1,10 @@
-<script context="module" lang="ts">
+<script lang="ts">
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 	import * as React from 'react';
 	import { useMemo, useState } from 'react';
 
 	import { useCharacterLimit } from './useCharacterLimit.svelte';
+
 	const CHARACTER_LIMIT = 5;
 	let textEncoderInstance: null | TextEncoder = null;
 
@@ -18,7 +19,11 @@
 
 		return textEncoderInstance;
 	}
-
+	type props = {
+		charset: 'UTF-8' | 'UTF-16';
+		maxLength: number;
+	};
+	let { charset, maxLength } = $props<props>();
 	function utf8Length(text: string) {
 		const currentTextEncoder = textEncoder();
 
@@ -30,14 +35,6 @@
 
 		return currentTextEncoder.encode(text).length;
 	}
-</script>
-
-<script lang="ts">
-	type p = {
-		charset: 'UTF-8' | 'UTF-16';
-		maxLength: number;
-	};
-	let { charset = 'UTF-16', maxLength = CHARACTER_LIMIT } = $props<p>();
 	const [editor] = useLexicalComposerContext();
 
 	const [remainingCharacters, setRemainingCharacters] = useState(maxLength);
@@ -62,5 +59,6 @@
 </script>
 
 <span class={`characters-limit ${remainingCharacters() < 0 ? 'characters-limit-exceeded' : ''}`}>
-	{remainingCharacters}
+	{' '}
+	{remainingCharacters()}
 </span>

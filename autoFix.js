@@ -76,4 +76,4 @@ async function process(filename) {
 	);
 	await writeFile(jsfiles[0].replace('tsx', 'tsx'), new_imports + rest, () => console.log('wrote'));
 }
-process('useCharacterLimit.svelte.ts');
+process('LexicalTableOfContents.tsx');
