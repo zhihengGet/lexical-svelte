@@ -74,7 +74,6 @@ export class AutocompleteServer {
 		let isDismissed = false;
 
 		const dismiss = () => {
-			console.error('dismissed');
 			isDismissed = true;
 		};
 		const promise: Promise<null | string[]> = new Promise((resolve, reject) => {

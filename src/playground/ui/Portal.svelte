@@ -31,12 +31,12 @@
 		}
 
 		let p = usePortal(node, props.target);
-		/* onDestroy(() => {
+		onDestroy(() => {
 			console.log('portal destroy refFn', p);
 			if (p && p.destroy) {
-				p.destroy();  
+				p.destroy();
 			}
-		}); */
+		});
 	}
 	if (typeof props.initializor == 'function') {
 		//console.log('call initializer');

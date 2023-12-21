@@ -170,7 +170,7 @@
 	}, [editor, updateTextFormatFloatingToolbar]);
 </script>
 
-<div bind:this={popupCharStylesEditorRef.current} class="floating-text-format-popup">
+<div bind:this={popupCharStylesEditorRef.current} class="floating-text-format-popup !z-0">
 	<button
 		type="button"
 		onclick={() => {

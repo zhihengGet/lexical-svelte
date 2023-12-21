@@ -99,38 +99,35 @@ export default function AutocompletePlugin({
 		}
 	}
 	function handleUpdate() {
-		console.trace('calling handleUpdate');
-		editor.update(
-			() => {
-				const selection = getSelection();
-				//console.log('autocomplete', selection);
-				const [hasMatch, match] = search(selection);
-				if (!hasMatch) {
-					clearSuggestion();
-					return;
-				}
-				if (match === lastMatch) {
-					return;
-				}
+		//console.trace('calling handleUpdate');
+		editor.update(() => {
+			const selection = getSelection();
+			//console.log('autocomplete', selection);
+			const [hasMatch, match] = search(selection);
+			if (!hasMatch) {
 				clearSuggestion();
-				searchPromise = query(match);
-				searchPromise.promise
-					.then((newSuggestion) => {
-						console.log(
+				return;
+			}
+			if (match === lastMatch) {
+				return;
+			}
+			clearSuggestion();
+			searchPromise = query(match);
+			searchPromise.promise
+				.then((newSuggestion) => {
+					/* console.log(
 							'🚀 ~ file: AutocompletePlugin.svelte.ts:113 ~ .then ~ newSuggestion:',
 							newSuggestion
-						);
-						if (searchPromise !== null) {
-							updateAsyncSuggestion(searchPromise, newSuggestion);
-						}
-					})
-					.catch((e) => {
-						console.error(e);
-					});
-				lastMatch = match;
-			},
-			{ discrete: true }
-		);
+						); */
+					if (searchPromise !== null) {
+						updateAsyncSuggestion(searchPromise, newSuggestion);
+					}
+				})
+				.catch((e) => {
+					console.error(e);
+				});
+			lastMatch = match;
+		});
 	}
 	function handleAutocompleteIntent(): boolean {
 		const lastSuggestion = suggestion_state.select;

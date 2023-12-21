@@ -14,7 +14,7 @@
 	let { anchorElem = document.body } = $props<props>();
 
 	const [editor] = useLexicalComposerContext();
-	console.log('the anchorElemetn is', anchorElem);
+	console.log('the anchorEl is', anchorElem);
 </script>
 
 <UseFloatingTextFormatToolbar {editor} {anchorElem} />
