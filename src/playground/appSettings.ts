@@ -37,7 +37,7 @@ export type InitialConfigType = Readonly<{
 	namespace: string;
 	nodes?: ReadonlyArray<Klass<LexicalNode> | LexicalNodeReplacement>;
 	onError: (error: Error, editor: LexicalEditor) => void;
-	query: typeof useQuery;
+	query?: ReturnType<typeof useQuery>;
 	editable?: boolean;
 	theme?: EditorThemeClasses;
 	editorState?: InitialEditorStateType;
@@ -72,7 +72,7 @@ export const DEFAULT_SETTINGS = {
 	initialHTML: '<p>Hi<h2>H2</h2></p>',
 	allowedAttributesOnParagraph: [''],
 	config: {
-		query: null,
+		query: undefined,
 		editable: true,
 		editorState: JSON.stringify(
 			{

@@ -31,10 +31,9 @@ import { useSharedAutocompleteContext } from '../../context/SharedAutocompleteCo
 import { addSwipeRightListener } from '../../utils/swipe';
 import { flushSync } from 'svelte';
 export default function AutocompletePlugin({
-	//@ts-expect-error
 	query = () => ({ promise: new Promise((a) => a(['hello', '123213'])), dismiss: () => {} })
 }: {
-	query: typeof useQuery;
+	query?: ReturnType<typeof useQuery>;
 }) {
 	const [editor] = useLexicalComposerContext();
 	const suggestion_state = useSharedAutocompleteContext();
@@ -61,11 +60,6 @@ export default function AutocompletePlugin({
 		suggestion_state.suggestions = [];
 	}
 	function updateAsyncSuggestion(refSearchPromise: SearchPromise, newSuggestion: null | string[]) {
-		console.log(
-			'🚀 ~ file: AutocompletePlugin.svelte.ts:60 ~ useEffect ~ refSearchPromise:',
-			refSearchPromise,
-			newSuggestion
-		);
 		if (searchPromise !== refSearchPromise || newSuggestion === null) {
 			// Outdated or no suggestion
 			return;

@@ -14,7 +14,7 @@
 		...props
 	} = $props<SvelteRender<T> & { children?: Snippet; enable?: boolean }>();
 	function refFn(node: HTMLElement) {
-		console.log('portal node in refFn', node);
+		//console.log('portal node in refFn', node);
 		if (!node) return console.error('portal element does not exists', node);
 		if (portal === false || !props.target) {
 			// if we don't need to portal then remove the div that is wrapper it
@@ -31,14 +31,6 @@
 		}
 
 		let p = usePortal(node, props.target);
-
-		/* 	onDestroy(() => {
-			if (p && p.destroy) {
-				p.destroy();
-				const c = document.getElementsByClassName('text-[#ccc] relative');
-				console.log('portal destory', node, c.length);
-			}
-		}); */
 	}
 	if (typeof props.initializor == 'function') {
 		//console.log('call initializer');
@@ -46,7 +38,6 @@
 	}
 	let ref = props.ref ?? { current: undefined };
 
-	let parent: HTMLDivElement;
 	$effect.pre(() => {
 		if (props.component && props.target && ref.current) {
 			ref.current.innerHTML = '';
@@ -54,8 +45,6 @@
 	});
 	$effect(() => {
 		// useRef won't be called if decorator update so we have to call manually
-		/* 	const c = Array.from(document.getElementsByClassName('text-[#ccc] relative'));
-		console.log('in portal components:', portal, enable, c, c.length); */
 		if (props.component && props.target && ref.current) {
 			refFn(ref.current);
 		}

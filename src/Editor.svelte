@@ -116,10 +116,9 @@
 			enable={maxLength > 0}
 		/>
 		<Portal
-			target={null}
 			initializor={() =>
 				AutocompletePlugin({
-					query
+					query: query
 				})}
 			enable={isAutocomplete}
 		/>
