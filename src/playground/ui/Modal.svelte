@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { createDialog } from '@melt-ui/svelte';
-	/** Internal helpers */
 	import { flyAndScale } from '..//utils/css';
 	import { X } from 'lucide-svelte';
 	import { fade } from 'svelte/transition';
-	export function setChild() {}
+	import type { Snippet } from 'svelte';
+
 	type temp = {
 		closeOnClickOutside?: boolean;
 		onClose: () => void;
 		title: string;
-		children: any;
+		children: Snippet;
 	};
 	let { title: t, onClose, children } = $props<temp>();
 
@@ -19,26 +19,10 @@
 	} = createDialog({
 		forceVisible: true,
 		defaultOpen: true
-		/* 	onOpenChange: ({ curr, next }) => {
-			if (next == false) {
-				//debugger;
-				//onClose();
-			}
-			return next;
-		} */
 	});
 </script>
 
-<!-- <button
-	{...$trigger}
-	use:trigger
-	class="inline-flex items-center justify-center rounded-xl bg-white px-4 py-3
-  font-medium leading-none text-magnum-700 shadow hover:opacity-75"
->
-	{t}
-</button> -->
-
-<div class="modal">
+<div class="modal" {...$portalled} use:portalled>
 	{#if $open}
 		<div
 			{...$overlay}
@@ -60,7 +44,9 @@
 			use:content
 		>
 			<h1>{t}</h1>
-			{@render children()}<X class="square-4" />
+
+			<slot />
+			<X class="square-4" />
 			<button
 				{...$close}
 				use:close

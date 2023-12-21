@@ -3,16 +3,7 @@
 
 	import joinClasses from '../utils/joinClasses';
 
-	let {
-		'data-test-id': dataTestId,
-		className,
-		onClick,
-		disabled,
-		small,
-		title,
-		...props
-	} = $props<{
-		'data-test-id'?: string;
+	let { className, onClick, disabled, small, title, ...props } = $props<{
 		children?: any;
 		className?: string;
 		disabled?: boolean;
@@ -33,7 +24,6 @@
 	onclick={onClick}
 	{title}
 	aria-label={title}
-	{...dataTestId && { 'data-test-id': dataTestId }}
 >
 	<slot />
 </button>

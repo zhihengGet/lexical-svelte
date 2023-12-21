@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 
-	// @ts-nocheck
-
 	import { useSharedAutocompleteContext } from '../../context/SharedAutocompleteContext.svelte';
 	import {
 		COMMAND_PRIORITY_LOW,
@@ -11,10 +9,16 @@
 		KEY_ARROW_UP_COMMAND,
 		KEY_ENTER_COMMAND
 	} from 'lexical';
-	import { SELECTED_CLASSNAME } from '.';
-	import { addClassNamesToElement, removeClassNamesFromElement } from '@lexical/utils';
-	import { onDestroy, onMount } from 'svelte';
+	import { ClickAutoComplete, SELECTED_CLASSNAME } from '.';
+	import {
+		addClassNamesToElement,
+		mergeRegister,
+		removeClassNamesFromElement
+	} from '@lexical/utils';
+	import { flushSync, onDestroy, onMount } from 'svelte';
 
+	let { ...props } = $props();
+	console.log('auto node', JSON.stringify(props));
 	const data = useSharedAutocompleteContext();
 	const userAgentData = window.navigator.userAgentData;
 	const isMobile =
@@ -22,7 +26,7 @@
 			? userAgentData.mobile
 			: window.innerWidth <= 800 && window.innerHeight <= 600;
 
-	let div: HTMLElement;
+	let div = $state<HTMLElement>();
 	const [editor] = useLexicalComposerContext();
 	const a = editor.registerCommand(
 		KEY_ARROW_DOWN_COMMAND,
@@ -60,25 +64,29 @@
 		},
 		COMMAND_PRIORITY_LOW
 	);
-	data.select = data.suggestions[0];
+	//data.select = data.suggestions[0];
 	onDestroy(() => {
 		a();
 		b();
 	});
 </script>
 
-<span class="text-[#ccc] relative" spellcheck="false">
-	{data.select}
-	{isMobile ? '(SWIPE \u2B95)' : '(TAB)'}
-
+<span class="text-[#ccc] relative" spellcheck="false" data-id="autocomplete-{props.nodeKey}">
+	{#if data.select}
+		{data.select}
+		{isMobile ? '(SWIPE \u2B95)' : '(TAB)'}
+	{/if}
 	<div
-		class="absolute bottom-[-5] border-[1px] border-solid border-green left-0 z-5 w-100px max-w-120px rounded"
+		class="absolute max-h-100 overflow-auto bottom-[-5] border-[1px] border-solid border-green left-0 z-5 w-100px max-w-120px rounded"
 		bind:this={div}
 	>
 		{#each data.suggestions as item, key}
 			<button
 				onclick={(e) => {
 					data.updateChoose(item);
+					flushSync(() => {
+						editor.dispatchCommand(ClickAutoComplete, { item });
+					});
 				}}
 				data-id="suggestions"
 				onmousedown={(e) => e.preventDefault()}

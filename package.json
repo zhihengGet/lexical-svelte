@@ -72,7 +72,7 @@
 		"yjs": "^13.6.10"
 	},
 	"devDependencies": {
-		"@melt-ui/svelte": "^0.65.2",
+		"@melt-ui/svelte": "^0.66.1",
 		"@sveltejs/kit": "1.16.3",
 		"@sveltejs/package": "latest",
 		"@sveltejs/vite-plugin-svelte": "^3.0.1",
@@ -82,7 +82,7 @@
 		"@typescript-eslint/eslint-plugin": "^6.14.0",
 		"@typescript-eslint/parser": "^6.14.0",
 		"eslint": "^8.56.0",
-		"svelte": "5.0.0-next.25",
+		"svelte": "5.0.0-next.26",
 		"svelte-check": "^3.6.2",
 		"tslib": "^2.6.2",
 		"typescript": "^5.3.3",

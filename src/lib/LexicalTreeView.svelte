@@ -188,7 +188,6 @@
 					editor.registerCommand(
 						command,
 						(payload) => {
-							console.log('logging command', payload);
 							setLoggedCommands((state) => {
 								const newState = [...state];
 								newState.push({
@@ -199,7 +198,6 @@
 								if (newState.length > 10) {
 									newState.shift();
 								}
-								console.log('log', newState);
 								return newState;
 							});
 
@@ -295,10 +293,10 @@
 			return selection === null
 				? ': null'
 				: lexical.$isRangeSelection(selection)
-				  ? printRangeSelection(selection)
-				  : DEPRECATED_$isGridSelection(selection)
-				    ? printGridSelection(selection)
-				    : printNodeSelection(selection);
+					? printRangeSelection(selection)
+					: DEPRECATED_$isGridSelection(selection)
+						? printGridSelection(selection)
+						: printNodeSelection(selection);
 		});
 
 		res += '\n selection' + selectionString;

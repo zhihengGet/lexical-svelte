@@ -22,6 +22,7 @@ import { CustomParagraphNode } from '@nodes/CustomParagrahNode';
 import { ParagraphNode } from 'lexical';
 import PlaygroundNodes from './PlaygroundNodes';
 import { getContext, setContext } from 'svelte';
+import type { useQuery } from '@plugins/AutocompletePlugin';
 const hostName = window.location.hostname;
 export const isDevPlayground: boolean =
 	hostName !== 'playground.lexical.dev' && hostName !== 'lexical-playground.vercel.app';
@@ -36,7 +37,7 @@ export type InitialConfigType = Readonly<{
 	namespace: string;
 	nodes?: ReadonlyArray<Klass<LexicalNode> | LexicalNodeReplacement>;
 	onError: (error: Error, editor: LexicalEditor) => void;
-	query: (query: string) => string[];
+	query: typeof useQuery;
 	editable?: boolean;
 	theme?: EditorThemeClasses;
 	editorState?: InitialEditorStateType;
@@ -46,7 +47,7 @@ export type InitialConfigType = Readonly<{
 export const DEFAULT_SETTINGS = {
 	disableBeforeInput: false,
 	emptyEditor: isDevPlayground,
-	isAutocomplete: false,
+	isAutocomplete: true,
 	isCharLimit: false,
 	isCharLimitUtf8: true,
 	isUndoRedo: true,
@@ -54,6 +55,8 @@ export const DEFAULT_SETTINGS = {
 	isFont: true,
 	isCollab: false,
 	isMaxLength: false,
+	maxSizeMB: 5,
+	maxLength: 10000,
 	isRichText: true,
 	measureTypingPerf: false,
 	shouldUseLexicalContextMenu: false,
@@ -62,11 +65,14 @@ export const DEFAULT_SETTINGS = {
 	showTreeView: true,
 	tableCellBackgroundColor: true,
 	tableCellMerge: true,
-	onInput: (html) => {},
-	initialHTML: '<p>Hi</p>',
+	image: false,
+	onInput: (html: string) => {
+		console.log('oninput', html);
+	},
+	initialHTML: '<p>Hi<h2>H2</h2></p>',
 	allowedAttributesOnParagraph: [''],
 	config: {
-		query: async () => [],
+		query: null,
 		editable: true,
 		editorState: JSON.stringify(
 			{

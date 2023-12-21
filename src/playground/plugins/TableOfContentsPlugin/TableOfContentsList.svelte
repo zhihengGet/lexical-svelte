@@ -7,7 +7,6 @@
 
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 	import { useEffect, useRef, useState } from 'react';
-	import * as React from 'react';
 
 	const MARGIN_ABOVE_EDITOR = 624;
 	const HEADING_WIDTH = 9;
@@ -124,4 +123,39 @@
 	}, [tableOfContents, editor]);
 </script>
 
-<!-- add toc -->
+<div class="table-of-contents">
+	<ul class="headings">
+		{#each tableOfContents as [key, text, tag], index}
+			{#if index == 0}
+				<div class="normal-heading-wrapper">
+					<div
+						class="first-heading"
+						onClick={() => scrollToNode(key, index)}
+						role="button"
+						tabIndex={0}
+					>
+						{('' + text).length > 20 ? text.substring(0, 20) + '...' : text}
+					</div>
+					<br />
+				</div>
+			{:else}
+				<div
+					class={`normal-heading-wrapper ${
+						selectedKey() === key ? 'selected-heading-wrapper' : ''
+					}`}
+				>
+					<div
+						onClick={() => scrollToNode(key, index)}
+						role="button"
+						class={indent(tag)}
+						tabIndex={0}
+					>
+						<li class={`normal-heading ${selectedKey() === key ? 'selected-heading' : ''}`}>
+							{('' + text).length > 27 ? text.substring(0, 27) + '...' : text}
+						</li>
+					</div>
+				</div>
+			{/if}
+		{/each}
+	</ul>
+</div>

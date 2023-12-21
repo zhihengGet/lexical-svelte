@@ -1,7 +1,11 @@
-import type { GridSelection, NodeSelection, RangeSelection } from 'lexical';
+import type { BaseSelection } from 'lexical';
 
 import { $isAtNodeEnd as isAtNodeEnd } from '@lexical/selection';
-import { $isRangeSelection as isRangeSelection, $isTextNode as isTextNode } from 'lexical';
+import {
+	createCommand,
+	$isRangeSelection as isRangeSelection,
+	$isTextNode as isTextNode
+} from 'lexical';
 import { useCallback } from 'react';
 export * from './AutocompleteNode';
 export * from './AutocompletePlugin.svelte';
@@ -18,9 +22,7 @@ export const uuid = Math.random()
 export const SELECTED_CLASSNAME = 'auto_selected';
 
 // TODO lookup should be custom
-export function search(
-	selection: null | RangeSelection | NodeSelection | GridSelection
-): [boolean, string] {
+export function search(selection: null | BaseSelection): [boolean, string] {
 	if (!isRangeSelection(selection) || !selection.isCollapsed()) {
 		return [false, ''];
 	}
@@ -49,13 +51,14 @@ export class Suggestions {
 
 // TODO query should be custom
 export function useQuery(): (searchText: string) => SearchPromise {
-	return useCallback((searchText: string) => {
+	return (searchText: string) => {
 		const server = new AutocompleteServer();
 		console.time('query');
 		const response = server.query(searchText);
 		console.timeEnd('query');
+
 		return response;
-	}, []);
+	};
 }
 
 /*
@@ -67,41 +70,41 @@ class AutocompleteServer {
 	LATENCY = 200;
 
 	query = (searchText: string): SearchPromise => {
+		console.log('search', searchText);
 		let isDismissed = false;
 
 		const dismiss = () => {
 			isDismissed = true;
 		};
 		const promise: Promise<null | string[]> = new Promise((resolve, reject) => {
-			setTimeout(() => {
-				if (isDismissed) {
-					// TODO cache result
-					return reject('Dismissed');
-				}
-				const searchTextLength = searchText.length;
-				if (searchText === '' || searchTextLength < 4) {
-					return resolve(null);
-				}
-				const char0 = searchText.charCodeAt(0);
-				const isCapitalized = char0 >= 65 && char0 <= 90;
-				const caseInsensitiveSearchText = isCapitalized
-					? String.fromCharCode(char0 + 32) + searchText.substring(1)
-					: searchText;
-				const match = this.DATABASE.find(
-					(dictionaryWord) => dictionaryWord.startsWith(caseInsensitiveSearchText) ?? null
-				);
-				if (match === undefined) {
-					return resolve(null);
-				}
-				const matchCapitalized = isCapitalized
-					? String.fromCharCode(match.charCodeAt(0) - 32) + match.substring(1)
-					: match;
-				const autocompleteChunk = ['hello', 'how are u'];
-				if (autocompleteChunk.length == 0) {
-					return resolve(null);
-				}
-				return resolve(autocompleteChunk);
-			}, this.LATENCY);
+			if (isDismissed) {
+				// TODO cache result
+				return reject('Dismissed');
+			}
+			const searchTextLength = searchText.length;
+			if (searchText === '' || searchTextLength < 4) {
+				return resolve(null);
+			}
+			const char0 = searchText.charCodeAt(0);
+			const isCapitalized = char0 >= 65 && char0 <= 90;
+			const caseInsensitiveSearchText = isCapitalized
+				? String.fromCharCode(char0 + 32) + searchText.substring(1)
+				: searchText;
+			const match = this.DATABASE.find(
+				(dictionaryWord) => dictionaryWord.startsWith(caseInsensitiveSearchText) ?? null
+			);
+			if (match === undefined) {
+				return resolve(null);
+			}
+			const matchCapitalized = isCapitalized
+				? String.fromCharCode(match.charCodeAt(0) - 32) + match.substring(1)
+				: match;
+			const autocompleteChunk = ['hello', 'how are u'];
+			if (autocompleteChunk.length == 0) {
+				return resolve(null);
+			}
+			console.log('Resolve', autocompleteChunk);
+			return resolve(autocompleteChunk);
 		});
 
 		return {
@@ -110,7 +113,7 @@ class AutocompleteServer {
 		};
 	};
 }
-
+export const ClickAutoComplete = createCommand('selected a word');
 // https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english-usa-no-swears-long.txt
 const DICTIONARY = [
 	'information',

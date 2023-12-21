@@ -8,13 +8,12 @@
 
 import type { LexicalEditor } from 'lexical';
 
-import { flushSync, onMount, unstate, untrack } from 'svelte';
+import { flushSync, onMount } from 'svelte';
 import type { SvelteRender } from '@lexical/react/types';
-
 export function useDecorators(editor: LexicalEditor) {
-	let isUpdated = $state(false);
+	let isChanged = $state(false);
 	let decorators = editor.getDecorators<SvelteRender>();
-	/* 	const [decoratorss, setDecorators] =$state()  useState<Record<string, SvelteRender>>(
+	/* 	const [decorators7, setDecorators] =useState<Record<string, SvelteRender>>(
 		editor.getDecorators<SvelteRender>()
 	);
  */
@@ -25,23 +24,23 @@ export function useDecorators(editor: LexicalEditor) {
 	// ensuring that we set the value.
 	onMount(() => {
 		decorators = editor.getDecorators();
+		isChanged = !isChanged;
 	});
 
-	editor.registerDecoratorListener<SvelteRender>((nextDecorators) => {
-		flushSync(() => {
-			decorators = nextDecorators;
+	$effect(() => {
+		return editor.registerDecoratorListener<SvelteRender>((nextDecorators) => {
+			flushSync(() => {
+				decorators = nextDecorators;
+				isChanged = !isChanged;
+			});
 		});
-		isUpdated = true;
 	});
-
 	// Return decorators defined as React Portals/
-	const toRender = $derived(() => {
-		if (!isUpdated) {
-			return;
-		}
 
+	const toRender = $derived(() => {
+		if (isChanged === null) return;
 		const decoratedPortals: SvelteRender[] = [];
-		const decoratorKeys = Object.keys(unstate(decorators));
+		const decoratorKeys = Object.keys(decorators);
 
 		for (let i = 0; i < decoratorKeys.length; i++) {
 			const nodeKey = decoratorKeys[i];
@@ -55,15 +54,11 @@ export function useDecorators(editor: LexicalEditor) {
 				node.nodeKey = nodeKey;
 				node.portal = true;
 				decoratedPortals.push(node);
-				//rendered.add(element);
 			}
 		}
-		untrack(() => {
-			isUpdated = false;
-		});
-		//console.log('to be rendered');
+		console.log('decorator updated', decoratedPortals, decoratedPortals.length);
 		return decoratedPortals;
 	});
 
-	return toRender;
+	return () => toRender();
 }

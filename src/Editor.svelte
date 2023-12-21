@@ -56,9 +56,9 @@
 		isRichText,
 		showTreeView,
 		showTableOfContents,
-		shouldUseLexicalContextMenu,
-		tableCellMerge,
-		tableCellBackgroundColor
+		maxLength,
+		image,
+		config: { query }
 	} = settings();
 	console.log('setting', isRichText, showTreeView);
 	$effect(() => {
@@ -100,7 +100,9 @@
 	{#if isRichText}
 		<LexicalRichTextPlugin contentEditable={contentEditableRichText} {placeholder} />
 		<PageBreakPlug />
-		<ImagePlugin captionsEnabled={true} />
+		{#if image}
+			<ImagePlugin captionsEnabled={true} />
+		{/if}
 		<Portal target={null} initializor={HorizontalRulePlugin} />
 		<Portal target={null} initializor={CollapsiblePlugin} />
 		<Portal target={null} initializor={AutoFocusPlugin} />
@@ -108,9 +110,20 @@
 		<Portal target={null} initializor={CheckListPlugin} />
 		<Portal target={null} initializor={CodeHighlightPlugin} />
 		<Portal target={null} initializor={HashtagPlugin} />
-		<Portal target={null} initializor={() => MaxLengthPlugin({ maxLength: 11 })} enable={false} />
-		<Portal target={null} initializor={AutocompletePlugin} enable={isAutocomplete} />
-		<LexicalCharacterLimitPlugin charset="UTF-8" maxLength={10} />
+		<Portal
+			target={null}
+			initializor={() => MaxLengthPlugin({ maxLength: maxLength })}
+			enable={maxLength > 0}
+		/>
+		<Portal
+			target={null}
+			initializor={() =>
+				AutocompletePlugin({
+					query
+				})}
+			enable={isAutocomplete}
+		/>
+		<LexicalCharacterLimitPlugin charset="UTF-8" {maxLength} />
 		<EquationsPlugin />
 		<LinkPlugin />
 
@@ -155,8 +168,11 @@
 			initializor={() => HistoryPlugin({ externalHistoryState: historyState })}
 		/>
 	{/if}
-	<TableOfContentsPlugin />
-	<Test />
-	<MeltTree />
+	<!-- 	<TableOfContentsPlugin /> -->
+	<!-- <Test /> -->
+	<!-- 	<MeltTree /> -->
 </div>
-<TreeViewPlugin />
+
+{#if settings().showTreeView}
+	<TreeViewPlugin />
+{/if}

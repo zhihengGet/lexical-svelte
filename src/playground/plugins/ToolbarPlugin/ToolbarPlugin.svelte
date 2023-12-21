@@ -72,7 +72,7 @@
 	import { useCallback, useEffect, useState } from 'react';
 	import type { rootTypeToRootName } from '.';
 	import { CODE_LANGUAGE_OPTIONS, blockTypeToBlockName } from '.';
-	import useModal from '../../hooks/useModal';
+	import useModal from '../../hooks/useModal.svelte';
 	import { getSelectedNode } from '../../utils/getSelectedNode';
 	import { sanitizeUrl } from '../../utils/url';
 	import type { InsertImagePayload } from '@plugins/ImagesPlugin/InsertImageUriDialogBody.svelte';
@@ -175,7 +175,7 @@
 					setBlockType(type);
 				} else {
 					const type = isHeadingNode(element) ? element.getTag() : element.getType();
-					console.log('update editor', type, element);
+					//console.log('update editor', type, element);
 					if (type in blockTypeToBlockName) {
 						setBlockType(type as keyof typeof blockTypeToBlockName);
 					}
@@ -586,7 +586,7 @@
 				<i class="icon page-break" />
 				<span class="text">Page Break</span>
 			</DropDownItem>
-			<DropDownItem
+			<!-- <DropDownItem
 				onClick={() => {
 					showModal('Insert Image', (onClose) => {
 						return [
@@ -603,7 +603,7 @@
 			>
 				<i class="icon image" />
 				<span class="text">Image</span>
-			</DropDownItem>
+			</DropDownItem> -->
 			<!-- 	<DropDownItem
 				onClick={() => {
 					showModal('Insert Image', (onClose) => {
@@ -1011,5 +1011,6 @@
 		{editor}
 		isRTL={isRTL()}
 	/>
-	<Portal {...modal()} />
+
+	<Portal component={modal?.component} />
 </div>

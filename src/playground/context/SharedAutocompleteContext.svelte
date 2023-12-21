@@ -3,15 +3,25 @@
 	import { useEffect, useMemo, useState } from 'react';
 	import { getContext, setContext } from 'svelte';
 	totalComponents += 1;
-	let contextkey = totalComponents + 'AutoCompleteContext';
+	let contextkey = 'AutoCompleteContext';
 	type Suggestion = null | string[];
 	type CallbackFn = (newSuggestion: Suggestion) => void;
 	type SubscribeFn = (callbackFn: CallbackFn) => () => void;
 	type PublishFn = (newSuggestion: Suggestion) => void;
 	type ContextShape = [SubscribeFn, PublishFn];
 	type HookShape = [suggestion: () => Suggestion, setSuggestion: PublishFn];
+	class autocomplete {
+		suggestions = $state<string[]>([]);
+		select = $state<string | null>('');
 
-
+		updateChoose(n: string) {
+			this.select = n;
+		}
+		reset() {
+			this.suggestions = [];
+			this.select = null;
+		}
+	}
 	export const useSharedAutocompleteContext = () => {
 		const data: autocomplete = getContext(contextkey);
 		/* const [suggestion, setSuggestion] = useState<Suggestion>(null);
@@ -24,14 +34,7 @@
 	};
 </script>
 
-<script lang="ts">	class autocomplete {
-	suggestions = $state<string[]>([]);
-	select = $state<string | null>('');
-
-	updateChoose(n: string) {
-		this.select = n;
-	}
-}
+<script lang="ts">
 	const c = new autocomplete();
 
 	setContext(contextkey, c);

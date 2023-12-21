@@ -16,7 +16,8 @@
 		type LexicalEditor,
 		type NodeSelection,
 		type RangeSelection,
-		SELECTION_CHANGE_COMMAND
+		SELECTION_CHANGE_COMMAND,
+		type BaseSelection
 	} from 'lexical';
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 
@@ -48,9 +49,7 @@
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [linkUrl, setLinkUrl] = useState('');
 	const [editedLinkUrl, setEditedLinkUrl] = useState('https://');
-	const [lastSelection, setLastSelection] = useState<
-		RangeSelection | GridSelection | NodeSelection | null
-	>(null);
+	const [lastSelection, setLastSelection] = useState<BaseSelection | null>(null);
 
 	const updateLinkEditor = useCallback(() => {
 		const selection = getSelection();

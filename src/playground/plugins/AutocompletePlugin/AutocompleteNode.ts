@@ -9,7 +9,7 @@
 import type { Spread } from 'lexical';
 
 import type { EditorConfig, NodeKey, SerializedLexicalNode } from 'lexical';
-import { DecoratorNode, LexicalNode } from 'lexical';
+import { DecoratorNode } from 'lexical';
 
 import { uuid as UUID } from '.';
 import type { SvelteRender } from '@lexical/react/types';
@@ -30,7 +30,7 @@ export type SerializedAutocompleteNode = Spread<
 	SerializedLexicalNode
 >;
 
-export class AutocompleteNode extends DecoratorNode<SvelteRender | null> {
+export class AutocompleteNode extends DecoratorNode<SvelteRender<AutocompleteComponent> | null> {
 	// TODO add comment
 	__uuid: string;
 
@@ -72,11 +72,11 @@ export class AutocompleteNode extends DecoratorNode<SvelteRender | null> {
 		return node;
 	}
 
-	decorate(): SvelteRender | null {
+	decorate(): SvelteRender<AutocompleteComponent> | null {
 		if (this.__uuid !== UUID) {
 			return null;
 		}
-		return { component: AutocompleteComponent };
+		return { component: AutocompleteComponent, props: { nodeKey: this.__key } };
 	}
 }
 

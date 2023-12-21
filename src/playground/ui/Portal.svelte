@@ -1,6 +1,8 @@
 <script lang="ts" generics="T extends SvelteComponent">
 	import type { SvelteRender } from '@lexical/react/types';
 	import { usePortal } from '@melt-ui/svelte/internal/actions';
+	import InsertImageDialog from '@plugins/ImagesPlugin/InsertImageDialog.svelte';
+	import { useRef } from 'react';
 	import { onDestroy, type SvelteComponent, type Snippet } from 'svelte';
 
 	let {
@@ -11,40 +13,52 @@
 		enable = true,
 		...props
 	} = $props<SvelteRender<T> & { children?: Snippet; enable?: boolean }>();
-
-	console.log('portal', props);
 	function refFn(node: HTMLElement) {
-		if (portal == true) {
-			console.warn('rendering', props.tree);
-		}
+		console.log('portal node in refFn', node);
+		if (!node) return console.error('portal element does not exists', node);
 		if (portal === false || !props.target) {
 			// if we don't need to portal then remove the div that is wrapper it
+			let parent = node.parentElement;
+			let child = node.childNodes;
+			if (parent && child) {
+				parent?.removeChild(node);
+				parent.append(...child);
+			} else if (parent) {
+				parent.removeChild(node);
+			}
+
 			return;
 		}
-		let p = usePortal(node, props.target);
-		let parent = node.parentElement;
-		let child = node.childNodes;
-		if (parent && child) {
-			parent?.removeChild(node);
-			parent.append(...child);
-		} else if (parent) {
-			parent.removeChild(node);
-		}
 
-		return;
-		onDestroy(() => {
+		let p = usePortal(node, props.target);
+
+		/* 	onDestroy(() => {
 			if (p && p.destroy) {
 				p.destroy();
+				const c = document.getElementsByClassName('text-[#ccc] relative');
+				console.log('portal destory', node, c.length);
 			}
-		});
+		}); */
 	}
 	if (typeof props.initializor == 'function') {
-		console.log('call initializor');
+		//console.log('call initializer');
 		if (enable) props.initializor();
 	}
 	let ref = props.ref ?? { current: undefined };
+
+	let parent: HTMLDivElement;
+	$effect.pre(() => {
+		if (props.component && props.target && ref.current) {
+			ref.current.innerHTML = '';
+		}
+	});
 	$effect(() => {
-		console.log('in portal components:', components);
+		// useRef won't be called if decorator update so we have to call manually
+		/* 	const c = Array.from(document.getElementsByClassName('text-[#ccc] relative'));
+		console.log('in portal components:', portal, enable, c, c.length); */
+		if (props.component && props.target && ref.current) {
+			refFn(ref.current);
+		}
 	});
 </script>
 
@@ -66,16 +80,16 @@
 		{/if}
 	{/await}
 {/snippet}
-{#if (!components || components.length == 0) && (props.component || snippet || children)}
+{#if (!components || components.length == 0) && (props.component || snippet || children) && enable}
 	{#if portal == false || !props.target}
 		{@render El()}
 	{:else}
-		<div class="inline-block" use:refFn bind:this={ref.current} data-id="svelt-render">
+		<div class="inline-block" bind:this={ref.current} data-id="svelt-render-{props.nodeKey}">
 			{@render El()}
-			{#if children}
-				{@render children()}
-			{/if}
 		</div>
+	{/if}
+	{#if children}
+		{@render children()}
 	{/if}
 {/if}
 

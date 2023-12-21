@@ -1,11 +1,11 @@
-import type { ComponentProps, Snippet } from 'svelte';
+import type { ComponentProps, ComponentType, Snippet, SvelteComponent } from 'svelte';
 
 export type LexicalSubscription<T> = {
 	initialValueFn: () => T;
 	subscribe: (callback: (value: T) => void) => () => void;
 };
 
-export type SvelteRender<T = {}> = {
+export type SvelteRender<T extends SvelteComponent = SvelteComponent> = {
 	component?: T | any | Promise<T>;
 	snippet?: any;
 	props?: ComponentProps<T>;
@@ -20,4 +20,5 @@ export type SvelteRender<T = {}> = {
 	childComponents?: SvelteRender<any>[]; // nested in current component
 	components?: SvelteRender<any>[] | null; // sibling components
 	childSnippets?: Snippet[];
+	use?: string; // what is this component used for
 };

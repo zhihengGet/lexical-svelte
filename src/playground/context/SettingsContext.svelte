@@ -18,6 +18,7 @@
 		children: Snippet;
 		initialConfigs?: CreateEditorArgs;
 	}>();
+
 	const [settings, setSettings] = useState(DEFAULT_SETTINGS);
 	if (!text) {
 		setContext(context, settings);
