@@ -8,7 +8,7 @@
 
 import type { LexicalEditor } from 'lexical';
 
-import { flushSync, onMount } from 'svelte';
+import { createRoot, flushSync, getAllContexts, mount, onMount } from 'svelte';
 import type { SvelteRender } from '@lexical/react/types';
 export function useDecorators(editor: LexicalEditor) {
 	let isChanged = $state(false);
@@ -26,39 +26,35 @@ export function useDecorators(editor: LexicalEditor) {
 		decorators = editor.getDecorators();
 		isChanged = !isChanged;
 	});
-
-	$effect(() => {
+	const context = getAllContexts();
+	onMount(() => {
 		return editor.registerDecoratorListener<SvelteRender>((nextDecorators) => {
 			flushSync(() => {
 				decorators = nextDecorators;
-				isChanged = !isChanged;
+
+				const decoratorKeys = Object.keys(decorators);
+
+				for (let i = 0; i < decoratorKeys.length; i++) {
+					const nodeKey = decoratorKeys[i];
+
+					const element = editor.getElementByKey(nodeKey);
+
+					if (element !== null) {
+						const node = decorators[nodeKey];
+						node.target = element;
+						node.nodeKey = nodeKey;
+						node.portal = true;
+						mount(node.component, {
+							props: node.props,
+							target: node.target,
+							context: context
+						});
+						// lexical will handle removal of this node
+					}
+				}
 			});
 		});
 	});
-	// Return decorators defined as React Portals/
 
-	const toRender = $derived(() => {
-		if (isChanged === null) return;
-		const decoratedPortals: SvelteRender[] = [];
-		const decoratorKeys = Object.keys(decorators);
-
-		for (let i = 0; i < decoratorKeys.length; i++) {
-			const nodeKey = decoratorKeys[i];
-
-			const element = editor.getElementByKey(nodeKey);
-
-			if (element !== null) {
-				//	console.log(element);
-				const node = decorators[nodeKey];
-				node.target = element;
-				node.nodeKey = nodeKey;
-				node.portal = true;
-				decoratedPortals.push(node);
-			}
-		}
-		console.log('decorator updated', decoratedPortals, decoratedPortals.length);
-		return decoratedPortals;
-	});
-
-	return () => toRender();
+	return () => undefined;
 }

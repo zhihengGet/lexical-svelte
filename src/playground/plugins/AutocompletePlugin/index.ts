@@ -65,7 +65,7 @@ export function useQuery(): (searchText: string) => SearchPromise {
  * Simulate an asynchronous autocomplete server (typical in more common use cases like GMail where
  * the data is not static).
  */
-class AutocompleteServer {
+export class AutocompleteServer {
 	DATABASE = DICTIONARY;
 	LATENCY = 200;
 
@@ -74,6 +74,7 @@ class AutocompleteServer {
 		let isDismissed = false;
 
 		const dismiss = () => {
+			console.error('dismissed');
 			isDismissed = true;
 		};
 		const promise: Promise<null | string[]> = new Promise((resolve, reject) => {
@@ -81,7 +82,15 @@ class AutocompleteServer {
 				// TODO cache result
 				return reject('Dismissed');
 			}
+			return setTimeout(() => {
+				if (isDismissed) {
+					// TODO cache result
+					return reject('Dismissed');
+				}
+				resolve(['1112321']);
+			}, 500);
 			const searchTextLength = searchText.length;
+
 			if (searchText === '' || searchTextLength < 4) {
 				return resolve(null);
 			}
@@ -99,7 +108,7 @@ class AutocompleteServer {
 			const matchCapitalized = isCapitalized
 				? String.fromCharCode(match.charCodeAt(0) - 32) + match.substring(1)
 				: match;
-			const autocompleteChunk = ['hello', 'how are u'];
+			const autocompleteChunk = [matchCapitalized];
 			if (autocompleteChunk.length == 0) {
 				return resolve(null);
 			}

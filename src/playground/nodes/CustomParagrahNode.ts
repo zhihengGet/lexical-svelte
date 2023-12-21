@@ -4,7 +4,9 @@ import {
 	type SerializedElementNode,
 	type SerializedLexicalNode,
 	type EditorConfig,
-	type SerializedParagraphNode
+	type SerializedParagraphNode,
+	type LexicalEditor,
+	isHTMLElement
 } from 'lexical';
 
 type SerializedCustomParagraphNode = SerializedParagraphNode & {
@@ -13,31 +15,36 @@ type SerializedCustomParagraphNode = SerializedParagraphNode & {
 };
 
 export class CustomParagraphNode extends ParagraphNode {
-	static allowedAttributes: string[] = ['data-chapter-id'];
+	static allowedAttributes: string[] = ['data-chapter-id', 'data-id', 'data-test'];
 	attr: { [s in string]: string } = {};
 
 	static getType() {
 		return 'custom-paragraph';
 	}
 
-	static clone(node) {
-		return new CustomParagraphNode(node.__key);
+	static clone(node: CustomParagraphNode) {
+		//console.log('export clone', node);
+		const n = new CustomParagraphNode(node.__key);
+		n.attr = node.attr;
+		return n;
 	}
 
 	exportJSON() {
-		console.log('export json', this.attr);
 		return {
 			...super.exportJSON(),
 			'data-chapter-id': this['data-chapter-id'],
-			attr: this.attr,
+			attr: this.getLatest().attr,
 			type: this.getType()
 		};
 	}
-	exportDOM(editor) {
+	exportDOM(editor: LexicalEditor) {
 		const dom = super.exportDOM(editor);
-		this.setAttribute(dom.element);
-		console.log('export dom', dom, JSON.stringify(this.attr));
+		if (dom.element && isHTMLElement(dom.element)) this.setAttribute(dom.element);
+		//console.log('export dom', dom, JSON.stringify(this.attr));
 		return dom;
+	}
+	getLatestAttr() {
+		return this.getLatest().attr;
 	}
 	static getAtt(el: HTMLElement, names: string[]) {
 		const att: { [s in string]: string } = {};
@@ -67,8 +74,9 @@ export class CustomParagraphNode extends ParagraphNode {
 	}
 	setAttribute(dom: HTMLElement) {
 		Object.keys(this.attr).forEach((v) => {
-			dom.setAttribute(v, this.attr[v]);
+			dom.setAttribute(v, this.getLatest()[v]);
 		});
+		//console.log('setting attributes', this.attr);
 	}
 	createDOM(config) {
 		const dom = super.createDOM(config);
@@ -76,12 +84,14 @@ export class CustomParagraphNode extends ParagraphNode {
 		return dom;
 	}
 	updateDOM(prevNode: ParagraphNode, dom: HTMLElement, config: EditorConfig): boolean {
-		this.getWritable().__attr = prevNode.attr;
-		this.testLog(prevNode, dom, config);
-		return true;
+		/* 	console.log('updateDom', dom);
+		//	this.getWritable().attr = prevNode.attr;
+		this.testLog(prevNode, dom, config); */
+		//	console.trace('export updateDom', this.getLatestAttr());
+		return false;
 	}
 
-	testLog(...args) {
-		console.log(args);
+	testLog(...args: any) {
+		console.log('Paragraph Custom:', args);
 	}
 }

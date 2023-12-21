@@ -59,4 +59,9 @@
 	}  */
 </script>
 
+<button
+	onclick={() => {
+		setSettings({ ...DEFAULT_SETTINGS, isAutocomplete: !settings().isAutocomplete });
+	}}>update setting {settings().isAutocomplete}</button
+>
 {@render children()}

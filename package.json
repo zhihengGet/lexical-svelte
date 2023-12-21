@@ -1,10 +1,10 @@
 {
 	"name": "lexical-svelte-runes",
 	"private": false,
-	"version": "0.1.2-beta.4",
+	"version": "0.1.2-beta.5",
 	"type": "module",
 	"author": {
-		"name": "whateverhack@qq.com"
+		"name": "zhiheng"
 	},
 	"scripts": {
 		"dev": "vite",
@@ -18,8 +18,8 @@
 	},
 	"exports": {
 		".": {
-			"default": "./dist/App.svelte",
-			"types": "./dist/App.svelte.d.ts"
+			"default": "./dist/index",
+			"types": "./dist/index.d.ts"
 		}
 	},
 	"files": [

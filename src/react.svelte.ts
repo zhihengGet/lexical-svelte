@@ -38,7 +38,12 @@ export function useState<T>(state: T | temp<T>) {
 	] as const;
 }
 
-function useEffect<D>(func: () => void, dep?: any[]) {
+function useEffect(func: () => void, dep?: any[]) {
+	const cleanup = {
+		fn: () => {
+			console.log('no cleanup fn');
+		}
+	};
 	if (dep) {
 		$effect(() => {
 			for (const d of dep) {
@@ -46,7 +51,10 @@ function useEffect<D>(func: () => void, dep?: any[]) {
 					d();
 				}
 			}
-			untrack(func);
+			untrack(() => {
+				cleanup.fn = func();
+			});
+			return cleanup.fn;
 		});
 	} else $effect(func);
 }

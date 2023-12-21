@@ -14,7 +14,7 @@
 		...props
 	} = $props<SvelteRender<T> & { children?: Snippet; enable?: boolean }>();
 	function refFn(node: HTMLElement) {
-		//console.log('portal node in refFn', node);
+		console.log('portal refFn', node);
 		if (!node) return console.error('portal element does not exists', node);
 		if (portal === false || !props.target) {
 			// if we don't need to portal then remove the div that is wrapper it
@@ -31,24 +31,31 @@
 		}
 
 		let p = usePortal(node, props.target);
+		/* onDestroy(() => {
+			console.log('portal destroy refFn', p);
+			if (p && p.destroy) {
+				p.destroy();  
+			}
+		}); */
 	}
 	if (typeof props.initializor == 'function') {
 		//console.log('call initializer');
 		if (enable) props.initializor();
 	}
 	let ref = props.ref ?? { current: undefined };
-
-	$effect.pre(() => {
-		if (props.component && props.target && ref.current) {
+	/* 	$effect.pre(() => {
+		console.log('portal prerender', ref.current?.innerHTML);
+		if ((props.component || props.target) && ref.current) {
 			ref.current.innerHTML = '';
 		}
 	});
 	$effect(() => {
+		console.log('portal after render', ref.current);
 		// useRef won't be called if decorator update so we have to call manually
 		if (props.component && props.target && ref.current) {
 			refFn(ref.current);
 		}
-	});
+	}); */
 </script>
 
 {#each components ?? [] as decorator}

@@ -324,7 +324,7 @@
 				});
 			}
 		});
-	}, [activeEditor()]);
+	}, [activeEditor]);
 
 	const onFontColorSelect = useCallback(
 		(value: string) => {
@@ -433,7 +433,7 @@
 		<Divider />
 		<button
 			disabled={!isEditable()}
-			onClick={() => {
+			onclick={() => {
 				activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'bold');
 			}}
 			class={'toolbar-item spaced ' + (isBold() ? 'active' : '')}
@@ -445,7 +445,7 @@
 		</button>
 		<button
 			disabled={!isEditable()}
-			onClick={() => {
+			onclick={() => {
 				activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'italic');
 			}}
 			class={'toolbar-item spaced ' + (isItalic() ? 'active' : '')}
@@ -457,7 +457,7 @@
 		</button>
 		<button
 			disabled={!isEditable()}
-			onClick={() => {
+			onclick={() => {
 				activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'underline');
 			}}
 			class={'toolbar-item spaced ' + (isUnderline() ? 'active' : '')}
@@ -469,7 +469,7 @@
 		</button>
 		<button
 			disabled={!isEditable()}
-			onClick={() => {
+			onclick={() => {
 				activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'code');
 			}}
 			class={'toolbar-item spaced ' + (isCode() ? 'active' : '')}

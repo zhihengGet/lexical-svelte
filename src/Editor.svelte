@@ -37,6 +37,7 @@
 	import { MaxLengthPlugin } from '@plugins/MaxLengthPlugin/MaxLengthPlugin.svelte';
 	import TableOfContentsPlugin from '@plugins/TableOfContentsPlugin/TableOfContentsPlugin.svelte';
 	import MeltTree from '@plugins/TableOfContentsPlugin/MeltTree.svelte';
+	import { UNDO_COMMAND } from 'lexical';
 	const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
 	const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
 	const isEditable = true;
@@ -47,6 +48,7 @@
 		window.parent != null && window.parent.frames.right === window;
 
 	const settings = useSettings();
+	$inspect('setting change', settings());
 	const {
 		isCollab,
 		isAutocomplete,
@@ -59,8 +61,11 @@
 		maxLength,
 		image,
 		config: { query }
-	} = settings();
-	console.log('setting', isRichText, showTreeView);
+	} = $derived(settings());
+	$effect(() => {
+		console.log('setting change', isAutocomplete);
+	});
+	//console.log('setting', isRichText, showTreeView);
 	$effect(() => {
 		const updateViewPortWidth = () => {
 			const isNextSmallWidthViewport =
@@ -80,8 +85,22 @@
 			setFloatingAnchorElem(_floatingAnchorElem);
 		}
 	};
-	console.log('isRichText', isRichText);
+	const [editor] = useLexicalComposerContext();
+	//console.log('isRichText', isRichText);
+	let container = $state<HTMLDivElement>();
+	/* 	$effect(() => {
+		container?.addEventListener('keydown', (v) => {
+			console.log('keydown');
+			if (v.ctrlKey && v.key == 'z') {
+				editor.dispatchCommand(UNDO_COMMAND, undefined);
+			}
+		});
+
+	}); */
 	// your script goes here
+	/* 	AutocompletePlugin({
+		query: query
+	}); */
 </script>
 
 {#snippet contentEditableRichText()}
@@ -96,6 +115,7 @@
 <ToolbarPlugin {setIsLinkEditMode} />
 <div
 	class={`editor-container ${showTreeView ? 'tree-view' : ''} ${!isRichText ? 'plain-text' : ''}`}
+	bind:this={container}
 >
 	{#if isRichText}
 		<LexicalRichTextPlugin contentEditable={contentEditableRichText} {placeholder} />
@@ -103,25 +123,23 @@
 		{#if image}
 			<ImagePlugin captionsEnabled={true} />
 		{/if}
-		<Portal target={null} initializor={HorizontalRulePlugin} />
-		<Portal target={null} initializor={CollapsiblePlugin} />
-		<Portal target={null} initializor={AutoFocusPlugin} />
-		<Portal target={null} initializor={ListPlugin} />
-		<Portal target={null} initializor={CheckListPlugin} />
-		<Portal target={null} initializor={CodeHighlightPlugin} />
-		<Portal target={null} initializor={HashtagPlugin} />
-		<Portal
-			target={null}
-			initializor={() => MaxLengthPlugin({ maxLength: maxLength })}
-			enable={maxLength > 0}
-		/>
-		<Portal
-			initializor={() =>
-				AutocompletePlugin({
-					query: query
-				})}
-			enable={isAutocomplete}
-		/>
+		<Portal initializor={HorizontalRulePlugin} />
+		<Portal initializor={CollapsiblePlugin} />
+		<Portal initializor={AutoFocusPlugin} />
+		<Portal initializor={ListPlugin} />
+		<Portal initializor={CheckListPlugin} />
+		<Portal initializor={CodeHighlightPlugin} />
+		<Portal initializor={HashtagPlugin} />
+		<Portal initializor={() => MaxLengthPlugin({ maxLength: maxLength })} />
+		{#if isAutocomplete}
+			<Portal
+				initializor={() =>
+					AutocompletePlugin({
+						query: query
+					})}
+			/>
+		{/if}
+
 		<LexicalCharacterLimitPlugin charset="UTF-8" {maxLength} />
 		<EquationsPlugin />
 		<LinkPlugin />
@@ -172,6 +190,7 @@
 	<!-- 	<MeltTree /> -->
 </div>
 
-{#if settings().showTreeView}
+<!-- {#if settings().showTreeView}
 	<TreeViewPlugin />
 {/if}
+ -->

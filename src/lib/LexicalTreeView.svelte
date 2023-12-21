@@ -1,12 +1,13 @@
 <script lang="ts">
 	import type {
+		BaseSelection,
 		EditorState,
 		ElementNode,
-		GridSelection,
+		INTERNAL_PointSelection,
 		LexicalEditor,
 		LexicalNode,
-		NodeSelection,
-		RangeSelection
+		RangeSelection,
+		TextNode
 	} from 'lexical';
 
 	import * as html from '@lexical/html';
@@ -19,9 +20,10 @@
 		$getRoot as getRoot,
 		$getSelection as getSelection,
 		COMMAND_PRIORITY_HIGH,
+		$isNodeSelection as isNodeSelection,
 		DEPRECATED_$isGridSelection
 	} from 'lexical';
-
+	import { $isGridSelection as isGridSelection, GridSelection } from '@lexical/table';
 	import * as lexical from 'lexical';
 	import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
@@ -75,33 +77,67 @@
 	const [showLimited, setShowLimited] = useState(false);
 	const lastEditorStateRef = useRef<null | EditorState>(null);
 
-	const commandsLog = useLexicalCommandsLog(editor);
+	const [commandsLog, setLoggedCommands] = useState<
+		ReadonlyArray<LexicalCommand<unknown> & { payload: unknown }>
+	>([]);
 
-	const generateTree = useCallback(
-		(editorState: EditorState) => {
-			const treeText = generateContent(editor, commandsLog, showExportDOM());
+	$effect(() => {
+		const unregisterCommandListeners = new Set<() => void>();
 
-			setContent(treeText);
+		for (const [command] of editor._commands) {
+			unregisterCommandListeners.add(
+				editor.registerCommand(
+					command,
+					(payload) => {
+						setLoggedCommands((state) => {
+							if (!state) return [];
+							const newState = [...state];
+							newState.push({
+								payload,
+								type: command.type ? command.type : 'UNKNOWN'
+							});
 
-			if (!timeTravelEnabled()) {
-				setTimeStampedEditorStates((currentEditorStates) => [
-					...(currentEditorStates ?? []),
-					[Date.now(), editorState]
-				]);
-			}
-		},
-		[commandsLog, editor, timeTravelEnabled(), showExportDOM]
-	);
+							if (newState.length > 10) {
+								newState.shift();
+							}
+							return newState;
+						});
 
-	useEffect(() => {
+						return false;
+					},
+					COMMAND_PRIORITY_HIGH
+				)
+			);
+		}
+
+		return () => {
+			unregisterCommandListeners.forEach((unregister) => unregister());
+		};
+	});
+
+	$inspect(commandsLog(), 'command');
+	const generateTree = (editorState: EditorState) => {
+		const treeText = generateContent(editor, commandsLog(), showExportDOM());
+
+		setContent(treeText);
+
+		if (!timeTravelEnabled()) {
+			setTimeStampedEditorStates((currentEditorStates) => [
+				...(currentEditorStates ?? []),
+				[Date.now(), editorState]
+			]);
+		}
+	};
+
+	$effect(() => {
 		const editorState = editor.getEditorState();
 
 		if (!showLimited() && editorState._nodeMap.size < 1000) {
-			setContent(generateContent(editor, commandsLog, showExportDOM()));
+			setContent(generateContent(editor, commandsLog(), showExportDOM()));
 		}
-	}, [commandsLog, editor, showLimited(), showExportDOM]);
+	});
 
-	useEffect(() => {
+	$effect(() => {
 		return mergeRegister(
 			editor.registerUpdateListener(({ editorState }) => {
 				if (!showLimited() && editorState._nodeMap.size > 1000) {
@@ -114,15 +150,15 @@
 				generateTree(editorState);
 			}),
 			editor.registerEditableListener(() => {
-				const treeText = generateContent(editor, commandsLog, showExportDOM());
+				const treeText = generateContent(editor, commandsLog(), showExportDOM());
 				setContent(treeText);
 			})
 		);
-	}, [commandsLog, editor, showExportDOM, isLimited(), generateTree, showLimited()]);
+	});
 
 	const totalEditorStates = timeStampedEditorStates().length;
 
-	useEffect(() => {
+	$effect(() => {
 		if (isPlaying()) {
 			let timeoutId: ReturnType<typeof setTimeout>;
 
@@ -157,9 +193,9 @@
 				clearTimeout(timeoutId);
 			};
 		}
-	}, [timeStampedEditorStates, isPlaying, editor, totalEditorStates]);
+	});
 
-	useEffect(() => {
+	$effect(() => {
 		const element = treeElementRef;
 
 		if (element !== null) {
@@ -171,48 +207,7 @@
 				element.__lexicalEditor = null;
 			};
 		}
-	}, [editor]);
-
-	function useLexicalCommandsLog(
-		editor: LexicalEditor
-	): ReadonlyArray<LexicalCommand<unknown> & { payload: unknown }> {
-		const [loggedCommands, setLoggedCommands] = useState<
-			ReadonlyArray<LexicalCommand<unknown> & { payload: unknown }>
-		>([]);
-
-		useEffect(() => {
-			const unregisterCommandListeners = new Set<() => void>();
-
-			for (const [command] of editor._commands) {
-				unregisterCommandListeners.add(
-					editor.registerCommand(
-						command,
-						(payload) => {
-							setLoggedCommands((state) => {
-								const newState = [...state];
-								newState.push({
-									payload,
-									type: command.type ? command.type : 'UNKNOWN'
-								});
-
-								if (newState.length > 10) {
-									newState.shift();
-								}
-								return newState;
-							});
-
-							return false;
-						},
-						COMMAND_PRIORITY_HIGH
-					)
-				);
-			}
-
-			return () => unregisterCommandListeners.forEach((unregister) => unregister());
-		}, [editor]);
-
-		return useMemo(() => loggedCommands(), [loggedCommands]);
-	}
+	});
 
 	function printRangeSelection(selection: RangeSelection): string {
 		let res = '';
@@ -238,7 +233,8 @@
 		return res;
 	}
 
-	function printNodeSelection(selection: NodeSelection): string {
+	function printNodeSelection(selection: lexical.BaseSelection): string {
+		if (!isNodeSelection(selection)) return '';
 		return `: node\n  └ [${Array.from(selection._nodes).join(', ')}]`;
 	}
 
@@ -491,7 +487,7 @@
 		isSelected: boolean;
 		node: LexicalNode;
 		nodeKeyDisplay: string;
-		selection: GridSelection | NodeSelection | RangeSelection | null;
+		selection: lexical.BaseSelection | null;
 		typeDisplay: string;
 	}) {
 		// No selection or node is not selected.

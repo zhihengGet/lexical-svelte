@@ -69,7 +69,7 @@ export const DEFAULT_SETTINGS = {
 	onInput: (html: string) => {
 		console.log('oninput', html);
 	},
-	initialHTML: '<p>Hi<h2>H2</h2></p>',
+	initialHTML: '<p data-test="1324">Hi<h2>H2</h2> </p>',
 	allowedAttributesOnParagraph: [''],
 	config: {
 		query: undefined,

@@ -87,9 +87,9 @@
 					if (editor) {
 						const htmlString = generateHtmlFromNodes(editor);
 						onInput(htmlString);
-						console.log('html', htmlString);
+						//console.log('export html', htmlString);
 					}
-					console.log(editorState.toJSON());
+					//console.log(editorState.toJSON());
 				});
 			});
 		}
