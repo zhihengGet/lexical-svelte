@@ -7,23 +7,32 @@
 
 	type temp = {
 		closeOnClickOutside?: boolean;
-		onClose: () => void;
+		onClose?: () => void;
 		title: string;
-		children: Snippet;
+		children?: Snippet;
+		open: boolean;
 	};
-	let { title: t, onClose, children } = $props<temp>();
+	let { title: t, onClose, children, open } = $props<temp>();
 
 	const {
 		elements: { trigger, overlay, content, title, description, close, portalled },
-		states: { open }
+		states: { open: open1 }
 	} = createDialog({
-		forceVisible: true,
-		defaultOpen: true
+		defaultOpen: true,
+		closeOnOutsideClick: false
+	});
+
+	$effect(() => {
+		console.log('binded', open, $open1);
+		open1.set(open);
+		open1.subscribe((v) => (open = v));
 	});
 </script>
 
-<div class="modal" {...$portalled} use:portalled>
-	{#if $open}
+is dialog {$open1}
+{open}
+<div class="z-100">
+	{#if open}
 		<div
 			{...$overlay}
 			use:overlay

@@ -41,7 +41,7 @@
 			reader.readAsDataURL(files[0]);
 		}
 	};
-	const isDisabled = src() === '';
+	const isDisabled = $derived(src() === '');
 </script>
 
 <FileInput
@@ -58,11 +58,7 @@
 	data-test-id="image-modal-alt-text-input"
 />
 <DialogActions>
-	<Button
-		data-test-id="image-modal-file-upload-btn"
-		disabled={isDisabled}
-		onClick={() => onClick({ altText: altText(), src: src() })}
-	>
+	<Button disabled={isDisabled} onClick={() => onClick({ altText: altText(), src: src() })}>
 		Confirm
 	</Button>
 </DialogActions>

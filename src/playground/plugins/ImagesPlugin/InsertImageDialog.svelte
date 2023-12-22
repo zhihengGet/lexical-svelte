@@ -73,24 +73,23 @@
 {#if !mode()}
 	<DialogButtonsList>
 		<Button
-			data-test-id="image-modal-option-sample"
 			onClick={() =>
 				onClick(
 					hasModifier.current
 						? {
 								altText: 'Daylight fir trees forest glacier green high ice landscape',
 								src: 'https://images.unsplash.com/photo-1682686581498-5e85c7228119?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-						  }
+							}
 						: {
 								altText: 'Yellow flower in tilt shift lens',
 								src: 'https://images.unsplash.com/photo-1682686581498-5e85c7228119?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-						  }
+							}
 				)}
 		>
 			Sample
 		</Button>
-		<Button data-test-id="image-modal-option-url" onClick={() => setMode('url')}>URL</Button>
-		<Button data-test-id="image-modal-option-file" onClick={() => setMode('file')}>File</Button>
+		<Button onClick={() => setMode('url')}>URL</Button>
+		<Button onClick={() => setMode('file')}>File</Button>
 	</DialogButtonsList>
 {/if}
 

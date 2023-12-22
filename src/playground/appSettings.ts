@@ -65,7 +65,7 @@ export const DEFAULT_SETTINGS = {
 	showTreeView: true,
 	tableCellBackgroundColor: true,
 	tableCellMerge: true,
-	image: false,
+	image: true,
 	onInput: (html: string) => {
 		console.log('oninput', html);
 	},

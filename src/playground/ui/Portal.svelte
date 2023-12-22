@@ -17,6 +17,7 @@
 		console.log('portal refFn', node);
 		if (!node) return console.error('portal element does not exists', node);
 		if (portal === false || !props.target) {
+			return;
 			// if we don't need to portal then remove the div that is wrapper it
 			let parent = node.parentElement;
 			let child = node.childNodes;
@@ -43,24 +44,21 @@
 		if (enable) props.initializor();
 	}
 	let ref = props.ref ?? { current: undefined };
-	/* 	$effect.pre(() => {
+	$effect.pre(() => {
 		console.log('portal prerender', ref.current?.innerHTML);
-		if ((props.component || props.target) && ref.current) {
+		/* if ((props.component || props.target) && ref.current) {
 			ref.current.innerHTML = '';
-		}
+		} */
 	});
 	$effect(() => {
 		console.log('portal after render', ref.current);
 		// useRef won't be called if decorator update so we have to call manually
-		if (props.component && props.target && ref.current) {
+		/* 	if (props.component && props.target && ref.current) {
 			refFn(ref.current);
-		}
-	}); */
+		} */
+	});
 </script>
 
-{#each components ?? [] as decorator}
-	<svelte:self {...decorator} />
-{/each}
 {#snippet El()}
 	{#await props.component}
 		<div>wait</div>
@@ -88,6 +86,9 @@
 		{@render children()}
 	{/if}
 {/if}
+{#each components ?? [] as decorator}
+	<svelte:self {...decorator} />
+{/each}
 
 <style>
 </style>

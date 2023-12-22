@@ -95,6 +95,7 @@
 	import InsertInlineImageDialog from '@plugins/InlineImagePlugin/InsertInlineImageDialog.svelte';
 	import { INSERT_PAGE_BREAK } from '@plugins/PageBreakPlugin/PageBreakPlug.svelte';
 	import { useSettings } from '../../appSettings';
+	import type { SvelteRender } from '@lexical/react/types';
 
 	let { setIsLinkEditMode } = $props<{ setIsLinkEditMode: (param: boolean) => boolean }>();
 	const [editor] = useLexicalComposerContext();
@@ -117,7 +118,7 @@
 	const [isCode, setIsCode] = useState(false);
 	const [canUndo, setCanUndo] = useState(false);
 	const [canRedo, setCanRedo] = useState(false);
-	const [modal, showModal] = useModal();
+	const [modal, showModal, child, setModalChild] = useModal();
 	const [isRTL, setIsRTL] = useState(false);
 	const [codeLanguage, setCodeLanguage] = useState<string>('');
 	const [isEditable, setIsEditable] = useState(() => editor.isEditable());
@@ -367,6 +368,8 @@
 		activeEditor().dispatchCommand(INSERT_IMAGE_COMMAND, payload);
 	};
 	const settings = useSettings();
+	let open = $state(false);
+	let modalContent = $state<SvelteRender>({});
 </script>
 
 {blockType()}
@@ -586,24 +589,33 @@
 				<i class="icon page-break" />
 				<span class="text">Page Break</span>
 			</DropDownItem>
-			<!-- <DropDownItem
+			<DropDownItem
 				onClick={() => {
+					modalContent = {
+						component: InsertImageDialog,
+						props: { activeEditor: activeEditor() }
+					};
+					open = true;
 					showModal('Insert Image', (onClose) => {
 						return [
 							{
 								component: InsertImageDialog,
-								props: { activeEditor: activeEditor(), onClose },
-								portal: false,
-								target: undefined
+								props: { activeEditor: activeEditor(), onClose, title: 'Insert Image', open: true }
 							}
 						];
+					});
+					setModalChild((onClose) => {
+						return {
+							component: InsertImageDialog,
+							props: { activeEditor: activeEditor(), onClose, title: 'Insert Image', open: true }
+						};
 					});
 				}}
 				class="item"
 			>
 				<i class="icon image" />
 				<span class="text">Image</span>
-			</DropDownItem> -->
+			</DropDownItem>
 			<!-- 	<DropDownItem
 				onClick={() => {
 					showModal('Insert Image', (onClose) => {
@@ -1011,6 +1023,21 @@
 		{editor}
 		isRTL={isRTL()}
 	/>
-
-	<Portal component={modal?.component} />
 </div>
+<!-- <Portal
+	component={modal()?.component}
+	childComponents={modal()?.childComponents}
+	props={modal()?.props}
+/> -->
+<Modal bind:open title="insert image">
+	<svelte:component this={child().component} {...child()?.props} />
+</Modal>
+
+<!-- <Modal bind:open title={'insert image'}
+	><svelte:component
+		this={modalContent.component}
+		{...modalContent.props}
+		onClose={() => (open = false)}
+	/>
+</Modal>
+ -->
