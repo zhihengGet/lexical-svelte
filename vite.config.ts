@@ -4,6 +4,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import path from 'path';
 import UnoCSS from 'unocss/vite';
 
+import dts from 'vite-plugin-dts';
 // https://vitejs.dev/config/
 export default defineConfig({
 	base: './',
@@ -18,15 +19,19 @@ export default defineConfig({
 			'@plugins': path.resolve(__dirname, './src/playground/plugins/')
 		}
 	},
-	plugins: [tsconfigPaths({ loose: true }), UnoCSS({}), svelte()],
+	plugins: [tsconfigPaths({ loose: true }), UnoCSS({}), svelte(), dts()],
 	build: {
 		lib: {
-			entry: path.resolve(__dirname, './src/App.svelte'),
+			entry: path.resolve(__dirname, './src/index.ts'),
 			name: 'MyLib',
 			formats: ['es'],
 			// the proper extensions will be added
-			fileName: 'index.svelte'
+			fileName: 'index'
 		},
+		// Reduce bloat from legacy polyfills.
+		target: 'es2020',
+		// Leave minification up to applications.
+		minify: false,
 		rollupOptions: {}
 	}
 });

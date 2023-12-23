@@ -588,7 +588,9 @@
 				<i class="icon page-break" />
 				<span class="text">Page Break</span>
 			</DropDownItem>
+
 			<DropDownItem
+				enabled={settings().image}
 				onClick={() => {
 					modalContent = {
 						component: InsertImageDialog,
@@ -599,7 +601,12 @@
 						return [
 							{
 								component: InsertImageDialog,
-								props: { activeEditor: activeEditor(), onClose, title: 'Insert Image', open: true }
+								props: {
+									activeEditor: activeEditor(),
+									onClose,
+									title: 'Insert Image',
+									open: true
+								}
 							}
 						];
 					});
@@ -615,6 +622,7 @@
 				<i class="icon image" />
 				<span class="text">Image</span>
 			</DropDownItem>
+			x
 			<!-- 	<DropDownItem
 				onClick={() => {
 					showModal('Insert Image', (onClose) => {

@@ -38,7 +38,7 @@ export class CustomParagraphNode extends ParagraphNode {
 	exportDOM(editor: LexicalEditor) {
 		const dom = super.exportDOM(editor);
 		if (dom.element && isHTMLElement(dom.element)) this.setAttribute(dom.element);
-		//console.log('export dom', dom, JSON.stringify(this.attr));
+		console.log('export dom', dom, JSON.stringify(this.attr));
 		return dom;
 	}
 	getLatestAttr() {
@@ -72,9 +72,9 @@ export class CustomParagraphNode extends ParagraphNode {
 	}
 	setAttribute(dom: HTMLElement) {
 		Object.keys(this.attr).forEach((v) => {
-			dom.setAttribute(v, this.getLatest()[v]);
+			dom.setAttribute(v, this.getLatestAttr()[v]);
 		});
-		//console.log('setting attributes', this.attr);
+		console.log('setting attributes', dom);
 	}
 	createDOM(config) {
 		const dom = super.createDOM(config);

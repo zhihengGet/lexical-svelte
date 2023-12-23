@@ -6,12 +6,14 @@
 	let {
 		class: className,
 		onClick,
+		enabled = true,
 		title
 	} = $props<{
 		class: string;
 		children?: any;
 		onClick: () => any;
 		title?: string;
+		enabled?: boolean;
 		'aria-label'?: string;
 	}>();
 	const ref = useRef(null);
@@ -22,6 +24,8 @@
 	}
 </script>
 
-<button class={className} onclick={onClick} bind:this={ref.current} type="button">
-	<slot />
-</button>
+{#if enabled}
+	<button class={className} onclick={onClick} bind:this={ref.current} type="button">
+		<slot />
+	</button>
+{/if}

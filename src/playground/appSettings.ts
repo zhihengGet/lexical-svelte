@@ -69,9 +69,9 @@ export const DEFAULT_SETTINGS = {
 	dev: true,
 	showToolbar: true,
 	onInput: (html: string) => {
-		console.log('oninput', html);
+		console.log('on input', html);
 	},
-	initialHTML: '<p data-test="1324">Hi<h2>H2</h2> </p>',
+	initialHTML: '<p data-test="1324">Hi </p>',
 	allowedAttributesOnParagraph: [''],
 	config: {
 		query: undefined,
@@ -119,6 +119,10 @@ export const DEFAULT_SETTINGS = {
 			{
 				replace: ParagraphNode,
 				with: () => {
+					const setting = useSettings();
+					if (setting) {
+						//CustomParagraphNode.allowedAttributes = setting().allowedAttributesOnParagraph;
+					}
 					return new CustomParagraphNode();
 				}
 			}
