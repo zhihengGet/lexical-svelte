@@ -25,7 +25,6 @@
 	import FloatingLinkEditorPlugin from '@plugins/FloatingLinkEditorPlugin/FloatingLinkEditorPlugin.svelte';
 	import ImagePlugin from '@plugins/ImagesPlugin/ImagePlugin.svelte';
 	import { useLexicalComposerContext } from './lib/LexicalComposerContext.svelte';
-	import Test from './Test.svelte';
 	import { AutoFocusPlugin } from './playground/plugins/AutoFocus/LexicalAutoFocusPlugin.svelte';
 	import PageBreakPlug from '@plugins/PageBreakPlugin/PageBreakPlug.svelte';
 	import { HorizontalRulePlugin } from '@plugins/HorizontalPlugin/LexicalHorizontalRulePlugin';
@@ -58,6 +57,7 @@
 		isRichText,
 		showTreeView,
 		showTableOfContents,
+		showToolbar,
 		maxLength,
 		image,
 		config: { query }
@@ -111,11 +111,12 @@
 	</div>
 {/snippet}
 
-{isRichText ? 'RichTExt' : 'Plain'}
-<ToolbarPlugin {setIsLinkEditMode} />
+<!-- {isRichText ? 'RichTExt' : 'Plain'} -->
+{#if showToolbar}
+	<ToolbarPlugin {setIsLinkEditMode} />
+{/if}
 <div
 	class={`editor-container ${showTreeView ? 'tree-view' : ''} ${!isRichText ? 'plain-text' : ''}`}
-	bind:this={container}
 >
 	{#if isRichText}
 		<LexicalRichTextPlugin contentEditable={contentEditableRichText} {placeholder} />

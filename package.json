@@ -1,7 +1,7 @@
 {
 	"name": "lexical-svelte-runes",
 	"private": false,
-	"version": "0.1.2-beta.5",
+	"version": "0.1.2-beta.8",
 	"type": "module",
 	"author": {
 		"name": "zhiheng"
@@ -13,8 +13,7 @@
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"fix": "eslint --fix .",
 		"tsc": "tsc",
-		"package": "svelte-package --input src/ && npx unocss",
-		"uno": "echo 123 "
+		"package": "svelte-package --input src/ && npx unocss"
 	},
 	"exports": {
 		".": {
@@ -26,7 +25,7 @@
 		"dist"
 	],
 	"peerDDependencies": {
-		"svelte": "^5.0.0-next.25"
+		"svelte": "^5.0.0-next.26"
 	},
 	"dependencies": {
 		"@lexical/clipboard": "0.12.5",
@@ -49,29 +48,29 @@
 		"@lexical/yjs": "0.12.5",
 		"@myriaddreamin/typst-ts-renderer": "0.4.1",
 		"@myriaddreamin/typst.ts": "0.4.1",
-		"@types/katex": "^0.16.7",
-		"@types/lodash-es": "^4.17.12",
-		"@types/node": "^20.10.5",
-		"@unocss/cli": "latest",
 		"@unocss/reset": "^0.58.0",
 		"chalk": "^5.3.0",
 		"clsx": "^2.0.0",
-		"csstype": "^3.1.3",
-		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-svelte": "^2.35.1",
-		"glob": "^10.3.10",
 		"katex": "^0.16.9",
 		"lexical": "^0.12.5",
 		"lodash-es": "^4.17.21",
 		"lucide-svelte": "^0.297.0",
 		"prettier": "^3.1.1",
-		"prettier-plugin-svelte": "^3.1.2",
 		"tailwind-merge": "^2.1.0",
-		"vite-tsconfig-paths": "^4.2.2",
 		"y-websocket": "^1.5.1",
 		"yjs": "^13.6.10"
 	},
 	"devDependencies": {
+		"glob": "^10.3.10",
+		"csstype": "^3.1.3",
+		"@unocss/cli": "latest",
+		"@types/katex": "^0.16.7",
+		"@types/lodash-es": "^4.17.12",
+		"@types/node": "^20.10.5",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-svelte": "^2.35.1",
+		"prettier-plugin-svelte": "^3.1.2",
+		"vite-tsconfig-paths": "^4.2.2",
 		"@melt-ui/svelte": "^0.66.1",
 		"@sveltejs/kit": "1.16.3",
 		"@sveltejs/package": "latest",

@@ -8,7 +8,7 @@ module.exports = {
 		'prettier'
 	],
 	rules: {
-		'@typescript-eslint/consistent-type-imports': 'error'
+		'@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }]
 	},
 	parser: '@typescript-eslint/parser',
 	plugins: ['@typescript-eslint'],

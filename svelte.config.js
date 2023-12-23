@@ -12,6 +12,7 @@ export default {
 	kit: {
 		alias: {
 			shared: path.resolve(__dirname, './src/util/src/'),
+			'@shared': path.resolve('./src/shared/'),
 			'@lexical/react': path.resolve(__dirname, 'src/lib/'),
 			react: path.resolve(__dirname, 'src/react.svelte'),
 			'@theme': path.resolve(__dirname, './src/themes/'),

@@ -1,8 +1,6 @@
 import {
 	ParagraphNode,
 	type DOMConversionMap,
-	type SerializedElementNode,
-	type SerializedLexicalNode,
 	type EditorConfig,
 	type SerializedParagraphNode,
 	type LexicalEditor,

@@ -6,7 +6,6 @@ import {
 	$isRangeSelection as isRangeSelection,
 	$isTextNode as isTextNode
 } from 'lexical';
-import { useCallback } from 'react';
 export * from './AutocompleteNode';
 export * from './AutocompletePlugin.svelte';
 export type SearchPromise = {
@@ -122,6 +121,7 @@ export class AutocompleteServer {
 	};
 }
 export const ClickAutoComplete = createCommand('selected a word');
+export const RefocusOnClickOutside = createCommand('focus editor on click outside of autocomplete');
 // https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english-usa-no-swears-long.txt
 const DICTIONARY = [
 	'information',

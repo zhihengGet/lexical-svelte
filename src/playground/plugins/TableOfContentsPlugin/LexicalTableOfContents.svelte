@@ -3,7 +3,8 @@
 	import type { LexicalEditor, NodeKey, NodeMutation } from 'lexical';
 
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
-	import { $isHeadingNode as isHeadingNode, HeadingNode, HeadingTagType } from '@lexical/rich-text';
+	import type { HeadingTagType } from '@lexical/rich-text';
+import { $isHeadingNode as isHeadingNode, HeadingNode } from '@lexical/rich-text';
 	import { $getNodeByKey as getNodeByKey, $getRoot as getRoot, TextNode } from 'lexical';
 	import { useEffect, useState } from 'react';
 

@@ -23,7 +23,8 @@
 		$isNodeSelection as isNodeSelection,
 		DEPRECATED_$isGridSelection
 	} from 'lexical';
-	import { $isGridSelection as isGridSelection, GridSelection } from '@lexical/table';
+	import type { GridSelection } from '@lexical/table';
+import { $isGridSelection as isGridSelection } from '@lexical/table';
 	import * as lexical from 'lexical';
 	import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 

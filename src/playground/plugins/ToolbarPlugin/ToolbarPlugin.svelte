@@ -372,7 +372,6 @@
 	let modalContent = $state<SvelteRender>({});
 </script>
 
-{blockType()}
 <div class="toolbar">
 	<button
 		class:hidden={settings().isUndoRedo == false}

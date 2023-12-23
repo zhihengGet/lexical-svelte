@@ -22,16 +22,18 @@ import {
 	AutocompleteNode,
 	$createAutocompleteNode as createAutocompleteNode,
 	search,
-	useQuery,
+	type useQuery,
 	uuid,
 	type SearchPromise,
 	ClickAutoComplete
 } from '.';
 import { useSharedAutocompleteContext } from '../../context/SharedAutocompleteContext.svelte';
 import { addSwipeRightListener } from '../../utils/swipe';
-import { flushSync, onDestroy, unstate } from 'svelte';
+import { onDestroy } from 'svelte';
 export default function AutocompletePlugin({
-	query = useQuery()
+	query = () => {
+		return { promise: new Promise((v) => v(['test', 'test1'])), dismiss: () => {} };
+	}
 }: {
 	query?: ReturnType<typeof useQuery>;
 }) {
@@ -85,7 +87,7 @@ export default function AutocompletePlugin({
 				selection.insertNodes([node]);
 				setSelection(selectionCopy);
 				//lastSuggestion = newSuggestion[0];
-				suggestion_state.suggestions = unstate(newSuggestion);
+				suggestion_state.suggestions = newSuggestion;
 			},
 			{ tag: 'history-merge' } // important, we want discrete update
 		);

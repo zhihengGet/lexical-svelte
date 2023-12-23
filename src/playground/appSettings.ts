@@ -66,6 +66,8 @@ export const DEFAULT_SETTINGS = {
 	tableCellBackgroundColor: true,
 	tableCellMerge: true,
 	image: true,
+	dev: true,
+	showToolbar: true,
 	onInput: (html: string) => {
 		console.log('oninput', html);
 	},

@@ -5,22 +5,27 @@
 
 	import type { CreateEditorArgs } from 'lexical';
 	import { setContext, type Snippet } from 'svelte';
-	import { DEFAULT_SETTINGS, useSettings } from '../appSettings';
+	import { DEFAULT_SETTINGS, useSettings, type Settings } from '../appSettings';
 	let context = 'setting context';
 </script>
 
 <script lang="ts">
 	totalComponents += 1;
 
-	const text = useSettings();
+	const UserSetting = useSettings();
 
-	const { children, initialConfigs } = $props<{
+	const {
+		children,
+		initialConfigs,
+		settings: s
+	} = $props<{
 		children: Snippet;
 		initialConfigs?: CreateEditorArgs;
+		settings: Settings;
 	}>();
 
-	const [settings, setSettings] = useState(DEFAULT_SETTINGS);
-	if (!text) {
+	const [settings, setSettings] = useState({ ...DEFAULT_SETTINGS, ...s });
+	if (!UserSetting) {
 		setContext(context, settings);
 	}
 
@@ -59,9 +64,22 @@
 	}  */
 </script>
 
-<button
-	onclick={() => {
-		setSettings({ ...DEFAULT_SETTINGS, isAutocomplete: !settings().isAutocomplete });
-	}}>update setting {settings().isAutocomplete}</button
->
+<!-- {settings().dev}
+{typeof UserSetting}
+{#if UserSetting && UserSetting().dev}
+	<button
+		onclick={() => {
+			UserSetting().isAutocomplete = !UserSetting().isAutocomplete;
+		}}>update setting {settings().isAutocomplete} {settings().dev}</button
+	>
+{/if}
+{#if !UserSetting && settings().dev}
+	<button
+		class="bg-gray"
+		onclick={() => {
+			settings().isAutocomplete = !settings().isAutocomplete;
+		}}>update setting {settings().isAutocomplete} {settings().dev}</button
+	>
+{/if} -->
+
 {@render children()}

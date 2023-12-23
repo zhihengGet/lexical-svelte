@@ -29,8 +29,8 @@
 	});
 </script>
 
-is dialog {$open1}
-{open}
+<!-- is dialog {$open1}
+{open} -->
 <div class="z-100">
 	{#if open}
 		<div
