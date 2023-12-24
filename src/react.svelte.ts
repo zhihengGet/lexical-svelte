@@ -84,7 +84,8 @@ export function useMemoed<T>(fn: () => T, dep?: any) {
 	return () => data;
 }
 export function useRef<T>(param: T | null) {
-	return { current: param };
+	let state = $state<{ current: T }>({ current: param });
+	return state;
 }
 
 export function createContext<T>(config) {

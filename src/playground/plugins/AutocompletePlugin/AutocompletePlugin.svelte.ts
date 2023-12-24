@@ -22,18 +22,18 @@ import {
 	AutocompleteNode,
 	$createAutocompleteNode as createAutocompleteNode,
 	search,
-	type useQuery,
+	useQuery,
 	uuid,
 	type SearchPromise,
 	ClickAutoComplete
 } from '.';
 import { useSharedAutocompleteContext } from '../../context/SharedAutocompleteContext.svelte';
 import { addSwipeRightListener } from '../../utils/swipe';
-import { onDestroy } from 'svelte';
+import { flushSync, onDestroy } from 'svelte';
+import { debounce } from '@melt-ui/svelte/internal/helpers';
+import type { EditorUpdateOptions, UpdateListener } from 'lexical/LexicalEditor';
 export default function AutocompletePlugin({
-	query = () => {
-		return { promise: new Promise((v) => v(['test', 'test1'])), dismiss: () => {} };
-	}
+	query = useQuery()
 }: {
 	query?: ReturnType<typeof useQuery>;
 }) {
@@ -63,7 +63,7 @@ export default function AutocompletePlugin({
 		suggestion_state.suggestions = [];
 	}
 	function updateAsyncSuggestion(refSearchPromise: SearchPromise, newSuggestion: null | string[]) {
-		if (searchPromise !== refSearchPromise || newSuggestion === null) {
+		if (searchPromise !== refSearchPromise || newSuggestion === null || newSuggestion.length == 0) {
 			console.log(
 				'🚀 ~ file: AutocompletePlugin.svelte.ts:64 ~ updateAsyncSuggestion ~ searchPromise:',
 				searchPromise
@@ -81,15 +81,15 @@ export default function AutocompletePlugin({
 					// Outdated
 					return;
 				}
-				const selectionCopy = selection.clone();
+				const old = selection.clone(); //use to skip autocomplete node TextNode-AutoCompleteNode-TextNode
 				const node = createAutocompleteNode(uuid);
 				autocompleteNodeKey = node.getKey();
 				selection.insertNodes([node]);
-				setSelection(selectionCopy);
-				//lastSuggestion = newSuggestion[0];
+				setSelection(old);
+				suggestion_state.select = newSuggestion[0];
 				suggestion_state.suggestions = newSuggestion;
 			},
-			{ tag: 'history-merge' } // important, we want discrete update
+			{ tag: 'history-merge' }
 		);
 	}
 
@@ -100,36 +100,47 @@ export default function AutocompletePlugin({
 			clearSuggestion();
 		}
 	}
-	function handleUpdate() {
-		//console.trace('calling handleUpdate');
-		editor.update(() => {
-			const selection = getSelection();
-			//console.log('autocomplete', selection);
-			const [hasMatch, match] = search(selection);
-			if (!hasMatch) {
+	function handleUpdate(arg: Parameters<UpdateListener>[0]) {
+		console.log('calling handleUpdate', arg);
+		if (arg.tags.has('autocomplete') || arg.tags.has('history-merge')) return;
+		editor.update(
+			() => {
+				const selection = getSelection();
+
+				const [hasMatch, match] = search(selection);
+				console.log(
+					'🚀 ~ file: AutocompletePlugin.svelte.ts:116 ~ editor.update ~ hasMatch, match:',
+					hasMatch,
+					match,
+					selection
+				);
+				if (!hasMatch) {
+					clearSuggestion();
+					return;
+				}
+				if (match === lastMatch) {
+					return;
+				}
 				clearSuggestion();
-				return;
-			}
-			if (match === lastMatch) {
-				return;
-			}
-			clearSuggestion();
-			searchPromise = query(match);
-			searchPromise.promise
-				.then((newSuggestion) => {
-					/* console.log(
+				searchPromise = query(match);
+				searchPromise.promise
+					.then((newSuggestion) => {
+						console.log(
 							'🚀 ~ file: AutocompletePlugin.svelte.ts:113 ~ .then ~ newSuggestion:',
 							newSuggestion
-						); */
-					if (searchPromise !== null) {
-						updateAsyncSuggestion(searchPromise, newSuggestion);
-					}
-				})
-				.catch((e) => {
-					console.error(e);
-				});
-			lastMatch = match;
-		});
+						);
+						if (searchPromise !== null && newSuggestion) {
+							updateAsyncSuggestion(searchPromise, ['!23']);
+						}
+					})
+					.catch((e) => {
+						console.error(e);
+					});
+
+				lastMatch = match;
+			},
+			{ tag: 'autocomplete' }
+		);
 	}
 	function handleAutocompleteIntent(): boolean {
 		const lastSuggestion = suggestion_state.select;
@@ -167,7 +178,7 @@ export default function AutocompletePlugin({
 	}
 
 	const rootElem = editor.getRootElement();
-
+	const waitFn = debounce(handleUpdate, 500);
 	const un = mergeRegister(
 		editor.registerNodeTransform(AutocompleteNode, handleAutocompleteNodeTransform),
 		editor.registerUpdateListener(handleUpdate),
@@ -178,7 +189,7 @@ export default function AutocompletePlugin({
 			handleKeypressCommand,
 			COMMAND_PRIORITY_CRITICAL
 		),
-		editor.registerCommand(KEY_ENTER_COMMAND, handleKeypressCommand, COMMAND_PRIORITY_LOW),
+		//editor.registerCommand(KEY_ENTER_COMMAND, handleKeypressCommand, COMMAND_PRIORITY_LOW),
 
 		...(rootElem !== null ? [addSwipeRightListener(rootElem, handleSwipeRight)] : []),
 		unmountSuggestion

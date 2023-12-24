@@ -58,6 +58,7 @@
 	contentEditable={isEditable()}
 	data-testid={'editor'}
 	id="editor_center"
+	spellcheck="false"
 	use:ref
 	{role}
 	{spellCheck}

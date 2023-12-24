@@ -62,7 +62,7 @@
 					setActiveEditor(newEditor);
 					return false;
 				},
-				COMMAND_PRIORITY_CRITICAL
+				COMMAND_PRIORITY_LOW
 			),
 			editor.registerCommand(
 				CLICK_COMMAND,

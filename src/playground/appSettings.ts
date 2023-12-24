@@ -21,7 +21,7 @@ import PlaygroundEditorTheme from '../themes/PlaygroundEditorTheme';
 import { CustomParagraphNode } from '@nodes/CustomParagrahNode';
 import { ParagraphNode } from 'lexical';
 import PlaygroundNodes from './PlaygroundNodes';
-import { getContext, setContext } from 'svelte';
+import { getContext, onDestroy, setContext } from 'svelte';
 import type { useQuery } from '@plugins/AutocompletePlugin';
 const hostName = window.location.hostname;
 export const isDevPlayground: boolean =
@@ -119,10 +119,10 @@ export const DEFAULT_SETTINGS = {
 			{
 				replace: ParagraphNode,
 				with: () => {
-					const setting = useSettings();
+					/* 	const setting = useSettings();
 					if (setting) {
-						//CustomParagraphNode.allowedAttributes = setting().allowedAttributesOnParagraph;
-					}
+						CustomParagraphNode.allowedAttributes = setting().allowedAttributesOnParagraph;
+					} */
 					return new CustomParagraphNode();
 				}
 			}

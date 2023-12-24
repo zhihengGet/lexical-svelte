@@ -68,6 +68,7 @@ export class AutocompleteNode extends DecoratorNode<SvelteRender<AutocompleteCom
 	createDOM(config: EditorConfig): HTMLElement {
 		const node = document.createElement('span');
 		node.style.position = 'relative';
+		node.style.width = '0px';
 		//node.style.display = 'inline-block';
 		return node;
 	}

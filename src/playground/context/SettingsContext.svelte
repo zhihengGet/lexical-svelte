@@ -72,7 +72,7 @@
 			UserSetting().isAutocomplete = !UserSetting().isAutocomplete;
 		}}>update setting {settings().isAutocomplete} {settings().dev}</button
 	>
-{/if}
+{/if}-->
 {#if !UserSetting && settings().dev}
 	<button
 		class="bg-gray"
@@ -80,6 +80,6 @@
 			settings().isAutocomplete = !settings().isAutocomplete;
 		}}>update setting {settings().isAutocomplete} {settings().dev}</button
 	>
-{/if} -->
+{/if}
 
 {@render children()}

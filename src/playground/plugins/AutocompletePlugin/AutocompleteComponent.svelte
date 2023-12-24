@@ -3,11 +3,13 @@
 
 	import { useSharedAutocompleteContext } from '../../context/SharedAutocompleteContext.svelte';
 	import {
+		$setSelection as setSelection,
 		COMMAND_PRIORITY_LOW,
 		COMMAND_PRIORITY_NORMAL,
 		KEY_ARROW_DOWN_COMMAND,
 		KEY_ARROW_UP_COMMAND,
-		KEY_ENTER_COMMAND
+		KEY_ENTER_COMMAND,
+		$getSelection as getSelection
 	} from 'lexical';
 	import { ClickAutoComplete, SELECTED_CLASSNAME } from '.';
 	import {
@@ -16,6 +18,7 @@
 		removeClassNamesFromElement
 	} from '@lexical/utils';
 	import { flushSync, onDestroy, onMount } from 'svelte';
+	import { useClickOutside } from '../../utils/isClickOutside';
 
 	let { ...props } = $props();
 	console.log('auto node', JSON.stringify(props));
@@ -69,9 +72,29 @@
 		a();
 		b();
 	});
+	let el = $state();
+
+	/* $effect(() => {
+		useClickOutside(el, {
+			enabled: true,
+			handler: (e) => {
+				e.preventDefault();
+				console.log('click outside');
+				editor.update(() => {
+					//setSelection(getSelection());
+					editor.focus();
+				});
+			}
+		});
+	}); */
 </script>
 
-<span class="text-[#ccc] relative" spellcheck="false" data-id="autocomplete-{props.nodeKey}">
+<span
+	class="text-[#ccc] inline-block relative {data.select ? ' w-fit ' : 'w-0px'}"
+	spellcheck="false"
+	data-id="autocomplete-{props.nodeKey}"
+	bind:this={el}
+>
 	{#if data.select}
 		{data.select}
 		{isMobile ? '(SWIPE \u2B95)' : '(TAB)'}

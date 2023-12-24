@@ -2,6 +2,7 @@ import type { BaseSelection } from 'lexical';
 
 import { $isAtNodeEnd as isAtNodeEnd } from '@lexical/selection';
 import {
+	$getSelection,
 	createCommand,
 	$isRangeSelection as isRangeSelection,
 	$isTextNode as isTextNode
@@ -22,17 +23,43 @@ export const SELECTED_CLASSNAME = 'auto_selected';
 
 // TODO lookup should be custom
 export function search(selection: null | BaseSelection): [boolean, string] {
+	console.log(
+		'selection search 1',
+		selection?.getTextContent(),
+		!isRangeSelection(selection) || !selection.isCollapsed()
+	);
 	if (!isRangeSelection(selection) || !selection.isCollapsed()) {
 		return [false, ''];
 	}
 	const node = selection.getNodes()[0];
+	const prev = node.getPreviousSibling();
 	const anchor = selection.anchor;
+	console.log(
+		'selection test',
+		selection,
+		node.getTextContent(),
+		node.getTextContentSize(),
+		selection.getNodes(),
+		$getSelection()?.getTextContent().length,
+		prev
+	);
+
 	// Check siblings?
-	if (!isTextNode(node) || !node.isSimpleText() || !isAtNodeEnd(anchor)) {
+	if (!isTextNode(node) || !node.isSimpleText()) {
+		console.log('calling search 2', selection, !isTextNode(node), !isAtNodeEnd(anchor));
 		return [false, ''];
 	}
+
 	const word = [];
 	const text = node.getTextContent();
+	const end = selection.focus.offset;
+
+	if (!text || text.length == 0) {
+		return [false, ''];
+	}
+	let match = text.substring(0, end).split(' ').at(-1);
+	if (!match) return [false, ''];
+	return [true, text.substring(0, end).split(' ').at(-1)];
 	let i = node.getTextContentSize();
 	let c;
 	while (i-- && i >= 0 && (c = text[i]) !== ' ') {
@@ -64,54 +91,48 @@ export function useQuery(): (searchText: string) => SearchPromise {
  * Simulate an asynchronous autocomplete server (typical in more common use cases like GMail where
  * the data is not static).
  */
-export class AutocompleteServer {
+class AutocompleteServer {
 	DATABASE = DICTIONARY;
 	LATENCY = 200;
 
 	query = (searchText: string): SearchPromise => {
-		console.log('search', searchText);
 		let isDismissed = false;
 
 		const dismiss = () => {
 			isDismissed = true;
 		};
-		const promise: Promise<null | string[]> = new Promise((resolve, reject) => {
-			if (isDismissed) {
-				// TODO cache result
-				return reject('Dismissed');
-			}
-			return setTimeout(() => {
+		const promise: Promise<null | string> = new Promise((resolve, reject) => {
+			setTimeout(() => {
 				if (isDismissed) {
 					// TODO cache result
 					return reject('Dismissed');
 				}
-				resolve(['1112321']);
-			}, 500);
-			const searchTextLength = searchText.length;
 
-			if (searchText === '' || searchTextLength < 4) {
-				return resolve(null);
-			}
-			const char0 = searchText.charCodeAt(0);
-			const isCapitalized = char0 >= 65 && char0 <= 90;
-			const caseInsensitiveSearchText = isCapitalized
-				? String.fromCharCode(char0 + 32) + searchText.substring(1)
-				: searchText;
-			const match = this.DATABASE.find(
-				(dictionaryWord) => dictionaryWord.startsWith(caseInsensitiveSearchText) ?? null
-			);
-			if (match === undefined) {
-				return resolve(null);
-			}
-			const matchCapitalized = isCapitalized
-				? String.fromCharCode(match.charCodeAt(0) - 32) + match.substring(1)
-				: match;
-			const autocompleteChunk = [matchCapitalized];
-			if (autocompleteChunk.length == 0) {
-				return resolve(null);
-			}
-			console.log('Resolve', autocompleteChunk);
-			return resolve(autocompleteChunk);
+				const searchTextLength = searchText.length;
+				if (searchText === '' || searchTextLength < 4) {
+					return resolve(null);
+				}
+				return resolve('helloworld');
+				const char0 = searchText.charCodeAt(0);
+				const isCapitalized = char0 >= 65 && char0 <= 90;
+				const caseInsensitiveSearchText = isCapitalized
+					? String.fromCharCode(char0 + 32) + searchText.substring(1)
+					: searchText;
+				const match = this.DATABASE.find(
+					(dictionaryWord) => dictionaryWord.startsWith(caseInsensitiveSearchText) ?? null
+				);
+				if (match === undefined) {
+					return resolve(null);
+				}
+				const matchCapitalized = isCapitalized
+					? String.fromCharCode(match.charCodeAt(0) - 32) + match.substring(1)
+					: match;
+				const autocompleteChunk = matchCapitalized.substring(searchTextLength);
+				if (autocompleteChunk === '') {
+					return resolve(null);
+				}
+				return resolve(autocompleteChunk);
+			}, this.LATENCY);
 		});
 
 		return {
@@ -120,6 +141,7 @@ export class AutocompleteServer {
 		};
 	};
 }
+
 export const ClickAutoComplete = createCommand('selected a word');
 export const RefocusOnClickOutside = createCommand('focus editor on click outside of autocomplete');
 // https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english-usa-no-swears-long.txt

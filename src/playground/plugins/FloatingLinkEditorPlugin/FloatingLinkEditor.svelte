@@ -35,6 +35,7 @@
 
 <script lang="ts">
 	import { TrashIcon } from 'lucide-svelte';
+	import { useClickOutside } from '@melt-ui/svelte/internal/actions';
 
 	let { editor, isLink, setIsLink, anchorElem, isLinkEditMode, setIsLinkEditMode } = $props<{
 		editor: LexicalEditor;
@@ -187,6 +188,16 @@
 			setIsLinkEditMode(false);
 		}
 	};
+
+	$effect(() => {
+		return useClickOutside(editorRef.current, {
+			enabled: true,
+			handler: () => {
+				editor.focus();
+				editorRef.current?.remove();
+			}
+		}).destroy;
+	});
 </script>
 
 <div bind:this={editorRef.current} class="link-editor">
