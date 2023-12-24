@@ -6,7 +6,7 @@
  *
  */
 
-import type { Spread } from 'lexical';
+import type { LexicalNode, Spread } from 'lexical';
 
 import type { EditorConfig, NodeKey, SerializedLexicalNode } from 'lexical';
 import { DecoratorNode } from 'lexical';
@@ -83,4 +83,8 @@ export class AutocompleteNode extends DecoratorNode<SvelteRender<AutocompleteCom
 
 export function $createAutocompleteNode(uuid: string): AutocompleteNode {
 	return new AutocompleteNode(uuid);
+}
+
+export function isAutocompleteNode(node: LexicalNode) {
+	return node instanceof AutocompleteNode;
 }

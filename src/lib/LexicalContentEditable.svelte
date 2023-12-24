@@ -44,7 +44,6 @@
 <div
 	{...rest}
 	aria-activedescendant={!isEditable() ? undefined : ariaActiveDescendant}
-	aria-autocomplete={!isEditable() ? 'none' : ariaAutoComplete}
 	aria-controls={!isEditable() ? undefined : ariaControls}
 	aria-describedby={ariaDescribedBy}
 	aria-expanded={!isEditable() ? undefined : role === 'combobox' ? !!ariaExpanded : undefined}
@@ -59,6 +58,8 @@
 	data-testid={'editor'}
 	id="editor_center"
 	spellcheck="false"
+	autocorrect="false"
+	aria-autocomplete="none"
 	use:ref
 	{role}
 	{spellCheck}

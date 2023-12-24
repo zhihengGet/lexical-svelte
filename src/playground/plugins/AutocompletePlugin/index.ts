@@ -9,6 +9,7 @@ import {
 } from 'lexical';
 export * from './AutocompleteNode';
 export * from './AutocompletePlugin.svelte';
+import { isAutocompleteNode } from '.';
 export type SearchPromise = {
 	dismiss: () => void;
 	promise: Promise<null | string[]>;
@@ -31,19 +32,39 @@ export function search(selection: null | BaseSelection): [boolean, string] {
 	if (!isRangeSelection(selection) || !selection.isCollapsed()) {
 		return [false, ''];
 	}
-	const node = selection.getNodes()[0];
+	let node = selection.getNodes()[0];
 	const prev = node.getPreviousSibling();
 	const anchor = selection.anchor;
+	let end = selection.focus.offset; // handle partial autocomplete "World| world", focus is bewtween two string
+	let text = '';
 	console.log(
 		'selection test',
 		selection,
 		node.getTextContent(),
 		node.getTextContentSize(),
+		node,
 		selection.getNodes(),
 		$getSelection()?.getTextContent().length,
-		prev
+		prev,
+		prev?.getPreviousSibling()
 	);
+	//option 1: clear autocomplete node before search
+	/* 
+	if (node.__text?.length == 1 && prev) {
+		// fetched nodes before we merge
+		text = prev.getPreviousSibling()?.getTextContent();
+		const match = text.split(' ').at(-1);
+		console.log('selection with auto', match);
+		if (!match) return [false, ''];
+		return [true, match];
+	} */
 
+	// handle we if selected autocomplete node
+	/* if (isAutocompleteNode(prev)) {
+		text =
+			prev?.getPreviousSibling()?.getTextContent().split(' ').at(-1) + node.getTextContent() ?? '';
+		return [true, text];
+	} */
 	// Check siblings?
 	if (!isTextNode(node) || !node.isSimpleText()) {
 		console.log('calling search 2', selection, !isTextNode(node), !isAtNodeEnd(anchor));
@@ -51,15 +72,15 @@ export function search(selection: null | BaseSelection): [boolean, string] {
 	}
 
 	const word = [];
-	const text = node.getTextContent();
-	const end = selection.focus.offset;
+	text += node.getTextContent();
 
 	if (!text || text.length == 0) {
 		return [false, ''];
 	}
 	let match = text.substring(0, end).split(' ').at(-1);
+	console.log('selection ->', match);
 	if (!match) return [false, ''];
-	return [true, text.substring(0, end).split(' ').at(-1)];
+	return [true, match];
 	let i = node.getTextContentSize();
 	let c;
 	while (i-- && i >= 0 && (c = text[i]) !== ' ') {
@@ -93,7 +114,7 @@ export function useQuery(): (searchText: string) => SearchPromise {
  */
 class AutocompleteServer {
 	DATABASE = DICTIONARY;
-	LATENCY = 200;
+	LATENCY = 400;
 
 	query = (searchText: string): SearchPromise => {
 		let isDismissed = false;
@@ -112,7 +133,7 @@ class AutocompleteServer {
 				if (searchText === '' || searchTextLength < 4) {
 					return resolve(null);
 				}
-				return resolve('helloworld');
+
 				const char0 = searchText.charCodeAt(0);
 				const isCapitalized = char0 >= 65 && char0 <= 90;
 				const caseInsensitiveSearchText = isCapitalized

@@ -89,7 +89,7 @@
 						onInput(htmlString);
 						//console.log('export html', htmlString);
 					}
-					//console.log(editorState.toJSON());
+					console.table('JSON', editorState.toJSON().root.children);
 				});
 			});
 		}

@@ -21,7 +21,7 @@ export function AutoFocusPlugin({ defaultSelection }: Props = {}): null {
 
 		editor.focus(
 			() => {
-				//console.log(' focus cb');
+				console.log(' focus cb');
 				// If we try and move selection to the same point with setBaseAndExtent, it won't
 				// trigger a re-focus on the element. So in the case this occurs, we'll need to correct it.
 				// Normally this is fine, Selection API !== Focus API, but fore the intents of the naming

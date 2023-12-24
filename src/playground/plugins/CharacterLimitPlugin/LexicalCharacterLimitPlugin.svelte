@@ -43,6 +43,7 @@
 		() => ({
 			remainingCharacters: setRemainingCharacters,
 			strlen: (text: string) => {
+				return text.length;
 				if (charset === 'UTF-8') {
 					return utf8Length(text);
 				} else if (charset === 'UTF-16') {
