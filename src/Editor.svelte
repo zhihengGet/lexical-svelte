@@ -146,7 +146,7 @@
 		<LinkPlugin />
 
 		{@const el = floatingAnchorElem()}
-		<!-- 	{#if el && isEditable}
+		{#if el && isEditable}
 			<Portal {...CodeActionMenuPlugin({ anchorElem: el })} />
 			<FloatingLinkEditorPlugin
 				anchorElem={el}
@@ -154,7 +154,7 @@
 				{setIsLinkEditMode}
 			/>
 			<FloatingTextFormatToolbarPlugin anchorElem={el} />
-		{/if} -->
+		{/if}
 	{:else}
 		<!-- plain text only -->
 		<PlainTextPlugin contentEditable={ContentEditable} {placeholder} />

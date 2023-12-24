@@ -60,7 +60,20 @@
 			//initializeEditor(newEditor, initialEditorState);
 
 			editor = newEditor;
-
+			/* editor.update(() => {
+				const root = getRoot();
+				if (root.isEmpty()) {
+					const paragraph = lex.$createParagraphNode();
+					root.append(paragraph);
+					const activeElement = CAN_USE_DOM ? document.activeElement : null;
+					if (
+						getSelection() !== null ||
+						(activeElement !== null && activeElement === editor.getRootElement())
+					) {
+						paragraph.select();
+					}
+				}
+			}, HISTORY_MERGE_OPTIONS); */
 			editor.update(() => {
 				// In the browser you can use the native DOMParser API to parse the HTML string.
 				const parser = new DOMParser();

@@ -29,9 +29,30 @@ import {
 } from '.';
 import { useSharedAutocompleteContext } from '../../context/SharedAutocompleteContext.svelte';
 import { addSwipeRightListener } from '../../utils/swipe';
-import { flushSync, onDestroy } from 'svelte';
+import { createRoot, flushSync, getAllContexts, onDestroy } from 'svelte';
 import { debounce } from '@melt-ui/svelte/internal/helpers';
 import type { EditorUpdateOptions, UpdateListener } from 'lexical/LexicalEditor';
+import AutocompleteComponent from './AutocompleteComponent.svelte';
+import { getCaretTopPoint } from '../../utils/careat';
+/**
+ * Get the caret position, relative to the window
+ * @returns {object} left, top distance in pixels
+ */
+function getCaretGlobalPosition() {
+	const r = document.getSelection().getRangeAt(0);
+	const node = r.startContainer;
+	const offset = r.startOffset;
+	const pageOffset = { x: window.scrollX, y: window.scrollY };
+	let rect, r2;
+
+	if (offset > 0) {
+		r2 = document.createRange();
+		r2.setStart(node, offset - 1);
+		r2.setEnd(node, offset);
+		rect = r2.getBoundingClientRect();
+		return { left: rect.right + pageOffset.x + 'px', top: rect.bottom + pageOffset.y + 'px' };
+	}
+}
 export default function AutocompletePlugin({
 	query = useQuery()
 }: {
@@ -39,109 +60,54 @@ export default function AutocompletePlugin({
 }) {
 	const [editor] = useLexicalComposerContext();
 	const suggestion_state = useSharedAutocompleteContext();
-	const promises: Promise<string[]>[] = [];
 	//const query = useQuery();
 
-	let autocompleteNodeKey: null | NodeKey = null;
-	let lastMatch: null | string = null;
 	//let lastSuggestion: null | string = null;
 	let searchPromise: null | SearchPromise = null;
-	function clearSuggestion() {
-		const autocompleteNode =
-			autocompleteNodeKey !== null ? getNodeByKey(autocompleteNodeKey) : null;
-
-		if (autocompleteNode !== null && autocompleteNode.isAttached()) {
-			autocompleteNode.remove();
-			autocompleteNodeKey = null;
-		}
-
-		lastMatch = null;
-		//lastSuggestion = null;
-		suggestion_state.suggestions = [];
-		console.warn('clear');
-	}
-	function updateAsyncSuggestion(refSearchPromise: SearchPromise, newSuggestion: null | string[]) {
-		if (searchPromise !== refSearchPromise || newSuggestion === null || newSuggestion.length == 0) {
-			// Outdated or no suggestion
-
-			return;
-		}
-		console.log(
-			'🚀 ~ file: AutocompletePlugin.svelte.ts:64 ~ updateAsyncSuggestion ~ searchPromise:',
-			newSuggestion
-		);
-		editor.update(
-			() => {
-				const selection = getSelection();
-				if (!selection) return;
-				const [hasMatch, match] = search(selection);
-				if (!hasMatch || !isRangeSelection(selection)) {
-					// Outdated
-					return;
-				}
-				const old = selection.clone(); //use to skip autocomplete node TextNode-AutoCompleteNode-TextNode
-				const node = createAutocompleteNode(uuid);
-				autocompleteNodeKey = node.getKey();
-				selection.insertNodes([node]);
-				setSelection(old);
-
-				suggestion_state.suggestions = newSuggestion;
-			},
-			{ tag: 'history-merge' }
-		);
-	}
-
-	function handleAutocompleteNodeTransform(node: AutocompleteNode) {
-		const key = node.getKey();
-		if (node.__uuid === uuid && key !== autocompleteNodeKey) {
-			// Max one Autocomplete node per session
-			clearSuggestion();
-		}
-	}
+	const editorContext = getAllContexts();
+	const el = createRoot(AutocompleteComponent, {
+		target: document.body,
+		top: 0,
+		left: 0,
+		context: editorContext
+	});
 	async function handleUpdate(arg: Parameters<UpdateListener>[0]) {
 		console.log('calling handleUpdate', arg);
-		if (arg.tags.has('autocomplete') || arg.tags.has('history-merge')) return;
+		//if (arg.tags.has('autocomplete') || arg.tags.has('history-merge')) return;
 
 		searchPromise?.dismiss();
 		searchPromise = null;
-		//updateAsyncSuggestion(searchPromise, ['123123']);
+		suggestion_state.suggestions = [];
 		editor.update(
-			() => {
+			async () => {
 				const selection = getSelection();
 
 				if (!selection) return;
 				const [hasMatch, match] = search(selection);
-				if (!hasMatch) return clearSuggestion();
-				if (match === lastMatch) {
-					return;
+
+				if (hasMatch) {
+					searchPromise = query(match);
+
+					const words = (await searchPromise.promise) || [];
+					const props = getCaretTopPoint();
+					props.left += 10;
+					props.top += 5;
+					props.left += 'px';
+					props.top += 'px';
+					suggestion_state.suggestions = ['123123', '!23'];
+					console.log('porps', props, getCaretGlobalPosition());
+					el.$set(props);
 				}
-				clearSuggestion();
-				searchPromise = query(match);
-				searchPromise.promise
-					.then((result) => {
-						updateAsyncSuggestion(searchPromise, ['abcd']);
-					})
-					.catch((err) => {
-						console.error('problem with autocomplete query fn:', err);
-					});
-				lastMatch = match;
 			},
 			{ tag: 'autocomplete' }
 		);
 	}
 	function handleAutocompleteIntent(): boolean {
-		const lastSuggestion = suggestion_state.select;
-		if (lastSuggestion === null || autocompleteNodeKey === null) {
-			return false;
-		}
-		const autocompleteNode = getNodeByKey(autocompleteNodeKey);
-		if (autocompleteNode === null) {
-			return false;
-		}
+		const lastSuggestion = suggestion_state.select ?? '';
 		const textNode = createTextNode(lastSuggestion);
-		autocompleteNode.replace(textNode);
+		const selection = getSelection();
+		selection?.insertNodes([textNode]);
 		textNode.selectNext();
-		clearSuggestion();
 		return true;
 	}
 	function handleKeypressCommand(e: Event) {
@@ -160,14 +126,14 @@ export default function AutocompletePlugin({
 	}
 	function unmountSuggestion() {
 		editor.update(() => {
-			clearSuggestion();
+			//clearSuggestion();
 		});
 	}
 
 	const rootElem = editor.getRootElement();
 	//const waitFn = debounce(handleUpdate, 500);
 	const un = mergeRegister(
-		editor.registerNodeTransform(AutocompleteNode, handleAutocompleteNodeTransform),
+		//	editor.registerNodeTransform(AutocompleteNode, handleAutocompleteNodeTransform),
 		editor.registerUpdateListener(handleUpdate),
 		//editor.registerCommand(KEY_TAB_COMMAND, handleKeypressCommand, COMMAND_PRIORITY_LOW),
 		editor.registerCommand(ClickAutoComplete, handleAutocompleteIntent, COMMAND_PRIORITY_LOW),
@@ -184,6 +150,7 @@ export default function AutocompletePlugin({
 	onDestroy(() => {
 		console.log('plugin destroyed');
 		un();
+		el.$destroy();
 	});
 	return un;
 }

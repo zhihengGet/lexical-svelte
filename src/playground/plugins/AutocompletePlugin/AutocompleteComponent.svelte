@@ -90,10 +90,11 @@
 </script>
 
 <span
-	class="text-[#ccc] inline-block relative {data.select ? ' w-fit ' : 'w-0px'}"
+	class="text-[#ccc] inline-block z-100 {data.select ? ' w-fit ' : 'w-0px'}"
 	spellcheck="false"
 	data-id="autocomplete-{props.nodeKey}"
 	bind:this={el}
+	class:hidden={data.suggestions.length == 0}
 >
 	{#if data.select}
 		{data.select}
@@ -102,9 +103,17 @@
 	<div
 		class="absolute max-h-100 overflow-auto bottom-[-5] border-[1px] border-solid border-green left-0 z-5 w-100px max-w-120px rounded"
 		bind:this={div}
+		style="top:{props.top};left:{props.left}"
 	>
 		{#each data.suggestions as item, key}
 			<button
+				tabindex={0}
+				onpointerup={(e) => {
+					data.updateChoose(item);
+					flushSync(() => {
+						editor.dispatchCommand(ClickAutoComplete, { item });
+					});
+				}}
 				onclick={(e) => {
 					data.updateChoose(item);
 					flushSync(() => {
@@ -112,7 +121,6 @@
 					});
 				}}
 				data-id="suggestions"
-				onmousedown={(e) => e.preventDefault()}
 				class="block w-full font-500 text-truncate text-purple font-600 hover:bg-amber {key == 0
 					? SELECTED_CLASSNAME
 					: ''}"
