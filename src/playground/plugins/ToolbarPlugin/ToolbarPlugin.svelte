@@ -622,7 +622,6 @@
 				<i class="icon image" />
 				<span class="text">Image</span>
 			</DropDownItem>
-			x
 			<!-- 	<DropDownItem
 				onClick={() => {
 					showModal('Insert Image', (onClose) => {

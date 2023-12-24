@@ -34,7 +34,7 @@
 	import AutocompletePlugin from '@plugins/AutocompletePlugin/AutocompletePlugin.svelte';
 	import LexicalCharacterLimitPlugin from '@plugins/CharacterLimitPlugin/LexicalCharacterLimitPlugin.svelte';
 	import { MaxLengthPlugin } from '@plugins/MaxLengthPlugin/MaxLengthPlugin.svelte';
-	import { MaxByteDancePlugin } from '@plugins/MaxPlugin/MaxMBPlugin.svelte';
+	import { MaxByteDancePlugin } from '@plugins/MaxSizePlugin/MaxMBPlugin.svelte';
 	import TableOfContentsPlugin from '@plugins/TableOfContentsPlugin/TableOfContentsPlugin.svelte';
 	import MeltTree from '@plugins/TableOfContentsPlugin/MeltTree.svelte';
 	import { UNDO_COMMAND } from 'lexical';
