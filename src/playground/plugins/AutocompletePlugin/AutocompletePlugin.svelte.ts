@@ -34,27 +34,11 @@ import { debounce } from '@melt-ui/svelte/internal/helpers';
 import type { EditorUpdateOptions, UpdateListener } from 'lexical/LexicalEditor';
 import AutocompleteComponent from './AutocompleteComponent.svelte';
 import { getCaretTopPoint } from '../../utils/careat';
-/**
- * Get the caret position, relative to the window
- * @returns {object} left, top distance in pixels
- */
-function getCaretGlobalPosition() {
-	const r = document.getSelection().getRangeAt(0);
-	const node = r.startContainer;
-	const offset = r.startOffset;
-	const pageOffset = { x: window.scrollX, y: window.scrollY };
-	let rect, r2;
 
-	if (offset > 0) {
-		r2 = document.createRange();
-		r2.setStart(node, offset - 1);
-		r2.setEnd(node, offset);
-		rect = r2.getBoundingClientRect();
-		return { left: rect.right + pageOffset.x + 'px', top: rect.bottom + pageOffset.y + 'px' };
-	}
-}
 export default function AutocompletePlugin({
-	query = useQuery()
+	query = () => {
+		return { promise: new Promise((v) => v(['test', 'test1'])), dismiss: () => {} };
+	}
 }: {
 	query?: ReturnType<typeof useQuery>;
 }) {
@@ -92,10 +76,8 @@ export default function AutocompletePlugin({
 					const props = getCaretTopPoint();
 					props.left += 10;
 					props.top += 5;
-					props.left += 'px';
-					props.top += 'px';
-					suggestion_state.suggestions = ['123123', '!23'];
-					console.log('porps', props, getCaretGlobalPosition());
+					suggestion_state.suggestions = [...words, ''];
+					console.log('porps', props);
 					el.$set(props);
 				}
 			},

@@ -22,6 +22,10 @@ type OptionalProps = {
 	strlen?: (input: string) => number;
 };
 
+export const getKb = (text: string) => {
+	return new TextEncoder().encode(JSON.stringify(text)).length / 1024;
+};
+
 export function useCharacterLimit(
 	editor: LexicalEditor,
 	maxCharacters: number,
@@ -49,21 +53,22 @@ export function useCharacterLimit(
 			editor.registerTextContentListener((currentText: string) => {
 				text = currentText;
 			}),
-			editor.registerUpdateListener(({ dirtyLeaves, dirtyElements }) => {
+			editor.registerUpdateListener(({ dirtyLeaves, dirtyElements, editorState }) => {
 				const isComposing = editor.isComposing();
 				const hasContentChanges = dirtyLeaves.size > 0 || dirtyElements.size > 0;
 
 				if (isComposing || !hasContentChanges) {
 					return;
 				}
-
+				const json = editorState.toJSON();
 				const textLength = strlen(text);
 				const textLengthAboveThreshold =
 					textLength > maxCharacters ||
 					(lastComputedTextLength !== null && lastComputedTextLength > maxCharacters);
-				const diff = maxCharacters - textLength;
+				const kb = getKb(JSON.stringify(json));
+				//const diff = maxCharacters - textLength;
 
-				remainingCharacters(diff);
+				remainingCharacters(text.length + '-PlainText Only-(' + Math.floor(kb) + 'kb)');
 
 				if (lastComputedTextLength === null || textLengthAboveThreshold) {
 					const offset = findOffset(text, maxCharacters, strlen);
