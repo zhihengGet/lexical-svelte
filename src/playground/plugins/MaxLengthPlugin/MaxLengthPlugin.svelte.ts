@@ -9,7 +9,13 @@ import {
 } from 'lexical';
 import { useEffect } from 'react';
 
-export function MaxLengthPlugin({ maxLength = 10 }: { maxLength?: number }): null {
+export function MaxLengthPlugin({
+	maxLength = 10,
+	maxMB
+}: {
+	maxLength?: number;
+	maxMB: number;
+}): null {
 	const [editor] = useLexicalComposerContext();
 
 	useEffect(() => {

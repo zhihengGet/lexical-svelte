@@ -1,39 +1,20 @@
-import type { NodeKey } from 'lexical';
-
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 import { mergeRegister } from '@lexical/utils';
 import {
-	CLICK_COMMAND,
 	COMMAND_PRIORITY_CRITICAL,
-	COMMAND_PRIORITY_HIGH,
 	COMMAND_PRIORITY_LOW,
-	KEY_ARROW_DOWN_COMMAND,
 	KEY_ARROW_RIGHT_COMMAND,
-	KEY_ENTER_COMMAND,
-	KEY_TAB_COMMAND,
 	$createTextNode as createTextNode,
-	$getNodeByKey as getNodeByKey,
-	$getSelection as getSelection,
-	$isRangeSelection as isRangeSelection,
-	$setSelection as setSelection
+	$getSelection as getSelection
 } from 'lexical';
 
-import {
-	AutocompleteNode,
-	$createAutocompleteNode as createAutocompleteNode,
-	search,
-	useQuery,
-	uuid,
-	type SearchPromise,
-	ClickAutoComplete
-} from '.';
+import type { UpdateListener } from 'lexical/LexicalEditor';
+import { createRoot, getAllContexts, onDestroy } from 'svelte';
+import { ClickAutoComplete, search, type useQuery, type SearchPromise } from '.';
 import { useSharedAutocompleteContext } from '../../context/SharedAutocompleteContext.svelte';
-import { addSwipeRightListener } from '../../utils/swipe';
-import { createRoot, flushSync, getAllContexts, onDestroy } from 'svelte';
-import { debounce } from '@melt-ui/svelte/internal/helpers';
-import type { EditorUpdateOptions, UpdateListener } from 'lexical/LexicalEditor';
-import AutocompleteComponent from './AutocompleteComponent.svelte';
 import { getCaretTopPoint } from '../../utils/careat';
+import { addSwipeRightListener } from '../../utils/swipe';
+import AutocompleteComponent from './AutocompleteComponent.svelte';
 
 export default function AutocompletePlugin({
 	query = () => {
@@ -62,27 +43,25 @@ export default function AutocompletePlugin({
 		searchPromise?.dismiss();
 		searchPromise = null;
 		suggestion_state.suggestions = [];
-		editor.update(
-			async () => {
-				const selection = getSelection();
+		editor.update(async () => {
+			const selection = getSelection()?.clone();
 
-				if (!selection) return;
-				const [hasMatch, match] = search(selection);
+			if (!selection) return;
+			const [hasMatch, match] = search(selection);
 
-				if (hasMatch) {
-					searchPromise = query(match);
+			if (hasMatch) {
+				searchPromise = query(match);
 
-					const words = (await searchPromise.promise) || [];
-					const props = getCaretTopPoint();
-					props.left += 10;
-					props.top += 5;
-					suggestion_state.suggestions = [...words, ''];
-					console.log('porps', props);
-					el.$set(props);
-				}
-			},
-			{ tag: 'autocomplete' }
-		);
+				const words = (await searchPromise.promise) || [];
+				const props = getCaretTopPoint();
+				props.left += 10;
+				props.top += 16;
+				props.visibility = true;
+				suggestion_state.suggestions = words;
+				console.log('props', props);
+				el.$set(props);
+			}
+		});
 	}
 	function handleAutocompleteIntent(): boolean {
 		const lastSuggestion = suggestion_state.select ?? '';

@@ -88,7 +88,7 @@
 				lex.$insertNodes(nodes);
 
 				// Insert them at a selection.
-			});
+			}, HISTORY_MERGE_OPTIONS);
 			editor.registerUpdateListener(({ editorState }) => {
 				// In the browser you can use the native DOMParser API to parse the HTML string.
 				// The latest EditorState can be found as `editorState`.

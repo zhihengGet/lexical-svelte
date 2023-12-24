@@ -16,14 +16,11 @@ import {
 } from 'lexical';
 import { useEffect } from 'react';
 import invariant from 'shared/invariant';
+import { getKb } from '../../utils/megabyte';
 
 type OptionalProps = {
 	remainingCharacters?: (characters: number) => void;
 	strlen?: (input: string) => number;
-};
-
-export const getKb = (text: string) => {
-	return new TextEncoder().encode(JSON.stringify(text)).length / 1024;
 };
 
 export function useCharacterLimit(

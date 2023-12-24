@@ -36,13 +36,13 @@
 		(e, editor) => {
 			e.preventDefault();
 			const node = document.getElementsByClassName(SELECTED_CLASSNAME).item(0);
-
 			if (node) {
 				node.classList.remove(SELECTED_CLASSNAME);
 
 				const next = node.nextElementSibling || div.firstElementChild;
 				data.select = next?.textContent ?? '';
 				next?.classList.add(SELECTED_CLASSNAME);
+				//next?.focus();
 				return true;
 			}
 			return false;
@@ -54,13 +54,14 @@
 		(e, editor) => {
 			e.preventDefault();
 			const node = document.getElementsByClassName(SELECTED_CLASSNAME).item(0);
-
+			debugger;
 			if (node) {
 				node.classList.remove(SELECTED_CLASSNAME);
 
 				const prev = node.previousElementSibling || div.lastElementChild;
 				data.select = prev?.textContent ?? '';
 				prev?.classList.add(SELECTED_CLASSNAME);
+				//prev?.focus();
 				return true;
 			}
 			return false;
@@ -68,10 +69,13 @@
 		COMMAND_PRIORITY_LOW
 	);
 	$effect(() => {
-		/* 		const re = document.addEventListener('keydown', (e) => {
-			if (e.keyCode == 27) el.style.visibility = 'hidden';
+		const re = document.addEventListener('keydown', (e) => {
+			if (e.keyCode == 27) {
+				el.style.visibility = 'hidden';
+			}
 		});
-		editor.update(editor.focus); */
+
+		//editor.update(editor.focus);
 	});
 	//data.select = data.suggestions[0];
 	onDestroy(() => {
@@ -101,6 +105,8 @@
 	data-id="autocomplete-{props.nodeKey}"
 	bind:this={el}
 	class:hidden={data.suggestions.length == 0}
+	inert={true}
+	autofocus={false}
 >
 	{#if data.select}
 		{data.select}
@@ -109,11 +115,10 @@
 	<div
 		class="absolute max-h-100 overflow-auto bottom-[-5] border-[1px] border-solid border-green left-0 z-5 w-100px max-w-120px rounded"
 		bind:this={div}
-		style="top:{props.top}px;left:{props.left}px"
+		style="top:{props.top}px;left:{props.left}px;visibility:{props.visibility}"
 	>
 		{#each data.suggestions as item, key}
 			<button
-				tabindex={0}
 				onpointerup={(e) => {
 					data.updateChoose(item);
 					flushSync(() => {

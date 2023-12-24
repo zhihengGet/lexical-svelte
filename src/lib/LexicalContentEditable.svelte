@@ -43,6 +43,7 @@
 
 <div
 	{...rest}
+	autofocus={true}
 	aria-activedescendant={!isEditable() ? undefined : ariaActiveDescendant}
 	aria-controls={!isEditable() ? undefined : ariaControls}
 	aria-describedby={ariaDescribedBy}
