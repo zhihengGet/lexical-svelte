@@ -1450,16 +1450,16 @@ button.action-button:disabled {
 	z-index: 2;
 }
 /* custom scrollbar */
-::-webkit-scrollbar {
+.toolbar::-webkit-scrollbar {
 	width: 20px;
 }
 
-::-webkit-scrollbar-track {
+.toolbar::-webkit-scrollbar-track {
 	background-color: transparent;
 }
 
-::-webkit-scrollbar-thumb {
-	background-color: #d6dee1;
+.toolbar::-webkit-scrollbar-thumb {
+	background-color: #a5c1ca;
 	border-radius: 20px;
 	border: 6px solid transparent;
 	background-clip: content-box;
@@ -1467,7 +1467,7 @@ button.action-button:disabled {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background-color: #a8bbbf;
+	background-color: #1697b1;
 }
 button.toolbar-item {
 	border: 0;
