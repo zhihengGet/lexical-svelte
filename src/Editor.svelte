@@ -137,14 +137,14 @@
 			initializor={() => MaxByteDancePlugin({ maxLength: maxLength, maxMB: settings().maxSizeMB })}
 		/>
 		<Portal initializor={() => ({ maxLength: maxLength })} />
-		{#if isAutocomplete}
+		<!-- 	{#if isAutocomplete}
 			<Portal
 				initializor={() =>
 					AutocompletePlugin({
 						query: query
 					})}
 			/>
-		{/if}
+		{/if} -->
 
 		<LexicalCharacterLimitPlugin charset="UTF-8" {maxLength} />
 		<EquationsPlugin />

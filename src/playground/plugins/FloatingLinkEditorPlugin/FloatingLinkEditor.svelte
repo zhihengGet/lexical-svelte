@@ -193,11 +193,12 @@
 		return useClickOutside(editorRef.current, {
 			enabled: true,
 			handler: () => {
-				editor.focus();
-				editorRef.current?.remove();
+				//editor.focus();
+				///editorRef.current?.remove();
 			}
 		}).destroy;
 	});
+	//debugger;
 </script>
 
 <div bind:this={editorRef.current} class="link-editor">

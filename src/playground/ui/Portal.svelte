@@ -51,7 +51,7 @@
 		} */
 	});
 	$effect(() => {
-		console.log('portal after render', ref.current);
+		console.log('portal after render', ref.current, props.component);
 		// useRef won't be called if decorator update so we have to call manually
 		/* 	if (props.component && props.target && ref.current) {
 			refFn(ref.current);
