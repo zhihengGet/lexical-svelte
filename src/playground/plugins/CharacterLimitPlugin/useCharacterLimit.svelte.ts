@@ -17,9 +17,10 @@ import {
 import { useEffect } from 'react';
 import invariant from 'shared/invariant';
 import { getKb } from '../../utils/megabyte';
+import { useSettings } from '../../appSettings';
 
 type OptionalProps = {
-	remainingCharacters?: (characters: number) => void;
+	remainingCharacters?: (characters: string) => void;
 	strlen?: (input: string) => number;
 };
 
@@ -42,6 +43,7 @@ export function useCharacterLimit(
 		}
 	}, [editor]);
 
+	const setting = useSettings();
 	useEffect(() => {
 		let text = editor.getEditorState().read(rootTextContent);
 		let lastComputedTextLength = 0;
@@ -58,14 +60,18 @@ export function useCharacterLimit(
 					return;
 				}
 				const json = editorState.toJSON();
-				const textLength = strlen(text);
+				const textLength = text.length; // strlen(text);
 				const textLengthAboveThreshold =
 					textLength > maxCharacters ||
 					(lastComputedTextLength !== null && lastComputedTextLength > maxCharacters);
 				const kb = getKb(JSON.stringify(json));
-				//const diff = maxCharacters - textLength;
 
-				remainingCharacters(text.length + '-PlainText Only-(' + Math.floor(kb) + 'kb)');
+				//const diff = maxCharacters - textLength;
+				const display =
+					text.length +
+					`-Text length (Max:${maxCharacters}) ` +
+					(kb > 1000 ? Math.floor(kb / 1024) : kb + `kb-Max(mb)-${setting().maxSizeMB}mb`);
+				remainingCharacters(display);
 
 				if (lastComputedTextLength === null || textLengthAboveThreshold) {
 					const offset = findOffset(text, maxCharacters, strlen);
@@ -90,7 +96,6 @@ function findOffset(
 	maxCharacters: number,
 	strlen: (input: string) => number
 ): number {
-	// @ts-ignore This is due to be added in a later version of TS
 	const Segmenter = Intl.Segmenter;
 	let offsetUtf16 = 0;
 	let offset = 0;

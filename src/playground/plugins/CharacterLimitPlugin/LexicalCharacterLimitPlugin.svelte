@@ -37,7 +37,7 @@
 	}
 	const [editor] = useLexicalComposerContext();
 
-	const [remainingCharacters, setRemainingCharacters] = useState(maxLength);
+	const [remainingCharacters, setRemainingCharacters] = useState<string>(maxLength + '');
 
 	const characterLimitProps = useMemo(
 		() => ({

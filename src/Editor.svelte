@@ -61,6 +61,7 @@
 		showToolbar,
 		maxLength,
 		image,
+		onSizeLimit,
 		config: { query }
 	} = $derived(settings());
 	$effect(() => {
@@ -133,20 +134,29 @@
 		<Portal initializor={CodeHighlightPlugin} />
 		<Portal initializor={HashtagPlugin} />
 		<!-- <Portal initializor={() => MaxLengthPlugin({ maxLength: maxLength })} /> -->
-		<Portal
-			initializor={() => MaxByteDancePlugin({ maxLength: maxLength, maxMB: settings().maxSizeMB })}
-		/>
-		<Portal initializor={() => ({ maxLength: maxLength })} />
-		<!-- 	{#if isAutocomplete}
+
+		{#if isMaxLength}
+			<Portal
+				initializor={() =>
+					MaxByteDancePlugin({
+						maxLength: maxLength,
+						maxMB: 1,
+						onMaxLimit: onSizeLimit
+					})}
+			/>
+		{/if}
+		{#if isAutocomplete}
 			<Portal
 				initializor={() =>
 					AutocompletePlugin({
 						query: query
 					})}
 			/>
-		{/if} -->
+		{/if}
+		{#if isCharLimit || isCharLimitUtf8}
+			<LexicalCharacterLimitPlugin charset="UTF-8" {maxLength} />
+		{/if}
 
-		<LexicalCharacterLimitPlugin charset="UTF-8" {maxLength} />
 		<EquationsPlugin />
 		<LinkPlugin />
 
