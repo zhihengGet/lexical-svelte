@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '@unocss/reset/tailwind.css';
+	import './uno.css';
 	import 'uno.css';
 	import Editor from './Editor.svelte';
 	import './index.css';
@@ -21,7 +22,7 @@
 <SettingsContext settings={props}>
 	<SharedAutocompleteContext>
 		<LexicalComposer>
-			<div class="editor-shell w-96% lg:w-80% md:w-fit">
+			<div class="editor-shell">
 				<Editor />
 			</div>
 		</LexicalComposer>
