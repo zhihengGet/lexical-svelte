@@ -17,7 +17,7 @@
 <SettingsContext settings={props}>
 	<SharedAutocompleteContext>
 		<LexicalComposer>
-			<div class="editor-shell {props.editorCSS}">
+			<div class="editor-shell w-full">
 				<Editor />
 			</div>
 		</LexicalComposer>
