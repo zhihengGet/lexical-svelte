@@ -25,6 +25,15 @@
 	}>();
 
 	const [settings, setSettings] = useState({ ...DEFAULT_SETTINGS, ...s });
+
+	$effect(() => {
+		// on prop change
+		if (s)
+			setSettings((v) => {
+				Object.assign(v, s);
+				return v;
+			});
+	});
 	if (!UserSetting) {
 		setContext(context, settings);
 	}
