@@ -69,14 +69,15 @@ export const DEFAULT_SETTINGS = {
 	tableCellMerge: true,
 	image: true,
 	dev: true,
+	editorCSS: '',
 	showToolbar: true,
 	onInput: (html: string) => {
 		console.log('on input', html);
 	},
-	initialHTML: null,
+	initialHTML: '',
 	allowedAttributesOnParagraph: [''],
 	config: {
-		query: undefined,
+		query: () => {},
 		editable: true,
 		editorState: JSON.stringify(
 			{
