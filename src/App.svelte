@@ -12,9 +12,12 @@
 
 	let { ...props } = $props<Settings>();
 	createHistoryContext();
+
+	/* 	const p = $state<Settings>({ isAutocomplete: true }); */
 </script>
 
-<SettingsContext settings={props}>
+<!-- <button onclick={() => (p.isAutocomplete = false)}>click</button> -->
+<SettingsContext settings={p}>
 	<SharedAutocompleteContext>
 		<LexicalComposer>
 			<div class="editor-shell w-full">

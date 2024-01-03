@@ -78,7 +78,7 @@ export const DEFAULT_SETTINGS = {
 	initialHTML: '',
 	allowedAttributesOnParagraph: [''],
 	config: {
-		query: null,
+		query: undefined,
 		editable: true,
 		editorState: JSON.stringify(
 			{
