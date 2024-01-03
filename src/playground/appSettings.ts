@@ -22,7 +22,8 @@ import { CustomParagraphNode } from '@nodes/CustomParagrahNode';
 import { ParagraphNode } from 'lexical';
 import PlaygroundNodes from './PlaygroundNodes';
 import { getContext, onDestroy, setContext } from 'svelte';
-import type { useQuery } from '@plugins/AutocompletePlugin';
+import type { SearchPromise, useQuery } from '@plugins/AutocompletePlugin';
+
 const hostName = window.location.hostname;
 export const isDevPlayground: boolean =
 	hostName !== 'playground.lexical.dev' && hostName !== 'lexical-playground.vercel.app';
@@ -37,7 +38,7 @@ export type InitialConfigType = Readonly<{
 	namespace: string;
 	nodes?: ReadonlyArray<Klass<LexicalNode> | LexicalNodeReplacement>;
 	onError: (error: Error, editor: LexicalEditor) => void;
-	query?: ReturnType<typeof useQuery>;
+	query?: ReturnType<typeof useQuery> | null;
 	editable?: boolean;
 	theme?: EditorThemeClasses;
 	editorState?: InitialEditorStateType;
@@ -77,7 +78,7 @@ export const DEFAULT_SETTINGS = {
 	initialHTML: '',
 	allowedAttributesOnParagraph: [''],
 	config: {
-		query: () => {},
+		query: null,
 		editable: true,
 		editorState: JSON.stringify(
 			{
@@ -135,7 +136,7 @@ export const DEFAULT_SETTINGS = {
 			throw error;
 		},
 		theme: PlaygroundEditorTheme
-	}
+	} as InitialConfigType
 };
 
 export type SettingName = keyof typeof DEFAULT_SETTINGS;
@@ -143,6 +144,7 @@ export type SettingName = keyof typeof DEFAULT_SETTINGS;
 export type Settings = Omit<typeof DEFAULT_SETTINGS, 'config'> & { config: InitialConfigType } & {
 	onInput: (s: string) => unknown;
 };
+
 const context = 'setting context';
 export const useSettings = () => {
 	return getContext(context) as () => Settings;

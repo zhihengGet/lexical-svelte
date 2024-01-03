@@ -9,7 +9,6 @@ import {
 } from 'lexical';
 export * from './AutocompleteNode';
 export * from './AutocompletePlugin.svelte';
-import { isAutocompleteNode } from '.';
 export type SearchPromise = {
 	dismiss: () => void;
 	promise: Promise<null | string[]>;

@@ -44,13 +44,13 @@ export function MaxByteDancePlugin({
 			/* 	const delCount = textContentSize - 2;
 			const delKbCount = prevKB - maxMB;
 			const anchor = selection.anchor; */
-			console.log(
+			/* console.log(
 				'text size',
 				textContentSize,
 				prevEditorState.toJSON().root.children[0].children[0],
 				prevKB,
 				nextKB
-			);
+			); */
 
 			// Restore the old editor state instead if the last
 			// text content was already at the limit.

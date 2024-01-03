@@ -188,7 +188,7 @@
 			setIsLinkEditMode(false);
 		}
 	};
-
+	/* 
 	$effect(() => {
 		return useClickOutside(editorRef.current, {
 			enabled: true,
@@ -197,7 +197,7 @@
 				///editorRef.current?.remove();
 			}
 		}).destroy;
-	});
+	}); */
 	//debugger;
 </script>
 
