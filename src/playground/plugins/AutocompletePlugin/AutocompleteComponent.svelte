@@ -58,7 +58,8 @@
 				const next = node.nextElementSibling || div.firstElementChild;
 				data.select = next?.textContent ?? '';
 				next?.classList.add(SELECTED_CLASSNAME);
-				checkInView(div, next, false) ? '' : next?.scrollIntoView();
+				next?.scrollIntoView();
+				//checkInView(div, next, false) ? '' : next?.scrollIntoView();
 				//next?.focus();
 				return true;
 			}
