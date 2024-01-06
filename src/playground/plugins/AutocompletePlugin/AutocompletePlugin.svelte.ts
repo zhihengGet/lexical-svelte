@@ -73,7 +73,7 @@ export default function AutocompletePlugin({
 				const props = getCaretTopPoint();
 				props.left += 10;
 				props.top += 16;
-				props.visibility = true;
+				props.visibility = 'visible';
 				suggestion_state.suggestions = words;
 				console.log('props', props);
 				el.$set(props);
