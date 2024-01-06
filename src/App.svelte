@@ -17,7 +17,7 @@
 </script>
 
 <!-- <button onclick={() => (p.isAutocomplete = false)}>click</button> -->
-<SettingsContext settings={p}>
+<SettingsContext settings={props}>
 	<SharedAutocompleteContext>
 		<LexicalComposer>
 			<div class="editor-shell w-full">
