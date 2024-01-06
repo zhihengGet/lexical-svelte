@@ -109,10 +109,10 @@
 	inert={true}
 	autofocus={false}
 >
-	{#if data.select}
+	<!-- 	{#if data.select}
 		{data.select}
-		{isMobile ? '(SWIPE \u2B95)' : '(TAB)'}
-	{/if}
+		'(TAB)'
+	{/if} -->
 	<div
 		class="absolute max-h-30 overflow-auto bottom-[-5] border-[1px] border-solid border-green left-0 z-5 w-100px max-w-120px rounded"
 		bind:this={div}
