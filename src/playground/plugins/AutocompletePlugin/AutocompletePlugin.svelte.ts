@@ -10,7 +10,7 @@ import {
 } from 'lexical';
 
 import type { UpdateListener } from 'lexical/LexicalEditor';
-import { createRoot, getAllContexts, onDestroy } from 'svelte';
+import { createRoot, getAllContexts, onDestroy, onMount } from 'svelte';
 import { ClickAutoComplete, search, type useQuery, type SearchPromise } from '.';
 import { useSharedAutocompleteContext } from '../../context/SharedAutocompleteContext.svelte';
 import { getCaretTopPoint } from '../../utils/careat';
@@ -47,9 +47,24 @@ export default function AutocompletePlugin({
 	const editorContext = getAllContexts();
 	const el = createRoot(AutocompleteComponent, {
 		target: document.body,
-		top: 0,
-		left: 0,
+		props: {
+			top: 0,
+			left: 0,
+			visibility: 'hidden'
+		},
 		context: editorContext
+	});
+	const resizePos = () => {
+		const props = getCaretTopPoint();
+		props.left += 10;
+		props.top += -2;
+		//props.visibility = 'visible';
+		el.$set(props);
+	};
+	// update pos on resize
+	onMount(() => {
+		window.addEventListener('resize', resizePos);
+		return () => window.removeEventListener('resize', resizePos);
 	});
 	async function handleUpdate(arg: Parameters<UpdateListener>[0]) {
 		console.log('calling handleUpdate', arg);
@@ -73,9 +88,9 @@ export default function AutocompletePlugin({
 				const props = getCaretTopPoint();
 				props.left += 10;
 				props.top += -2;
-				//props.visibility = 'visible';
+				props.visibility = 'visible';
 				suggestion_state.suggestions = words;
-				console.log('props', props);
+				//console.log('props', props);
 				suggestion_state.select = words[0];
 				el.$set(props);
 			}
