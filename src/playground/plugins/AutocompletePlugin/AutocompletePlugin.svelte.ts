@@ -72,7 +72,7 @@ export default function AutocompletePlugin({
 				suggestion_state.select = words[0];
 				const props = getCaretTopPoint();
 				props.left += 10;
-				props.top += 16;
+				props.top += -2;
 				props.visibility = 'visible';
 				suggestion_state.suggestions = words;
 				console.log('props', props);
