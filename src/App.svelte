@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '@unocss/reset/tailwind.css';
 	import './uno.css';
-	import 'uno.css';
+	//import 'uno.css';
 	import Editor from './Editor.svelte';
 	import './index.css';
 	import LexicalComposer from './lib/LexicalComposer.svelte';
@@ -13,20 +13,8 @@
 
 	let { ...props } = $props<Settings>();
 	createHistoryContext();
-
-	const p = $state<Settings>({
-		isAutocomplete: true,
-		showToolbar: true,
-		config: {
-			query: () => {
-				return { promise: ['12312', 3423] };
-			}
-		}
-	});
 </script>
 
-<!-- 
-<button onclick={() => (p.showToolbar = !p.showToolbar)}>click</button> -->
 <SettingsContext settings={props}>
 	<SharedAutocompleteContext>
 		<LexicalComposer>

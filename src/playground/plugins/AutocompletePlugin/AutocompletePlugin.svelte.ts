@@ -60,7 +60,7 @@ export default function AutocompletePlugin({
 		suggestion_state.suggestions = [];
 		editor.update(async () => {
 			const selection = getSelection()?.clone();
-			suggestion_state.select = '';
+
 			if (!selection) return;
 
 			const [hasMatch, match] = search(selection);
@@ -69,13 +69,14 @@ export default function AutocompletePlugin({
 				searchPromise = query(match);
 
 				const words = (await searchPromise.promise) || [];
-				suggestion_state.select = words[0];
+
 				const props = getCaretTopPoint();
 				props.left += 10;
 				props.top += -2;
-				props.visibility = 'visible';
+				//props.visibility = 'visible';
 				suggestion_state.suggestions = words;
 				console.log('props', props);
+				suggestion_state.select = words[0];
 				el.$set(props);
 			}
 		});

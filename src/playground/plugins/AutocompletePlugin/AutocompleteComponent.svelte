@@ -28,7 +28,23 @@
 		userAgentData !== undefined
 			? userAgentData.mobile
 			: window.innerWidth <= 800 && window.innerHeight <= 600;
+	function checkInView(container: HTMLElement, element: HTMLElement, partial: boolean) {
+		//Get container properties
+		let cTop = container.scrollTop;
+		let cBottom = cTop + container.clientHeight;
 
+		//Get element properties
+		let eTop = element.offsetTop;
+		let eBottom = eTop + element.clientHeight;
+
+		//Check if in view
+		let isTotal = eTop >= cTop && eBottom <= cBottom;
+		let isPartial =
+			partial && ((eTop < cTop && eBottom > cTop) || (eBottom > cBottom && eTop < cBottom));
+
+		//Return outcome
+		return isTotal || isPartial;
+	}
 	let div = $state<HTMLElement>();
 	const [editor] = useLexicalComposerContext();
 	const a = editor.registerCommand(
@@ -42,6 +58,7 @@
 				const next = node.nextElementSibling || div.firstElementChild;
 				data.select = next?.textContent ?? '';
 				next?.classList.add(SELECTED_CLASSNAME);
+				checkInView(div, next, false) ? '' : next?.scrollIntoView();
 				//next?.focus();
 				return true;
 			}
@@ -61,6 +78,7 @@
 				const prev = node.previousElementSibling || div.lastElementChild;
 				data.select = prev?.textContent ?? '';
 				prev?.classList.add(SELECTED_CLASSNAME);
+				prev?.scrollIntoView();
 				//prev?.focus();
 				return true;
 			}
@@ -111,10 +129,10 @@
 >
 	{#if data.select}
 		{data.select}
-		'(TAB)'
+		(TAB)
 	{/if}
 	<div
-		class=" max-h-30 overflow-auto bottom-[-5] border-[1px] border-solid border-green left-0 z-5000 w-100px max-w-120px rounded"
+		class="max-h-30 overflow-auto bottom-[-5] border-[1px] border-solid border-green left-0 z-5000 w-100px max-w-120px rounded"
 		bind:this={div}
 	>
 		{#each data.suggestions as item, key}
