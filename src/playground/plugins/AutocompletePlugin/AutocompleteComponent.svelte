@@ -54,7 +54,7 @@
 		(e, editor) => {
 			e.preventDefault();
 			const node = document.getElementsByClassName(SELECTED_CLASSNAME).item(0);
-			debugger;
+
 			if (node) {
 				node.classList.remove(SELECTED_CLASSNAME);
 
@@ -81,6 +81,7 @@
 	onDestroy(() => {
 		a();
 		b();
+		data.select = '';
 	});
 	let el = $state();
 
@@ -113,7 +114,7 @@
 		{isMobile ? '(SWIPE \u2B95)' : '(TAB)'}
 	{/if}
 	<div
-		class="absolute max-h-100 overflow-auto bottom-[-5] border-[1px] border-solid border-green left-0 z-5 w-100px max-w-120px rounded"
+		class="absolute max-h-30 overflow-auto bottom-[-5] border-[1px] border-solid border-green left-0 z-5 w-100px max-w-120px rounded"
 		bind:this={div}
 		style="top:{props.top}px;left:{props.left}px;visibility:{props.visibility}"
 	>

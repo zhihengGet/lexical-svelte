@@ -4,6 +4,7 @@ import {
 	COMMAND_PRIORITY_CRITICAL,
 	COMMAND_PRIORITY_LOW,
 	KEY_ARROW_RIGHT_COMMAND,
+	KEY_TAB_COMMAND,
 	$createTextNode as createTextNode,
 	$getSelection as getSelection
 } from 'lexical';
@@ -18,7 +19,21 @@ import AutocompleteComponent from './AutocompleteComponent.svelte';
 
 export default function AutocompletePlugin({
 	query = () => {
-		return { promise: new Promise((v) => v(['test', 'test1'])), dismiss: () => {} };
+		return {
+			promise: new Promise((v) =>
+				v([
+					'test',
+					'test1',
+					'12333333333333333333333333333',
+					'12333333333333333333333333333333',
+					'test',
+					'test1',
+					'12333333333333333333333333333',
+					'12333333333333333333333333333333'
+				])
+			),
+			dismiss: () => {}
+		};
 	}
 }: {
 	query?: ReturnType<typeof useQuery>;
@@ -40,19 +55,21 @@ export default function AutocompletePlugin({
 		console.log('calling handleUpdate', arg);
 		//if (arg.tags.has('autocomplete') || arg.tags.has('history-merge')) return;
 
-		searchPromise?.dismiss();
+		searchPromise?.dismiss?.();
 		searchPromise = null;
 		suggestion_state.suggestions = [];
 		editor.update(async () => {
 			const selection = getSelection()?.clone();
-
+			suggestion_state.select = '';
 			if (!selection) return;
+
 			const [hasMatch, match] = search(selection);
 
 			if (hasMatch) {
 				searchPromise = query(match);
 
 				const words = (await searchPromise.promise) || [];
+				suggestion_state.select = words[0];
 				const props = getCaretTopPoint();
 				props.left += 10;
 				props.top += 16;
@@ -96,7 +113,7 @@ export default function AutocompletePlugin({
 	const un = mergeRegister(
 		//	editor.registerNodeTransform(AutocompleteNode, handleAutocompleteNodeTransform),
 		editor.registerUpdateListener(handleUpdate),
-		//editor.registerCommand(KEY_TAB_COMMAND, handleKeypressCommand, COMMAND_PRIORITY_LOW),
+		editor.registerCommand(KEY_TAB_COMMAND, handleKeypressCommand, COMMAND_PRIORITY_LOW),
 		editor.registerCommand(ClickAutoComplete, handleAutocompleteIntent, COMMAND_PRIORITY_LOW),
 		editor.registerCommand(
 			KEY_ARROW_RIGHT_COMMAND,

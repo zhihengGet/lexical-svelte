@@ -1,7 +1,7 @@
 {
 	"name": "lexical-svelte-runes",
 	"private": false,
-	"version": "0.1.4-beta.9",
+	"version": "0.1.4-beta.14",
 	"type": "module",
 	"author": {
 		"name": "zhiheng"
@@ -57,11 +57,11 @@
 		"lucide-svelte": "^0.303.0",
 		"prettier": "^3.1.1",
 		"tailwind-merge": "^2.1.0",
-		"vite-plugin-dts": "^3.6.4",
 		"y-websocket": "^1.5.1",
 		"yjs": "^13.6.10"
 	},
 	"devDependencies": {
+		"vite-plugin-dts": "^3.6.4",
 		"@melt-ui/svelte": "^0.66.1",
 		"@sveltejs/kit": "1.16.3",
 		"@sveltejs/package": "latest",
