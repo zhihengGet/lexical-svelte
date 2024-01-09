@@ -20,7 +20,7 @@
 	import { flushSync, onDestroy, onMount } from 'svelte';
 	import { useClickOutside } from '../../utils/isClickOutside';
 
-	let { ...props } = $props();
+	let { ...props } = $props<{ visibility: 'hidden' | 'visible' }>();
 	console.log('auto node', JSON.stringify(props));
 	const data = useSharedAutocompleteContext();
 	const userAgentData = window.navigator.userAgentData;
@@ -52,7 +52,7 @@
 		(e, editor) => {
 			e.preventDefault();
 			const node = document.getElementsByClassName(SELECTED_CLASSNAME).item(0);
-			if (node) {
+			if (node && props.visibility != 'hidden') {
 				node.classList.remove(SELECTED_CLASSNAME);
 
 				const next = node.nextElementSibling || div.firstElementChild;
@@ -73,7 +73,7 @@
 			e.preventDefault();
 			const node = document.getElementsByClassName(SELECTED_CLASSNAME).item(0);
 
-			if (node) {
+			if (node && props.visibility != 'hidden') {
 				node.classList.remove(SELECTED_CLASSNAME);
 
 				const prev = node.previousElementSibling || div.lastElementChild;
@@ -87,14 +87,22 @@
 		},
 		COMMAND_PRIORITY_LOW
 	);
-	$effect(() => {
+	/* $effect(() => {
 		const re = document.addEventListener('keydown', (e) => {
 			if (e.keyCode == 27) {
+				e.preventDefault();
+				e.stopPropagation();
 				el.style.visibility = 'hidden';
+				debugger;
 			}
 		});
-
+		editor.focus();
 		//editor.update(editor.focus);
+	}); */
+	$effect(() => {
+		if (data.suggestions && div) {
+			div.scrollTop = 0;
+		}
 	});
 	//data.select = data.suggestions[0];
 	onDestroy(() => {

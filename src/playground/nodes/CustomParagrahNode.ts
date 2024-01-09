@@ -13,7 +13,12 @@ type SerializedCustomParagraphNode = SerializedParagraphNode & {
 };
 
 export class CustomParagraphNode extends ParagraphNode {
-	static allowedAttributes: string[] = ['data-chapter-id', 'data-id', 'data-test'];
+	static allowedAttributes: string[] = [
+		'data-chapter-id',
+		'data-id',
+		'data-test',
+		'data-chapter-comment-id'
+	];
 	attr: { [s in string]: string } = {};
 
 	static getType() {

@@ -28,10 +28,12 @@
 	import { useMemo } from 'react';
 	import { $generateHtmlFromNodes as generateHtmlFromNodes } from '@lexical/html';
 	import { useSettings, type InitialEditorStateType } from '../playground/appSettings';
+	import { CustomParagraphNode } from '@nodes/CustomParagrahNode';
 
 	let setting = useSettings();
 	const {
 		onInput,
+		allowedAttributesOnParagraph,
 		config: {
 			theme,
 			namespace,
@@ -44,6 +46,7 @@
 		},
 		initialHTML
 	} = setting();
+
 	useMemo(() => {
 		const context: LexicalComposerContextType = createLexicalComposerContext(null, theme);
 		let editor = initialEditor || null;

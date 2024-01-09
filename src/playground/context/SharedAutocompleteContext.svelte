@@ -13,7 +13,7 @@
 	class autocomplete {
 		suggestions = $state<string[]>([]);
 		select = $state<string | null>('');
-
+		search: string = $state('');
 		updateChoose(n: string) {
 			this.select = n;
 		}

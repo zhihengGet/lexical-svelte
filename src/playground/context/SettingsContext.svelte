@@ -7,6 +7,7 @@
 	import { setContext, type Snippet } from 'svelte';
 	import { DEFAULT_SETTINGS, useSettings, type Settings } from '../appSettings';
 	import { merge } from 'lodash-es';
+	import { CustomParagraphNode } from '@nodes/CustomParagrahNode';
 	let context = 'setting context';
 </script>
 
@@ -30,6 +31,8 @@
 	$effect(() => {
 		// on prop change
 		if (s) {
+			CustomParagraphNode.allowedAttributes =
+				s.allowedAttributesOnParagraph ?? CustomParagraphNode.allowedAttributes;
 			console.log('lexical:updating props', s);
 			setSettings((v) => {
 				return merge(v, s);
