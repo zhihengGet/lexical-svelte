@@ -52,7 +52,7 @@
 		(e, editor) => {
 			e.preventDefault();
 			const node = document.getElementsByClassName(SELECTED_CLASSNAME).item(0);
-			if (node && props.visibility != 'hidden') {
+			if (node && props.visibility != 'hidden' && div) {
 				node.classList.remove(SELECTED_CLASSNAME);
 
 				const next = node.nextElementSibling || div.firstElementChild;
@@ -72,8 +72,7 @@
 		(e, editor) => {
 			e.preventDefault();
 			const node = document.getElementsByClassName(SELECTED_CLASSNAME).item(0);
-
-			if (node && props.visibility != 'hidden') {
+			if (node && props.visibility != 'hidden' && div) {
 				node.classList.remove(SELECTED_CLASSNAME);
 
 				const prev = node.previousElementSibling || div.lastElementChild;
@@ -87,18 +86,6 @@
 		},
 		COMMAND_PRIORITY_LOW
 	);
-	/* $effect(() => {
-		const re = document.addEventListener('keydown', (e) => {
-			if (e.keyCode == 27) {
-				e.preventDefault();
-				e.stopPropagation();
-				el.style.visibility = 'hidden';
-				debugger;
-			}
-		});
-		editor.focus();
-		//editor.update(editor.focus);
-	}); */
 	$effect(() => {
 		if (data.suggestions && div) {
 			div.scrollTop = 0;

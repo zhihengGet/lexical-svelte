@@ -60,10 +60,7 @@
 		(option: string) => {
 			editor.update(() => {
 				const selection = lexical.$getSelection();
-				if (
-					lexical.$isRangeSelection(selection) ||
-					lexical.DEPRECATED_$isGridSelection(selection)
-				) {
+				if (lexical.$INTERNAL_isPointSelection(selection)) {
 					Selection.$patchStyleText(selection, {
 						[style]: option
 					});

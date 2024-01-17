@@ -45,7 +45,7 @@
 	const formatParagraph = () => {
 		editor.update(() => {
 			const selection = lexical.$getSelection();
-			if (lexical.$isRangeSelection(selection) || lexical.DEPRECATED_$isGridSelection(selection)) {
+			if (lexical.$INTERNAL_isPointSelection(selection)) {
 				Selection.$setBlocksType(selection, () => lexical.$createParagraphNode());
 			}
 		});
@@ -55,10 +55,7 @@
 		if (blockType !== headingSize) {
 			editor.update(() => {
 				const selection = lexical.$getSelection();
-				if (
-					lexical.$isRangeSelection(selection) ||
-					lexical.DEPRECATED_$isGridSelection(selection)
-				) {
+				if (lexical.$INTERNAL_isPointSelection(selection)) {
 					Selection.$setBlocksType(selection, () => RichText.$createHeadingNode(headingSize));
 				}
 			});
@@ -94,10 +91,7 @@
 		if (blockType !== 'quote') {
 			editor.update(() => {
 				const selection = lexical.$getSelection();
-				if (
-					lexical.$isRangeSelection(selection) ||
-					lexical.DEPRECATED_$isGridSelection(selection)
-				) {
+				if (lexical.$INTERNAL_isPointSelection(selection)) {
 					Selection.$setBlocksType(selection, () => RichText.$createQuoteNode());
 				}
 			});
@@ -109,10 +103,7 @@
 			editor.update(() => {
 				let selection = lexical.$getSelection();
 
-				if (
-					lexical.$isRangeSelection(selection) ||
-					lexical.DEPRECATED_$isGridSelection(selection)
-				) {
+				if (lexical.$INTERNAL_isPointSelection(selection)) {
 					if (selection.isCollapsed()) {
 						Selection.$setBlocksType(selection, () => Code.$createCodeNode());
 					} else {

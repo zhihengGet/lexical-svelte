@@ -56,7 +56,7 @@ export class CustomParagraphNode extends ParagraphNode {
 		}
 		return att;
 	}
-	static importJSON(serializedNode: SerializedCustomParagraphNode): ParagraphNode {
+	static importJSON(serializedNode: SerializedCustomParagraphNode) {
 		const node = super.importJSON(serializedNode);
 		node.attr = serializedNode.attr;
 		return node;
