@@ -38,6 +38,7 @@
 	import TableOfContentsPlugin from '@plugins/TableOfContentsPlugin/TableOfContentsPlugin.svelte';
 	import MeltTree from '@plugins/TableOfContentsPlugin/MeltTree.svelte';
 	import { UNDO_COMMAND } from 'lexical';
+	import DraggableBlock from '@plugins/DraggableBlockPlugin/DraggableBlock.svelte';
 	const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
 	const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
 	const isEditable = true;
@@ -167,6 +168,11 @@
 				anchorElem={el}
 				isLinkEditMode={isLinkEditMode()}
 				{setIsLinkEditMode}
+			/>
+			<Portal
+				component={DraggableBlock}
+				target={el}
+				props={{ editor: editor, isEditable: editor._editable, anchorElem: el }}
 			/>
 			<FloatingTextFormatToolbarPlugin anchorElem={el} />
 		{/if}
