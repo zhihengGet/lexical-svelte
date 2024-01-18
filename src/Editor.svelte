@@ -146,14 +146,14 @@
 					})}
 			/>
 		{/if}
-		<!-- 	{#if isAutocomplete}
+		{#if isAutocomplete}
 			<Portal
 				initializor={() =>
 					AutocompletePlugin({
 						query: query
 					})}
 			/>
-		{/if} -->
+		{/if}
 		{#if isCharLimit || isCharLimitUtf8}
 			<LexicalCharacterLimitPlugin charset="UTF-8" {maxLength} />
 		{/if}

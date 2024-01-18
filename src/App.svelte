@@ -1,5 +1,5 @@
 <script lang="ts">
-	/* import '@unocss/reset/tailwind.css'; */
+	import '@unocss/reset/tailwind.css';
 	import './uno.css';
 	import 'uno.css';
 	import Editor from './Editor.svelte';
