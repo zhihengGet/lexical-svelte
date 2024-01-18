@@ -123,10 +123,12 @@
 	autofocus={false}
 	style="top:{props.top}px;left:{props.left}px;visibility:{props.visibility};"
 >
-	{#if data.select}
-		{data.select}
-		(TAB)
-	{/if}
+	<span class="pointer-events-none select-none">
+		{#if data.select}
+			{data.select}
+			(TAB)
+		{/if}
+	</span>
 	<div
 		class="max-h-30 overflow-auto bottom-[-5] border-[1px] border-solid border-green left-0 z-5000 w-100px max-w-120px rounded"
 		bind:this={div}
