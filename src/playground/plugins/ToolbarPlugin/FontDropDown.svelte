@@ -60,7 +60,7 @@
 		(option: string) => {
 			editor.update(() => {
 				const selection = lexical.$getSelection();
-				if (lexical.$INTERNAL_isPointSelection(selection)) {
+				if (selection) {
 					Selection.$patchStyleText(selection, {
 						[style]: option
 					});

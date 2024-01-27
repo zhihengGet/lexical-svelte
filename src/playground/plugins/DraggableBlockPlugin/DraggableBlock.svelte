@@ -244,7 +244,7 @@
 			const target = event.target;
 
 			if (!isHTMLElement(target)) {
-				console.log('drag:draggable block element', null);
+				//console.log('drag:draggable block element', null);
 				setDraggableBlockElem(null);
 				return;
 			}
@@ -254,7 +254,7 @@
 			}
 
 			const _draggableBlockElem = getBlockElement(anchorElem, editor, event);
-			console.log('drag:draggable block element', _draggableBlockElem);
+			//console.log('drag:draggable block element', _draggableBlockElem);
 			if (!_draggableBlockElem) {
 				console.warn('empty');
 			}

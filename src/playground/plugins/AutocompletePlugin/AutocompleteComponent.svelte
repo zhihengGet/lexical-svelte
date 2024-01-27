@@ -130,10 +130,10 @@
 	autofocus={false}
 	style="top:{props.top}px;left:{props.left}px;visibility:{props.visibility};"
 >
-	<span class="pointer-events-none select-none">
+	<span class="pointer-events-none select-none" class:invisible={props.isEnd == false}>
 		{#if data.select}
 			{data.select}
-			(TAB)
+			(TAB) {props.isEnd}
 		{/if}
 	</span>
 	<div

@@ -34,19 +34,14 @@ export function search(selection: null | BaseSelection): [boolean, string] {
 	let node = selection.getNodes()[0];
 	const prev = node.getPreviousSibling();
 	const anchor = selection.anchor;
-	let end = selection.focus.offset; // handle partial autocomplete "World| world", focus is bewtween two string
+	let end = selection.focus.offset; // handle partial autocomplete "World| world", focus is between two string
 	let text = '';
-	console.log(
-		'selection test',
-		selection,
-		node.getTextContent(),
-		node.getTextContentSize(),
-		node,
-		selection.getNodes(),
-		$getSelection()?.getTextContent().length,
-		prev,
-		prev?.getPreviousSibling()
-	);
+	console.log('selection test', selection, prev, prev?.getPreviousSibling());
+	console.log('autocomplete selection', selection);
+	console.log('autocomplete selection getTextContent', selection.getTextContent());
+	console.log('autocomplete selection getTextContentSize', selection.getTextContent().length);
+	console.log('autocomplt selection Nodes', selection.getNodes());
+	console.log('autocomplete selection prev sibling', prev);
 	//option 1: clear autocomplete node before search
 	/* 
 	if (node.__text?.length == 1 && prev) {
@@ -77,9 +72,10 @@ export function search(selection: null | BaseSelection): [boolean, string] {
 		return [false, ''];
 	}
 	let match = text.substring(0, end).split(' ').at(-1);
+	let isEnd = text.endsWith(match);
 	console.log('selection ->', match);
 	if (!match) return [false, ''];
-	return [true, match];
+	return [true, match, isEnd];
 	let i = node.getTextContentSize();
 	let c;
 	while (i-- && i >= 0 && (c = text[i]) !== ' ') {

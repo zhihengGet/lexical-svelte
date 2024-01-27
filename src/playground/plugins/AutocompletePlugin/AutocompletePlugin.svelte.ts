@@ -79,7 +79,7 @@ export default function AutocompletePlugin({
 			suggestion_state.select = '';
 			if (!selection) return;
 
-			const [hasMatch, match] = search(selection);
+			const [hasMatch, match, isEnd] = search(selection);
 			suggestion_state.search = match;
 			if (hasMatch) {
 				searchPromise = query(match);
@@ -91,6 +91,7 @@ export default function AutocompletePlugin({
 				props.left += 10;
 				props.top += -2;
 				props.visibility = 'visible';
+				props.isEnd = isEnd;
 				suggestion_state.suggestions = words;
 				//console.log('props', props);
 				suggestion_state.select = words[0];
@@ -148,11 +149,7 @@ export default function AutocompletePlugin({
 			COMMAND_PRIORITY_LOW
 		),
 		editor.registerCommand(ClickAutoComplete, handleAutocompleteIntent, COMMAND_PRIORITY_LOW),
-		editor.registerCommand(
-			KEY_ARROW_RIGHT_COMMAND,
-			handleKeypressCommand,
-			COMMAND_PRIORITY_CRITICAL
-		),
+		/* editor.registerCommand(KEY_ARROW_RIGHT_COMMAND, handleKeypressCommand, COMMAND_PRIORITY_LOW), */
 		//editor.registerCommand(KEY_ENTER_COMMAND, handleKeypressCommand, COMMAND_PRIORITY_LOW),
 
 		...(rootElem !== null ? [addSwipeRightListener(rootElem, handleSwipeRight)] : []),
