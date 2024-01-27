@@ -22,19 +22,19 @@ export const uuid = Math.random()
 export const SELECTED_CLASSNAME = 'auto_selected';
 
 // TODO lookup should be custom
-export function search(selection: null | BaseSelection): [boolean, string] {
+export function search(selection: null | BaseSelection): [boolean, string, boolean] {
 	console.log(
 		'selection search 1',
 		selection?.getTextContent(),
 		!isRangeSelection(selection) || !selection.isCollapsed()
 	);
 	if (!isRangeSelection(selection) || !selection.isCollapsed()) {
-		return [false, ''];
+		return [false, '', false];
 	}
-	let node = selection.getNodes()[0];
+	const node = selection.getNodes()[0];
 	const prev = node.getPreviousSibling();
 	const anchor = selection.anchor;
-	let end = selection.focus.offset; // handle partial autocomplete "World| world", focus is between two string
+	const end = selection.focus.offset; // handle partial autocomplete "World| world", focus is between two string
 	let text = '';
 	console.log('selection test', selection, prev, prev?.getPreviousSibling());
 	console.log('autocomplete selection', selection);
@@ -62,20 +62,20 @@ export function search(selection: null | BaseSelection): [boolean, string] {
 	// Check siblings?
 	if (!isTextNode(node) || !node.isSimpleText()) {
 		console.log('calling search 2', selection, !isTextNode(node), !isAtNodeEnd(anchor));
-		return [false, ''];
+		return [false, '', false];
 	}
 
 	const word = [];
 	text += node.getTextContent();
 
 	if (!text || text.length == 0) {
-		return [false, ''];
+		return [false, '', false];
 	}
 	selection.getStartEndPoints;
-	let match = text.substring(0, end).split(' ').at(-1);
-	let isEnd = text.endsWith(match) && end == text.length;
+	const match = text.substring(0, end).split(' ').at(-1);
+	const isEnd = text.endsWith(match ?? '^^^//') && end == text.length;
 	console.log('selection ->', match);
-	if (!match) return [false, ''];
+	if (!match) return [false, '', false];
 	return [true, match, isEnd];
 	let i = node.getTextContentSize();
 	let c;
