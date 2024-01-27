@@ -136,7 +136,7 @@
 	<span class="pointer-events-none select-none" class:invisible={props.isEnd == false}>
 		{#if data.select}
 			{data.select}
-			(TAB) {props.isEnd}
+			(TAB)
 		{/if}
 	</span>
 	<div
