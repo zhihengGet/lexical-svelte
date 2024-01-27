@@ -55,9 +55,10 @@
 	const a = editor.registerCommand(
 		KEY_ARROW_DOWN_COMMAND,
 		(e, editor) => {
-			e.preventDefault();
 			const node = document.getElementsByClassName(SELECTED_CLASSNAME).item(0);
 			if (node && props.visibility != 'hidden' && div) {
+				e.preventDefault();
+
 				node.classList.remove(SELECTED_CLASSNAME);
 
 				const next = node.nextElementSibling || div.firstElementChild;
@@ -66,6 +67,7 @@
 				next?.scrollIntoView();
 				//checkInView(div, next, false) ? '' : next?.scrollIntoView();
 				//next?.focus();
+				console.log('still handled ?');
 				return true;
 			}
 			return false;
@@ -75,9 +77,9 @@
 	const b = editor.registerCommand(
 		KEY_ARROW_UP_COMMAND,
 		(e, editor) => {
-			e.preventDefault();
 			const node = document.getElementsByClassName(SELECTED_CLASSNAME).item(0);
 			if (node && props.visibility != 'hidden' && div) {
+				e.preventDefault();
 				node.classList.remove(SELECTED_CLASSNAME);
 
 				const prev = node.previousElementSibling || div.lastElementChild;

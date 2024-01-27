@@ -40,6 +40,8 @@ export function search(selection: null | BaseSelection): [boolean, string, boole
 	console.log('autocomplete selection', selection);
 	console.log('autocomplete selection getTextContent', selection.getTextContent());
 	console.log('autocomplete selection getTextContentSize', selection.getTextContent().length);
+	console.log('autocomplete selection node text', node.getTextContent());
+	console.log('autocomplete selection node text', node.getTextContentSize());
 	console.log('autocomplt selection Nodes', selection.getNodes());
 	console.log('autocomplete selection prev sibling', prev);
 	//option 1: clear autocomplete node before search

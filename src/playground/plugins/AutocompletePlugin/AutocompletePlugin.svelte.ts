@@ -133,13 +133,17 @@ export default function AutocompletePlugin({
 			//clearSuggestion();
 		});
 	}
-
+	function onEsc() {
+		el.$set({ visibility: 'hidden' });
+		return false;
+	}
 	const rootElem = editor.getRootElement();
 	//const waitFn = debounce(handleUpdate, 500);
 	const un = mergeRegister(
 		//	editor.registerNodeTransform(AutocompleteNode, handleAutocompleteNodeTransform),
 		editor.registerUpdateListener(handleUpdate),
 		editor.registerCommand(KEY_TAB_COMMAND, handleKeypressCommand, COMMAND_PRIORITY_LOW),
+		editor.registerCommand(KEY_ESCAPE_COMMAND, onEsc, COMMAND_PRIORITY_LOW),
 		editor.registerCommand(
 			KEY_ESCAPE_COMMAND,
 			() => {
