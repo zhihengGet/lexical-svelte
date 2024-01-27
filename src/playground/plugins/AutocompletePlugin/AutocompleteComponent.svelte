@@ -24,6 +24,7 @@
 		visibility: 'hidden' | 'visible';
 		top: number;
 		nodeKey: any;
+		isEnd: boolean; // is selection between two words?
 		left: number;
 	}>();
 	console.log('auto node', JSON.stringify(props));

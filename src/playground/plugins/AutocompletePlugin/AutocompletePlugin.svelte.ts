@@ -90,7 +90,9 @@ export default function AutocompletePlugin({
 				const props = getCaretTopPoint();
 				props.left += 10;
 				props.top += -2;
+				//@ts-expect-error ts happy
 				props.visibility = 'visible';
+				//@ts-expect-error ts happy
 				props.isEnd = isEnd;
 				suggestion_state.suggestions = words;
 				//console.log('props', props);
