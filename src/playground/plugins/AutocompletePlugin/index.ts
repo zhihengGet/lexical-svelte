@@ -71,8 +71,9 @@ export function search(selection: null | BaseSelection): [boolean, string] {
 	if (!text || text.length == 0) {
 		return [false, ''];
 	}
+	selection.getStartEndPoints;
 	let match = text.substring(0, end).split(' ').at(-1);
-	let isEnd = text.endsWith(match);
+	let isEnd = text.endsWith(match) && end == text.length;
 	console.log('selection ->', match);
 	if (!match) return [false, ''];
 	return [true, match, isEnd];
