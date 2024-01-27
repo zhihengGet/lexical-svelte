@@ -1,7 +1,7 @@
 {
 	"name": "lexical-svelte-runes",
 	"private": false,
-	"version": "0.1.4-beta.25",
+	"version": "0.1.4-beta.26",
 	"type": "module",
 	"author": {
 		"name": "zhiheng"
@@ -29,7 +29,7 @@
 		"dist"
 	],
 	"peerDDependencies": {
-		"svelte": "^5.0.0-next.29"
+		"svelte": "^5.0.0-next.39"
 	},
 	"dependencies": {
 		"@lexical/clipboard": "0.13.1",
