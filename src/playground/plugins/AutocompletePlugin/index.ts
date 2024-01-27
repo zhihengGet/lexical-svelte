@@ -33,6 +33,7 @@ export function search(selection: null | BaseSelection): [boolean, string, boole
 	}
 	const node = selection.getNodes()[0];
 	const prev = node.getPreviousSibling();
+	const next = node.getNextSibling();
 	const anchor = selection.anchor;
 	const end = selection.focus.offset; // handle partial autocomplete "World| world", focus is between two string
 	let text = '';
@@ -75,7 +76,7 @@ export function search(selection: null | BaseSelection): [boolean, string, boole
 	}
 	selection.getStartEndPoints;
 	const match = text.substring(0, end).split(' ').at(-1);
-	const isEnd = text.endsWith(match ?? '^^^//') && end == text.length;
+	const isEnd = text.endsWith(match ?? '^^^//') && end == text.length && !next;
 	console.log('selection ->', match);
 	if (!match) return [false, '', false];
 	return [true, match, isEnd];
