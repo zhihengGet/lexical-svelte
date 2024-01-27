@@ -20,7 +20,12 @@
 	import { flushSync, onDestroy, onMount } from 'svelte';
 	import { useClickOutside } from '../../utils/isClickOutside';
 
-	let { ...props } = $props<{ visibility: 'hidden' | 'visible' }>();
+	let { ...props } = $props<{
+		visibility: 'hidden' | 'visible';
+		top: number;
+		nodeKey: any;
+		left: number;
+	}>();
 	console.log('auto node', JSON.stringify(props));
 	const data = useSharedAutocompleteContext();
 	const userAgentData = window.navigator.userAgentData;
@@ -115,7 +120,9 @@
 </script>
 
 <span
-	class="text-[#ccc] absolute inline-block z-500 {data.select ? ' w-fit ' : 'w-0px'}"
+	class="text-[#ccc] absolute inline-block z-1 bg-blend-color-burn {data.select
+		? ' w-fit '
+		: 'w-0px'}"
 	spellcheck="false"
 	data-id="autocomplete-{props.nodeKey}"
 	bind:this={el}
