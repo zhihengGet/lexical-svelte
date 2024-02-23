@@ -6,64 +6,60 @@
  *
  */
 
-import type { EditorThemeClasses, LexicalEditor } from "lexical";
+import type { EditorThemeClasses, LexicalEditor } from 'lexical';
 
-import invariant from "shared/invariant";
-import { getContext, setContext } from "svelte";
+import invariant from 'shared/invariant';
+import { getContext, setContext } from 'svelte';
 
 export type LexicalComposerContextType = {
-  getTheme: () => EditorThemeClasses | null | undefined;
+	getTheme: () => EditorThemeClasses | null | undefined;
 };
 
-export type LexicalComposerContextWithEditor = [
-  LexicalEditor,
-  LexicalComposerContextType
-];
-const KEY = "svelte-composer";
+export type LexicalComposerContextWithEditor = [LexicalEditor, LexicalComposerContextType];
+const KEY = 'svelte-composer';
 export const setLexicalComposerContext = (
-  LexicalComposerContextWithEditor: LexicalComposerContextWithEditor
+	LexicalComposerContextWithEditor: LexicalComposerContextWithEditor
 ) => {
-  setContext<LexicalComposerContextWithEditor | null | undefined>(
-    KEY,
-    LexicalComposerContextWithEditor
-  );
+	setContext<LexicalComposerContextWithEditor | null | undefined>(
+		KEY,
+		LexicalComposerContextWithEditor
+	);
 };
 
-export const getLexicalComposerContext = () =>
-  getContext(KEY) as LexicalComposerContextWithEditor;
+export const getLexicalComposerContext = () => getContext(KEY) as LexicalComposerContextWithEditor;
 
 export function createLexicalComposerContext(
-  parent: LexicalComposerContextWithEditor | null | undefined,
-  theme: EditorThemeClasses | null | undefined
+	parent: LexicalComposerContextWithEditor | null | undefined,
+	theme: EditorThemeClasses | null | undefined
 ): LexicalComposerContextType {
-  let parentContext: LexicalComposerContextType | null = null;
+	let parentContext: LexicalComposerContextType | null = null;
 
-  if (parent != null) {
-    parentContext = parent[1];
-  }
+	if (parent != null) {
+		parentContext = parent[1];
+	}
 
-  function getTheme() {
-    if (theme != null) {
-      return theme;
-    }
+	function getTheme() {
+		if (theme != null) {
+			return theme;
+		}
 
-    return parentContext != null ? parentContext.getTheme() : null;
-  }
+		return parentContext != null ? parentContext.getTheme() : null;
+	}
 
-  return {
-    getTheme,
-  };
+	return {
+		getTheme
+	};
 }
 
 export function useLexicalComposerContext(): LexicalComposerContextWithEditor {
-  const composerContext = getLexicalComposerContext();
+	const composerContext = getLexicalComposerContext();
 
-  if (composerContext == null) {
-    invariant(
-      false,
-      "LexicalComposerContext.useLexicalComposerContext: cannot find a LexicalComposerContext"
-    );
-  }
+	if (composerContext == null) {
+		invariant(
+			false,
+			'LexicalComposerContext.useLexicalComposerContext: cannot find a LexicalComposerContext'
+		);
+	}
 
-  return composerContext;
+	return composerContext;
 }

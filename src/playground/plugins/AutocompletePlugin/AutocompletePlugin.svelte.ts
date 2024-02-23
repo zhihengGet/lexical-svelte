@@ -11,12 +11,21 @@ import {
 } from 'lexical';
 
 import type { UpdateListener } from 'lexical/LexicalEditor';
-import { createRoot, getAllContexts, onDestroy, onMount } from 'svelte';
+import {
+	createRoot,
+	getAllContexts,
+	mount,
+	onDestroy,
+	onMount,
+	type ComponentType,
+	type ComponentProps
+} from 'svelte';
 import { ClickAutoComplete, search, type useQuery, type SearchPromise } from '.';
 import { useSharedAutocompleteContext } from '../../context/SharedAutocompleteContext.svelte';
 import { getCaretTopPoint } from '../../utils/careat';
 import { addSwipeRightListener } from '../../utils/swipe';
 import AutocompleteComponent from './AutocompleteComponent.svelte';
+import { merge } from 'lodash-es';
 
 export default function AutocompletePlugin({
 	query = () => {
@@ -46,21 +55,27 @@ export default function AutocompletePlugin({
 	//let lastSuggestion: null | string = null;
 	let searchPromise: null | SearchPromise = null;
 	const editorContext = getAllContexts();
-	const el = createRoot(AutocompleteComponent, {
+	const el_states = $state({
+		top: 0,
+		left: 0,
+		visibility: 'hidden'
+	});
+	const el = mount(AutocompleteComponent, {
 		target: document.body,
-		props: {
-			top: 0,
-			left: 0,
-			visibility: 'hidden'
-		},
+		props: el_states,
 		context: editorContext
 	});
+	function setElState(s: Partial<ComponentProps<AutocompleteComponent>>) {
+		el_states.left = s.left ?? el_states.left;
+		el_states.top = s.top ?? el_states.top;
+		el_states.visibility = s.visibility ?? el_states.visibility;
+	}
 	const resizePos = () => {
 		const props = getCaretTopPoint();
 		props.left += 10;
 		props.top += -2;
 		//props.visibility = 'visible';
-		el.$set(props);
+		setElState(props);
 	};
 	// update pos on resize
 	onMount(() => {
@@ -97,7 +112,7 @@ export default function AutocompletePlugin({
 				suggestion_state.suggestions = words;
 				//console.log('props', props);
 				suggestion_state.select = words[0];
-				el.$set(props);
+				setElState(props);
 			}
 		});
 	}

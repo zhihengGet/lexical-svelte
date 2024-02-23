@@ -46,23 +46,22 @@
 		initialHTML
 	} = setting();
 
-	useMemo(() => {
-		const context: LexicalComposerContextType = createLexicalComposerContext(null, theme);
-		let editor = initialEditor || null;
-		if (editor === null) {
-			const newEditor = createEditor({
-				editable: editable,
-				html,
-				namespace,
-				nodes,
-				onError: (error) => onError(error, newEditor),
-				theme
-			});
+	const context: LexicalComposerContextType = createLexicalComposerContext(null, theme);
+	let editor = initialEditor || null;
+	if (editor === null) {
+		const newEditor = createEditor({
+			editable: editable,
+			html,
+			namespace,
+			nodes,
+			onError: (error) => onError(error, newEditor),
+			theme
+		});
 
-			//initializeEditor(newEditor, initialEditorState);
+		//initializeEditor(newEditor, initialEditorState);
 
-			editor = newEditor;
-			/* editor.update(() => {
+		editor = newEditor;
+		/* editor.update(() => {
 				const root = getRoot();
 				if (root.isEmpty()) {
 					const paragraph = lex.$createParagraphNode();
@@ -76,42 +75,39 @@
 					}
 				}
 			}, HISTORY_MERGE_OPTIONS); */
-			editor.update(() => {
-				// In the browser you can use the native DOMParser API to parse the HTML string.
-				const parser = new DOMParser();
-				const dom = parser.parseFromString(initialHTML ?? '<p data-id="213">hi</p>', 'text/html');
+		editor.update(() => {
+			// In the browser you can use the native DOMParser API to parse the HTML string.
+			const parser = new DOMParser();
+			const dom = parser.parseFromString(initialHTML ?? '<p data-id="213">hi</p>', 'text/html');
 
-				// Once you have the DOM instance it's easy to generate LexicalNodes.
-				const nodes = generateNodesFromDOM(editor, dom);
+			// Once you have the DOM instance it's easy to generate LexicalNodes.
+			const nodes = generateNodesFromDOM(editor, dom);
 
-				// Select the root
-				lex.$getRoot().select();
-				// Insert them at a selection.
-				lex.$insertNodes(nodes);
+			// Select the root
+			lex.$getRoot().select();
+			// Insert them at a selection.
+			lex.$insertNodes(nodes);
 
-				// Insert them at a selection.
-			}, HISTORY_MERGE_OPTIONS);
-			editor.registerUpdateListener(({ editorState }) => {
-				// In the browser you can use the native DOMParser API to parse the HTML string.
-				// The latest EditorState can be found as `editorState`.
-				// To read the contents of the EditorState, use the following API:
+			// Insert them at a selection.
+		}, HISTORY_MERGE_OPTIONS);
+		editor.registerUpdateListener(({ editorState }) => {
+			// In the browser you can use the native DOMParser API to parse the HTML string.
+			// The latest EditorState can be found as `editorState`.
+			// To read the contents of the EditorState, use the following API:
 
-				editorState.read(() => {
-					// Just like editor.update(), .read() expects a closure where you can use
-					// the $ prefixed helper functions.
-					if (editor) {
-						const htmlString = generateHtmlFromNodes(editor);
-						onInput(htmlString);
-						//console.log('export html', htmlString);
-					}
-					console.table('JSON', editorState.toJSON().root.children);
-				});
+			editorState.read(() => {
+				// Just like editor.update(), .read() expects a closure where you can use
+				// the $ prefixed helper functions.
+				if (editor) {
+					const htmlString = generateHtmlFromNodes(editor);
+					onInput(htmlString);
+					//console.log('export html', htmlString);
+				}
+				//console.table('JSON', editorState.toJSON().root.children);
 			});
-		}
-		setLexicalComposerContext([editor, context]);
-		//    editor?.setEditable(true);
-		return [editor, context];
-	}, []);
+		});
+	}
+	setLexicalComposerContext([editor, context]);
 
 	function initializeEditor(
 		editor: LexicalEditor,

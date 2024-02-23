@@ -140,7 +140,7 @@
 		{/if}
 	</span>
 	<div
-		class="max-h-30 overflow-auto bottom-[-5] border-[1px] border-solid border-green left-0 z-5000 w-100px max-w-120px rounded"
+		class="max-h-30 overflow-auto bottom-[-5] border-[1px] border-solid border-green left-0 z-5000 w-100px max-w-120px rounded bg-neutral-100"
 		bind:this={div}
 	>
 		{#each data.suggestions as item, key}
