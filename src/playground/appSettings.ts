@@ -55,6 +55,7 @@ export const DEFAULT_SETTINGS = {
 	isBlockFormatDropdown: true,
 	isFont: true,
 	isCollab: false,
+	isDraggable: true,
 	isMaxLength: true,
 	maxSizeMB: 5,
 	maxLength: 10000,

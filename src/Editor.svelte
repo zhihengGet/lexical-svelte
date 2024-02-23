@@ -61,6 +61,7 @@
 		showTableOfContents,
 		showToolbar,
 		maxLength,
+		isDraggable,
 		image,
 		onSizeLimit,
 		config: { query }
@@ -169,11 +170,13 @@
 				isLinkEditMode={isLinkEditMode()}
 				{setIsLinkEditMode}
 			/>
-			<Portal
-				component={DraggableBlock}
-				target={el}
-				props={{ editor: editor, isEditable: editor._editable, anchorElem: el }}
-			/>
+			{#if isDraggable}
+				<Portal
+					component={DraggableBlock}
+					target={el}
+					props={{ editor: editor, isEditable: editor._editable, anchorElem: el }}
+				/>
+			{/if}
 			<FloatingTextFormatToolbarPlugin anchorElem={el} />
 		{/if}
 	{:else}

@@ -18,7 +18,8 @@ import {
 	onDestroy,
 	onMount,
 	type ComponentType,
-	type ComponentProps
+	type ComponentProps,
+	unmount
 } from 'svelte';
 import { ClickAutoComplete, search, type useQuery, type SearchPromise } from '.';
 import { useSharedAutocompleteContext } from '../../context/SharedAutocompleteContext.svelte';
@@ -179,7 +180,7 @@ export default function AutocompletePlugin({
 	onDestroy(() => {
 		console.log('plugin destroyed');
 		un();
-		el.$destroy();
+		unmount(el);
 	});
 	return un;
 }
