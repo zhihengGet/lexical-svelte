@@ -30,7 +30,7 @@
 		stopCloseOnClickSelf?: boolean;
 	}>();
 
-	const dropDownRef = useRef<HTMLDivElement>(null);
+	let dropDownRef = useRef<HTMLDivElement>(null);
 	const buttonRef = useRef<HTMLButtonElement>(null);
 	const [showDropDown, setShowDropDown] = useState(false);
 
@@ -115,7 +115,7 @@
 </button>
 
 {#if showDropDown()}
-	<DropDownItems {dropDownRef} onClose={handleClose}>
+	<DropDownItems bind:dropDownRef onClose={handleClose}>
 		<slot />
 	</DropDownItems>
 {/if}
