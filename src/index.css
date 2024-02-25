@@ -1535,7 +1535,7 @@ button.toolbar-item.active i {
 
 .toolbar i.chevron-down,
 .toolbar-item i.chevron-down {
-	margin-top: 3px;
+	margin-top: 1px;
 	width: 16px;
 	height: 16px;
 	display: flex;

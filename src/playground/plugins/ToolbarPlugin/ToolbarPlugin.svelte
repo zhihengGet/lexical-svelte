@@ -568,9 +568,10 @@
 		<DropDown
 			disabled={!isEditable}
 			buttonClassName="toolbar-item spaced"
-			buttonLabel="Insert"
+			buttonLabel="Insert "
 			buttonAriaLabel="Insert specialized editor node"
 			buttonIconClassName="icon plus"
+			chevronClass="translate-x-[2px]"
 		>
 			<DropDownItem
 				onclick={() => {
@@ -578,8 +579,10 @@
 				}}
 				class="item"
 			>
-				<i class="icon horizontal-rule" />
-				<span class="text">Horizontal Rule</span>
+				<div>
+					<i class="icon horizontal-rule" />
+					<span class="text">Horizontal Rule</span>
+				</div>
 			</DropDownItem>
 			<DropDownItem
 				onclick={() => {

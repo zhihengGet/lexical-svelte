@@ -27,4 +27,4 @@
 {/if}
  -->
 
-<DropdownMenu.DropdownMenuItem {...props}><slot /></DropdownMenu.DropdownMenuItem>
+<DropdownMenu.DropdownMenuItem {...props} class="item"><slot /></DropdownMenu.DropdownMenuItem>

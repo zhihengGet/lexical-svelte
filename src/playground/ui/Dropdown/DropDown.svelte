@@ -18,6 +18,7 @@
 		buttonClassName,
 		buttonIconClassName,
 		stopCloseOnClickSelf,
+		chevronClass = '',
 		children
 	} = $props<{
 		children?: Snippet;
@@ -27,14 +28,15 @@
 		buttonIconClassName?: string;
 		buttonLabel?: string;
 		stopCloseOnClickSelf?: boolean;
+		chevronClass: string;
 	}>();
 
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 </script>
 
 <DropdownMenu.Root>
-	<DropdownMenu.Trigger
-		><button
+	<DropdownMenu.Trigger>
+		<button
 			type="button"
 			{disabled}
 			aria-label={buttonAriaLabel || buttonLabel}
@@ -47,10 +49,11 @@
 			{#if buttonLabel}
 				<span class="text-sm text-center">{buttonLabel}</span>
 			{/if}
-			<i class="chevron-down" />
-		</button></DropdownMenu.Trigger
-	>
-	<DropdownMenu.Content class="bg-neutral-100">
+
+			<i class="chevron-down {chevronClass}" />
+		</button>
+	</DropdownMenu.Trigger>
+	<DropdownMenu.Content class="bg-neutral-100 dropdown">
 		<DropdownMenu.Group>
 			<DropdownMenu.Label><slot name="group" /></DropdownMenu.Label>
 			<DropdownMenu.Separator />
