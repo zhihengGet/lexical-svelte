@@ -2,16 +2,12 @@
 	import * as React from 'react';
 	import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 	import { getContext, setContext } from 'svelte';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 
-	let {
-		class: className,
-		onClick,
-		enabled = true,
-		title
-	} = $props<{
+	let { ...props } = $props<{
 		class: string;
 		children?: any;
-		onClick: () => any;
+		onclick: () => any;
 		title?: string;
 		enabled?: boolean;
 		'aria-label'?: string;
@@ -24,8 +20,11 @@
 	}
 </script>
 
-{#if enabled}
+<!-- {#if enabled}
 	<button class={className} onclick={onClick} bind:this={ref.current} type="button">
 		<slot />
 	</button>
 {/if}
+ -->
+
+<DropdownMenu.DropdownMenuItem {...props}><slot /></DropdownMenu.DropdownMenuItem>

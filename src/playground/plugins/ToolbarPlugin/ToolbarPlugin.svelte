@@ -364,12 +364,14 @@
 		},
 		[activeEditor, selectedElementKey]
 	);
-	const insertGifOnClick = (payload: InsertImagePayload) => {
+	const insertGifonclick = (payload: InsertImagePayload) => {
 		activeEditor().dispatchCommand(INSERT_IMAGE_COMMAND, payload);
 	};
 	const settings = useSettings();
 	let open = $state(false);
 	let modalContent = $state<SvelteRender>({});
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+	import DropdownItems from '@ui/Dropdown/DropdownItems.svelte';
 </script>
 
 <div class="toolbar">
@@ -422,7 +424,7 @@
 				<!-- content here -->
 				<DropDownItem
 					class={`item ${dropDownActiveClass(value === codeLanguage())}`}
-					onClick={() => onCodeLanguageSelect(value)}
+					onclick={() => onCodeLanguageSelect(value)}
 				>
 					<span class="text">{name}</span>
 				</DropDownItem>
@@ -517,7 +519,7 @@
 			buttonIconClassName="icon dropdown-more"
 		>
 			<DropDownItem
-				onClick={() => {
+				onclick={() => {
 					activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough');
 				}}
 				class={'item ' + dropDownActiveClass(isStrikethrough())}
@@ -528,7 +530,7 @@
 				<span class="text">Strikethrough</span>
 			</DropDownItem>
 			<DropDownItem
-				onClick={() => {
+				onclick={() => {
 					activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript');
 				}}
 				class={'item ' + dropDownActiveClass(isSubscript())}
@@ -539,7 +541,7 @@
 				<span class="text">Subscript</span>
 			</DropDownItem>
 			<DropDownItem
-				onClick={() => {
+				onclick={() => {
 					activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'superscript');
 				}}
 				class={'item ' + dropDownActiveClass(isSuperscript())}
@@ -550,7 +552,7 @@
 				<span class="text">Superscript</span>
 			</DropDownItem>
 			<DropDownItem
-				onClick={clearFormatting}
+				onclick={clearFormatting}
 				class="item"
 				title="Clear text formatting"
 				aria-label="Clear all text formatting"
@@ -571,7 +573,7 @@
 			buttonIconClassName="icon plus"
 		>
 			<DropDownItem
-				onClick={() => {
+				onclick={() => {
 					activeEditor().dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined);
 				}}
 				class="item"
@@ -580,7 +582,7 @@
 				<span class="text">Horizontal Rule</span>
 			</DropDownItem>
 			<DropDownItem
-				onClick={() => {
+				onclick={() => {
 					activeEditor().dispatchCommand(INSERT_PAGE_BREAK, undefined);
 				}}
 				class="item"
@@ -591,7 +593,7 @@
 
 			<DropDownItem
 				enabled={settings().image}
-				onClick={() => {
+				onclick={() => {
 					modalContent = {
 						component: InsertImageDialog,
 						props: { activeEditor: activeEditor() }
@@ -623,7 +625,7 @@
 				<span class="text">Image</span>
 			</DropDownItem>
 			<!-- 	<DropDownItem
-				onClick={() => {
+				onclick={() => {
 					showModal('Insert Image', (onClose) => {
 						return [
 							{
@@ -640,8 +642,8 @@
 				<span class="text">Inline Image</span>
 			</DropDownItem> -->
 			<!-- 	<DropDownItem
-				onClick={() =>
-					insertGifOnClick({
+				onclick={() =>
+					insertGifonclick({
 						altText: 'Cat typing on a laptop',
 						src: 'https://images.unsplash.com/photo-1682686581498-5e85c7228119?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
 					})}
@@ -651,7 +653,7 @@
 				<span class="text">GIF</span>
 			</DropDownItem> -->
 			<!-- 	<DropDownItem
-				onClick={() => {
+				onclick={() => {
 					activeEditor().dispatchCommand(INSERT_EXCALIDRAW_COMMAND, undefined);
 				}}
 				class="item"
@@ -661,7 +663,7 @@
 			</DropDownItem> -->
 
 			<!-- 	<DropDownItem
-				onClick={() => {
+				onclick={() => {
 					showModal('Insert Equation', (onClose) => [
 						{
 							component: InsertEquationDialog,
@@ -678,7 +680,7 @@
 				<span class="text">Equation</span>
 			</DropDownItem> -->
 			<!-- 	<DropDownItem
-				onClick={() => {
+				onclick={() => {
 					editor.update(() => {
 						const root = getRoot();
 						const stickyNode = createStickyNode(0, 0);
@@ -691,7 +693,7 @@
 				<span class="text">Sticky Note</span>
 			</DropDownItem> -->
 			<DropDownItem
-				onClick={() => {
+				onclick={() => {
 					editor.dispatchCommand(INSERT_COLLAPSIBLE_COMMAND, undefined);
 				}}
 				class="item"
@@ -715,7 +717,7 @@
 			<Divider />
 			<button
 				disabled={!isEditable()}
-				onClick={() => {
+				onclick={() => {
 					activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'bold');
 				}}
 				class={'toolbar-item spaced ' + (isBold ? 'active' : '')}
@@ -727,7 +729,7 @@
 			</button>
 			<button
 				disabled={!isEditable()}
-				onClick={() => {
+				onclick={() => {
 					activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'italic');
 				}}
 				class={'toolbar-item spaced ' + (isItalic ? 'active' : '')}
@@ -739,7 +741,7 @@
 			</button>
 			<button
 				disabled={!isEditable()}
-				onClick={() => {
+				onclick={() => {
 					activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'underline');
 				}}
 				class={'toolbar-item spaced ' + (isUnderline ? 'active' : '')}
@@ -751,7 +753,7 @@
 			</button>
 			<button
 				disabled={!isEditable()}
-				onClick={() => {
+				onclick={() => {
 					activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'code');
 				}}
 				class={'toolbar-item spaced ' + (isCode ? 'active' : '')}
@@ -763,7 +765,7 @@
 			</button>
 			<button
 				disabled={!isEditable()}
-				onClick={insertLink}
+				onclick={insertLink}
 				class={'toolbar-item spaced ' + (isLink ? 'active' : '')}
 				aria-label="Insert link"
 				title="Insert link"
@@ -797,7 +799,7 @@
 				buttonIconclass="icon dropdown-more"
 			>
 				<DropDownItem
-					onClick={() => {
+					onclick={() => {
 						activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough');
 					}}
 					class={'item ' + dropDownActiveClass(isStrikethrough)}
@@ -808,7 +810,7 @@
 					<span class="text">Strikethrough</span>
 				</DropDownItem>
 				<DropDownItem
-					onClick={() => {
+					onclick={() => {
 						activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript');
 					}}
 					class={'item ' + dropDownActiveClass(isSubscript)}
@@ -819,7 +821,7 @@
 					<span class="text">Subscript</span>
 				</DropDownItem>
 				<DropDownItem
-					onClick={() => {
+					onclick={() => {
 						activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'superscript');
 					}}
 					class={'item ' + dropDownActiveClass(isSuperscript)}
@@ -830,7 +832,7 @@
 					<span class="text">Superscript</span>
 				</DropDownItem>
 				<DropDownItem
-					onClick={clearFormatting}
+					onclick={clearFormatting}
 					class="item"
 					title="Clear text formatting"
 					aria-label="Clear all text formatting"
@@ -850,7 +852,7 @@
 						buttonIconclass="icon table secondary"
 					>
 						<DropDownItem
-							onClick={() => {
+							onclick={() => {
 								/**/
 							}}
 							class="item"
@@ -869,7 +871,7 @@
 				buttonIconclass="icon plus"
 			>
 				<DropDownItem
-					onClick={() => {
+					onclick={() => {
 						activeEditor().dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined);
 					}}
 					class="item"
@@ -878,7 +880,7 @@
 					<span class="text">Horizontal Rule</span>
 				</DropDownItem>
 				<DropDownItem
-					onClick={() => {
+					onclick={() => {
 						activeEditor().dispatchCommand(INSERT_PAGE_BREAK, undefined);
 					}}
 					class="item"
@@ -887,7 +889,7 @@
 					<span class="text">Page Break</span>
 				</DropDownItem>
 				<DropDownItem
-					onClick={() => {
+					onclick={() => {
 						showModal('Insert Image', (onClose) => (
 							<InsertImageDialog activeEditor={activeEditor} onClose={onClose} />
 						));
@@ -898,7 +900,7 @@
 					<span class="text">Image</span>
 				</DropDownItem>
 				<DropDownItem
-					onClick={() => {
+					onclick={() => {
 						showModal('Insert Inline Image', (onClose) => (
 							<InsertInlineImageDialog activeEditor={activeEditor} onClose={onClose} />
 						));
@@ -909,8 +911,8 @@
 					<span class="text">Inline Image</span>
 				</DropDownItem>
 				<DropDownItem
-					onClick={() =>
-						insertGifOnClick({
+					onclick={() =>
+						insertGifonclick({
 							altText: 'Cat typing on a laptop',
 							src: catTypingGif
 						})
@@ -921,7 +923,7 @@
 					<span class="text">GIF</span>
 				</DropDownItem>
 				<DropDownItem
-					onClick={() => {
+					onclick={() => {
 						activeEditor().dispatchCommand(INSERT_EXCALIDRAW_COMMAND, undefined);
 					}}
 					class="item"
@@ -930,7 +932,7 @@
 					<span class="text">Excalidraw</span>
 				</DropDownItem>
 				<DropDownItem
-					onClick={() => {
+					onclick={() => {
 						showModal('Insert Table', (onClose) => (
 							<InsertTableDialog activeEditor={activeEditor} onClose={onClose} />
 						));
@@ -941,7 +943,7 @@
 					<span class="text">Table</span>
 				</DropDownItem>
 				<DropDownItem
-					onClick={() => {
+					onclick={() => {
 						showModal('Insert Table', (onClose) => (
 							<InsertNewTableDialog activeEditor={activeEditor} onClose={onClose} />
 						));
@@ -952,7 +954,7 @@
 					<span class="text">Table (Experimental)</span>
 				</DropDownItem>
 				<DropDownItem
-					onClick={() => {
+					onclick={() => {
 						showModal('Insert Poll', (onClose) => (
 							<InsertPollDialog activeEditor={activeEditor} onClose={onClose} />
 						));
@@ -963,7 +965,7 @@
 					<span class="text">Poll</span>
 				</DropDownItem>
 				<DropDownItem
-					onClick={() => {
+					onclick={() => {
 						showModal('Insert Columns Layout', (onClose) => (
 							<InsertLayoutDialog activeEditor={activeEditor} onClose={onClose} />
 						));
@@ -975,7 +977,7 @@
 				</DropDownItem>
 
 				<DropDownItem
-					onClick={() => {
+					onclick={() => {
 						showModal('Insert Equation', (onClose) => (
 							<InsertEquationDialog activeEditor={activeEditor} onClose={onClose} />
 						));
@@ -986,7 +988,7 @@
 					<span class="text">Equation</span>
 				</DropDownItem>
 				<DropDownItem
-					onClick={() => {
+					onclick={() => {
 						editor.update(() => {
 							const root = $getRoot();
 							const stickyNode = $createStickyNode(0, 0);
@@ -999,7 +1001,7 @@
 					<span class="text">Sticky Note</span>
 				</DropDownItem>
 				<DropDownItem
-					onClick={() => {
+					onclick={() => {
 						editor.dispatchCommand(INSERT_COLLAPSIBLE_COMMAND, undefined);
 					}}
 					class="item"
@@ -1010,7 +1012,7 @@
 				{EmbedConfigs.map((embedConfig) => (
 					<DropDownItem
 						key={embedConfig.type}
-						onClick={() => {
+						onclick={() => {
 							activeEditor().dispatchCommand(INSERT_EMBED_COMMAND, embedConfig.type);
 						}}
 						class="item"

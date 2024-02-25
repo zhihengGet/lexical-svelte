@@ -122,58 +122,58 @@
 >
 	<DropDownItem
 		class={'item ' + dropDownActiveClass(blockType === 'paragraph')}
-		onClick={formatParagraph}
+		onclick={formatParagraph}
 	>
 		<i class="icon paragraph" />
 		<span class="text">Normal</span>
 	</DropDownItem>
 	<DropDownItem
 		class={'item ' + dropDownActiveClass(blockType === 'h1')}
-		onClick={() => formatHeading('h1')}
+		onclick={() => formatHeading('h1')}
 	>
 		<i class="icon h1" />
 		<span class="text">Heading 1</span>
 	</DropDownItem>
 	<DropDownItem
 		class={'item ' + dropDownActiveClass(blockType === 'h2')}
-		onClick={() => formatHeading('h2')}
+		onclick={() => formatHeading('h2')}
 	>
 		<i class="icon h2" />
 		<span class="text">Heading 2</span>
 	</DropDownItem>
 	<DropDownItem
 		class={'item ' + dropDownActiveClass(blockType === 'h3')}
-		onClick={() => formatHeading('h3')}
+		onclick={() => formatHeading('h3')}
 	>
 		<i class="icon h3" />
 		<span class="text">Heading 3</span>
 	</DropDownItem>
 	<DropDownItem
 		class={'item ' + dropDownActiveClass(blockType === 'bullet')}
-		onClick={formatBulletList}
+		onclick={formatBulletList}
 	>
 		<i class="icon bullet-list" />
 		<span class="text">Bullet List</span>
 	</DropDownItem>
 	<DropDownItem
 		class={'item ' + dropDownActiveClass(blockType === 'number')}
-		onClick={formatNumberedList}
+		onclick={formatNumberedList}
 	>
 		<i class="icon numbered-list" />
 		<span class="text">Numbered List</span>
 	</DropDownItem>
 	<DropDownItem
 		class={'item ' + dropDownActiveClass(blockType === 'check')}
-		onClick={formatCheckList}
+		onclick={formatCheckList}
 	>
 		<i class="icon check-list" />
 		<span class="text">Check List</span>
 	</DropDownItem>
-	<DropDownItem class={'item ' + dropDownActiveClass(blockType === 'quote')} onClick={formatQuote}>
+	<DropDownItem class={'item ' + dropDownActiveClass(blockType === 'quote')} onclick={formatQuote}>
 		<i class="icon quote" />
 		<span class="text">Quote</span>
 	</DropDownItem>
-	<DropDownItem class={'item ' + dropDownActiveClass(blockType === 'code')} onClick={formatCode}>
+	<DropDownItem class={'item ' + dropDownActiveClass(blockType === 'code')} onclick={formatCode}>
 		<i class="icon code" />
 		<span class="text">Code Block</span>
 	</DropDownItem>

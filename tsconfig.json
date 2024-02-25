@@ -24,7 +24,9 @@
 			"@ui/*": ["./src/playground/ui/*"],
 			"react": ["./src/react.svelte.ts"],
 			"@nodes/*": ["./src/playground/nodes/*"],
-			"@plugins/*": ["./src/playground/plugins/*"]
+			"@plugins/*": ["./src/playground/plugins/*"],
+			"$lib": ["./src/lib"],
+			"$lib/*": ["./src/lib/*"]
 		},
 		"isolatedModules": true
 	},

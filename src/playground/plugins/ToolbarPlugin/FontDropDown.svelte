@@ -86,7 +86,7 @@
 		{#each FONT_FAMILY_OPTIONS as [option, text] (option)}
 			<DropDownItem
 				class={`item ${dropDownActiveClass(value === option)}`}
-				onClick={() => handleClick(option)}
+				onclick={() => handleClick(option)}
 			>
 				<span class="text">{text}</span>
 			</DropDownItem>
@@ -95,7 +95,7 @@
 		{#each FONT_SIZE_OPTIONS as [option, text] (option)}
 			<DropDownItem
 				class={`item ${dropDownActiveClass(value === option)} fontsize-item`}
-				onClick={() => handleClick(option)}
+				onclick={() => handleClick(option)}
 			>
 				<span class="text">{text}</span>
 			</DropDownItem>
