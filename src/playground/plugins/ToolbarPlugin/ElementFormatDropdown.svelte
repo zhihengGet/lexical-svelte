@@ -53,7 +53,7 @@
 	buttonAriaLabel="Formatting options for text alignment"
 >
 	<DropDownItem
-		onClick={() => {
+		onclick={() => {
 			editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'left');
 		}}
 		class="item"
@@ -62,7 +62,7 @@
 		<span class="text">Left Align</span>
 	</DropDownItem>
 	<DropDownItem
-		onClick={() => {
+		onclick={() => {
 			editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'center');
 		}}
 		class="item"
@@ -71,7 +71,7 @@
 		<span class="text">Center Align</span>
 	</DropDownItem>
 	<DropDownItem
-		onClick={() => {
+		onclick={() => {
 			editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'right');
 		}}
 		class="item"
@@ -80,7 +80,7 @@
 		<span class="text">Right Align</span>
 	</DropDownItem>
 	<DropDownItem
-		onClick={() => {
+		onclick={() => {
 			editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'justify');
 		}}
 		class="item"
@@ -89,7 +89,7 @@
 		<span class="text">Justify Align</span>
 	</DropDownItem>
 	<DropDownItem
-		onClick={() => {
+		onclick={() => {
 			editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'start');
 		}}
 		class="item"
@@ -102,7 +102,7 @@
 		<span class="text">Start Align</span>
 	</DropDownItem>
 	<DropDownItem
-		onClick={() => {
+		onclick={() => {
 			editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'end');
 		}}
 		class="item"
@@ -114,7 +114,7 @@
 	</DropDownItem>
 	<Divider />
 	<DropDownItem
-		onClick={() => {
+		onclick={() => {
 			editor.dispatchCommand(OUTDENT_CONTENT_COMMAND, undefined);
 		}}
 		class="item"
@@ -123,7 +123,7 @@
 		<span class="text">Outdent</span>
 	</DropDownItem>
 	<DropDownItem
-		onClick={() => {
+		onclick={() => {
 			editor.dispatchCommand(INDENT_CONTENT_COMMAND, undefined);
 		}}
 		class="item"

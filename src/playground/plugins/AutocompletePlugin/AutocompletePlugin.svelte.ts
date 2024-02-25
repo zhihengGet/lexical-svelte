@@ -152,7 +152,7 @@ export default function AutocompletePlugin({
 		});
 	}
 	function onEsc() {
-		el.$set({ visibility: 'hidden' });
+		setElState({ visibility: 'hidden' });
 		return false;
 	}
 	const rootElem = editor.getRootElement();
@@ -165,7 +165,7 @@ export default function AutocompletePlugin({
 		editor.registerCommand(
 			KEY_ESCAPE_COMMAND,
 			() => {
-				el.$set({ visibility: 'hidden' });
+				setElState({ visibility: 'hidden' });
 				return true;
 			},
 			COMMAND_PRIORITY_LOW
