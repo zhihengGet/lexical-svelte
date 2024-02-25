@@ -20,6 +20,6 @@
 	let { disabled = false, stopCloseOnClickSelf = true, color, onChange, ...rest } = $props<Props>();
 </script>
 
-<DropDown {...rest} {disabled} {stopCloseOnClickSelf}>
+<DropDown {...rest} {disabled}>
 	<ColorPicker {color} {onChange} />
 </DropDown>

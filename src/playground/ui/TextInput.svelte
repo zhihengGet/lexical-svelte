@@ -27,8 +27,10 @@
 	<input
 		{type}
 		{value}
+		tabindex="-1"
 		class="Input__input"
 		{placeholder}
+		autofocus={false}
 		oninput={(e) => {
 			onChange(e.target.value);
 		}}

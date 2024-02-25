@@ -1032,11 +1032,7 @@
 		isRTL={isRTL()}
 	/>
 </div>
-<!-- <Portal
-	component={modal()?.component}
-	childComponents={modal()?.childComponents}
-	props={modal()?.props}
-/> -->
+
 <Modal bind:open title="insert image">
 	<svelte:component this={child().component} {...child()?.props} />
 </Modal>
