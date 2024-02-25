@@ -11,22 +11,12 @@ import {
 } from 'lexical';
 
 import type { UpdateListener } from 'lexical/LexicalEditor';
-import {
-	createRoot,
-	getAllContexts,
-	mount,
-	onDestroy,
-	onMount,
-	type ComponentType,
-	type ComponentProps,
-	unmount
-} from 'svelte';
+import { getAllContexts, mount, onDestroy, onMount, type ComponentProps, unmount } from 'svelte';
 import { ClickAutoComplete, search, type useQuery, type SearchPromise } from '.';
 import { useSharedAutocompleteContext } from '../../context/SharedAutocompleteContext.svelte';
 import { getCaretTopPoint } from '../../utils/careat';
 import { addSwipeRightListener } from '../../utils/swipe';
 import AutocompleteComponent from './AutocompleteComponent.svelte';
-import { merge } from 'lodash-es';
 
 export default function AutocompletePlugin({
 	query = () => {
