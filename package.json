@@ -1,7 +1,7 @@
 {
 	"name": "lexical-svelte-runes",
 	"private": false,
-	"version": "0.1.4-beta.32",
+	"version": "0.1.4-beta.33",
 	"type": "module",
 	"author": {
 		"name": "zhiheng"
