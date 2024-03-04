@@ -579,10 +579,8 @@
 				}}
 				class="item"
 			>
-				<div>
-					<i class="icon horizontal-rule" />
-					<span class="text">Horizontal Rule</span>
-				</div>
+				<i class="icon horizontal-rule" />
+				<span class="text">Horizontal Rule</span>
 			</DropDownItem>
 			<DropDownItem
 				onclick={() => {

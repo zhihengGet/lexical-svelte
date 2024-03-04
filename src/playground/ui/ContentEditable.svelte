@@ -4,7 +4,7 @@
 	import ContentEditable from '@lexical/react/LexicalContentEditable.svelte';
 
 	let { class: cl } = $props<{ class?: string }>();
-	console.log('content editorl class', cl || 'ContentEditable__root');
+	console.log('content editor class', cl || 'ContentEditable__root');
 
 	const ref = (node: HTMLElement) => node.focus();
 </script>

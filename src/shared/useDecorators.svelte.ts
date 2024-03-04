@@ -14,7 +14,8 @@ import {
 	flushSync,
 	getAllContexts,
 	mount,
-	onMount
+	onMount,
+	unmount
 } from 'svelte';
 import type { SvelteRender } from '@lexical/react/types';
 export function useDecorators(editor: LexicalEditor) {
@@ -34,7 +35,7 @@ export function useDecorators(editor: LexicalEditor) {
 		isChanged = !isChanged;
 	});
 	const context = getAllContexts();
-	let old: (() => unknown)[] = [];
+	let old: unknown[] = [];
 	onMount(() => {
 		//NOTE
 		// do not render decorators with portal because lexical need to be in sync with svelte, node might not be rendered by the time lexical wants it
@@ -43,7 +44,7 @@ export function useDecorators(editor: LexicalEditor) {
 				decorators = nextDecorators;
 
 				const decoratorKeys = Object.keys(decorators);
-				old.forEach((v) => v()); // destroy old component, even though lexical will remove them , we need to clean $effect
+				old.forEach((v) => unmount(v)); // destroy old component, even though lexical will remove them , we need to clean $effect
 				old = [];
 				for (let i = 0; i < decoratorKeys.length; i++) {
 					const nodeKey = decoratorKeys[i];
@@ -55,12 +56,12 @@ export function useDecorators(editor: LexicalEditor) {
 						node.target = element;
 						node.nodeKey = nodeKey;
 						Promise.resolve(node.component).then((v) => {
-							const [accessor, destroy] = mount(v, {
+							const app = mount(v, {
 								props: node.props,
 								target: node.target || document.body,
 								context: context
 							});
-							old.push(destroy);
+							old.push(app);
 						}); //dynamic import component
 
 						// lexical will handle removal of this node
