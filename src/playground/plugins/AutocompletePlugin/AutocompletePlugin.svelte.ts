@@ -14,7 +14,7 @@ import type { UpdateListener } from 'lexical/LexicalEditor';
 import { getAllContexts, mount, onDestroy, onMount, type ComponentProps, unmount } from 'svelte';
 import { ClickAutoComplete, search, type useQuery, type SearchPromise } from '.';
 import { useSharedAutocompleteContext } from '../../context/SharedAutocompleteContext.svelte';
-import { getCaretTopPoint } from '../../utils/careat';
+import { getCaretGlobalPosition, getCaretTopPoint } from '../../utils/careat';
 import { addSwipeRightListener } from '../../utils/swipe';
 import AutocompleteComponent from './AutocompleteComponent.svelte';
 
@@ -62,7 +62,7 @@ export default function AutocompletePlugin({
 		el_states.visibility = s.visibility ?? el_states.visibility;
 	}
 	const resizePos = () => {
-		const props = getCaretTopPoint();
+		const props = getCaretGlobalPosition();
 		props.left += 10;
 		props.top += -2;
 		//props.visibility = 'visible';
@@ -93,7 +93,7 @@ export default function AutocompletePlugin({
 				const words = (await searchPromise.promise) || [];
 				// remove matching prefix
 
-				const props = getCaretTopPoint();
+				const props = getCaretGlobalPosition();
 				props.left += 10;
 				props.top += -2;
 				//@ts-expect-error ts happy

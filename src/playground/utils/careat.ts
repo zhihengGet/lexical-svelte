@@ -55,5 +55,6 @@ export function getCaretGlobalPosition() {
 	r2.setStart(node, offset - 1);
 	r2.setEnd(node, offset);
 	rect = r2.getBoundingClientRect();
+	debugger;
 	return { left: rect.right + pageOffset.x, top: rect.bottom + pageOffset.y };
 }
