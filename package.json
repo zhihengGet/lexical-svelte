@@ -1,7 +1,7 @@
 {
 	"name": "lexical-svelte-runes",
 	"private": false,
-	"version": "0.1.4-beta.37",
+	"version": "0.1.4-beta.38",
 	"type": "module",
 	"author": {
 		"name": "zhiheng"
@@ -13,7 +13,8 @@
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"fix": "eslint --fix .",
 		"tsc": "tsc",
-		"package": "svelte-package --input src/ && npx unocss"
+		"package": "svelte-package --input src/ && npx unocss",
+		"clean_uno": "sed -e \"s/import 'uno.css';//g\" -i dist/*.svelte"
 	},
 	"exports": {
 		".": {

@@ -79,7 +79,6 @@
 				CLICK_COMMAND,
 				(event: MouseEvent) => {
 					const hrElem = editor.getElementByKey(nodeKey);
-					debugger;
 					if (event.target === hrElem) {
 						if (!event.shiftKey) {
 							clearSelection();
