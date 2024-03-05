@@ -18,6 +18,20 @@
 	createHistoryContext();
 </script>
 
+<Button>hi</Button>
+<div>aa</div>
+<Button>hi</Button>
+<div>aa</div>
+<Button>hi</Button>
+<div>aa</div>
+<Button>hi</Button>
+<div>aa</div>
+<Button>hi</Button>
+<div>aa</div>
+<Button>hi</Button>
+<div>aa</div>
+<Button>hi</Button>
+<div>aa</div>
 <SettingsContext settings={props}>
 	<SharedAutocompleteContext>
 		<LexicalComposer>

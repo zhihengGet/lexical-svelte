@@ -51,11 +51,9 @@ export function getCaretGlobalPosition() {
 	const pageOffset = { x: window.scrollX, y: window.scrollY };
 	let rect, r2;
 
-	if (offset > 0) {
-		r2 = document.createRange();
-		r2.setStart(node, offset - 1);
-		r2.setEnd(node, offset);
-		rect = r2.getBoundingClientRect();
-		return { left: rect.right + pageOffset.x + 'px', top: rect.bottom + pageOffset.y + 'px' };
-	}
+	r2 = document.createRange();
+	r2.setStart(node, offset - 1);
+	r2.setEnd(node, offset);
+	rect = r2.getBoundingClientRect();
+	return { left: rect.right + pageOffset.x, top: rect.bottom + pageOffset.y };
 }
