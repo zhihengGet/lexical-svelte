@@ -95,7 +95,7 @@ export default function AutocompletePlugin({
 
 				const props = getCaretGlobalPosition();
 				props.left += 10;
-				props.top += -2;
+				props.top += -21;
 				//@ts-expect-error ts happy
 				props.visibility = 'visible';
 				//@ts-expect-error ts happy
