@@ -55,6 +55,7 @@
 
 <script lang="ts">
 	let { nodeKey } = $props<{ nodeKey: NodeKey }>();
+	if (!nodeKey) throw 'missing node key in horizonta comp';
 	const [editor] = useLexicalComposerContext();
 	const [isSelected, setSelected, clearSelection] = useLexicalNodeSelection(nodeKey);
 
@@ -78,12 +79,12 @@
 				CLICK_COMMAND,
 				(event: MouseEvent) => {
 					const hrElem = editor.getElementByKey(nodeKey);
-
+					debugger;
 					if (event.target === hrElem) {
 						if (!event.shiftKey) {
 							clearSelection();
 						}
-						setSelected(!isSelected);
+						setSelected(!isSelected());
 						return true;
 					}
 
@@ -98,6 +99,7 @@
 
 	useEffect(() => {
 		const hrElem = editor.getElementByKey(nodeKey);
+
 		if (hrElem !== null) {
 			hrElem.className = isSelected() ? 'selected' : '';
 		}

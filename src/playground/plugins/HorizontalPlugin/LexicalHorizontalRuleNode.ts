@@ -15,7 +15,7 @@ import type {
 } from 'lexical';
 
 import { $applyNodeReplacement, DecoratorNode } from 'lexical';
-import { HorizontalRuleComponent } from './HorizontalRuleComponent.svelte';
+import HorizontalRuleComponent from './LexicalHorizontalRuleComponent.svelte';
 import type { SvelteRender } from '../../../lib/types';
 
 export type SerializedHorizontalRuleNode = SerializedLexicalNode;
@@ -71,6 +71,7 @@ export class HorizontalRuleNode extends DecoratorNode<SvelteRender> {
 	decorate(): SvelteRender {
 		return {
 			component: HorizontalRuleComponent,
+			props: { nodeKey: this.__key },
 			nodeKey: this.__key,
 			portal: false,
 			target: null //TODO

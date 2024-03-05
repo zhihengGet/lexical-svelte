@@ -1,13 +1,13 @@
 {
 	"name": "lexical-svelte-runes",
 	"private": false,
-	"version": "0.1.4-beta.35",
+	"version": "0.1.4-beta.37",
 	"type": "module",
 	"author": {
 		"name": "zhiheng"
 	},
 	"scripts": {
-		"dev": "vite",
+		"dev": "vite --port 3001",
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-check --tsconfig ./tsconfig.json",

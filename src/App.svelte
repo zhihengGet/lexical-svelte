@@ -18,20 +18,6 @@
 	createHistoryContext();
 </script>
 
-<Button>hi</Button>
-<div>aa</div>
-<Button>hi</Button>
-<div>aa</div>
-<Button>hi</Button>
-<div>aa</div>
-<Button>hi</Button>
-<div>aa</div>
-<Button>hi</Button>
-<div>aa</div>
-<Button>hi</Button>
-<div>aa</div>
-<Button>hi</Button>
-<div>aa</div>
 <SettingsContext settings={props}>
 	<SharedAutocompleteContext>
 		<LexicalComposer>
@@ -41,26 +27,3 @@
 		</LexicalComposer>
 	</SharedAutocompleteContext>
 </SettingsContext>
-<Dialog.Root>
-	<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>Edit Profile</Dialog.Trigger>
-	<Dialog.Content class="sm:max-w-[425px]">
-		<Dialog.Header>
-			<Dialog.Title>Edit profile</Dialog.Title>
-			<Dialog.Description>
-				Make changes to your profile here. Click save when you're done.
-			</Dialog.Description>
-		</Dialog.Header>
-		<SettingsContext settings={props}>
-			<SharedAutocompleteContext>
-				<LexicalComposer>
-					<div class="editor-shell w-full">
-						<Editor />
-					</div>
-				</LexicalComposer>
-			</SharedAutocompleteContext>
-		</SettingsContext>
-		<Dialog.Footer>
-			<Button type="submit">Save changes</Button>
-		</Dialog.Footer>
-	</Dialog.Content>
-</Dialog.Root>

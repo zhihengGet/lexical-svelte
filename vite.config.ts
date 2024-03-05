@@ -20,7 +20,19 @@ export default defineConfig({
 			'@plugins': path.resolve(__dirname, './src/playground/plugins/')
 		}
 	}, */
-	plugins: [tsconfigPaths({ loose: true }), UnoCSS({}), svelte(), dts()],
+	plugins: [
+		tsconfigPaths({ loose: true }),
+		UnoCSS({}),
+		svelte(),
+		dts(),
+		{
+			name: 'prebuild-commands',
+			handleHotUpdate: async () => {},
+			buildStart: async () => {
+				console.log('builds');
+			}
+		}
+	],
 	build: {
 		/* lib: {
 			entry: path.resolve(__dirname, './src/index.ts'),
