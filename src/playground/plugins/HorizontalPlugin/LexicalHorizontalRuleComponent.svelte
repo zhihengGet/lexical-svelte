@@ -65,6 +65,7 @@
 				event.preventDefault();
 				const node = getNodeByKey(nodeKey);
 				if (isHorizontalRuleNode(node)) {
+					debugger;
 					node.remove();
 				}
 			}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import '@unocss/reset/tailwind.css';
+	import '@unocss/reset/tailwind-compat.css';
 	import './uno.css';
 	import 'uno.css';
 	import Editor from './Editor.svelte';
@@ -10,10 +10,7 @@
 	import SharedAutocompleteContext from './playground/context/SharedAutocompleteContext.svelte';
 	import { createHistoryContext } from './playground/context/SharedHistoryContext';
 	import type { Settings } from './playground/appSettings';
-	import { Button, buttonVariants } from '$lib/components/ui/button';
-	import * as Dialog from '$lib/components/ui/dialog';
-	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
+
 	let { ...props } = $props<Settings>();
 	createHistoryContext();
 </script>

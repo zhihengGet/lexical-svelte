@@ -1,7 +1,7 @@
 {
 	"name": "lexical-svelte-runes",
 	"private": false,
-	"version": "0.1.4-beta.38",
+	"version": "0.1.4-beta.40",
 	"type": "module",
 	"author": {
 		"name": "zhiheng"
@@ -110,6 +110,8 @@
 		"tslib": "^2.6.2",
 		"typescript": "^5.3.3",
 		"unocss": "^0.58.4",
+		"unocss-preset-animations": "^1.0.1",
+		"unocss-preset-shadcn": "^0.2.3",
 		"vite": "^5.0.12",
 		"vite-plugin-dts": "^3.7.2",
 		"vite-tsconfig-paths": "^4.3.1"

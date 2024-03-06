@@ -386,7 +386,7 @@
 </script>
 
 <div
-	class="icon draggable-block-menu bg-purple z-2 hidden md:inline"
+	class="icon draggable-block-menu bg-purple z-2 hidden lg:inline"
 	bind:this={menuRef.current}
 	onmouseover={() => {
 		isMouseover.state = true;

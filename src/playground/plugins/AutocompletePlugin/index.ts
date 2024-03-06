@@ -77,7 +77,7 @@ export function search(selection: null | BaseSelection): [boolean, string, boole
 	selection.getStartEndPoints;
 	const match = text.substring(0, end).split(' ').at(-1);
 	const isEnd = text.endsWith(match ?? '^^^//') && end == text.length && !next;
-	console.log('selection ->', match);
+	console.log('selection ->', match, isEnd);
 	if (!match) return [false, '', false];
 	return [true, match, isEnd];
 	let i = node.getTextContentSize();
