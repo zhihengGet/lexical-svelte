@@ -44,7 +44,7 @@
 			editable
 		},
 		initialHTML
-	} = setting();
+	} = $derived(setting());
 
 	const context: LexicalComposerContextType = createLexicalComposerContext(null, theme);
 	let editor = initialEditor || null;
