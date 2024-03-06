@@ -12,6 +12,7 @@
 	import type { Settings } from './playground/appSettings';
 
 	let { ...props } = $props<Settings>();
+
 	createHistoryContext();
 </script>
 

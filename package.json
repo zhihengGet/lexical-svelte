@@ -105,7 +105,7 @@
 		"eslint-plugin-svelte": "^2.35.1",
 		"glob": "^10.3.10",
 		"prettier-plugin-svelte": "^3.1.2",
-		"svelte": "5.0.0-next.66",
+		"svelte": "5.0.0-next.72",
 		"svelte-check": "^3.6.3",
 		"tslib": "^2.6.2",
 		"typescript": "^5.3.3",

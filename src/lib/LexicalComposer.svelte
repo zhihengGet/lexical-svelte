@@ -108,7 +108,9 @@
 		});
 	}
 	setLexicalComposerContext([editor, context]);
-
+	$effect(() => {
+		editor?.setEditable(editable ?? true);
+	});
 	function initializeEditor(
 		editor: LexicalEditor,
 		initialEditorState?: InitialEditorStateType

@@ -45,13 +45,14 @@ export function getCaretTopPoint() {
  * @returns {object} left, top distance in pixels
  */
 export function getCaretGlobalPosition() {
-	const r = document.getSelection().getRangeAt(0);
+	const r = document.getSelection()?.getRangeAt(0);
+	if (!r) return { left: 0, top: 0 };
 	const node = r.startContainer;
 	const offset = r.startOffset;
 	const pageOffset = { x: window.scrollX, y: window.scrollY };
 	let rect, r2;
-
 	r2 = document.createRange();
+	if (offset >= 4294967294) return { left: 0, top: 0 };
 	r2.setStart(node, offset - 1);
 	r2.setEnd(node, offset);
 	rect = r2.getBoundingClientRect();

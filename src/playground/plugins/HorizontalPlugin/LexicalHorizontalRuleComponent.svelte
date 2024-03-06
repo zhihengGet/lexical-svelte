@@ -55,7 +55,7 @@
 
 <script lang="ts">
 	let { nodeKey } = $props<{ nodeKey: NodeKey }>();
-	if (!nodeKey) throw 'missing node key in horizonta comp';
+	if (!nodeKey) throw 'missing node key in horizontal comp';
 	const [editor] = useLexicalComposerContext();
 	const [isSelected, setSelected, clearSelection] = useLexicalNodeSelection(nodeKey);
 
@@ -65,7 +65,6 @@
 				event.preventDefault();
 				const node = getNodeByKey(nodeKey);
 				if (isHorizontalRuleNode(node)) {
-					debugger;
 					node.remove();
 				}
 			}
