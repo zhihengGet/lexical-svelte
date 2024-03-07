@@ -28,6 +28,7 @@
 	import { useMemo } from 'react';
 	import { $generateHtmlFromNodes as generateHtmlFromNodes } from '@lexical/html';
 	import { useSettings, type InitialEditorStateType } from '../playground/appSettings';
+	import { onDestroy } from 'svelte';
 
 	let setting = useSettings();
 	const {
@@ -49,6 +50,7 @@
 	const context: LexicalComposerContextType = createLexicalComposerContext(null, theme);
 	let editor = initialEditor || null;
 	if (editor === null) {
+		// only editable need to be reactive, other is one-off setting?
 		const newEditor = createEditor({
 			editable: editable,
 			html,
@@ -90,7 +92,7 @@
 
 			// Insert them at a selection.
 		}, HISTORY_MERGE_OPTIONS);
-		editor.registerUpdateListener(({ editorState }) => {
+		const un = editor.registerUpdateListener(({ editorState }) => {
 			// In the browser you can use the native DOMParser API to parse the HTML string.
 			// The latest EditorState can be found as `editorState`.
 			// To read the contents of the EditorState, use the following API:
@@ -106,6 +108,7 @@
 				//console.table('JSON', editorState.toJSON().root.children);
 			});
 		});
+		onDestroy(un);
 	}
 	setLexicalComposerContext([editor, context]);
 	$effect(() => {

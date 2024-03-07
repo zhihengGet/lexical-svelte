@@ -47,6 +47,7 @@ export type InitialConfigType = Readonly<{
 }>;
 export const DEFAULT_SETTINGS = {
 	disableBeforeInput: false,
+	floatingToolbar: true,
 	emptyEditor: isDevPlayground,
 	isAutocomplete: true,
 	isCharLimit: false,

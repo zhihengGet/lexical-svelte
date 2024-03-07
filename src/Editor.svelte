@@ -58,6 +58,7 @@
 		isCharLimitUtf8,
 		isRichText,
 		showTreeView,
+		floatingToolbar,
 		showTableOfContents,
 		showToolbar,
 		maxLength,
@@ -165,11 +166,13 @@
 		{@const el = floatingAnchorElem()}
 		{#if el && isEditable}
 			<Portal {...CodeActionMenuPlugin({ anchorElem: el })} />
-			<FloatingLinkEditorPlugin
-				anchorElem={el}
-				isLinkEditMode={isLinkEditMode()}
-				{setIsLinkEditMode}
-			/>
+			{#if floatingToolbar}
+				<FloatingLinkEditorPlugin
+					anchorElem={el}
+					isLinkEditMode={isLinkEditMode()}
+					{setIsLinkEditMode}
+				/>
+			{/if}
 			{#if isDraggable}
 				<Portal
 					component={DraggableBlock}

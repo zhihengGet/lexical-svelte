@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /**
  * Get the caret position in all cases
  *
