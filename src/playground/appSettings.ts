@@ -73,6 +73,7 @@ export const DEFAULT_SETTINGS = {
 	image: true,
 	dev: true,
 	editorCSS: '',
+	toolbarCSS: '',
 	showToolbar: true,
 	onInput: (html: string) => {
 		console.log('on input', html);

@@ -1446,7 +1446,7 @@ button.action-button:disabled {
 	vertical-align: middle;
 	overflow: auto;
 	height: max-content;
-	position: sticky;
+	/* position: sticky; */
 	top: 0;
 	z-index: 2;
 }

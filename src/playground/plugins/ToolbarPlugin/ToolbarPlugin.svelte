@@ -375,7 +375,7 @@
 	import DropdownItems from '@ui/Dropdown/DropdownItems.svelte';
 </script>
 
-<div class="toolbar">
+<div class="toolbar {settings().toolbarCSS}">
 	<button
 		class:hidden={settings().isUndoRedo == false}
 		disabled={!canUndo() || !isEditable()}
