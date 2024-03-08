@@ -53,7 +53,7 @@ export function getCaretGlobalPosition() {
 	const pageOffset = { x: window.scrollX, y: window.scrollY };
 	let rect, r2;
 	r2 = document.createRange();
-	if (offset >= 4294967294) return { left: 0, top: 0 };
+	if (offset >= 4294967000) return { left: 0, top: 0 };
 	r2.setStart(node, offset - 1);
 	r2.setEnd(node, offset);
 	rect = r2.getBoundingClientRect();

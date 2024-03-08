@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 	import { useCallback, useState } from '../react.svelte';
+	import { useSettings } from '../playground/appSettings';
 
 	const {
 		ariaActiveDescendant,
@@ -22,7 +23,8 @@
 		'data-testid': testid,
 		...rest
 	} = $props<any>();
-
+	const setting = useSettings();
+	const {} = $derived(setting());
 	const [editor] = useLexicalComposerContext();
 	const [isEditable, setEditable] = useState(false);
 
@@ -65,4 +67,5 @@
 	{spellCheck}
 	{tabIndex}
 	{style}
+	{...setting().contentEditableAttrs ?? {}}
 />

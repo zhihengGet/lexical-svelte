@@ -46,6 +46,7 @@ export type InitialConfigType = Readonly<{
 	isHTML?: boolean; //is initial state html
 }>;
 export const DEFAULT_SETTINGS = {
+	contentEditableAttrs: { 'data-a': 1 },
 	disableBeforeInput: false,
 	floatingToolbar: true,
 	emptyEditor: isDevPlayground,
