@@ -59,7 +59,6 @@
 	contentEditable={isEditable()}
 	data-testid={'editor'}
 	id="editor_center"
-	spellcheck="false"
 	autocorrect="false"
 	aria-autocomplete="none"
 	use:ref
