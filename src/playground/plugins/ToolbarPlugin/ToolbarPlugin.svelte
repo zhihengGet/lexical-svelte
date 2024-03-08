@@ -53,7 +53,6 @@
 		CAN_UNDO_COMMAND,
 		COMMAND_PRIORITY_CRITICAL,
 		COMMAND_PRIORITY_NORMAL,
-		DEPRECATED_$isGridSelection,
 		FORMAT_ELEMENT_COMMAND,
 		FORMAT_TEXT_COMMAND,
 		INDENT_CONTENT_COMMAND,
@@ -279,7 +278,7 @@
 		(styles: Record<string, string>) => {
 			activeEditor().update(() => {
 				const selection = getSelection();
-				if (isRangeSelection(selection) || DEPRECATED_$isGridSelection(selection)) {
+				if (selection !== null) {
 					patchStyleText(selection, styles);
 				}
 			});
@@ -303,19 +302,21 @@
 					// We split the first and last node by the selection
 					// So that we don't format unselected text inside those nodes
 					if (isTextNode(node)) {
+						// Use a separate variable to ensure TS does not lose the refinement
+						let textNode = node;
 						if (idx === 0 && anchor.offset !== 0) {
-							node = node.splitText(anchor.offset)[1] || node;
+							textNode = textNode.splitText(anchor.offset)[1] || textNode;
 						}
 						if (idx === nodes.length - 1) {
-							node = node.splitText(focus.offset)[0] || node;
+							textNode = textNode.splitText(focus.offset)[0] || textNode;
 						}
 
 						if (node.__style !== '') {
-							node.setStyle('');
+							textNode.setStyle('');
 						}
-						if (node.__format !== 0) {
-							node.setFormat(0);
-							getNearestBlockElementAncestorOrThrow(node).setFormat('');
+						if (textNode.__format !== 0) {
+							textNode.setFormat(0);
+							getNearestBlockElementAncestorOrThrow(textNode).setFormat('');
 						}
 					} else if (isHeadingNode(node) || isQuoteNode(node)) {
 						node.replace(createParagraphNode(), true);
