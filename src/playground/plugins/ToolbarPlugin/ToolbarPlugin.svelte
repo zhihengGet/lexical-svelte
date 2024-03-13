@@ -371,8 +371,6 @@
 	const settings = useSettings();
 	let open = $state(false);
 	let modalContent = $state<SvelteRender>({});
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-	import DropdownItems from '@ui/Dropdown/DropdownItems.svelte';
 </script>
 
 <div class="toolbar {settings().toolbarCSS}">

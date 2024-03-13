@@ -1,7 +1,7 @@
 {
 	"name": "lexical-svelte-runes",
 	"private": false,
-	"version": "0.1.4-beta.43",
+	"version": "0.1.4-beta.44",
 	"type": "module",
 	"author": {
 		"name": "zhiheng"
@@ -105,7 +105,7 @@
 		"eslint-plugin-svelte": "^2.35.1",
 		"glob": "^10.3.10",
 		"prettier-plugin-svelte": "^3.1.2",
-		"svelte": "5.0.0-next.72",
+		"svelte": "5.0.0-next.76",
 		"svelte-check": "^3.6.3",
 		"tslib": "^2.6.2",
 		"typescript": "^5.3.3",

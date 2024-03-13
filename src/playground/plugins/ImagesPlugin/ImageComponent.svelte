@@ -24,7 +24,7 @@
 		$getSelection as getSelection,
 		$isNodeSelection as isNodeSelection,
 		$isRangeSelection as isRangeSelection,
-		$setSelection as setSelection,
+		//	$setSelection as setSelection,
 		CLICK_COMMAND,
 		COMMAND_PRIORITY_LOW,
 		createCommand,
@@ -56,6 +56,18 @@
 </script>
 
 <script lang="ts">
+	type p = {
+		altText: string;
+		caption: LexicalEditor;
+		height: 'inherit' | number;
+		maxWidth: number;
+		nodeKey: NodeKey;
+		resizable: boolean;
+		showCaption: boolean;
+		src: string;
+		width: 'inherit' | number;
+		captionsEnabled: boolean;
+	};
 	let {
 		src,
 		altText,
@@ -67,18 +79,7 @@
 		showCaption,
 		caption,
 		captionsEnabled
-	} = $props<{
-		altText: string;
-		caption: LexicalEditor;
-		height: 'inherit' | number;
-		maxWidth: number;
-		nodeKey: NodeKey;
-		resizable: boolean;
-		showCaption: boolean;
-		src: string;
-		width: 'inherit' | number;
-		captionsEnabled: boolean;
-	}>();
+	}: p = $props();
 	const imageRef = useRef<null | HTMLImageElement>(null);
 	const buttonRef = useRef<HTMLButtonElement | null>(null);
 	const [isSelected, setSelected, clearSelection] = useLexicalNodeSelection(nodeKey);
