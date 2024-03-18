@@ -31,6 +31,11 @@
 			"types": "./dist/client.d.ts"
 		}
 	},
+	"imports": {
+		"#uno": {
+			"default": "./uno.css"
+		}
+	},
 	"files": [
 		"dist"
 	],

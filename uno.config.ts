@@ -4,8 +4,12 @@ import extractorSvelte from '@unocss/extractor-svelte';
 
 export default defineConfig({
 	cli: {
-		entry: [{ patterns: ['src/**/*.svelte'], outFile: 'dist/uno.css' }] // CliEntryItem | CliEntryItem[]
+		entry: [
+			{ patterns: ['src/**/*.svelte'], outFile: 'dist/uno.css' },
+			{ patterns: ['src/**/*.svelte'], outFile: './uno.css' }
+		] // CliEntryItem | CliEntryItem[]
 	},
+
 	extractors: [extractorSvelte()],
 	presets: [
 		presetAttributify({
