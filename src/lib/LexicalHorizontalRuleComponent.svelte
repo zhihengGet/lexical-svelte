@@ -55,6 +55,7 @@
 
 <script lang="ts">
 	let { nodeKey } = $props<{ nodeKey: NodeKey }>();
+	if (!nodeKey) throw 'missing node key in horizontal  ';
 	const [editor] = useLexicalComposerContext();
 	const [isSelected, setSelected, clearSelection] = useLexicalNodeSelection(nodeKey);
 

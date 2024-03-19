@@ -15,7 +15,10 @@ import { useCallback } from 'react';
 import { useEffect } from 'react';
 import { mergeRegister } from '@lexical/utils';
 
-export function HorizontalRuleComponent({ nodeKey }: { nodeKey: NodeKey }) {
+export function HorizontalRuleComponent(...props: { nodeKey: NodeKey }) {
+	console.log(props);
+	debugger;
+	if (!nodeKey) throw 'no node key in horizontal rule';
 	const [editor] = useLexicalComposerContext();
 	const [isSelected, setSelected, clearSelection] = useLexicalNodeSelection(nodeKey);
 
