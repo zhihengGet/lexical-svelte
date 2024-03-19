@@ -140,7 +140,7 @@ export class PageBreakNode extends DecoratorNode<SvelteRender<any>> {
 	}
 
 	decorate(): SvelteRender {
-		return { initializor: () => PageBreakComponent({ nodeKey: this.__key }) };
+		return { component: PageBreakComponent, nodeKey: this.__key };
 	}
 }
 

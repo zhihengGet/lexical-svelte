@@ -13,10 +13,7 @@
 		$isRangeSelection as isRangeSelection,
 		COMMAND_PRIORITY_HIGH,
 		COMMAND_PRIORITY_LOW,
-		GridSelection,
 		KEY_ESCAPE_COMMAND,
-		NodeSelection,
-		RangeSelection,
 		SELECTION_CHANGE_COMMAND,
 		FORMAT_TEXT_COMMAND,
 		createCommand

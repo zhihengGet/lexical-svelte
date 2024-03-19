@@ -3,7 +3,6 @@
 		BaseSelection,
 		EditorState,
 		ElementNode,
-		INTERNAL_PointSelection,
 		LexicalEditor,
 		LexicalNode,
 		RangeSelection,
@@ -20,11 +19,9 @@
 		$getRoot as getRoot,
 		$getSelection as getSelection,
 		COMMAND_PRIORITY_HIGH,
-		$isNodeSelection as isNodeSelection,
-		DEPRECATED_$isGridSelection
+		$isNodeSelection as isNodeSelection
 	} from 'lexical';
-	import type { GridSelection } from '@lexical/table';
-import { $isGridSelection as isGridSelection } from '@lexical/table';
+	import { $isTableSelection as isTableSelection, type TableSelection } from '@lexical/table';
 	import * as lexical from 'lexical';
 	import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
@@ -53,7 +50,7 @@ import { $isGridSelection as isGridSelection } from '@lexical/table';
 		viewClassName,
 		timeTravelPanelClassName,
 		editor
-	} = $props<{
+	}: {
 		editor: LexicalEditor;
 		treeTypeButtonClassName: string;
 		timeTravelButtonClassName: string;
@@ -61,7 +58,7 @@ import { $isGridSelection as isGridSelection } from '@lexical/table';
 		timeTravelPanelClassName: string;
 		timeTravelPanelSliderClassName: string;
 		viewClassName: string;
-	}>();
+	} = $props();
 	//unwrap below function
 
 	const [timeStampedEditorStates, setTimeStampedEditorStates] = useState<
@@ -239,10 +236,9 @@ import { $isGridSelection as isGridSelection } from '@lexical/table';
 		return `: node\n  └ [${Array.from(selection._nodes).join(', ')}]`;
 	}
 
-	function printGridSelection(selection: GridSelection): string {
-		return `: grid\n  └ { grid: ${selection.gridKey}, anchorCell: ${selection.anchor.key}, focusCell: ${selection.focus.key} }`;
+	function printTableSelection(selection: TableSelection): string {
+		return `: table\n  └ { table: ${selection.tableKey}, anchorCell: ${selection.anchor.key}, focusCell: ${selection.focus.key} }`;
 	}
-
 	function generateContent(
 		editor: LexicalEditor,
 		commandsLog: ReadonlyArray<LexicalCommand<unknown> & { payload: unknown }>,
@@ -291,8 +287,8 @@ import { $isGridSelection as isGridSelection } from '@lexical/table';
 				? ': null'
 				: lexical.$isRangeSelection(selection)
 					? printRangeSelection(selection)
-					: DEPRECATED_$isGridSelection(selection)
-						? printGridSelection(selection)
+					: isTableSelection(selection)
+						? printTableSelection(selection)
 						: printNodeSelection(selection);
 		});
 
@@ -377,27 +373,25 @@ import { $isGridSelection as isGridSelection } from '@lexical/table';
 			return '';
 		}
 	}
-
 	const FORMAT_PREDICATES = [
-		(node: LexicalNode | RangeSelection) => node.hasFormat('bold') && 'Bold',
-		(node: LexicalNode | RangeSelection) => node.hasFormat('code') && 'Code',
-		(node: LexicalNode | RangeSelection) => node.hasFormat('italic') && 'Italic',
-		(node: LexicalNode | RangeSelection) => node.hasFormat('strikethrough') && 'Strikethrough',
-		(node: LexicalNode | RangeSelection) => node.hasFormat('subscript') && 'Subscript',
-		(node: LexicalNode | RangeSelection) => node.hasFormat('superscript') && 'Superscript',
-		(node: LexicalNode | RangeSelection) => node.hasFormat('underline') && 'Underline'
+		(node: TextNode | RangeSelection) => node.hasFormat('bold') && 'Bold',
+		(node: TextNode | RangeSelection) => node.hasFormat('code') && 'Code',
+		(node: TextNode | RangeSelection) => node.hasFormat('italic') && 'Italic',
+		(node: TextNode | RangeSelection) => node.hasFormat('strikethrough') && 'Strikethrough',
+		(node: TextNode | RangeSelection) => node.hasFormat('subscript') && 'Subscript',
+		(node: TextNode | RangeSelection) => node.hasFormat('superscript') && 'Superscript',
+		(node: TextNode | RangeSelection) => node.hasFormat('underline') && 'Underline'
 	];
 
 	const DETAIL_PREDICATES = [
-		(node: LexicalNode) => node.isDirectionless() && 'Directionless',
-		(node: LexicalNode) => node.isUnmergeable() && 'Unmergeable'
+		(node: TextNode) => node.isDirectionless() && 'Directionless',
+		(node: TextNode) => node.isUnmergeable() && 'Unmergeable'
 	];
 
 	const MODE_PREDICATES = [
-		(node: LexicalNode) => node.isToken() && 'Token',
-		(node: LexicalNode) => node.isSegmented() && 'Segmented'
+		(node: TextNode) => node.isToken() && 'Token',
+		(node: TextNode) => node.isSegmented() && 'Segmented'
 	];
-
 	function printAllTextNodeProperties(node: LexicalNode) {
 		return [printFormatProperties(node), printDetailProperties(node), printModeProperties(node)]
 			.filter(Boolean)

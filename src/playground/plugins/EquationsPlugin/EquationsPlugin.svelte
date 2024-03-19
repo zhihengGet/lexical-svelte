@@ -18,8 +18,7 @@
 		$insertNodes as insertNodes,
 		$isRootOrShadowRoot as isRootOrShadowRoot,
 		COMMAND_PRIORITY_EDITOR,
-		createCommand,
-		LexicalEditor
+		createCommand
 	} from 'lexical';
 	import { useCallback, useEffect } from 'react';
 	import * as React from 'react';
