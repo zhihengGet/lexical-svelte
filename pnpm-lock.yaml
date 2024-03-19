@@ -2656,6 +2656,7 @@ packages:
 
   /base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
+    requiresBuild: true
     dev: false
 
   /bin-check@4.1.0:
@@ -2750,7 +2751,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001599
-      electron-to-chromium: 1.4.709
+      electron-to-chromium: 1.4.710
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.23.0)
     dev: true
@@ -3288,8 +3289,8 @@ packages:
   /eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
-  /electron-to-chromium@1.4.709:
-    resolution: {integrity: sha512-ixj1cyHrKqmdXF5CeHDSLbO0KRuOE1BHdCYKbcRA04dPLaKu8Vi7JDK5KLnGrfD6WxKcSEGm9gtHR4MqBq8gmg==}
+  /electron-to-chromium@1.4.710:
+    resolution: {integrity: sha512-w+9yAVHoHhysCa+gln7AzbO9CdjFcL/wN/5dd+XW/Msl2d/4+WisEaCF1nty0xbAKaxdaJfgLB2296U7zZB7BA==}
     dev: true
 
   /embla-carousel-reactive-utils@8.0.0(embla-carousel@8.0.0):

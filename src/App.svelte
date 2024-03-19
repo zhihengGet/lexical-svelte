@@ -11,7 +11,7 @@
 	import { createHistoryContext } from './playground/context/SharedHistoryContext';
 	import type { Settings } from './playground/appSettings';
 
-	let { ...props } = $props<Settings>();
+	let { ...props }: Settings = $props();
 
 	createHistoryContext();
 </script>
