@@ -29,29 +29,27 @@ import {
 	KEY_BACKSPACE_COMMAND,
 	KEY_DELETE_COMMAND
 } from 'lexical';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 
 export type SerializedPageBreakNode = SerializedLexicalNode;
 
-function PageBreakComponent({ nodeKey }: { nodeKey: NodeKey }) {
+function PageBreakComponent(...props: [HTMLElement, { nodeKey: NodeKey }]) {
+	const { nodeKey } = props[1];
+	if (!nodeKey) throw 'missing node key in page break component ' + nodeKey;
 	const [editor] = useLexicalComposerContext();
 	const [isSelected, setSelected, clearSelection] = useLexicalNodeSelection(nodeKey);
 
-	const onDelete = useCallback(
-		(event: KeyboardEvent) => {
-			event.preventDefault();
-			if (isSelected() && $isNodeSelection($getSelection())) {
-				const node = $getNodeByKey(nodeKey);
-				if ($isPageBreakNode(node)) {
-					node.remove();
-					return true;
-				}
+	const onDelete = (event: KeyboardEvent) => {
+		event.preventDefault();
+		if (isSelected() && $isNodeSelection($getSelection())) {
+			const node = $getNodeByKey(nodeKey);
+			if ($isPageBreakNode(node)) {
+				node.remove();
+				return true;
 			}
-			return false;
-		},
-		[isSelected, nodeKey]
-	);
-
+		}
+		return false;
+	};
 	useEffect(() => {
 		return mergeRegister(
 			editor.registerCommand(
@@ -63,7 +61,7 @@ function PageBreakComponent({ nodeKey }: { nodeKey: NodeKey }) {
 						if (!event.shiftKey) {
 							clearSelection();
 						}
-						setSelected(!isSelected);
+						setSelected(!isSelected());
 						return true;
 					}
 
@@ -140,7 +138,7 @@ export class PageBreakNode extends DecoratorNode<SvelteRender<any>> {
 	}
 
 	decorate(): SvelteRender {
-		return { component: PageBreakComponent, nodeKey: this.__key };
+		return { component: PageBreakComponent, props: { nodeKey: this.__key } };
 	}
 }
 
