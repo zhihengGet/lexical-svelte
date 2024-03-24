@@ -218,6 +218,7 @@
 	<!-- 	<MeltTree /> -->
 </div>
 
-{#if settings().showTreeView}
+<!-- {#if settings().showTreeView}
 	<TreeViewPlugin />
 {/if}
+ -->

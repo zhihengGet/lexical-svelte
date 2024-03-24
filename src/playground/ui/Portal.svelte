@@ -12,7 +12,7 @@
 		portal = false,
 		enable = true,
 		...props
-	} = $props<SvelteRender<T> & { children?: Snippet; enable?: boolean }>();
+	}: SvelteRender<T> & { children?: Snippet; enable?: boolean } = $props();
 	function refFn(node: HTMLElement) {
 		console.log('portal refFn', node);
 		if (!node) return console.error('portal element does not exists', node);
@@ -51,7 +51,7 @@
 		} */
 	});
 	$effect(() => {
-		console.log('portal after render', ref.current, props.component);
+		console.log('portal after render', ref.current, snippet);
 		// useRef won't be called if decorator update so we have to call manually
 		/* 	if (props.component && props.target && ref.current) {
 			refFn(ref.current);
@@ -69,10 +69,11 @@
 					<svelte:self {...cp} />
 				{/each}
 			</svelte:component>
-		{:else if snippet}
-			{@render snippet({ refFn, ...props.props })}
 		{/if}
 	{/await}
+	{#if snippet}
+		{@render snippet({ refFn, ...props.props })}
+	{/if}
 {/snippet}
 {#if (!components || components.length == 0) && (props.component || snippet || children) && enable}
 	{#if portal == false || !props.target}

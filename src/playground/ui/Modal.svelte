@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createDialog } from '@melt-ui/svelte';
 	import { flyAndScale } from '..//utils/css';
-	import { X } from 'lucide-svelte';
+
 	import { fade } from 'svelte/transition';
 	import type { Snippet } from 'svelte';
 
@@ -12,7 +12,7 @@
 		children?: Snippet;
 		open: boolean;
 	};
-	let { title: t, onClose, children, open } = $props<temp>();
+	let { title: t, onClose, children, open = $bindable(false) }: temp = $props();
 
 	const {
 		elements: { trigger, overlay, content, title, description, close, portalled },
