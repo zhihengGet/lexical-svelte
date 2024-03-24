@@ -13,22 +13,13 @@
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"fix": "eslint --fix .",
 		"tsc": "tsc",
-		"package": "svelte-package --input src/ && npx unocss",
-		"clean_uno": "sed -e \"s/import 'uno.css';//g\" -i dist/*.svelte"
+		"package": "svelte-package --input src/ && npx unocss"
 	},
 	"exports": {
 		".": {
 			"svelte": "./dist/index.js",
 			"default": "./dist/index",
 			"types": "./dist/index.d.ts"
-		},
-		"./uno.css": {
-			"default": "./dist/uno.css"
-		},
-		"./client": {
-			"svelte": "./dist/client",
-			"default": "./dist/client",
-			"types": "./dist/client.d.ts"
 		}
 	},
 	"imports": {
@@ -37,10 +28,11 @@
 		}
 	},
 	"files": [
-		"dist"
+		"dist",
+		"src"
 	],
 	"peerDDependencies": {
-		"svelte": "^5.0.0-next.79"
+		"svelte": "^5.0.0-next.80"
 	},
 	"dependencies": {
 		"@internationalized/date": "^3.5.2",
@@ -110,7 +102,7 @@
 		"eslint-plugin-svelte": "^2.35.1",
 		"glob": "^10.3.10",
 		"prettier-plugin-svelte": "^3.2.2",
-		"svelte": "5.0.0-next.80",
+		"svelte": "5.0.0-next.82",
 		"svelte-check": "^3.6.7",
 		"tslib": "^2.6.2",
 		"typescript": "^5.4.2",

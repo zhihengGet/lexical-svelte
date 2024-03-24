@@ -594,10 +594,10 @@
 			<DropDownItem
 				enabled={settings().image}
 				onclick={() => {
-					modalContent = {
+					/* modalContent = {
 						component: InsertImageDialog,
 						props: { activeEditor: activeEditor() }
-					};
+					}; */
 					open = true;
 					showModal('Insert Image', (onClose) => {
 						return [

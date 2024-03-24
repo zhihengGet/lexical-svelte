@@ -12,10 +12,12 @@
 	const [src, setSrc] = useState('');
 	const [altText, setAltText] = useState('');
 
-	const isDisabled = src() === '';
-	let { onClick } = $props<{
+	const isDisabled = $derived(src() === '');
+	let {
+		onClick
+	}: {
 		onClick: (payload: InsertImagePayload) => void;
-	}>();
+	} = $props();
 </script>
 
 <TextInput
@@ -35,7 +37,7 @@
 <DialogActions>
 	<Button
 		data-test-id="image-modal-confirm-btn"
-		disabled={isDisabled}
+		disabled={src() === ''}
 		onClick={() => onClick({ altText: altText(), src: src() })}
 	>
 		Confirm

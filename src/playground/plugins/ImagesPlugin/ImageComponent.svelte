@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
 	import type {
-		GridSelection,
+		BaseSelection,
 		LexicalCommand,
 		LexicalEditor,
 		NodeKey,
@@ -49,10 +49,24 @@
 	import Placeholder from '../../ui/Placeholder.svelte';
 	import { $isImageNode as isImageNode } from './ImageNode';
 	import Portal from '@ui/Portal.svelte';
+	import { onMount } from 'svelte';
 	export const RIGHT_CLICK_IMAGE_COMMAND: LexicalCommand<MouseEvent> = createCommand(
 		'RIGHT_CLICK_IMAGE_COMMAND'
 	);
 	const imageCache = new Set();
+	async function useSuspenseImage(src: string) {
+		if (!imageCache.has(src)) {
+			return new Promise((resolve) => {
+				const img = new Image();
+				img.src = src;
+				img.onload = () => {
+					imageCache.add(src);
+					resolve(null);
+				};
+			});
+		}
+		return src;
+	}
 </script>
 
 <script lang="ts">
@@ -86,7 +100,7 @@
 	const [isResizing, setIsResizing] = useState<boolean>(false);
 	const { isCollabActive } = useCollaborationContext();
 	const [editor] = useLexicalComposerContext();
-	const [selection, setSelection] = useState<RangeSelection | NodeSelection | GridSelection | null>(
+	const [selection, setSelection] = useState<RangeSelection | NodeSelection | BaseSelection | null>(
 		null
 	);
 	const activeEditorRef = useRef<LexicalEditor | null>(null);
@@ -99,6 +113,7 @@
 				const node = getNodeByKey(nodeKey);
 				if (isImageNode(node)) {
 					node.remove();
+					return true;
 				}
 			}
 			return false;
@@ -159,7 +174,7 @@
 			}
 			if (event.target === imageRef.current) {
 				if (event.shiftKey) {
-					setSelected(!isSelected);
+					setSelected(!isSelected());
 				} else {
 					clearSelection();
 					setSelected(true);
@@ -277,14 +292,24 @@
 
 	const { historyState } = useSharedHistoryContext();
 	const settings = useSettings();
+	let srcLazy = $state(src);
+	/* onMount(() => {
+		useSuspenseImage(src).then((v) => {
+			srcLazy = src;
+		});
+	}); */
+
 	//const draggable = isSelected && isNodeSelection(selection) && !isResizing;
-	let openImageResizer = $derived((isSelected() || isResizing()) && resizable);
-	const mw = maxWidth;
+	//let openImageResizer = $derived((isSelected() || isResizing()) && resizable);
+	//const mw = maxWidth;
 </script>
 
 <div draggable="true">
 	<img
-		{src}
+		class={isSelected() || isResizing()
+			? `focused ${isNodeSelection(selection) ? 'draggable' : ''}`
+			: null}
+		src={srcLazy}
 		alt={altText}
 		bind:this={imageRef.current}
 		{width}

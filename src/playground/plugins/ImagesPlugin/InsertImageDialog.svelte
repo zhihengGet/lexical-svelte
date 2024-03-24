@@ -44,10 +44,13 @@
 	import { onMount } from 'svelte';
 	const [mode, setMode] = useState<null | 'url' | 'file'>(null);
 	const hasModifier = useRef(false);
-	let { activeEditor, onClose } = $props<{
+	let {
+		activeEditor,
+		onClose
+	}: {
 		activeEditor: LexicalEditor;
 		onClose: () => void;
-	}>();
+	} = $props();
 	useEffect(() => {
 		hasModifier.current = false;
 		const handler = (e: KeyboardEvent) => {
