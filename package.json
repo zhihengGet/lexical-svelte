@@ -31,7 +31,7 @@
 		"dist",
 		"src"
 	],
-	"peerDDependencies": {
+	"peerDependencies": {
 		"svelte": "^5.0.0-next.102"
 	},
 	"dependencies": {
