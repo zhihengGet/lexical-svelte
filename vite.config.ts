@@ -3,6 +3,7 @@ import { svelte } from '@sveltejs/vite-plugin-svelte';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import path from 'path';
 import UnoCSS from 'unocss/vite';
+import extractorSvelte from '@unocss/extractor-svelte';
 
 import dts from 'vite-plugin-dts';
 // https://vitejs.dev/config/
@@ -22,7 +23,7 @@ export default defineConfig({
 	}, */
 	plugins: [
 		tsconfigPaths({ loose: true }),
-		UnoCSS({}),
+		UnoCSS(),
 		svelte(),
 		dts(),
 		{

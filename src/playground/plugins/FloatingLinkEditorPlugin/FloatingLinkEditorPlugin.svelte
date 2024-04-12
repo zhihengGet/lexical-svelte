@@ -13,7 +13,8 @@
 		COMMAND_PRIORITY_CRITICAL,
 		COMMAND_PRIORITY_HIGH,
 		COMMAND_PRIORITY_LOW,
-		SELECTION_CHANGE_COMMAND
+		SELECTION_CHANGE_COMMAND,
+		$isLineBreakNode as isLineBreakNode
 	} from 'lexical';
 	import { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -29,7 +30,7 @@
 		isLinkEditMode: boolean;
 		setIsLinkEditMode: React.Dispatch<boolean>;
 	};
-	let { anchorElem = document.body, isLinkEditMode, setIsLinkEditMode } = $props<props>();
+	let { anchorElem = document.body, isLinkEditMode, setIsLinkEditMode }: props = $props();
 	const [editor] = useLexicalComposerContext();
 	const [activeEditor, setActiveEditor] = useState(editor);
 	const [isLink, setIsLink] = useState(false);
@@ -38,11 +39,27 @@
 		function updateToolbar() {
 			const selection = getSelection();
 			if (isRangeSelection(selection)) {
-				const node = getSelectedNode(selection);
-				const linkParent = findMatchingParent(node, isLinkNode);
-				const autoLinkParent = findMatchingParent(node, isAutoLinkNode);
-				// We don't want this menu to open for auto links.
-				if (linkParent !== null && autoLinkParent === null) {
+				const focusNode = getSelectedNode(selection);
+				const focusLinkNode = findMatchingParent(focusNode, isLinkNode);
+				const focusAutoLinkNode = findMatchingParent(focusNode, isAutoLinkNode);
+				if (!(focusLinkNode || focusAutoLinkNode)) {
+					setIsLink(false);
+					return;
+				}
+				const badNode = selection
+					.getNodes()
+					.filter((node) => !isLineBreakNode(node))
+					.find((node) => {
+						const linkNode = findMatchingParent(node, isLinkNode);
+						const autoLinkNode = findMatchingParent(node, isAutoLinkNode);
+						return (
+							(focusLinkNode && !focusLinkNode.is(linkNode)) ||
+							(linkNode && !linkNode.is(focusLinkNode)) ||
+							(focusAutoLinkNode && !focusAutoLinkNode.is(autoLinkNode)) ||
+							(autoLinkNode && !autoLinkNode.is(focusAutoLinkNode))
+						);
+					});
+				if (!badNode) {
 					setIsLink(true);
 				} else {
 					setIsLink(false);

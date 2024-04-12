@@ -6,7 +6,8 @@ export default defineConfig({
 	cli: {
 		entry: [
 			{ patterns: ['src/**/*.svelte'], outFile: 'dist/uno.css' },
-			{ patterns: ['src/**/*.svelte'], outFile: './uno.css' }
+			{ patterns: ['src/**/*.svelte'], outFile: './uno.css' },
+			{ patterns: ['src/**/*.svelte'], outFile: './src/uno.css' }
 		] // CliEntryItem | CliEntryItem[]
 	},
 

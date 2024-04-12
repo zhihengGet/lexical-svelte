@@ -19,14 +19,14 @@
 	} from '@lexical/utils';
 	import { flushSync, onDestroy, onMount } from 'svelte';
 	import { useClickOutside } from '../../utils/isClickOutside';
-
-	let { ...props } = $props<{
+	type p = {
 		visibility: 'hidden' | 'visible';
 		top: number;
 		nodeKey: any;
 		isEnd: boolean; // is selection between two words?
 		left: number;
-	}>();
+	};
+	let { ...props }: p = $props();
 	console.log('auto node', JSON.stringify(props));
 	const data = useSharedAutocompleteContext();
 	const userAgentData = window.navigator.userAgentData;
@@ -133,7 +133,7 @@
 	autofocus={false}
 	style="top:{props.top}px;left:{props.left}px;visibility:{props.visibility};"
 >
-	<span class="pointer-events-none select-none" class:invisible={props.isEnd == false}>
+	<span class="pointer-events-none select-none" class:invisible={!props.isEnd}>
 		{#if data.select}
 			{data.select}
 			(TAB)
@@ -172,5 +172,8 @@
 	.auto_selected {
 		background-color: yellow;
 		text-decoration: underline;
+	}
+	.invisible {
+		visibility: hidden;
 	}
 </style>

@@ -8,15 +8,7 @@
 
 import type { LexicalEditor } from 'lexical';
 
-import {
-	type SvelteComponent,
-	createRoot,
-	flushSync,
-	getAllContexts,
-	mount,
-	onMount,
-	unmount
-} from 'svelte';
+import { flushSync, getAllContexts, mount, onMount, unmount } from 'svelte';
 import type { SvelteRender } from '@lexical/react/types';
 export function useDecorators(editor: LexicalEditor) {
 	let isChanged = $state(false);

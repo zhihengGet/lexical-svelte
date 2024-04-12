@@ -60,6 +60,7 @@ export default function AutocompletePlugin({
 		el_states.left = s.left ?? el_states.left;
 		el_states.top = s.top ?? el_states.top;
 		el_states.visibility = s.visibility ?? el_states.visibility;
+		el_states.isEnd = s.isEnd;
 	}
 	const resizePos = () => {
 		const props = getCaretGlobalPosition();
