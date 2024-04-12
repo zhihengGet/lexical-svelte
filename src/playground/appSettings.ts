@@ -24,9 +24,9 @@ import PlaygroundNodes from './PlaygroundNodes';
 import { getContext, onDestroy, setContext } from 'svelte';
 import type { SearchPromise, useQuery } from '@plugins/AutocompletePlugin';
 
-const hostName = window.location.hostname;
+/* const hostName = typeof window!  window.location.hostname;
 export const isDevPlayground: boolean =
-	hostName !== 'playground.lexical.dev' && hostName !== 'lexical-playground.vercel.app';
+	hostName !== 'playground.lexical.dev' && hostName !== 'lexical-playground.vercel.app'; */
 export type InitialEditorStateType =
 	| null
 	| string
@@ -49,7 +49,7 @@ export const DEFAULT_SETTINGS = {
 	contentEditableAttrs: { 'data-a': 1 },
 	disableBeforeInput: false,
 	floatingToolbar: true,
-	emptyEditor: isDevPlayground,
+	emptyEditor: false,
 	isAutocomplete: true,
 	isCharLimit: false,
 	isCharLimitUtf8: true,

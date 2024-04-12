@@ -10,6 +10,31 @@
 	type PublishFn = (newSuggestion: Suggestion) => void;
 	type ContextShape = [SubscribeFn, PublishFn];
 	type HookShape = [suggestion: () => Suggestion, setSuggestion: PublishFn];
+	/* 	class autocomplete {
+		suggestions = $state<string[]>([]);
+		select = $state<string | null>('');
+		search: string = $state('');
+		updateChoose(n: string) {
+			this.select = n;
+		}
+		reset() {
+			this.suggestions = [];
+			this.select = null;
+		}
+	} */
+	export const useSharedAutocompleteContext = () => {
+		const data = getContext(contextkey);
+		/* const [suggestion, setSuggestion] = useState<Suggestion>(null);
+		useEffect(() => {
+			return subscribe((newSuggestion: Suggestion) => {
+				setSuggestion(newSuggestion);
+			});
+		}, [subscribe]); */
+		return data;
+	};
+</script>
+
+<script lang="ts">
 	class autocomplete {
 		suggestions = $state<string[]>([]);
 		select = $state<string | null>('');
@@ -22,19 +47,6 @@
 			this.select = null;
 		}
 	}
-	export const useSharedAutocompleteContext = () => {
-		const data: autocomplete = getContext(contextkey);
-		/* const [suggestion, setSuggestion] = useState<Suggestion>(null);
-		useEffect(() => {
-			return subscribe((newSuggestion: Suggestion) => {
-				setSuggestion(newSuggestion);
-			});
-		}, [subscribe]); */
-		return data;
-	};
-</script>
-
-<script lang="ts">
 	const c = new autocomplete();
 
 	setContext(contextkey, c);
