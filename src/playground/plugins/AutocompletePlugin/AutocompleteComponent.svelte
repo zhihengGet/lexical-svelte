@@ -19,6 +19,7 @@
 	} from '@lexical/utils';
 	import { flushSync, onDestroy, onMount } from 'svelte';
 	import { useClickOutside } from '../../utils/isClickOutside';
+	import { CAN_USE_DOM } from 'shared/canUseDOM';
 	type p = {
 		visibility: 'hidden' | 'visible';
 		top: number;
@@ -29,28 +30,7 @@
 	let { ...props }: p = $props();
 	console.log('auto node', JSON.stringify(props));
 	const data = useSharedAutocompleteContext();
-	const userAgentData = window.navigator.userAgentData;
-	const isMobile =
-		userAgentData !== undefined
-			? userAgentData.mobile
-			: window.innerWidth <= 800 && window.innerHeight <= 600;
-	function checkInView(container: HTMLElement, element: HTMLElement, partial: boolean) {
-		//Get container properties
-		let cTop = container.scrollTop;
-		let cBottom = cTop + container.clientHeight;
 
-		//Get element properties
-		let eTop = element.offsetTop;
-		let eBottom = eTop + element.clientHeight;
-
-		//Check if in view
-		let isTotal = eTop >= cTop && eBottom <= cBottom;
-		let isPartial =
-			partial && ((eTop < cTop && eBottom > cTop) || (eBottom > cBottom && eTop < cBottom));
-
-		//Return outcome
-		return isTotal || isPartial;
-	}
 	let div = $state<HTMLElement>();
 	const [editor] = useLexicalComposerContext();
 	const a = editor.registerCommand(
@@ -146,13 +126,13 @@
 		{#each data.suggestions as item, key}
 			<button
 				onpointerup={(e) => {
-					data.updateChoose(item);
+					data.select = item;
 					flushSync(() => {
 						editor.dispatchCommand(ClickAutoComplete, { item });
 					});
 				}}
 				onclick={(e) => {
-					data.updateChoose(item);
+					data.select = item;
 					flushSync(() => {
 						editor.dispatchCommand(ClickAutoComplete, { item });
 					});

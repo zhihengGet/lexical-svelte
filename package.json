@@ -1,7 +1,7 @@
 {
 	"name": "lexical-svelte-runes",
 	"private": false,
-	"version": "0.1.4-beta.63",
+	"version": "0.1.4-beta.64",
 	"type": "module",
 	"author": {
 		"name": "zhiheng"
@@ -24,7 +24,7 @@
 	},
 	"imports": {
 		"#uno": {
-			"default": "./src/uno.css"
+			"default": "./dist/uno.css"
 		}
 	},
 	"files": [
@@ -60,26 +60,17 @@
 		"bits-ui": "^0.21.3",
 		"chalk": "^5.3.0",
 		"clsx": "^2.1.0",
-		"cmdk-sv": "^0.0.17",
 		"embla-carousel-svelte": "^8.0.2",
-		"formsnap": "^1.0.0",
 		"katex": "^0.16.10",
 		"lexical": "^0.14.3",
 		"lodash-es": "^4.17.21",
 		"lucide-svelte": "^0.368.0",
-		"madge": "^7.0.0",
-		"mode-watcher": "^0.3.0",
-		"paneforge": "^0.0.4",
 		"prettier": "^3.2.5",
 		"svelte-awesome-color-picker": "^3.0.6",
-		"svelte-sonner": "^0.3.22",
-		"sveltekit-superforms": "^2.12.4",
 		"tailwind-merge": "^2.2.2",
 		"tailwind-variants": "^0.2.1",
-		"vaul-svelte": "^0.3.0",
 		"y-websocket": "^2.0.2",
-		"yjs": "^13.6.14",
-		"zod": "^3.22.4"
+		"yjs": "^13.6.14"
 	},
 	"devDependencies": {
 		"@melt-ui/svelte": "^0.76.3",
@@ -102,7 +93,7 @@
 		"eslint-plugin-svelte": "^2.37.0",
 		"glob": "^10.3.12",
 		"prettier-plugin-svelte": "^3.2.3",
-		"svelte": "5.0.0-next.102",
+		"svelte": "5.0.0-next.103",
 		"svelte-check": "^3.6.9",
 		"tslib": "^2.6.2",
 		"typescript": "^5.4.5",

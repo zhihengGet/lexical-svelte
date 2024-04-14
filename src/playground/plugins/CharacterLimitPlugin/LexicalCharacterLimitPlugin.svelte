@@ -9,6 +9,7 @@
 	let textEncoderInstance: null | TextEncoder = null;
 
 	function textEncoder(): null | TextEncoder {
+		9;
 		if (window.TextEncoder === undefined) {
 			return null;
 		}
@@ -23,7 +24,7 @@
 		charset: 'UTF-8' | 'UTF-16';
 		maxLength: number;
 	};
-	let { charset, maxLength } = $props<props>();
+	let { charset, maxLength }: props = $props();
 	function utf8Length(text: string) {
 		const currentTextEncoder = textEncoder();
 

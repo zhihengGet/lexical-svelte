@@ -10,7 +10,6 @@ import {
 	$getSelection as getSelection
 } from 'lexical';
 
-import type { UpdateListener } from 'lexical/LexicalEditor';
 import { getAllContexts, mount, onDestroy, onMount, type ComponentProps, unmount } from 'svelte';
 import { ClickAutoComplete, search, type useQuery, type SearchPromise } from '.';
 import { useSharedAutocompleteContext } from '../../context/SharedAutocompleteContext.svelte';
@@ -37,7 +36,7 @@ export default function AutocompletePlugin({
 		};
 	}
 }: {
-	query?: ReturnType<typeof useQuery>;
+	query: ReturnType<typeof useQuery>;
 }) {
 	const [editor] = useLexicalComposerContext();
 	const suggestion_state = useSharedAutocompleteContext();
@@ -46,10 +45,12 @@ export default function AutocompletePlugin({
 	//let lastSuggestion: null | string = null;
 	let searchPromise: null | SearchPromise = null;
 	const editorContext = getAllContexts();
-	const el_states = $state({
+	const el_states: ComponentProps<AutocompleteComponent> = $state({
 		top: 0,
 		left: 0,
-		visibility: 'hidden'
+		visibility: 'hidden',
+		isEnd: false,
+		nodeKey: 0
 	});
 	const el = mount(AutocompleteComponent, {
 		target: document.body,
@@ -60,7 +61,7 @@ export default function AutocompletePlugin({
 		el_states.left = s.left ?? el_states.left;
 		el_states.top = s.top ?? el_states.top;
 		el_states.visibility = s.visibility ?? el_states.visibility;
-		el_states.isEnd = s.isEnd;
+		el_states.isEnd = s.isEnd ?? false;
 	}
 	const resizePos = () => {
 		const props = getCaretGlobalPosition();
@@ -74,7 +75,8 @@ export default function AutocompletePlugin({
 		window.addEventListener('resize', resizePos);
 		return () => window.removeEventListener('resize', resizePos);
 	});
-	async function handleUpdate(arg: Parameters<UpdateListener>[0]) {
+	type args = Parameters<typeof editor.registerUpdateListener>[number];
+	async function handleUpdate(arg: Parameters<args>[0]) {
 		console.log('calling handleUpdate', arg);
 		//if (arg.tags.has('autocomplete') || arg.tags.has('history-merge')) return;
 

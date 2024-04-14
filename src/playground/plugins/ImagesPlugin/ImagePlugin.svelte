@@ -12,7 +12,7 @@
 
 	const TRANSPARENT_IMAGE =
 		'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-	const img = document.createElement('img');
+	const img = typeof document != 'undefined' ? document.createElement('img') : { src: '' };
 	img.src = TRANSPARENT_IMAGE;
 
 	function onDragStart(event: DragEvent): boolean {
@@ -128,8 +128,8 @@
 			target == null
 				? null
 				: target.nodeType === 9
-				  ? (target as Document).defaultView
-				  : (target as Element).ownerDocument.defaultView;
+					? (target as Document).defaultView
+					: (target as Element).ownerDocument.defaultView;
 		const domSelection = getDOMSelection(targetWindow);
 		if (document.caretRangeFromPoint) {
 			range = document.caretRangeFromPoint(event.clientX, event.clientY);

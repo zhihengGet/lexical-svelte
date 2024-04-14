@@ -45,8 +45,10 @@
 	const text = 'Enter some plain text...';
 	const placeholder = text;
 	const skipCollaborationInit =
-		// @ts-ignore
-		window.parent != null && window.parent.frames.right === window;
+		typeof window == 'undefined'
+			? true
+			: // @ts-expect-error
+				window.parent != null && window.parent.frames?.right === window;
 
 	const settings = useSettings();
 	$inspect('setting change', settings());
