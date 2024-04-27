@@ -9,6 +9,38 @@
    1. if you are not using them, you can import uno.css from dist
 3. import index.css for lexical playground css
 
+```typescript
+<script lang="ts">
+	import '@unocss/reset/tailwind-compat.css';
+	//import 'uno.css';
+	import '#uno.css';  // unocss, u can add this repo to tailwindcss so u dont need to import from here
+	import Editor from './Editor.svelte';
+	import './index.css'; // react playground css
+	import LexicalComposer from './lib/LexicalComposer.svelte';
+
+	import SettingsContext from './playground/context/SettingsContext.svelte';
+	import SharedAutocompleteContext from './playground/context/SharedAutocompleteContext.svelte';
+	import { createHistoryContext } from './playground/context/SharedHistoryContext';
+	import type { Settings } from './playground/appSettings';
+
+	let { ...props }: Settings = $props();
+
+	createHistoryContext();
+</script>
+
+<SettingsContext settings={props}>
+	<SharedAutocompleteContext>
+		<LexicalComposer>
+			<div class="editor-shell w-full">
+				<Editor />
+			</div>
+		</LexicalComposer>
+	</SharedAutocompleteContext>
+</SettingsContext>
+
+
+```
+
 # Goal
 
 - migrate to melt-ui/shadcn for components
