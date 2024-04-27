@@ -25,6 +25,7 @@
 			"svelte": "./dist/*",
 			"default": "./dist/*"
 		},
+		"./uno.css": "./dist/uno.css",
 		"./editor.css": "./dist/uno.css"
 	},
 	"imports": {
