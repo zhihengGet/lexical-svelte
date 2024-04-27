@@ -6,7 +6,7 @@ export { default as ContentTree } from './playground/plugins/TableOfContentsPlug
 export { default as App } from './App.svelte';
 export { createHistoryContext } from './playground/context/SharedHistoryContext';
 export { default as EditorBase } from './Editor.svelte';
-//export { default as Editor } from './EditorBase.svelte';
+export { default as Editor } from './EditorBase.svelte';
 export { default as LexicalComposer } from './lib/LexicalComposer.svelte';
 export { default as SettingsContext } from './playground/context/SettingsContext.svelte';
 export { default as SharedAutocompleteContext } from './playground/context/SharedAutocompleteContext.svelte';
