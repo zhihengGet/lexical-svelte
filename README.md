@@ -1,13 +1,14 @@
-# currently we need to sync with this forked branch
+check [dev](https://github.com/zhihengGet/lexical-svelte/tree/test) branch please
 
-# shitty readme i know :(
+currently we need to sync with this forked branch or not...
 
-# style
+[fork](<[asd](https://github.com/zhihengGet/lexical)>)
 
-1. remember to import @unocss/reset/tailwind-compat.css
-2. if u use tailwindcss or unocss , then u need to add this node modules to the content in your config
-   1. if you are not using them, you can import uno.css from dist
-3. import index.css for lexical playground css
+shitty readme i know :(
+
+## QuickStart
+
+`pnpm install lexical-svelte-runes@latest`
 
 ```typescript
 <script lang="ts">
