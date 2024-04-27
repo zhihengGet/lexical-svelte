@@ -28,8 +28,9 @@
 	import { useMemo } from 'react';
 	import { $generateHtmlFromNodes as generateHtmlFromNodes } from '@lexical/html';
 	import { useSettings, type InitialEditorStateType } from '../playground/appSettings';
-	import { onDestroy } from 'svelte';
+	import { onDestroy, type Snippet } from 'svelte';
 
+	let { children }: { children: Snippet } = $props();
 	let setting = useSettings();
 	const {
 		onInput,
@@ -179,4 +180,4 @@
 	}
 </script>
 
-<slot />
+{@render children()}

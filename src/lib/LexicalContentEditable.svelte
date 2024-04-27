@@ -22,7 +22,7 @@
 		tabIndex,
 		'data-testid': testid,
 		...rest
-	} = $props<any>();
+	} = $props();
 	const setting = useSettings();
 	const {} = $derived(setting());
 	const [editor] = useLexicalComposerContext();

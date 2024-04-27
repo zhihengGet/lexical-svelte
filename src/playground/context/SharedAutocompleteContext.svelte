@@ -29,7 +29,8 @@
 </script>
 
 <script lang="ts">
+	let { children } = $props();
 	setContext(contextkey, autocomplete);
 </script>
 
-<slot />
+{@render children()}
