@@ -1,7 +1,7 @@
 {
 	"name": "lexical-svelte-runes",
 	"private": false,
-	"version": "0.1.4-beta.69.1",
+	"version": "0.1.4-beta.69.5",
 	"type": "module",
 	"author": {
 		"name": "zhiheng"
@@ -21,14 +21,14 @@
 			"default": "./dist/index",
 			"types": "./dist/index.d.ts"
 		},
-		".": {
-			"svelte": "./dist",
-			"default": "./dist"
+		"./*": {
+			"svelte": "./dist/*",
+			"default": "./dist/*"
 		},
 		"./editor.css": "./dist/uno.css"
 	},
 	"imports": {
-		"#uno": {
+		"#uno.css": {
 			"default": "./dist/uno.css"
 		}
 	},
