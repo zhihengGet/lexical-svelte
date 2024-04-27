@@ -8,7 +8,9 @@ shitty readme i know :(
 
 ## QuickStart
 
-`pnpm install lexical-svelte-runes@latest`
+```shell
+pnpm install lexical-svelte-runes@latest
+```
 
 ```typescript
 <script lang="ts">
