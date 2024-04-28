@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
 	import type { Position } from './InlineImageNode.svelte';
 
-	import '../../ui/Checkbox.css';
+	//import '../../ui/Checkbox.css';
 
 	import type { LexicalCommand, LexicalEditor } from 'lexical';
 	import { createCommand } from 'lexical';
@@ -15,6 +15,7 @@
 	import FileInput from '@ui/FileInput.svelte';
 	import Select from '@ui/Select.svelte';
 	import TextInput from '@ui/TextInput.svelte';
+	import Checkbox from '@lexical/react/components/ui/checkbox/checkbox.svelte';
 
 	export type InsertInlineImagePayload = Readonly<InlineImagePayload>;
 
@@ -108,7 +109,7 @@
 </Select>
 
 <div class="Input__wrapper">
-	<input id="caption" type="checkbox" checked={showCaption()} onChange={handleShowCaptionChange} />
+	<Checkbox id="caption" checked={showCaption()} onchange={handleShowCaptionChange} />
 	<label for="caption">Show Caption</label>
 </div>
 
