@@ -599,7 +599,7 @@
 						props: { activeEditor: activeEditor() }
 					}; */
 					open = true;
-					showModal('Insert Image', (onClose) => {
+					/* 	showModal('Insert Image', (onClose) => {
 						return [
 							{
 								component: InsertImageDialog,
@@ -611,7 +611,7 @@
 								}
 							}
 						];
-					});
+					}); */
 					setModalChild((onClose) => {
 						return {
 							component: InsertImageDialog,
@@ -662,9 +662,10 @@
 				<span class="text">Excalidraw</span>
 			</DropDownItem> -->
 
-			<!-- 	<DropDownItem
+			<DropDownItem
+				enabled={settings().equation}
 				onclick={() => {
-					showModal('Insert Equation', (onClose) => [
+					/* 	showModal('Insert Equation', (onClose) => [
 						{
 							component: InsertEquationDialog,
 							props: {
@@ -672,13 +673,25 @@
 								onClose
 							}
 						}
-					]);
+					]); */
+					open = true;
+					setModalChild((onClose) => {
+						return {
+							component: InsertEquationDialog,
+							props: {
+								activeEditor: activeEditor(),
+								onClose,
+								title: 'Insert Latex code',
+								open: true
+							}
+						};
+					});
 				}}
 				class="item"
 			>
 				<i class="icon equation" />
 				<span class="text">Equation</span>
-			</DropDownItem> -->
+			</DropDownItem>
 			<!-- 	<DropDownItem
 				onclick={() => {
 					editor.update(() => {

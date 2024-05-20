@@ -65,6 +65,11 @@ pnpm install lexical-svelte-runes@latest
 
 2. you can check other components in the repo to see how it works
 
+3. when porting, most of the time you only need to start with two goal: toolbar component and plugin;
+   1. node is registered with plugin : how to render stuff
+   2. toolbar tell you the when and what to render
+      i.e if you want to port excalidraw to svelte, then you need to check editor.tsx to see the plugin it uses then go to toolbar file and see how they render excalidraw through which ui component
+
 # TODO
 
 you can refer to official react playground to see what is missing here

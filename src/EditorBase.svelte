@@ -5,9 +5,13 @@
 	import SharedAutocompleteContext from './playground/context/SharedAutocompleteContext.svelte';
 	import { createHistoryContext } from './playground/context/SharedHistoryContext';
 	import type { Settings } from './playground/appSettings';
+
 	let { ...props }: Settings = $props();
 
-	createHistoryContext();
+	$effect.pre(() => {
+		// clear history when initialHTMl changes which is rare
+		createHistoryContext(props.initialHTML);
+	});
 </script>
 
 <SettingsContext settings={props}>

@@ -13,10 +13,21 @@
 
 	let { ...props }: Settings = $props();
 
-	createHistoryContext();
+	let s = $state({ initialHTML: '<p>hello<p>', equation: true });
+	$effect.pre(() => {
+		createHistoryContext(props.initialHTML);
+	});
 </script>
 
-<SettingsContext settings={props}>
+{#if props.dev}
+	<button
+		onclick={() => {
+			s.initialHTML = '<p>hello v2</p>';
+		}}>update html</button
+	>
+{/if}
+
+<SettingsContext settings={s}>
 	<SharedAutocompleteContext>
 		<LexicalComposer>
 			<div class="editor-shell w-full">

@@ -22,7 +22,7 @@ import { $applyNodeReplacement, DecoratorNode } from 'lexical';
 
 import type { SvelteRender } from '@lexical/react/types';
 
-const EquationComponent = () => import('./EquationComponent.svelte');
+const EquationComponent = () => import('./EquationComponent.svelte').then((v) => v.default);
 
 export type SerializedEquationNode = Spread<
 	{

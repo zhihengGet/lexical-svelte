@@ -109,6 +109,7 @@
 		forwardedRef={inputRef}
 	/>
 {:else}
+	<!-- render katex -->
 	<KatexRenderer
 		equation={equationValue()}
 		{inline}

@@ -239,6 +239,7 @@
 .b,
 .border,
 .border-\[1px\],
+.border-1,
 [b=""]{border-width:1px;}
 .border-2{border-width:2px;}
 .file\:border-0::file-selector-button{border-width:0px;}

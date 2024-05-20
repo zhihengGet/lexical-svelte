@@ -28,15 +28,15 @@
 
 	const [editor] = useLexicalComposerContext();
 
-	useEffect(() => {
+	$effect(() => {
 		if (!editor.hasNodes([EquationNode])) {
 			throw new Error('EquationsPlugins: EquationsNode not registered on editor');
 		}
-
 		return editor.registerCommand<CommandPayload>(
 			INSERT_EQUATION_COMMAND,
 			(payload) => {
 				const { equation, inline } = payload;
+
 				const equationNode = createEquationNode(equation, inline);
 
 				insertNodes([equationNode]);
@@ -48,5 +48,5 @@
 			},
 			COMMAND_PRIORITY_EDITOR
 		);
-	}, [editor]);
+	});
 </script>

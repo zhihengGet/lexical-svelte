@@ -4,10 +4,13 @@
 	import { useCallback } from 'react';
 	import { INSERT_EQUATION_COMMAND } from './EquationsPlugin.svelte';
 
-	let { activeEditor, onClose } = $props<{
+	let {
+		activeEditor,
+		onClose
+	}: {
 		activeEditor: LexicalEditor;
 		onClose: () => void;
-	}>();
+	} = $props();
 	const onEquationConfirm = useCallback(
 		(equation: string, inline: boolean) => {
 			activeEditor.dispatchCommand(INSERT_EQUATION_COMMAND, {

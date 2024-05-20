@@ -1,4 +1,5 @@
 <script lang="ts" context="module">
+	//import { debug } from 'console';
 	/**
 	 * Copyright (c) Meta Platforms, Inc. and affiliates.
 	 *
@@ -21,6 +22,7 @@
 	type Props = BaseEquationEditorProps;
 	let { equation, setEquation, inline, forwardedRef } = $props<Props>();
 	const onChange = (event: InputEvent) => {
+		debugger;
 		setEquation((event.target as HTMLInputElement).value);
 	};
 </script>
@@ -30,7 +32,6 @@
 		<span class="EquationEditor_dollarSign">$</span>
 		<input
 			class="EquationEditor_inlineEditor"
-			value={equation}
 			oninput={onChange}
 			autofocus={true}
 			bind:this={forwardedRef.current}
@@ -40,11 +41,8 @@
 {:else}
 	<div class="EquationEditor_inputBackground">
 		<span class="EquationEditor_dollarSign">{'$$\n'}</span>
-		<textarea
-			class="EquationEditor_blockEditor"
-			oninput={onChange}
-			bind:this={forwardedRef.current}
-		/>
+		<textarea class="EquationEditor_blockEditor" oninput={onChange} bind:this={forwardedRef.current}
+		></textarea>
 		<span class="EquationEditor_dollarSign">{'\n$$'}</span>
 	</div>
 {/if}

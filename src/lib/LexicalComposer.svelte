@@ -50,6 +50,7 @@
 
 	const context: LexicalComposerContextType = createLexicalComposerContext(null, theme);
 	let editor = initialEditor || null;
+
 	if (editor === null) {
 		// only editable need to be reactive, other is one-off setting?
 		const newEditor = createEditor({
@@ -64,6 +65,25 @@
 		//initializeEditor(newEditor, initialEditorState);
 
 		editor = newEditor;
+		$effect(() => {
+			if (!editor) return;
+			editor.update(() => {
+				// In the browser you can use the native DOMParser API to parse the HTML string.
+				const parser = new DOMParser();
+				const dom = parser.parseFromString(initialHTML ?? '<p data-id="213">hi</p>', 'text/html');
+
+				// Once you have the DOM instance it's easy to generate LexicalNodes.
+				const nodes = generateNodesFromDOM(editor, dom);
+
+				// Select the root
+				lex.$getRoot().select();
+				lex.$getRoot().clear();
+				// Insert them at a selection.
+				lex.$insertNodes(nodes);
+
+				// Insert them at a selection.
+			}, HISTORY_MERGE_OPTIONS);
+		});
 		/* editor.update(() => {
 				const root = getRoot();
 				if (root.isEmpty()) {
@@ -78,7 +98,7 @@
 					}
 				}
 			}, HISTORY_MERGE_OPTIONS); */
-		editor.update(() => {
+		/* editor.update(() => {
 			// In the browser you can use the native DOMParser API to parse the HTML string.
 			const parser = new DOMParser();
 			const dom = parser.parseFromString(initialHTML ?? '<p data-id="213">hi</p>', 'text/html');
@@ -92,7 +112,7 @@
 			lex.$insertNodes(nodes);
 
 			// Insert them at a selection.
-		}, HISTORY_MERGE_OPTIONS);
+		}, HISTORY_MERGE_OPTIONS); */
 		const un = editor.registerUpdateListener(({ editorState }) => {
 			// In the browser you can use the native DOMParser API to parse the HTML string.
 			// The latest EditorState can be found as `editorState`.

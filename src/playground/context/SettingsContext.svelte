@@ -20,11 +20,11 @@
 		children,
 		initialConfigs,
 		settings: s
-	} = $props<{
+	}: {
 		children: Snippet;
 		initialConfigs?: CreateEditorArgs;
 		settings: Settings;
-	}>();
+	} = $props();
 
 	const [settings, setSettings] = useState(merge(DEFAULT_SETTINGS, s));
 

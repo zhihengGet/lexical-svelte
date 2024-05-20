@@ -38,7 +38,7 @@
 			use:overlay
 			class="fixed inset-0 z-50 bg-black/50"
 			transition:fade={{ duration: 150 }}
-		/>
+		></div>
 
 		<div
 			class="fixed left-[50%] top-[50%] z-50 max-h-[85vh] w-[90vw]
@@ -49,7 +49,7 @@
 		>
 			<h1>{t}</h1>
 
-			<slot />
+			{@render children?.()}
 			<!-- <X class="square-4" /> -->
 			<button
 				{...$close}

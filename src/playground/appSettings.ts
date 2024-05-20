@@ -50,6 +50,7 @@ export const DEFAULT_SETTINGS = {
 	disableBeforeInput: false,
 	floatingToolbar: true,
 	emptyEditor: false,
+	equation: false,
 	isAutocomplete: true,
 	isCharLimit: false,
 	isCharLimitUtf8: true,
