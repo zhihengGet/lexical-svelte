@@ -1441,6 +1441,7 @@ button.action-button:disabled {
 
 .toolbar {
 	display: flex;
+	flex-wrap: wrap;
 	margin-bottom: 1px;
 	background: #fff;
 	padding: 4px;
@@ -1448,7 +1449,7 @@ button.action-button:disabled {
 	border-top-right-radius: 10px;
 	vertical-align: middle;
 	overflow: auto;
-	height: 36px;
+	height: max-content;
 	/* position: sticky; */
 	top: 0;
 	z-index: 2;
