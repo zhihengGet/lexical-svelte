@@ -15,6 +15,7 @@
 
 	let s = $state({ initialHTML: '<p>hello<p>', equation: true });
 	$effect.pre(() => {
+		//@ts-expect-error make effect reactive
 		createHistoryContext(props.initialHTML);
 	});
 </script>
