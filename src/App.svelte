@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '@unocss/reset/tailwind-compat.css';
 	//import 'uno.css';
-	import '#uno.css';
+	//import '#uno.css';
 	import Editor from './Editor.svelte';
 	import './index.css';
 	import LexicalComposer from './lib/LexicalComposer.svelte';
@@ -10,7 +10,7 @@
 	import SharedAutocompleteContext from './playground/context/SharedAutocompleteContext.svelte';
 	import { createHistoryContext } from './playground/context/SharedHistoryContext';
 	import type { Settings } from './playground/appSettings';
-
+	import './React';
 	let { ...props }: Settings = $props();
 
 	let s = $state({ initialHTML: '<p>hello<p>', equation: true });
@@ -20,6 +20,7 @@
 	});
 </script>
 
+<div id="root" />
 {#if props.dev}
 	<button
 		onclick={() => {

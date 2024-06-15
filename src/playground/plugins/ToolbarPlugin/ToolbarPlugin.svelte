@@ -61,7 +61,8 @@
 		OUTDENT_CONTENT_COMMAND,
 		REDO_COMMAND,
 		SELECTION_CHANGE_COMMAND,
-		UNDO_COMMAND
+		UNDO_COMMAND,
+		CLEAR_EDITOR_COMMAND
 	} from 'lexical';
 
 	function dropDownActiveClass(active: boolean) {
@@ -1044,6 +1045,18 @@
 		{editor}
 		isRTL={isRTL()}
 	/>
+	<button
+		disabled={!isEditable()}
+		onclick={() => {
+			activeEditor().dispatchCommand(CLEAR_EDITOR_COMMAND, undefined);
+		}}
+		class={'toolbar-item spaced ' + (isCode() ? 'active' : '')}
+		title="Insert code block"
+		type="button"
+		aria-label="Insert code block"
+	>
+		Clear
+	</button>
 </div>
 
 <Modal bind:open title="insert image">

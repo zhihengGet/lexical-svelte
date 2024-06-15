@@ -39,6 +39,9 @@
 	import MeltTree from '@plugins/TableOfContentsPlugin/MeltTree.svelte';
 	import { UNDO_COMMAND } from 'lexical';
 	import DraggableBlock from '@plugins/DraggableBlockPlugin/DraggableBlock.svelte';
+	import { ClearEditorPlugin } from '@plugins/ClearEditorPlugin';
+	import TableCellResizerPlugin from '@plugins/TableCellResizer/TableCellResizerPlugin.svelte';
+	import { TablePlugin } from './lib/LexicalTablePlugin';
 	const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
 	const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
 	const isEditable = true;
@@ -138,8 +141,10 @@
 		<Portal initializor={CheckListPlugin} />
 		<Portal initializor={CodeHighlightPlugin} />
 		<Portal initializor={HashtagPlugin} />
+		<Portal initializor={() => ClearEditorPlugin({})} />
 		<!-- <Portal initializor={() => MaxLengthPlugin({ maxLength: maxLength })} /> -->
-
+		<Portal initializor={() => TablePlugin({})} />
+		<TableCellResizerPlugin />
 		{#if isMaxLength}
 			<Portal
 				initializor={() =>
