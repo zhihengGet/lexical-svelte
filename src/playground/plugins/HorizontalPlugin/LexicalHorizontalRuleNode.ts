@@ -10,14 +10,16 @@ import type {
 	DOMConversionMap,
 	DOMConversionOutput,
 	DOMExportOutput,
+	EditorConfig,
+	LexicalCommand,
 	LexicalNode,
+	NodeKey,
 	SerializedLexicalNode
 } from 'lexical';
-
 import { $applyNodeReplacement, DecoratorNode } from 'lexical';
 import HorizontalRuleComponent from './LexicalHorizontalRuleComponent.svelte';
 import type { SvelteRender } from '../../../lib/types';
-
+import { addClassNamesToElement, mergeRegister, removeClassNamesFromElement } from '@lexical/utils';
 export type SerializedHorizontalRuleNode = SerializedLexicalNode;
 
 export class HorizontalRuleNode extends DecoratorNode<SvelteRender> {
@@ -53,8 +55,10 @@ export class HorizontalRuleNode extends DecoratorNode<SvelteRender> {
 		return { element: document.createElement('hr') };
 	}
 
-	createDOM(): HTMLElement {
-		return document.createElement('hr');
+	createDOM(config: EditorConfig): HTMLElement {
+		const element = document.createElement('hr');
+		addClassNamesToElement(element, config.theme.hr);
+		return element;
 	}
 
 	getTextContent(): string {

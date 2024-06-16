@@ -18,7 +18,6 @@
 	import { $getNearestNodeFromDOMNode as getNearestNodeFromDOMNode } from 'lexical';
 	import * as React from 'react';
 	import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-	import { createPortal } from 'react-dom';
 	import type { MouseEventHandler } from 'svelte/elements';
 
 	type MousePosition = {

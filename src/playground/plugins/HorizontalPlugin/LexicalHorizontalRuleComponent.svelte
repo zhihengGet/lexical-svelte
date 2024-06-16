@@ -11,6 +11,7 @@
 		DOMConversionMap,
 		DOMConversionOutput,
 		DOMExportOutput,
+		EditorConfig,
 		LexicalCommand,
 		LexicalNode,
 		NodeKey,
@@ -19,7 +20,11 @@
 
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 	import { useLexicalNodeSelection } from '@lexical/react/useLexicalNodeSelection.svelte';
-	import { mergeRegister } from '@lexical/utils';
+	import {
+		addClassNamesToElement,
+		mergeRegister,
+		removeClassNamesFromElement
+	} from '@lexical/utils';
 	import {
 		$applyNodeReplacement as applyNodeReplacement,
 		$getNodeByKey as getNodeByKey,
@@ -98,9 +103,14 @@
 
 	useEffect(() => {
 		const hrElem = editor.getElementByKey(nodeKey);
+		const isSelectedClassName = 'selected';
 
 		if (hrElem !== null) {
-			hrElem.className = isSelected() ? 'selected' : '';
+			if (isSelected()) {
+				addClassNamesToElement(hrElem, isSelectedClassName);
+			} else {
+				removeClassNamesFromElement(hrElem, isSelectedClassName);
+			}
 		}
 	}, [editor, isSelected, nodeKey]);
 </script>
