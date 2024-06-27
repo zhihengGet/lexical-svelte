@@ -35,25 +35,18 @@
 </script>
 
 <DropdownMenu.Root>
-	<DropdownMenu.Trigger>
-		<button
-			type="button"
-			{disabled}
-			aria-label={buttonAriaLabel || buttonLabel}
-			class={buttonClassName}
-		>
-			{#if buttonIconClassName}
-				<span class={buttonIconClassName} />
-			{/if}
+	<DropdownMenu.Trigger class={buttonClassName}>
+		{#if buttonIconClassName}
+			<span class={buttonIconClassName}></span>
+		{/if}
 
-			{#if buttonLabel}
-				<span class="text-sm text-center">{buttonLabel}</span>
-			{/if}
+		{#if buttonLabel}
+			<span class="text-sm text-center">{buttonLabel}</span>
+		{/if}
 
-			<i class="chevron-down {chevronClass}" />
-		</button>
+		<i class="chevron-down {chevronClass}"></i>
 	</DropdownMenu.Trigger>
-	<DropdownMenu.Content class="bg-neutral-100 dropdown">
+	<DropdownMenu.Content class="bg-[#fff] dropdown">
 		<DropdownMenu.Group>
 			<DropdownMenu.Label><slot name="group" /></DropdownMenu.Label>
 			<DropdownMenu.Separator />

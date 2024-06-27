@@ -1,20 +1,16 @@
-check [dev](https://github.com/zhihengGet/lexical-svelte/tree/test) branch please
+the main check [test](https://github.com/zhihengGet/lexical-svelte/tree/test) branch
 
-currently we need to sync with this forked branch or not...
-
-[fork](<[asd](https://github.com/zhihengGet/lexical)>)
-
-shitty readme i know :(
+i forked lexical repo for tracking purpose [fork](<(https://github.com/zhihengGet/lexical)>), ideally we need to catch up commit by commit by i guess it is fine that we just add whatever is needed.
 
 ## QuickStart
 
 ```shell
-pnpm install lexical-svelte-runes@latest
+pnpm install lexical-svelte-runes@latest @unocss/reset
 ```
 
 ```typescript
 <script lang="ts">
-	import '@unocss/reset/tailwind-compat.css';
+	import '@unocss/reset/tailwind-compat.css'; //using unocss reset
 	//import 'uno.css';
 	import '#uno.css';  // unocss, u can add this repo to tailwindcss so u dont need to import from here
 	import Editor from './Editor.svelte';
