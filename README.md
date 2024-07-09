@@ -79,7 +79,8 @@ when importing a new plugin to lexical-svelte-runes, we can use external library
    5. **remember when you convert code to svelte , you can use external libs but please keep code structure as similar to the react repo as much as possible for easier debug later on!**
    6. remember to add node to [playgroundNodes](/src/playground/PlaygroundNodes.ts) after your ported from react's repo https://github.com/facebook/lexical/tree/main/packages/lexical-playground/src/nodes
    7. add converted plugins to the editor.tsx in svelte repo
-   8. remove unused files i.e .tsx that you used autoFix.js on or some utilities that svelte don't need
+   8. remove unused files
+      1. i.e .tsx that you used autoFix.js on or some utilities that svelte don't need
 
 # todos...
 
