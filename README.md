@@ -68,7 +68,7 @@ when importing a new plugin to lexical-svelte-runes, we can use external library
 
 ## steps (wip)
 
-1. clone this repo - we will refer to the cloned repo 'svelte repo'
+1. clone the lexical-svelte(the repo you are on now) repo - we will refer to the cloned repo 'svelte repo'
 2. clone official lexical repo - we will refer to the cloned repo 'react repo'
 3. go to https://playground.lexical.dev/ and pick something we dont have i.e font dropdown
 4. go to react repo, navigate to react playground package,
