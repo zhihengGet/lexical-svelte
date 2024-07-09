@@ -52,7 +52,9 @@ export default defineConfig({
 		// Leave minification up to applications.
 		minify: false,
 		rollupOptions: {
-			plugins: [nodeResolve()]
+			plugins: [
+				/* nodeResolve() */
+			]
 		}
 	}
 });
