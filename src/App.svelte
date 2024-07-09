@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '@unocss/reset/tailwind-compat.css';
 	//import 'uno.css';
-	import '#uno.css';.
+	import '#uno.css';
 	import Editor from './Editor.svelte';
 	import './index.css';
 	import LexicalComposer from './lib/LexicalComposer.svelte';

@@ -1,121 +1,121 @@
 {
-	"name": "lexical-svelte-runes",
-	"private": false,
-	"version": "0.1.4-beta.69.84.3",
-	"type": "module",
-	"author": {
-		"name": "zhiheng zhang"
-	},
-	"scripts": {
-		"dev": "vite --port 3001",
-		"build": "vite build",
-		"preview": "vite preview",
-		"check": "svelte-check --tsconfig ./tsconfig.json",
-		"fix": "eslint --fix .",
-		"tsc": "tsc",
-		"package": "svelte-package --input src/ && npx unocss"
-	},
-	"exports": {
-		".": {
-			"svelte": "./dist/",
-			"default": "./dist/*"
-		},
-		"./editor": {
-			"svelte": "./dist/index.js",
-			"default": "./dist/index",
-			"types": "./dist/index.d.ts"
-		},
-		"./*": {
-			"svelte": "./dist/*",
-			"default": "./dist/*"
-		},
-		"./src/*": {
-			"svelte": "./src/*",
-			"default": "./src/*"
-		},
-		"./editor.css": "./src/themes/playgroundEditorTheme.css",
-		"./uno.css": "./dist/uno.css"
-	},
-	"imports": {
-		"#uno.css": {
-			"default": "./dist/uno.css"
-		}
-	},
-	"files": [
-		"dist",
-		"src"
-	],
-	"peerDependencies": {
-		"svelte": "^5.0.0-next.136"
-	},
-	"dependencies": {
-		"@internationalized/date": "^3.5.4",
-		"@lexical/clipboard": "0.16.0",
-		"@lexical/code": "0.16.0",
-		"@lexical/dragon": "0.16.0",
-		"@lexical/hashtag": "0.16.0",
-		"@lexical/history": "0.16.0",
-		"@lexical/html": "^0.16.0",
-		"@lexical/link": "0.16.0",
-		"@lexical/list": "0.16.0",
-		"@lexical/mark": "0.16.0",
-		"@lexical/markdown": "0.16.0",
-		"@lexical/overflow": "0.16.0",
-		"@lexical/plain-text": "0.16.0",
-		"@lexical/rich-text": "0.16.0",
-		"@lexical/selection": "0.16.0",
-		"@lexical/table": "0.16.0",
-		"@lexical/text": "0.16.0",
-		"@lexical/utils": "0.16.0",
-		"@lexical/yjs": "0.16.0",
-		"@myriaddreamin/typst-ts-renderer": "0.5.0-rc4",
-		"@myriaddreamin/typst.ts": "0.5.0-rc4",
-		"@unocss/reset": "^0.61.0",
-		"bits-ui": "^0.21.10",
-		"chalk": "^5.3.0",
-		"clsx": "^2.1.1",
-		"embla-carousel-svelte": "^8.1.5",
-		"katex": "^0.16.10",
-		"lexical": "^0.16.0",
-		"lodash-es": "^4.17.21",
-		"lucide-svelte": "^0.395.0",
-		"prettier": "^3.3.2",
-		"svelte-awesome-color-picker": "^3.1.0",
-		"tailwind-merge": "^2.3.0",
-		"tailwind-variants": "^0.2.1",
-		"y-websocket": "^2.0.3",
-		"yjs": "^13.6.16"
-	},
-	"devDependencies": {
-		"@melt-ui/svelte": "^0.81.0",
-		"@sveltejs/kit": "2.5.16",
-		"@sveltejs/package": "^2.3.2",
-		"@sveltejs/vite-plugin-svelte": "^3.1.1",
-		"@swc/cli": "^0.3.12",
-		"@swc/core": "^1.6.1",
-		"@tsconfig/svelte": "^5.0.4",
-		"@types/katex": "^0.16.7",
-		"@types/lodash-es": "^4.17.12",
-		"@types/node": "^20.14.2",
-		"@typescript-eslint/eslint-plugin": "^7.13.0",
-		"@typescript-eslint/parser": "^7.13.0",
-		"@unocss/cli": "^0.61.0",
-		"@unocss/extractor-svelte": "^0.61.0",
-		"csstype": "^3.1.3",
-		"eslint": "^9.5.0",
-		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-svelte": "^2.39.4",
-		"glob": "^10.4.1",
-		"prettier-plugin-svelte": "^3.2.4",
-		"svelte": "^5.0.0-next.155",
-		"svelte-check": "^3.8.0",
-		"tslib": "^2.6.3",
-		"typescript": "^5.4.5",
-		"unocss": "^0.61.0",
-		"unocss-preset-animations": "^1.0.2",
-		"unocss-preset-shadcn": "^0.3.0",
-		"vite": "^5.3.1",
-		"vite-plugin-dts": "^3.9.1",
-		"vite-tsconfig-paths": "^4.3.2"
-	}
+  "name": "lexical-svelte-runes",
+  "private": false,
+  "version": "0.1.4-beta.69.84.4",
+  "type": "module",
+  "author": {
+    "name": "zhiheng zhang"
+  },
+  "scripts": {
+    "dev": "vite --port 3001",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "fix": "eslint --fix .",
+    "tsc": "tsc",
+    "package": "svelte-package --input src/ && npx unocss"
+  },
+  "exports": {
+    ".": {
+      "svelte": "./dist/",
+      "default": "./dist/*"
+    },
+    "./editor": {
+      "svelte": "./dist/index.js",
+      "default": "./dist/index",
+      "types": "./dist/index.d.ts"
+    },
+    "./*": {
+      "svelte": "./dist/*",
+      "default": "./dist/*"
+    },
+    "./src/*": {
+      "svelte": "./src/*",
+      "default": "./src/*"
+    },
+    "./editor.css": "./src/themes/playgroundEditorTheme.css",
+    "./uno.css": "./dist/uno.css"
+  },
+  "imports": {
+    "#uno.css": {
+      "default": "./dist/uno.css"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "peerDependencies": {
+    "svelte": "^5.0.0-next.172"
+  },
+  "dependencies": {
+    "@internationalized/date": "^3.5.4",
+    "@lexical/clipboard": "0.16.1",
+    "@lexical/code": "0.16.1",
+    "@lexical/dragon": "0.16.1",
+    "@lexical/hashtag": "0.16.1",
+    "@lexical/history": "0.16.1",
+    "@lexical/html": "^0.16.1",
+    "@lexical/link": "0.16.1",
+    "@lexical/list": "0.16.1",
+    "@lexical/mark": "0.16.1",
+    "@lexical/markdown": "0.16.1",
+    "@lexical/overflow": "0.16.1",
+    "@lexical/plain-text": "0.16.1",
+    "@lexical/rich-text": "0.16.1",
+    "@lexical/selection": "0.16.1",
+    "@lexical/table": "0.16.1",
+    "@lexical/text": "0.16.1",
+    "@lexical/utils": "0.16.1",
+    "@lexical/yjs": "0.16.1",
+    "@myriaddreamin/typst-ts-renderer": "0.5.0-rc5",
+    "@myriaddreamin/typst.ts": "0.5.0-rc5",
+    "@unocss/reset": "^0.61.0",
+    "bits-ui": "^0.21.11",
+    "chalk": "^5.3.0",
+    "clsx": "^2.1.1",
+    "embla-carousel-svelte": "^8.1.6",
+    "katex": "^0.16.11",
+    "lexical": "^0.16.1",
+    "lodash-es": "^4.17.21",
+    "lucide-svelte": "^0.399.0",
+    "prettier": "^3.3.2",
+    "svelte-awesome-color-picker": "^3.1.0",
+    "tailwind-merge": "^2.3.0",
+    "tailwind-variants": "^0.2.1",
+    "y-websocket": "^2.0.3",
+    "yjs": "^13.6.18"
+  },
+  "devDependencies": {
+    "@melt-ui/svelte": "^0.83.0",
+    "@sveltejs/kit": "2.5.18",
+    "@sveltejs/package": "^2.3.2",
+    "@sveltejs/vite-plugin-svelte": "^3.1.1",
+    "@swc/cli": "^0.4.0",
+    "@swc/core": "^1.6.7",
+    "@tsconfig/svelte": "^5.0.4",
+    "@types/katex": "^0.16.7",
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "^20.14.9",
+    "@typescript-eslint/eslint-plugin": "^7.15.0",
+    "@typescript-eslint/parser": "^7.15.0",
+    "@unocss/cli": "^0.61.0",
+    "@unocss/extractor-svelte": "^0.61.0",
+    "csstype": "^3.1.3",
+    "eslint": "^9.6.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-svelte": "^2.41.0",
+    "glob": "^10.4.2",
+    "prettier-plugin-svelte": "^3.2.5",
+    "svelte": "^5.0.0-next.172",
+    "svelte-check": "^3.8.4",
+    "tslib": "^2.6.3",
+    "typescript": "^5.5.3",
+    "unocss": "^0.61.0",
+    "unocss-preset-animations": "^1.0.2",
+    "unocss-preset-shadcn": "^0.3.0",
+    "vite": "^5.3.3",
+    "vite-plugin-dts": "^3.9.1",
+    "vite-tsconfig-paths": "^4.3.2"
+  }
 }
