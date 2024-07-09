@@ -4,6 +4,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import path from 'path';
 import UnoCSS from 'unocss/vite';
 import extractorSvelte from '@unocss/extractor-svelte';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 
 import dts from 'vite-plugin-dts';
 // https://vitejs.dev/config/
@@ -50,6 +51,8 @@ export default defineConfig({
 		target: 'esnext',
 		// Leave minification up to applications.
 		minify: false,
-		rollupOptions: {}
+		rollupOptions: {
+			plugins: [nodeResolve()]
+		}
 	}
 });
