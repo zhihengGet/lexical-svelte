@@ -283,6 +283,7 @@
 	padding: 0;
 	margin: 0;
 	list-style-position: outside;
+	list-style: decimal;
 }
 .PlaygroundEditorTheme__ol2 {
 	padding: 0;
@@ -312,6 +313,7 @@
 	padding: 0;
 	margin: 0;
 	list-style-position: outside;
+	list-style: circle;
 }
 .PlaygroundEditorTheme__listItem {
 	margin: 0 32px;
