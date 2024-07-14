@@ -4,11 +4,7 @@ i forked lexical repo for tracking purpose [fork](<(https://github.com/zhihengGe
 
 ```shell
 pnpm install lexical-svelte-runes@latest @unocss/reset
-
-
 ```
-
-Quick start:
 
 im not able to make it work on stackblitz due to some weird 'cross-origin frame' but it should work in your own project, copy the code !
 
@@ -16,19 +12,17 @@ https://stackblitz.com/edit/vitejs-vite-pzwyu3?file=src%2FApp.svelte
 
 # Goal
 
-when importing a new plugin to lexical-svelte-runes, we can use external library instead of copy all the logic from react playground to keep code clean but at the same time we want to 'make sure the structure of our code is similar to react's so that it is easy to debug/maintain, a lot of times we can simply check the commits in rect to copy the changes over.
+### Importing Plugins into `lexical-svelte-runes`
 
-- migrate to melt-ui, unocss, svelte-shadscn for components
-- use external library instead creating our own
-  - image resize library
-  - colorPicker components
-  - ...
-- use feature based folder architecture instead of plugin folder and nodes folder
-  - ```
-    /dialog
-      node.svelte
-      plugin.svelte.ts
-    ```
+When adding new plugins to `lexical-svelte-runes`, use external libraries instead of copying all the logic from the React playground. This keeps our code clean and maintainable.
+
+#### we also want to ensure our code structure is similar to React's !
+
+### libs
+
+- **Melt-UI, UnoCSS, and Svelte-ShadCN**:
+- **Image Resize Library**: For efficient image manipulation.
+- **ColorPicker Components**: color selection.
 
 # TODO
 
@@ -36,11 +30,13 @@ when importing a new plugin to lexical-svelte-runes, we can use external library
 2. imports more components from lexical playground
 3. setup git actions & releases...
 
-# Contribute How-to
+# How-to Convert react-playground to svelte
 
-1. since we use runes to [polyfill react hook](/react.d.ts) & [svelte runes](/src/react.svelte.ts), it is super easy to port an component, simply copy the tsx into the right folder, then run autoFix.js to clean the import (removing $ by renaming imports) then fix the code to make it svelte-ish ! remember the output of useState `const [fn,setFn]=useState()` are both function just like solidjs
+Short version
 
-## steps (wip)
+since we use runes to [polyfill react hook](/react.d.ts) & [svelte runes](/src/react.svelte.ts), it is super easy to port an component, simply copy the tsx into the right folder(i.e [playground](/src/playground/plugins/)), then run autoFix.js to clean the import (removing $ by renaming imports) then fix the code to make it svelte-ish ! remember the output of useState `const [fn,setFn]=useState()` are both function just like _solid_
+
+## Steps (wip)
 
 (we also need to refractor the current repo, i.e move all plugins in to the same folder currently there are some naughty plugins outside )
 
