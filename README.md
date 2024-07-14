@@ -1,6 +1,4 @@
-the main check [test](https://github.com/zhihengGet/lexical-svelte/tree/test) branch
-
-i forked lexical repo for tracking purpose [fork](<(https://github.com/zhihengGet/lexical)>), ideally we need to catch up commit by commit by i guess it is fine that we just add whatever is needed.
+i forked lexical repo for tracking purpose [fork](<(https://github.com/zhihengGet/lexical)>), ideally we need to catch up commit by commit by it is fine that we just add whatever is needed.
 
 ## QuickStart
 
@@ -12,39 +10,34 @@ pnpm install lexical-svelte-runes@latest @unocss/reset
 <script lang="ts">
 	import '@unocss/reset/tailwind-compat.css'; //using unocss reset
 	//import 'uno.css';
-	import 'lexical-svelte-runes/uno.css';  // import all the generated classname, if you have uno or tailwind, you can ignore this
-	import Editor from 'lexical-svelte-runes/Editor.svelte';
+	import 'lexical-svelte-runes/uno.css'; // import all the generated class name, if you have uno or tailwind, you can ignore this by making sure your tw/uno process this package
 	import 'lexical-svelte-runes/index.css'; // react playground css
-	import LexicalComposer from 'lexical-svelte-runes/lib/LexicalComposer.svelte';
+	import * as Editor from 'lexical-svelte-runes/editor';
 
-	import SettingsContext from 'lexical-svelte-runes/playground/context/SettingsContext.svelte';
-	import SharedAutocompleteContext from 'lexical-svelte-runes/playground/context/SharedAutocompleteContext.svelte';
-	import { createHistoryContext } from 'lexical-svelte-runes/playground/context/SharedHistoryContext';
-	import type { Settings } from 'lexical-svelte-runes/playground/appSettings';
+	import { createHistoryContext } from 'lexical-svelte-runes/playground/context/SharedHistoryContext.js';
+	import type { Settings } from 'lexical-svelte-runes/playground/appSettings.js';
 
 	let { ...props }: Settings = $props(); // check Settings type for all the settings!
 
 	createHistoryContext();
 </script>
 
-<SettingsContext settings={props}>
-	<SharedAutocompleteContext>
-		<LexicalComposer>
+<Editor.SettingsContext settings={props}>
+	<Editor.SharedAutocompleteContext>
+		<Editor.LexicalComposer>
 			<div class="editor-shell w-full">
-				<Editor />
+				<Editor.Editor />
 			</div>
-		</LexicalComposer>
-	</SharedAutocompleteContext>
-</SettingsContext>
-
-
+		</Editor.LexicalComposer>
+	</Editor.SharedAutocompleteContext>
+</Editor.SettingsContext>
 ```
 
 # Goal
 
 when importing a new plugin to lexical-svelte-runes, we can use external library instead of copy all the logic from react playground to keep code clean but at the same time we want to 'make sure the structure of our code is similar to react's so that it is easy to debug/maintain, a lot of times we can simply check the commits in rect to copy the changes over.
 
-- migrate to melt-ui/shadcn for components
+- migrate to melt-ui, unocss, svelte-shadscn for components
 - use external library instead creating our own
   - image resize library
   - colorPicker components

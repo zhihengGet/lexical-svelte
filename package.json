@@ -1,7 +1,7 @@
 {
 	"name": "lexical-svelte-runes",
 	"private": false,
-	"version": "0.1.4-beta.69.84.5",
+	"version": "0.1.4-beta.69.84.7",
 	"type": "module",
 	"author": {
 		"name": "zhiheng zhang"
@@ -17,8 +17,9 @@
 	},
 	"exports": {
 		".": {
-			"svelte": "./dist/",
-			"default": "./dist/*"
+			"svelte": "./dist/*",
+			"default": "./dist/*",
+			"types": "./dist/*"
 		},
 		"./editor": {
 			"svelte": "./dist/index.js",
@@ -27,7 +28,8 @@
 		},
 		"./*": {
 			"svelte": "./dist/*",
-			"default": "./dist/*"
+			"default": "./dist/*",
+			"types": "./dist/*"
 		},
 		"./src/*": {
 			"svelte": "./src/*",
@@ -108,7 +110,7 @@
 		"eslint-plugin-svelte": "^2.41.0",
 		"glob": "^10.4.2",
 		"prettier-plugin-svelte": "^3.2.5",
-		"svelte": "^5.0.0-next.172",
+		"svelte": "5.0.0-next.183",
 		"svelte-check": "^3.8.4",
 		"tslib": "^2.6.3",
 		"typescript": "^5.5.3",
