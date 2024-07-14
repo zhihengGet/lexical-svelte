@@ -10,7 +10,7 @@ pnpm install lexical-svelte-runes@latest @unocss/reset
 <script lang="ts">
 	import '@unocss/reset/tailwind-compat.css'; //using unocss reset
 	//import 'uno.css';
-	import 'lexical-svelte-runes/uno.css'; // import all the generated class name, if you have uno or tailwind, you can ignore this by making sure your tw/uno process this package
+	import 'lexical-svelte-runes/uno.css'; // import all the generated classname, if you have uno or tailwind, you can ignore this
 	import 'lexical-svelte-runes/index.css'; // react playground css
 	import * as Editor from 'lexical-svelte-runes/editor';
 
@@ -31,6 +31,7 @@ pnpm install lexical-svelte-runes@latest @unocss/reset
 		</Editor.LexicalComposer>
 	</Editor.SharedAutocompleteContext>
 </Editor.SettingsContext>
+
 ```
 
 # Goal
