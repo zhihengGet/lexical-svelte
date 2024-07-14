@@ -3,36 +3,16 @@ i forked lexical repo for tracking purpose [fork](<(https://github.com/zhihengGe
 ## QuickStart
 
 ```shell
-pnpm install lexical-svelte-runes@latest @unocss/reset
-```
+pnpm install lexical-svelte-runes@latest @unocss/reset @melt-ui/svelte
 
-```typescript
-<script lang="ts">
-	import '@unocss/reset/tailwind-compat.css'; //using unocss reset
-	//import 'uno.css';
-	import 'lexical-svelte-runes/uno.css'; // import all the generated classname, if you have uno or tailwind, you can ignore this
-	import 'lexical-svelte-runes/index.css'; // react playground css
-	import * as Editor from 'lexical-svelte-runes/editor';
-
-	import { createHistoryContext } from 'lexical-svelte-runes/playground/context/SharedHistoryContext.js';
-	import type { Settings } from 'lexical-svelte-runes/playground/appSettings.js';
-
-	let { ...props }: Settings = $props(); // check Settings type for all the settings!
-
-	createHistoryContext();
-</script>
-
-<Editor.SettingsContext settings={props}>
-	<Editor.SharedAutocompleteContext>
-		<Editor.LexicalComposer>
-			<div class="editor-shell w-full">
-				<Editor.Editor />
-			</div>
-		</Editor.LexicalComposer>
-	</Editor.SharedAutocompleteContext>
-</Editor.SettingsContext>
 
 ```
+
+Quick start:
+
+im not able to make it work on stackblitz due to some weird 'cross-origin frame' but it should work in your own project, copy the code !
+
+https://stackblitz.com/edit/vitejs-vite-pzwyu3?file=src%2FApp.svelte
 
 # Goal
 
