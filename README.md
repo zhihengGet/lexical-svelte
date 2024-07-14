@@ -3,7 +3,7 @@ i forked lexical repo for tracking purpose [fork](<(https://github.com/zhihengGe
 ## QuickStart
 
 ```shell
-pnpm install lexical-svelte-runes@latest @unocss/reset @melt-ui/svelte
+pnpm install lexical-svelte-runes@latest @unocss/reset
 
 
 ```
