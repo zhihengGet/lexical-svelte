@@ -32,6 +32,6 @@
 		"isolatedModules": true
 	},
 	"exclude": ["src/playground/plugins/AutoEmbedPlugin/*"],
-	"include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte"],
+	"include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte", "packages/**/*"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }
