@@ -6,24 +6,27 @@
  *
  */
 
-import type {
-	DOMConversionMap,
-	DOMConversionOutput,
-	DOMExportOutput,
-	EditorConfig,
-	LexicalEditor,
-	LexicalNode,
-	RangeSelection,
-	SerializedElementNode
+import {
+	$createParagraphNode,
+	$isElementNode,
+	type DOMConversionMap,
+	type DOMConversionOutput,
+	type EditorConfig,
+	ElementNode,
+	type LexicalEditor,
+	type LexicalNode,
+	type RangeSelection,
+	type SerializedElementNode
 } from 'lexical';
-import { $createParagraphNode, $isElementNode, ElementNode } from 'lexical';
+import { IS_CHROME } from 'shared/environment';
+import invariant from 'shared/invariant';
 
 import { $isCollapsibleContainerNode } from './CollapsibleContainerNode';
 import { $isCollapsibleContentNode } from './CollapsibleContentNode';
 
 type SerializedCollapsibleTitleNode = SerializedElementNode;
 
-export function convertSummaryElement(domNode: HTMLElement): DOMConversionOutput | null {
+export function $convertSummaryElement(domNode: HTMLElement): DOMConversionOutput | null {
 	const node = $createCollapsibleTitleNode();
 	return {
 		node
@@ -42,6 +45,18 @@ export class CollapsibleTitleNode extends ElementNode {
 	createDOM(config: EditorConfig, editor: LexicalEditor): HTMLElement {
 		const dom = document.createElement('summary');
 		dom.classList.add('Collapsible__title');
+		if (IS_CHROME) {
+			dom.addEventListener('click', () => {
+				editor.update(() => {
+					const collapsibleContainer = this.getLatest().getParentOrThrow();
+					invariant(
+						$isCollapsibleContainerNode(collapsibleContainer),
+						'Expected parent node to be a CollapsibleContainerNode'
+					);
+					collapsibleContainer.toggleOpen();
+				});
+			});
+		}
 		return dom;
 	}
 
@@ -53,7 +68,7 @@ export class CollapsibleTitleNode extends ElementNode {
 		return {
 			summary: (domNode: HTMLElement) => {
 				return {
-					conversion: convertSummaryElement,
+					conversion: $convertSummaryElement,
 					priority: 1
 				};
 			}
@@ -62,11 +77,6 @@ export class CollapsibleTitleNode extends ElementNode {
 
 	static importJSON(serializedNode: SerializedCollapsibleTitleNode): CollapsibleTitleNode {
 		return $createCollapsibleTitleNode();
-	}
-
-	exportDOM(): DOMExportOutput {
-		const element = document.createElement('summary');
-		return { element };
 	}
 
 	exportJSON(): SerializedCollapsibleTitleNode {
