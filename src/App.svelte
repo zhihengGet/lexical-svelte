@@ -26,7 +26,7 @@
 	>
 {/if}
 
-<!-- <SettingsContext settings={s}>
+<SettingsContext settings={s}>
 	<SharedAutocompleteContext>
 		<LexicalComposer>
 			<div class="editor-shell w-full">
@@ -35,9 +35,9 @@
 			</div>
 		</LexicalComposer>
 	</SharedAutocompleteContext>
-</SettingsContext> -->
----- READ ONLY
-<SettingsContext
+</SettingsContext>
+
+<!-- <SettingsContext
 	settings={{
 		dev: false,
 		config: { editable: false },
@@ -115,3 +115,4 @@
 		</LexicalComposer>
 	</SharedAutocompleteContext>
 </SettingsContext>
+ -->
