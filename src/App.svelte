@@ -9,6 +9,7 @@
 	import SharedAutocompleteContext from './playground/context/SharedAutocompleteContext.svelte';
 	import { createHistoryContext } from './playground/context/SharedHistoryContext';
 	import type { Settings } from './playground/appSettings';
+	import { START_COMMENT_NODE } from '@plugins/ParagraphCommentPlugin/paragraphComment';
 	let { ...props }: Settings = $props();
 
 	let s = $state({ initialHTML: '<p>hello<p>', equation: true });
@@ -33,25 +34,8 @@
 	onclick={() => {
 		const p = document.body.querySelectorAll('p');
 		console.log(p);
-		editor.update(() => {
-			// Get the root node of the editor
-			const root = lexical.$getRoot();
 
-			// Iterate over all the children of the root node
-			const children = root.getChildren();
-
-			children.forEach((child) => {
-				// Check if the child node is a ParagraphNode
-				if (child instanceof lexical.ParagraphNode) {
-					// Create a new span node
-					const spanNode = new lexical.ElementNode();
-					spanNode.getTextContent();
-
-					// Insert the span node after the paragraph
-					child.insertAfter(spanNode);
-				}
-			});
-		});
+		editor.dispatchCommand(START_COMMENT_NODE, null);
 		debugger;
 	}}>render</button
 >
