@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
 	import { $generateNodesFromDOM as generateNodesFromDOM } from '@lexical/html';
 
 	const HISTORY_MERGE_OPTIONS = { tag: 'history-merge' };

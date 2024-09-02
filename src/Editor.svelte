@@ -70,7 +70,7 @@
 		isDraggable,
 		image,
 		onSizeLimit,
-		config: { query }
+		config: { query, editable }
 	} = $derived(settings());
 	$effect(() => {
 		console.log('setting change', isAutocomplete);
@@ -155,7 +155,7 @@
 					})}
 			/>
 		{/if}
-		{#if isAutocomplete}
+		{#if isAutocomplete && editable}
 			<Portal
 				initializor={() =>
 					AutocompletePlugin({
@@ -171,7 +171,7 @@
 		<LinkPlugin />
 
 		{@const el = floatingAnchorElem()}
-		{#if el && isEditable}
+		{#if el && editable}
 			<Portal {...CodeActionMenuPlugin({ anchorElem: el })} />
 			{#if floatingToolbar}
 				<FloatingLinkEditorPlugin
@@ -200,25 +200,27 @@
 			initializor={() => HistoryPlugin({ externalHistoryState: historyState })}
 		/>
 	{/if}
-	{#if isCollab}
-		<!-- enable history plugin  -->
-		<Portal
-			portal={false}
-			target={null}
-			initializor={() =>
-				CollaborationPlugin({
-					id: 'main',
-					providerFactory: createWebsocketProvider,
-					shouldBootstrap: !skipCollaborationInit
-				})}
-		/>
-	{:else}
-		<!-- enable history plugin  -->
-		<Portal
-			target={null}
-			portal={false}
-			initializor={() => HistoryPlugin({ externalHistoryState: historyState })}
-		/>
+	{#if editable}
+		{#if isCollab}
+			<!-- enable history plugin  -->
+			<Portal
+				portal={false}
+				target={null}
+				initializor={() =>
+					CollaborationPlugin({
+						id: 'main',
+						providerFactory: createWebsocketProvider,
+						shouldBootstrap: !skipCollaborationInit
+					})}
+			/>
+		{:else}
+			<!-- enable history plugin  -->
+			<Portal
+				target={null}
+				portal={false}
+				initializor={() => HistoryPlugin({ externalHistoryState: historyState })}
+			/>
+		{/if}
 	{/if}
 	<!-- 	<TableOfContentsPlugin /> -->
 	<!-- <Test /> -->

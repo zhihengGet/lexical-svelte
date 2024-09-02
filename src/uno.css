@@ -132,7 +132,8 @@
 [h-9=""]{height:2.25rem;}
 .h-auto{height:auto;}
 .h-full{height:100%;}
-.h1{height:0.25rem;}
+.h1,
+[h1=""]{height:0.25rem;}
 .h3{height:0.75rem;}
 .max-h-\[300px\]{max-height:300px;}
 .max-h-\[85vh\]{max-height:85vh;}
