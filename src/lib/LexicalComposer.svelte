@@ -30,7 +30,8 @@
 	import { useSettings, type InitialEditorStateType } from '../playground/appSettings';
 	import { onDestroy, type Snippet } from 'svelte';
 
-	let { children }: { children: Snippet } = $props();
+	let { children, bindEditor = $bindable() }: { children: Snippet; bindEditor: LexicalEditor } =
+		$props();
 	let setting = useSettings();
 	const {
 		onInput,
@@ -117,7 +118,9 @@
 			// In the browser you can use the native DOMParser API to parse the HTML string.
 			// The latest EditorState can be found as `editorState`.
 			// To read the contents of the EditorState, use the following API:
-
+			if (!editable) {
+				return;
+			}
 			editorState.read(() => {
 				// Just like editor.update(), .read() expects a closure where you can use
 				// the $ prefixed helper functions.
@@ -131,6 +134,7 @@
 		});
 		onDestroy(un);
 	}
+	bindEditor = editor;
 	setLexicalComposerContext([editor, context]);
 	$effect(() => {
 		editor?.setEditable(editable ?? true);

@@ -42,6 +42,7 @@
 	import { ClearEditorPlugin } from '@plugins/ClearEditorPlugin';
 	import TableCellResizerPlugin from '@plugins/TableCellResizer/TableCellResizerPlugin.svelte';
 	import { TablePlugin } from './lib/LexicalTablePlugin';
+	import ParagraphCommentPugin from '@plugins/ParagraphCommentPlugin/ParagraphCommentPugin.svelte';
 	const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
 	const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
 	const isEditable = true;
@@ -200,6 +201,7 @@
 			initializor={() => HistoryPlugin({ externalHistoryState: historyState })}
 		/>
 	{/if}
+	<ParagraphCommentPugin />
 	{#if editable}
 		{#if isCollab}
 			<!-- enable history plugin  -->

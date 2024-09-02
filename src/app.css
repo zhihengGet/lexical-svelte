@@ -105,6 +105,7 @@ h6 {
 	--lexical-page-break: #509777;
 	--lexical-code-filter-invert: invert(1);
 	--lexical-collapsible-filter-invert: invert(1);
+	--p-comment-opacity: 1;
 }
 
 code {

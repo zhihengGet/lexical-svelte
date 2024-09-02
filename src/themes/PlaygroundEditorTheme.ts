@@ -114,7 +114,8 @@ const theme: EditorThemeClasses = {
 		superscript: 'PlaygroundEditorTheme__textSuperscript',
 		underline: 'PlaygroundEditorTheme__textUnderline',
 		underlineStrikethrough: 'PlaygroundEditorTheme__textUnderlineStrikethrough'
-	}
+	},
+	paragraphComment: { visible: 'paragraph-comment' }
 };
 
 export default theme;

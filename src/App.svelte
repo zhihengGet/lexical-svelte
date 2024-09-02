@@ -4,7 +4,7 @@
 	import Editor from './Editor.svelte';
 	import './index.css';
 	import LexicalComposer from './lib/LexicalComposer.svelte';
-
+	import * as lexical from 'lexical';
 	import SettingsContext from './playground/context/SettingsContext.svelte';
 	import SharedAutocompleteContext from './playground/context/SharedAutocompleteContext.svelte';
 	import { createHistoryContext } from './playground/context/SharedHistoryContext';
@@ -16,8 +16,45 @@
 		//@ts-expect-error make effect reactive
 		createHistoryContext(props.initialHTML);
 	});
+	/* 	$effect(() => {
+		const p = document.body.querySelectorAll('p');
+		console.log(p);
+		for (let x of p) {
+			const s = document.createElement('span');
+			s.innerText = 'ABC';
+			x.append(s);
+			console.log(x);
+		}
+	}); */
+	let editor = $state();
 </script>
 
+<button
+	onclick={() => {
+		const p = document.body.querySelectorAll('p');
+		console.log(p);
+		editor.update(() => {
+			// Get the root node of the editor
+			const root = lexical.$getRoot();
+
+			// Iterate over all the children of the root node
+			const children = root.getChildren();
+
+			children.forEach((child) => {
+				// Check if the child node is a ParagraphNode
+				if (child instanceof lexical.ParagraphNode) {
+					// Create a new span node
+					const spanNode = new lexical.ElementNode();
+					spanNode.getTextContent();
+
+					// Insert the span node after the paragraph
+					child.insertAfter(spanNode);
+				}
+			});
+		});
+		debugger;
+	}}>render</button
+>
 {#if props.dev}
 	<button
 		onclick={() => {
@@ -26,7 +63,7 @@
 	>
 {/if}
 
-<SettingsContext settings={s}>
+<!-- <SettingsContext settings={s}>
 	<SharedAutocompleteContext>
 		<LexicalComposer>
 			<div class="editor-shell w-full">
@@ -35,9 +72,9 @@
 			</div>
 		</LexicalComposer>
 	</SharedAutocompleteContext>
-</SettingsContext>
+</SettingsContext> -->
 
-<!-- <SettingsContext
+<SettingsContext
 	settings={{
 		dev: false,
 		config: { editable: false },
@@ -108,11 +145,10 @@
 	}}
 >
 	<SharedAutocompleteContext>
-		<LexicalComposer>
+		<LexicalComposer bind:bindEditor={editor}>
 			<div class="editor-shell w-full" style="background:red;">
 				<Editor />
 			</div>
 		</LexicalComposer>
 	</SharedAutocompleteContext>
 </SettingsContext>
- -->
