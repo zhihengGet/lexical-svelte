@@ -82,6 +82,7 @@ export const DEFAULT_SETTINGS = {
 	},
 	initialHTML: '',
 	allowedAttributesOnParagraph: [''],
+	paragraphCommentClickFn: (props: { id: string }) => {},
 	config: {
 		query: undefined,
 		editable: true,
