@@ -70,6 +70,7 @@
 .grid{display:grid;}
 .grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr));}
 .m-0{margin:0;}
+.m283\.6{margin:70.9rem;}
 .-mx-1{margin-left:-0.25rem;margin-right:-0.25rem;}
 .mx-1{margin-left:0.25rem;margin-right:0.25rem;}
 .mx-auto{margin-left:auto;margin-right:auto;}
@@ -131,6 +132,7 @@
 .h-9,
 [h-9=""]{height:2.25rem;}
 .h-auto{height:auto;}
+.h-fit{height:fit-content;}
 .h-full{height:100%;}
 .h1,
 [h1=""]{height:0.25rem;}

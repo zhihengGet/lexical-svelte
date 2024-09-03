@@ -76,29 +76,29 @@
 		@apply bg-background text-foreground;
 	}
 }
-/* for testing */
+
 .editor-container {
-	background-color: rgb(5, 7, 7) !important;
-	color: antiquewhite !important;
+	background-color: var(--lexcial-background-color) !important;
 }
 
-div,
-p,
-span {
+.editor-container div,
+.editor-container p,
+.editor-container span {
 	color: var(--lexcial-text) !important;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+.editor-container h1,
+.editor-container h2,
+.editor-container h3,
+.editor-container h4,
+.editor-container h5,
+.editor-container h6 {
 	color: var(--lexcial-headers) !important;
 }
 
-:root {
+/* .editor-container {
 	--lexcial-headers: red;
 	--lexcial-text: rgb(118, 118, 212);
+	--lexcial-background-color: rgb(75, 75, 100);
 	--lexical-collapsible-container: #123123;
 	--lexical-collapsible-title: #123123;
 	--lexical-page-break-bg: #123123;
@@ -106,7 +106,7 @@ h6 {
 	--lexical-code-filter-invert: invert(1);
 	--lexical-collapsible-filter-invert: invert(1);
 	--p-comment-opacity: 1;
-}
+} */
 
 code {
 	filter: var(--lexical-code-filter-invert);
