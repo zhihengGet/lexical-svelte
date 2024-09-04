@@ -16,7 +16,7 @@
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"fix": "eslint --fix .",
 		"tsc": "tsc",
-		"package": "rm -rf dist && svelte-package --input ./src && npx unocss"
+		"package": "svelte-package --input ./src && npx unocss"
 	},
 	"exports": {
 		".": {

@@ -77,9 +77,9 @@
 			)
 		);
 	});
-	$effect(() => {
+	/* $effect(() => {
 		setTimeout(() => {
 			editor.dispatchCommand(node.START_COMMENT_NODE, null);
 		}, 500);
-	});
+	}); */
 </script>
