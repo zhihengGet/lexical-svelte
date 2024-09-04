@@ -77,9 +77,12 @@
 			)
 		);
 	});
-	/* $effect(() => {
-		setTimeout(() => {
-			editor.dispatchCommand(node.START_COMMENT_NODE, null);
-		}, 500);
-	}); */
+	$effect(() => {
+		if (settings().dev) {
+			console.log('dev mode auto render paragraph comment node');
+			setTimeout(() => {
+				editor.dispatchCommand(node.START_COMMENT_NODE, null);
+			}, 500);
+		}
+	});
 </script>
