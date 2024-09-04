@@ -8,7 +8,7 @@ const __dirname = dirname(__filename);
 export default {
 	// Consult https://svelte.dev/docs#compile-time-svelte-preprocess
 	// for more information about preprocessors
-	preprocess: vitePreprocess({ enableSourcemap: true }),
+	preprocess: vitePreprocess({ enableSourcemap: true, script: true }),
 	kit: {
 		alias: {
 			shared: path.resolve(__dirname, './src/util/src/'),

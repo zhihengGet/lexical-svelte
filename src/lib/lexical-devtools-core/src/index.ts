@@ -7,5 +7,5 @@
  */
 
 export * from './generateContent';
-export * from './TreeView.svelte';
+export { default as TreeView } from './TreeView.svelte';
 export * from './useLexicalCommandsLog.svelte';

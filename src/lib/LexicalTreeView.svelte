@@ -5,7 +5,7 @@
 		generateContent,
 		useLexicalCommandsLog
 	} from './lexical-devtools-core/src';
-	import { default as TreeViewCore } from './lexical-devtools-core/src/TreeView.svelte';
+	import { TreeView as TreeViewCore } from './lexical-devtools-core/src';
 	import { mergeRegister } from '@lexical/utils';
 	import { useRef, useState } from 'react';
 

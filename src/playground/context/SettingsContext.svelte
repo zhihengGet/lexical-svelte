@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
 	let totalComponents = 0;
 
 	import { useState } from 'react';

@@ -11,7 +11,7 @@
 	import { START_COMMENT_NODE } from '@plugins/ParagraphCommentPlugin/paragraphComment';
 	let { ...props }: Settings = $props();
 
-	let s = $state({ initialHTML: '<p>hello<p>', equation: true, dev: true });
+	let s = $state({ initialHTML: '<p>hello<p>', equation: true, dev: true, showTreeView: true });
 	$effect.pre(() => {
 		//@ts-expect-error make effect reactive
 		createHistoryContext(props.initialHTML);
@@ -45,17 +45,17 @@
 	>
 {/if}
  -->
-{#if s.dev == false}
-	<SettingsContext settings={s}>
-		<SharedAutocompleteContext>
-			<LexicalComposer>
-				<div class="editor-shell w-full">
-					<Editor />
-				</div>
-			</LexicalComposer>
-		</SharedAutocompleteContext>
-	</SettingsContext>
-{/if}
+
+<SettingsContext settings={s}>
+	<SharedAutocompleteContext>
+		<LexicalComposer>
+			<div class="editor-shell w-full">
+				<Editor />
+			</div>
+		</LexicalComposer>
+	</SharedAutocompleteContext>
+</SettingsContext>
+
 {#if s.dev}
 	<SettingsContext
 		settings={{
