@@ -16,3 +16,14 @@ export const createHistoryContext = () =>
 export const useSharedHistoryContext = (): ContextShape => {
 	return getContext('SharedHistoryContext');
 };
+let contextkey = 'AutoCompleteContext';
+export const useSharedAutocompleteContext = () => {
+	const data = getContext(contextkey);
+	/* const [suggestion, setSuggestion] = useState<Suggestion>(null);
+	useEffect(() => {
+		return subscribe((newSuggestion: Suggestion) => {
+			setSuggestion(newSuggestion);
+		});
+	}, [subscribe]); */
+	return data as { suggestions: string[]; select: string; search: string };
+};

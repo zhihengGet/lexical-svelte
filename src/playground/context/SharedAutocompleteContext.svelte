@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script lang="ts" module>
 	let totalComponents = 0;
 	import { useEffect, useMemo, useState } from 'react';
 	import { getContext, setContext } from 'svelte';

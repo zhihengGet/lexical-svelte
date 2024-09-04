@@ -41,13 +41,14 @@ export class ParagraphCmmtNode extends DecoratorNode<SvelteRender> {
 		const node = document.createElement('span');
 		node.classList.add(_config.theme['paragraphComment'].visible);
 		node.style.cssText = 'opacity:var(--p-comment-opacity)';
-		node.addEventListener('click', () => this._clickFn({ section_id: this.__id }));
 		return node;
 	}
 	updateDOM(): false {
 		return false;
 	}
-
+	getCommentId() {
+		return this.getLatest().__id;
+	}
 	decorate(_editor: LexicalEditor, config: EditorConfig): SvelteRender {
 		return { component: Comment, nodeKey: this.getKey(), props: { nodeKey: this.getKey() } };
 	}

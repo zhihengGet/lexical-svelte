@@ -16,6 +16,7 @@
 	import * as utils from '@lexical/utils';
 	import * as node from './paragraphComment';
 	import { useSettings } from '../../appSettings';
+	import { onDestroy } from 'svelte';
 
 	const [editor] = useLexicalComposerContext();
 	if (!editor.hasNodes([node.ParagraphCmmtNode])) {
@@ -36,20 +37,39 @@
 							paragraphs.push(node);
 						}
 					});
-
 					// Insert custom node at the beginning of each paragraph
 					paragraphs.forEach((paragraph) => {
 						if (paragraph.getLastChild() instanceof node.ParagraphCmmtNode) {
 							return;
 						}
 						const html = editor.getElementByKey(paragraph.getKey());
-						console.log(node);
+						let id = html?.getAttribute('data-chapter-id');
+						console.log(html);
 						const customNode = node.$createParagraphCommentNode({
-							id: html?.getAttribute('data-chapter-id'),
+							id: id,
 							clickFn: settings().paragraphCommentClickFn
 						}); // Example: inserting a rocket emoji
 
-						paragraph.append(customNode);
+						editor.update(
+							() => {
+								paragraph.append(customNode);
+							},
+							{
+								onUpdate: () => {
+									const el = editor.getElementByKey(customNode.getKey());
+									let c = () => {
+										console.log('commen click', html?.getAttribute('data-chapter-id'));
+										settings().paragraphCommentClickFn({
+											id: id
+										});
+									};
+									if (!el) {
+										console.error('failed to get comment element in editor');
+									}
+									el!.onclick = c;
+								}
+							}
+						);
 					});
 					return true;
 				},
@@ -57,9 +77,9 @@
 			)
 		);
 	});
-	/* $effect(() => {
+	$effect(() => {
 		setTimeout(() => {
 			editor.dispatchCommand(node.START_COMMENT_NODE, null);
 		}, 500);
-	}); */
+	});
 </script>

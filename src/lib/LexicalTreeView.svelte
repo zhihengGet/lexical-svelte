@@ -4,10 +4,10 @@
 		type CustomPrintNodeFn,
 		generateContent,
 		useLexicalCommandsLog
-	} from '../../packages/lexical-devtools-core/src/';
-	import { default as TreeViewCore } from '../../packages/lexical-devtools-core/src/TreeView.svelte';
+	} from './lexical-devtools-core/src';
+	import { default as TreeViewCore } from './lexical-devtools-core/src/TreeView.svelte';
 	import { mergeRegister } from '@lexical/utils';
-	import { useEffect, useRef, useState } from 'react';
+	import { useRef, useState } from 'react';
 
 	const NON_SINGLE_WIDTH_CHARS_REPLACEMENT: Readonly<Record<string, string>> = Object.freeze({
 		'\t': '\\t',
@@ -46,7 +46,7 @@
 		customPrintNode?: CustomPrintNodeFn;
 	} = $props();
 	//unwrap below function
-	const treeElementRef = useRef();
+	const treeElementRef = useRef<Element>(null);
 	const [editorCurrentState, setEditorCurrentState] = useState<EditorState>(
 		editor.getEditorState()
 	);

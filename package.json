@@ -1,11 +1,14 @@
 {
 	"name": "lexical-svelte-runes",
 	"private": false,
-	"version": "0.1.4-beta.69.84.6",
+	"version": "0.1.4-beta.69.84.7",
 	"type": "module",
 	"author": {
 		"name": "zhiheng zhang"
 	},
+	"sideEffects": [
+		"**/*.css"
+	],
 	"scripts": {
 		"dev": "vite --port 3001",
 		"build": "npx unocss && vite build",
@@ -13,7 +16,7 @@
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"fix": "eslint --fix .",
 		"tsc": "tsc",
-		"package": "svelte-package --input src/ && npx unocss"
+		"package": "rm -rf dist && svelte-package --input ./src && npx unocss"
 	},
 	"exports": {
 		".": {
@@ -85,6 +88,7 @@
 		"svelte-awesome-color-picker": "^3.1.4",
 		"tailwind-merge": "^2.5.2",
 		"tailwind-variants": "^0.2.1",
+		"vite-plugin-svelte-monorepo": "sveltejs/vite-plugin-svelte",
 		"y-websocket": "^2.0.4",
 		"yjs": "^13.6.18"
 	},
@@ -92,15 +96,15 @@
 		"@melt-ui/svelte": "^0.83.0",
 		"@sveltejs/kit": "2.5.25",
 		"@sveltejs/package": "^2.3.4",
-		"@sveltejs/vite-plugin-svelte": "^3.1.2",
+		"@sveltejs/vite-plugin-svelte": "^4.0.0-next.7",
 		"@swc/cli": "^0.4.0",
-		"@swc/core": "^1.7.22",
+		"@swc/core": "^1.7.23",
 		"@tsconfig/svelte": "^5.0.4",
 		"@types/katex": "^0.16.7",
 		"@types/lodash-es": "^4.17.12",
-		"@types/node": "^22.5.2",
-		"@typescript-eslint/eslint-plugin": "^8.3.0",
-		"@typescript-eslint/parser": "^8.3.0",
+		"@types/node": "^22.5.3",
+		"@typescript-eslint/eslint-plugin": "^8.4.0",
+		"@typescript-eslint/parser": "^8.4.0",
 		"@unocss/cli": "^0.62.3",
 		"@unocss/extractor-svelte": "^0.62.3",
 		"csstype": "^3.1.3",
@@ -109,14 +113,14 @@
 		"eslint-plugin-svelte": "^2.43.0",
 		"glob": "^11.0.0",
 		"prettier-plugin-svelte": "^3.2.6",
-		"svelte": "^5.0.0-next.242",
-		"svelte-check": "^3.8.6",
+		"svelte": "^5.0.0-next.243",
+		"svelte-check": "^4.0.0",
 		"tslib": "^2.7.0",
 		"typescript": "^5.5.4",
 		"unocss": "^0.62.3",
 		"unocss-preset-animations": "^1.1.0",
 		"unocss-preset-shadcn": "^0.3.1",
-		"vite": "^5.4.2",
+		"vite": "^5.4.3",
 		"vite-plugin-dts": "^4.1.0",
 		"vite-tsconfig-paths": "^5.0.1"
 	}

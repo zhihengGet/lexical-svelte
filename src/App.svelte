@@ -4,7 +4,6 @@
 	import Editor from './Editor.svelte';
 	import './index.css';
 	import LexicalComposer from './lib/LexicalComposer.svelte';
-	import * as lexical from 'lexical';
 	import SettingsContext from './playground/context/SettingsContext.svelte';
 	import SharedAutocompleteContext from './playground/context/SharedAutocompleteContext.svelte';
 	import { createHistoryContext } from './playground/context/SharedHistoryContext';
@@ -12,7 +11,7 @@
 	import { START_COMMENT_NODE } from '@plugins/ParagraphCommentPlugin/paragraphComment';
 	let { ...props }: Settings = $props();
 
-	let s = $state({ initialHTML: '<p>hello<p>', equation: true, dev: false });
+	let s = $state({ initialHTML: '<p>hello<p>', equation: true, dev: true });
 	$effect.pre(() => {
 		//@ts-expect-error make effect reactive
 		createHistoryContext(props.initialHTML);
@@ -38,21 +37,20 @@
 		debugger;
 	}}>render</button
 >
-{#if props.dev}
+<!-- {#if props.dev}
 	<button
 		onclick={() => {
 			s.initialHTML = '<p>hello v2</p>';
 		}}>update html</button
 	>
 {/if}
-
+ -->
 {#if s.dev == false}
 	<SettingsContext settings={s}>
 		<SharedAutocompleteContext>
 			<LexicalComposer>
 				<div class="editor-shell w-full">
 					<Editor />
-					<hr />
 				</div>
 			</LexicalComposer>
 		</SharedAutocompleteContext>
@@ -68,8 +66,8 @@
 <code spellcheck="false" style="background-color: rgb(126, 211, 33); color: rgb(0, 0, 0); white-space: pre-wrap;">
 <span class="PlaygroundEditorTheme__textCode">let a =b1</span>
 </code>
-</h1>
-<p class="PlaygroundEditorTheme__paragraph">
+</h1>123213213213
+<p class="PlaygroundEditorTheme__paragraph" data-chapter-id="1">
 <br>
 </p>
 <pre class="PlaygroundEditorTheme__code" spellcheck="false" data-language="javascript" data-highlight-language="javascript">

@@ -30,7 +30,7 @@
 	import { useSettings, type InitialEditorStateType } from '../playground/appSettings';
 	import { onDestroy, type Snippet } from 'svelte';
 
-	let { children, bindEditor = $bindable() }: { children: Snippet; bindEditor: LexicalEditor } =
+	let { children, bindEditor = $bindable() }: { children: Snippet; bindEditor?: LexicalEditor } =
 		$props();
 	let setting = useSettings();
 	const {
