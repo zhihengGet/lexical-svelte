@@ -37,7 +37,7 @@
 	import { MaxByteDancePlugin } from '@plugins/MaxSizePlugin/MaxMBPlugin.svelte';
 	import TableOfContentsPlugin from '@plugins/TableOfContentsPlugin/TableOfContentsPlugin.svelte';
 	import MeltTree from '@plugins/TableOfContentsPlugin/MeltTree.svelte';
-	import { UNDO_COMMAND } from 'lexical';
+	import { TextNode, UNDO_COMMAND } from 'lexical';
 	import DraggableBlock from '@plugins/DraggableBlockPlugin/DraggableBlock.svelte';
 	import { ClearEditorPlugin } from '@plugins/ClearEditorPlugin';
 	import TableCellResizerPlugin from '@plugins/TableCellResizer/TableCellResizerPlugin.svelte';
@@ -99,6 +99,7 @@
 	const [editor] = useLexicalComposerContext();
 	//console.log('isRichText', isRichText);
 	let container = $state<HTMLDivElement>();
+
 	/* 	$effect(() => {
 		container?.addEventListener('keydown', (v) => {
 			console.log('keydown');

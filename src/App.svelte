@@ -62,6 +62,7 @@
 			dev: false,
 			config: { editable: false },
 			initialHTML: `
+	<span style="background-color: rgb(245, 166, 35); white-space: pre-wrap;">ssadas</span>
 <h1 class="PlaygroundEditorTheme__h1" dir="ltr">
 <code spellcheck="false" style="background-color: rgb(126, 211, 33); color: rgb(0, 0, 0); white-space: pre-wrap;">
 <span class="PlaygroundEditorTheme__textCode">let a =b1</span>

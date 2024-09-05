@@ -19,10 +19,11 @@ import type {
 import PlaygroundEditorTheme from '../themes/PlaygroundEditorTheme';
 
 import { CustomParagraphNode } from '@nodes/CustomParagrahNode';
-import { ParagraphNode } from 'lexical';
+import { ParagraphNode, TextNode } from 'lexical';
 import PlaygroundNodes from './PlaygroundNodes';
 import { getContext, onDestroy, setContext } from 'svelte';
 import type { SearchPromise, useQuery } from '@plugins/AutocompletePlugin';
+import { MyCustomTextNode } from '@nodes/CustomTextNode';
 
 /* const hostName = typeof window!  window.location.hostname;
 export const isDevPlayground: boolean =
@@ -134,6 +135,13 @@ export const DEFAULT_SETTINGS = {
 						CustomParagraphNode.allowedAttributes = setting().allowedAttributesOnParagraph;
 					} */
 					return new CustomParagraphNode();
+				}
+			}, // Don't forget to register your custom node separately!
+			MyCustomTextNode,
+			{
+				replace: TextNode,
+				with: (node: TextNode) => {
+					return new MyCustomTextNode(node.__text);
 				}
 			}
 		],
