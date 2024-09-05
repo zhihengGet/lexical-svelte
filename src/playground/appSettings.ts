@@ -23,7 +23,7 @@ import { ParagraphNode, TextNode } from 'lexical';
 import PlaygroundNodes from './PlaygroundNodes';
 import { getContext, onDestroy, setContext } from 'svelte';
 import type { SearchPromise, useQuery } from '@plugins/AutocompletePlugin';
-import { MyCustomTextNode } from '@nodes/CustomTextNode';
+import { ExtendedTextNode } from '@nodes/CustomTextNode';
 
 /* const hostName = typeof window!  window.location.hostname;
 export const isDevPlayground: boolean =
@@ -137,11 +137,11 @@ export const DEFAULT_SETTINGS = {
 					return new CustomParagraphNode();
 				}
 			}, // Don't forget to register your custom node separately!
-			MyCustomTextNode,
+			ExtendedTextNode,
 			{
 				replace: TextNode,
 				with: (node: TextNode) => {
-					return new MyCustomTextNode(node.__text);
+					return new ExtendedTextNode(node.__text);
 				}
 			}
 		],
