@@ -12,15 +12,15 @@
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 	import { default as useLexicalEditable } from '@lexical/react/useLexicalEditable.svelte';
 	import {
-		computeTableMapSkipCellCheck as computeTableMapSkipCellCheck,
-		getTableNodeFromLexicalNodeOrThrow as getTableNodeFromLexicalNodeOrThrow,
+		$computeTableMapSkipCellCheck as computeTableMapSkipCellCheck,
+		$getTableNodeFromLexicalNodeOrThrow as getTableNodeFromLexicalNodeOrThrow,
 		$getTableRowIndexFromTableCellNode as getTableRowIndexFromTableCellNode,
-		isTableCellNode as isTableCellNode,
+		$isTableCellNode as isTableCellNode,
 		$isTableRowNode as isTableRowNode,
 		getDOMCellFromTarget
 	} from '@lexical/table';
 	import { calculateZoomLevel } from '@lexical/utils';
-	import { getNearestNodeFromDOMNode as getNearestNodeFromDOMNode } from 'lexical';
+	import { $getNearestNodeFromDOMNode as getNearestNodeFromDOMNode } from 'lexical';
 	import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 	import type { MouseEventHandler } from 'svelte/elements';
 	import { objectToCssString } from '../../utils/toCSS';
@@ -140,13 +140,13 @@
 
 	const updateRowHeight = useCallback(
 		(heightChange: number) => {
-			if (!activeCell()) {
+			let cell = activeCell();
+			if (!cell) {
 				throw new Error('TableCellResizer: Expected active cell.');
 			}
-
 			editor.update(
 				() => {
-					const tableCellNode = getNearestNodeFromDOMNode(activeCell().elem);
+					const tableCellNode = getNearestNodeFromDOMNode(cell.elem);
 					if (!isTableCellNode(tableCellNode)) {
 						throw new Error('TableCellResizer: Table cell node not found.');
 					}
@@ -225,12 +225,13 @@
 
 	const updateColumnWidth = useCallback(
 		(widthChange: number) => {
-			if (!activeCell()) {
+			let cell = activeCell();
+			if (!cell) {
 				throw new Error('TableCellResizer: Expected active cell.');
 			}
 			editor.update(
 				() => {
-					const tableCellNode = getNearestNodeFromDOMNode(activeCell().elem);
+					const tableCellNode = getNearestNodeFromDOMNode(cell.elem);
 					if (!isTableCellNode(tableCellNode)) {
 						throw new Error('TableCellResizer: Table cell node not found.');
 					}
@@ -264,67 +265,63 @@
 		[activeCell, editor]
 	);
 
-	const mouseUpHandler = useCallback(
-		(direction: MouseDraggingDirection) => {
-			const handler = (event: MouseEvent) => {
-				event.preventDefault();
-				event.stopPropagation();
+	const mouseUpHandler = (direction: MouseDraggingDirection) => {
+		const handler = (event: MouseEvent) => {
+			event.preventDefault();
+			event.stopPropagation();
 
-				if (!activeCell()) {
-					throw new Error('TableCellResizer: Expected active cell.');
+			if (!activeCell()) {
+				throw new Error('TableCellResizer: Expected active cell.');
+			}
+
+			if (mouseStartPosRef.current) {
+				const { x, y } = mouseStartPosRef.current;
+
+				if (activeCell() === null) {
+					return;
+				}
+				const zoom = calculateZoomLevel(event.target as Element);
+
+				if (isHeightChanging(direction)) {
+					const heightChange = (event.clientY - y) / zoom;
+					updateRowHeight(heightChange);
+				} else {
+					const widthChange = (event.clientX - x) / zoom;
+					updateColumnWidth(widthChange);
 				}
 
-				if (mouseStartPosRef.current) {
-					const { x, y } = mouseStartPosRef.current;
+				resetState();
+				document.removeEventListener('mouseup', handler);
+			}
+		};
+		return handler;
+	};
 
-					if (activeCell() === null) {
-						return;
-					}
-					const zoom = calculateZoomLevel(event.target as Element);
-
-					if (isHeightChanging(direction)) {
-						const heightChange = (event.clientY - y) / zoom;
-						updateRowHeight(heightChange);
-					} else {
-						const widthChange = (event.clientX - x) / zoom;
-						updateColumnWidth(widthChange);
-					}
-
-					resetState();
-					document.removeEventListener('mouseup', handler);
-				}
-			};
-			return handler;
-		},
-		[activeCell, resetState, updateColumnWidth, updateRowHeight]
-	);
-
-	const toggleResize = useCallback(
+	const toggleResize =
 		(direction: MouseDraggingDirection): MouseEventHandler<HTMLDivElement> =>
-			(event) => {
-				event.preventDefault();
-				event.stopPropagation();
+		(event) => {
+			event.preventDefault();
+			event.stopPropagation();
 
-				if (!activeCell()) {
-					throw new Error('TableCellResizer: Expected active cell.');
-				}
+			if (!activeCell()) {
+				throw new Error('TableCellResizer: Expected active cell.');
+			}
 
-				mouseStartPosRef.current = {
-					x: event.clientX,
-					y: event.clientY
-				};
-				updateMouseCurrentPos(mouseStartPosRef.current);
-				updateDraggingDirection(direction);
+			mouseStartPosRef.current = {
+				x: event.clientX,
+				y: event.clientY
+			};
+			updateMouseCurrentPos(mouseStartPosRef.current);
+			updateDraggingDirection(direction);
 
-				document.addEventListener('mouseup', mouseUpHandler(direction));
-			},
-		[activeCell, mouseUpHandler]
-	);
+			document.addEventListener('mouseup', mouseUpHandler(direction));
+		};
 
-	const getResizers = useCallback(() => {
-		if (activeCell()) {
-			const { height, width, top, left } = activeCell().elem.getBoundingClientRect();
-			const zoom = calculateZoomLevel(activeCell().elem);
+	const getResizers = () => {
+		let cell = activeCell();
+		if (cell) {
+			const { height, width, top, left } = cell.elem.getBoundingClientRect();
+			const zoom = calculateZoomLevel(cell.elem);
 			const zoneWidth = 10; // Pixel width of the zone where you can drag the edge
 			const styles = {
 				bottom: {
@@ -372,9 +369,9 @@
 			right: null,
 			top: null
 		};
-	}, [activeCell, draggingDirection, mouseCurrentPos]);
+	};
 
-	const resizerStyles = getResizers();
+	const resizerStyles = $derived.by(getResizers);
 </script>
 
 <div bind:this={resizerRef.current}>
