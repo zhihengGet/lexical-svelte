@@ -45,11 +45,14 @@
 </script>
 
 {#if !UserSetting && settings().dev}
+	<!-- {#each Object.keys(settings()) as t}
+		<button style="margin:4px;padding:1px;background:gray;">{t}</button>
+	{/each} -->
 	<button
 		class="bg-gray"
 		onclick={() => {
 			settings().isAutocomplete = !settings().isAutocomplete;
-		}}>update setting {settings().isAutocomplete} {settings().dev}</button
+		}}>update autocomplete {settings().isAutocomplete} {settings().dev}</button
 	>
 {/if}
 

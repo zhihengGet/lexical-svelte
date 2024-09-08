@@ -11,12 +11,12 @@
 	import { START_COMMENT_NODE } from '@plugins/ParagraphCommentPlugin/paragraphComment';
 	import type { LexicalEditor } from 'lexical';
 	let { ...props }: Settings = $props();
-
-	let s = $state({ initialHTML: '<p>hello<p>', equation: true, dev: true, showTreeView: true });
+	let s = $derived(props);
 	$effect.pre(() => {
 		//@ts-expect-error make effect reactive
 		createHistoryContext(props.initialHTML);
 	});
+	$inspect('editor props', props);
 	/* 	$effect(() => {
 		const p = document.body.querySelectorAll('p');
 		console.log(p);
@@ -30,29 +30,7 @@
 	let editor: LexicalEditor = $state();
 </script>
 
-<button
-	onclick={() => {
-		let a = editor.dispatchCommand(START_COMMENT_NODE, null);
-		console.log(a);
-		/* editor.update((v) => {
-			let a = document.querySelector('button svg');
-			if (a) {
-				a.classList.add('1');
-			}
-			console.log(a);
-		}); */
-	}}>render</button
->
-<!-- {#if props.dev}
-	<button
-		onclick={() => {
-			s.initialHTML = '<p>hello v2</p>';
-		}}>update html</button
-	>
-{/if}
- -->
-
-<SettingsContext settings={s}>
+<SettingsContext settings={props}>
 	<SharedAutocompleteContext>
 		<LexicalComposer>
 			<div class="editor-shell w-full">
@@ -61,8 +39,17 @@
 		</LexicalComposer>
 	</SharedAutocompleteContext>
 </SettingsContext>
-
-{#if s.dev}
+<!-- editor 2 -->
+<SettingsContext settings={props}>
+	<SharedAutocompleteContext>
+		<LexicalComposer>
+			<div class="editor-shell w-full">
+				<Editor />
+			</div>
+		</LexicalComposer>
+	</SharedAutocompleteContext>
+</SettingsContext>
+{#if true}
 	<h2>Read Only</h2>
 	<SettingsContext
 		settings={{

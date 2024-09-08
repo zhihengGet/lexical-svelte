@@ -35,7 +35,6 @@ export class CustomParagraphNode extends ParagraphNode {
 	exportJSON() {
 		return {
 			...super.exportJSON(),
-			'data-chapter-id': this['data-chapter-id'],
 			attr: this.getLatest().attr,
 			type: this.getType()
 		};

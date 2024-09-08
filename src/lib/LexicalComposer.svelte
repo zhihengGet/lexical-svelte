@@ -39,7 +39,7 @@
 		config: {
 			theme,
 			namespace,
-			editor__DEPRECATED: initialEditor,
+			editor__DEPRECATED: initialEditor, // not used
 			nodes,
 			onError,
 			editorState: initialEditorState,
@@ -49,7 +49,7 @@
 		initialHTML
 	} = $derived(setting());
 
-	const context: LexicalComposerContextType = createLexicalComposerContext(null, theme);
+	const context: LexicalComposerContextType = $derived(createLexicalComposerContext(null, theme));
 	let editor = initialEditor || null;
 
 	if (editor === null) {
@@ -65,7 +65,7 @@
 		//initializeEditor(newEditor, initialEditorState);
 
 		editor = newEditor;
-		$effect(() => {
+		$effect.pre(() => {
 			editor!.update(() => {
 				// In the browser you can use the native DOMParser API to parse the HTML string.
 				const parser = new DOMParser();
@@ -137,69 +137,6 @@
 	$effect(() => {
 		editor?.setEditable(editable ?? true);
 	});
-	function initializeEditor(
-		editor: LexicalEditor,
-		initialEditorState?: InitialEditorStateType
-	): void {
-		if (initialEditorState === null) {
-			return;
-		} else if (initialEditorState === undefined) {
-			editor.update(() => {
-				const root = lex.$getRoot();
-				if (root.isEmpty()) {
-					const paragraph = lex.$createParagraphNode();
-					root.append(paragraph);
-					const activeElement = CAN_USE_DOM ? document.activeElement : null;
-					if (
-						lex.$getSelection() !== null ||
-						(activeElement !== null && activeElement === editor.getRootElement())
-					) {
-						paragraph.select();
-					}
-				}
-			}, HISTORY_MERGE_OPTIONS);
-		} else if (initialEditorState !== null) {
-			switch (typeof initialEditorState) {
-				case 'string': {
-					if (initialHTML) {
-						editor.update(() => {
-							// In the browser you can use the native DOMParser API to parse the HTML string.
-							const parser = new DOMParser();
-							const dom = parser.parseFromString(initialEditorState, 'text/html');
-
-							// Once you have the DOM instance it's easy to generate LexicalNodes.
-							const nodes = generateNodesFromDOM(editor, dom);
-
-							// Select the root
-							lex.$getRoot().select();
-
-							// Insert them at a selection.
-							lex.$insertNodes(nodes);
-						});
-					} else {
-						const parsedEditorState = editor.parseEditorState(initialEditorState);
-						editor.setEditorState(parsedEditorState, HISTORY_MERGE_OPTIONS);
-					}
-
-					break;
-				}
-				case 'object': {
-					console.log('setting editor state', initialEditorState);
-					editor.setEditorState(initialEditorState, HISTORY_MERGE_OPTIONS);
-					break;
-				}
-				case 'function': {
-					editor.update(() => {
-						const root = lex.$getRoot();
-						if (root.isEmpty()) {
-							initialEditorState(editor);
-						}
-					}, HISTORY_MERGE_OPTIONS);
-					break;
-				}
-			}
-		}
-	}
 </script>
 
 {@render children()}

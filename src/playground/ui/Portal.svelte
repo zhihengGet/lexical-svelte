@@ -45,13 +45,13 @@
 	}
 	let ref = props.ref ?? { current: undefined };
 	$effect.pre(() => {
-		console.log('portal prerender', ref.current?.innerHTML);
+		//console.log('portal prerender', ref.current?.innerHTML);
 		/* if ((props.component || props.target) && ref.current) {
 			ref.current.innerHTML = '';
 		} */
 	});
 	$effect(() => {
-		console.log('portal after render', ref.current, snippet);
+		//console.log('portal after render', ref.current, snippet);
 		// useRef won't be called if decorator update so we have to call manually
 		/* 	if (props.component && props.target && ref.current) {
 			refFn(ref.current);
