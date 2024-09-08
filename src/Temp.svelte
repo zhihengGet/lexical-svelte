@@ -65,6 +65,7 @@
 	<h2>Read Only</h2>
 	<SettingsContext
 		settings={{
+			...props,
 			dev: false,
 			config: { editable: false },
 			initialHTML: `

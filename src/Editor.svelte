@@ -70,7 +70,7 @@
 		maxLength,
 		isDraggable,
 		image,
-		paragramComment,
+		paragraphComment,
 		onSizeLimit,
 		config: { query, editable }
 	} = $derived(settings());
@@ -131,7 +131,7 @@
 <div
 	class={`editor-container ${showTreeView ? 'tree-view' : ''} ${!isRichText ? 'plain-text' : ''}`}
 >
-	{#if paragramComment}
+	{#if paragraphComment}
 		<ParagraphCommentPugin />
 	{/if}
 	{#if isRichText}

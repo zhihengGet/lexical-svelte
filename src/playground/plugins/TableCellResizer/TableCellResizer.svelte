@@ -265,63 +265,67 @@
 		[activeCell, editor]
 	);
 
-	const mouseUpHandler = (direction: MouseDraggingDirection) => {
-		const handler = (event: MouseEvent) => {
-			event.preventDefault();
-			event.stopPropagation();
+	const mouseUpHandler = useCallback(
+		(direction: MouseDraggingDirection) => {
+			const handler = (event: MouseEvent) => {
+				event.preventDefault();
+				event.stopPropagation();
 
-			if (!activeCell()) {
-				throw new Error('TableCellResizer: Expected active cell.');
-			}
-
-			if (mouseStartPosRef.current) {
-				const { x, y } = mouseStartPosRef.current;
-
-				if (activeCell() === null) {
-					return;
-				}
-				const zoom = calculateZoomLevel(event.target as Element);
-
-				if (isHeightChanging(direction)) {
-					const heightChange = (event.clientY - y) / zoom;
-					updateRowHeight(heightChange);
-				} else {
-					const widthChange = (event.clientX - x) / zoom;
-					updateColumnWidth(widthChange);
+				if (!activeCell()) {
+					throw new Error('TableCellResizer: Expected active cell.');
 				}
 
-				resetState();
-				document.removeEventListener('mouseup', handler);
-			}
-		};
-		return handler;
-	};
+				if (mouseStartPosRef.current) {
+					const { x, y } = mouseStartPosRef.current;
 
-	const toggleResize =
-		(direction: MouseDraggingDirection): MouseEventHandler<HTMLDivElement> =>
-		(event) => {
-			event.preventDefault();
-			event.stopPropagation();
+					if (activeCell() === null) {
+						return;
+					}
+					const zoom = calculateZoomLevel(event.target as Element);
 
-			if (!activeCell()) {
-				throw new Error('TableCellResizer: Expected active cell.');
-			}
+					if (isHeightChanging(direction)) {
+						const heightChange = (event.clientY - y) / zoom;
+						updateRowHeight(heightChange);
+					} else {
+						const widthChange = (event.clientX - x) / zoom;
+						updateColumnWidth(widthChange);
+					}
 
-			mouseStartPosRef.current = {
-				x: event.clientX,
-				y: event.clientY
+					resetState();
+					document.removeEventListener('mouseup', handler);
+				}
 			};
-			updateMouseCurrentPos(mouseStartPosRef.current);
-			updateDraggingDirection(direction);
+			return handler;
+		},
+		[activeCell, resetState, updateColumnWidth, updateRowHeight]
+	);
 
-			document.addEventListener('mouseup', mouseUpHandler(direction));
-		};
+	const toggleResize = useCallback(
+		(direction: MouseDraggingDirection): MouseEventHandler<HTMLDivElement> =>
+			(event) => {
+				event.preventDefault();
+				event.stopPropagation();
 
-	const getResizers = () => {
-		let cell = activeCell();
-		if (cell) {
-			const { height, width, top, left } = cell.elem.getBoundingClientRect();
-			const zoom = calculateZoomLevel(cell.elem);
+				if (!activeCell()) {
+					throw new Error('TableCellResizer: Expected active cell.');
+				}
+
+				mouseStartPosRef.current = {
+					x: event.clientX,
+					y: event.clientY
+				};
+				updateMouseCurrentPos(mouseStartPosRef.current);
+				updateDraggingDirection(direction);
+
+				document.addEventListener('mouseup', mouseUpHandler(direction));
+			},
+		[activeCell, mouseUpHandler]
+	);
+
+	const getResizers = useCallback(() => {
+		if (activeCell()) {
+			const { height, width, top, left } = activeCell().elem.getBoundingClientRect();
+			const zoom = calculateZoomLevel(activeCell().elem);
 			const zoneWidth = 10; // Pixel width of the zone where you can drag the edge
 			const styles = {
 				bottom: {
@@ -343,8 +347,8 @@
 			};
 
 			const tableRect = tableRectRef.current;
-			let drag = draggingDirection();
-			let mouseCurr = mouseCurrentPos();
+			const drag = draggingDirection();
+			const mouseCurr = mouseCurrentPos();
 			if (drag && mouseCurr && tableRect) {
 				if (isHeightChanging(drag)) {
 					styles[drag].left = `${window.pageXOffset + tableRect.left}px`;
@@ -357,6 +361,7 @@
 					styles[drag].width = '3px';
 					styles[drag].height = `${tableRect.height}px`;
 				}
+
 				styles[drag].backgroundColor = '#adf';
 			}
 
@@ -369,7 +374,7 @@
 			right: null,
 			top: null
 		};
-	};
+	}, [activeCell, draggingDirection, mouseCurrentPos]);
 
 	const resizerStyles = $derived.by(getResizers);
 </script>

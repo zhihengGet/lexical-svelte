@@ -62,8 +62,8 @@ export { useEffect };
 
 //TODO cant just return an value, wont be reactive
 export function useCallback<T>(fn: T, dep?: any) {
-	const b = $derived(fn);
-	return b;
+	//const b = $derived(fn);
+	return fn;
 }
 //TODO , cant just return an value
 export function useMemo<T>(fn: () => T, dep?: any) {
