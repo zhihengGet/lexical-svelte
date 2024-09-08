@@ -33,13 +33,14 @@
 <button
 	onclick={() => {
 		let a = editor.dispatchCommand(START_COMMENT_NODE, null);
-		editor.update((v) => {
+		console.log(a);
+		/* editor.update((v) => {
 			let a = document.querySelector('button svg');
 			if (a) {
 				a.classList.add('1');
 			}
 			console.log(a);
-		});
+		}); */
 	}}>render</button
 >
 <!-- {#if props.dev}

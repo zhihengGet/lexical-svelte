@@ -14,7 +14,7 @@
 		isAutocomplete={false}
 		dev={false}
 		config={{ editable: false }}
-		paragramComment={true}
+		paragraphComment={true}
 		{...props}
 	/>
 {/await}

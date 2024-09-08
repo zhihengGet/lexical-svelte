@@ -66,21 +66,20 @@
 
 		editor = newEditor;
 		$effect(() => {
-			if (!editor) return;
-			editor.update(() => {
+			editor!.update(() => {
 				// In the browser you can use the native DOMParser API to parse the HTML string.
 				const parser = new DOMParser();
 				const dom = parser.parseFromString(initialHTML ?? '<p data-id="213">hi</p>', 'text/html');
 
 				// Once you have the DOM instance it's easy to generate LexicalNodes.
-				const nodes = generateNodesFromDOM(editor, dom);
+				const nodes = generateNodesFromDOM(editor!, dom);
 
 				// Select the root
 				lex.$getRoot().select();
 				lex.$getRoot().clear();
 				// Insert them at a selection.
 				lex.$insertNodes(nodes);
-
+				console.log('lexical:initialHTML', initialHTML.length);
 				// Insert them at a selection.
 			}, HISTORY_MERGE_OPTIONS);
 		});

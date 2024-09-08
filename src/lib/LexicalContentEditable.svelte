@@ -2,7 +2,22 @@
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 	import { useCallback, useState } from '../react.svelte';
 	import { useSettings } from '../playground/appSettings';
-
+	import type { LexicalEditor } from 'lexical';
+	type Props = {
+		editor: LexicalEditor;
+		ariaActiveDescendant?: React.AriaAttributes['aria-activedescendant'];
+		ariaAutoComplete?: React.AriaAttributes['aria-autocomplete'];
+		ariaControls?: React.AriaAttributes['aria-controls'];
+		ariaDescribedBy?: React.AriaAttributes['aria-describedby'];
+		ariaExpanded?: React.AriaAttributes['aria-expanded'];
+		ariaLabel?: React.AriaAttributes['aria-label'];
+		ariaLabelledBy?: React.AriaAttributes['aria-labelledby'];
+		ariaMultiline?: React.AriaAttributes['aria-multiline'];
+		ariaOwns?: React.AriaAttributes['aria-owns'];
+		ariaRequired?: React.AriaAttributes['aria-required'];
+		autoCapitalize?: HTMLDivElement['autocapitalize'];
+		'data-testid'?: string | null | undefined;
+	} & Omit<React.AllHTMLAttributes<HTMLDivElement>, 'placeholder'>;
 	const {
 		ariaActiveDescendant,
 		ariaAutoComplete,
@@ -22,15 +37,21 @@
 		tabIndex,
 		'data-testid': testid,
 		...rest
-	} = $props();
+	}: Props = $props();
 	const setting = useSettings();
-	const {} = $derived(setting());
 	const [editor] = useLexicalComposerContext();
 	const [isEditable, setEditable] = useState(false);
 
 	const ref = useCallback(
 		(rootElement: null | HTMLElement) => {
-			editor.setRootElement(rootElement);
+			// defaultView is required for a root element.
+			// In multi-window setups, the defaultView may not exist at certain points.
+			if (rootElement && rootElement.ownerDocument && rootElement.ownerDocument.defaultView) {
+				editor.setRootElement(rootElement);
+			} else {
+				editor.setRootElement(null);
+			}
+			console.log('lexical:set root element');
 		},
 		[editor]
 	);
@@ -58,13 +79,12 @@
 	autocapitalize={autoCapitalize}
 	contentEditable={isEditable()}
 	data-testid={'editor'}
-	id="editor_center"
 	autocorrect="false"
 	aria-autocomplete="none"
 	use:ref
 	{role}
-	{spellCheck}
+	spellcheck={spellCheck}
 	{tabIndex}
 	{style}
 	{...setting().contentEditableAttrs ?? {}}
-/>
+></div>

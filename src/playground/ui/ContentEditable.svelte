@@ -9,4 +9,4 @@
 	const ref = (node: HTMLElement) => node.focus();
 </script>
 
-<ContentEditable class={cl || 'ContentEditable__root'} />
+<ContentEditable class={cl || 'ContentEditable__root'} {ref} />

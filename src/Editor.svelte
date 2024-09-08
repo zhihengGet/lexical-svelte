@@ -74,9 +74,6 @@
 		onSizeLimit,
 		config: { query, editable }
 	} = $derived(settings());
-	$effect(() => {
-		console.log('setting change', isAutocomplete);
-	});
 	//console.log('setting', isRichText, showTreeView);
 	$effect(() => {
 		const updateViewPortWidth = () => {

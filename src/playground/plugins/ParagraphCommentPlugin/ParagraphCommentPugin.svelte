@@ -58,7 +58,11 @@
 						if (id)
 							editor.update(
 								() => {
-									paragraph.append(customNode);
+									if (paragraph.getChildrenSize()) {
+										paragraph.append(customNode);
+									} else {
+										paragraph.append(customNode);
+									}
 								},
 								{
 									onUpdate: () => {
