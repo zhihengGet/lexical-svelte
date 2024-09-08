@@ -62,7 +62,6 @@
 			onError: (error) => onError(error, newEditor),
 			theme
 		});
-
 		//initializeEditor(newEditor, initialEditorState);
 
 		editor = newEditor;

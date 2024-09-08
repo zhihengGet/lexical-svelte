@@ -1,7 +1,7 @@
 {
 	"name": "lexical-svelte-runes",
 	"private": false,
-	"version": "0.1.4-beta.69.87",
+	"version": "0.1.4-beta.70",
 	"type": "module",
 	"author": {
 		"name": "zhiheng zhang"
@@ -82,6 +82,7 @@
 		"embla-carousel-svelte": "^8.2.0",
 		"katex": "^0.16.11",
 		"lexical": "^0.17.1",
+		"lexical-svelte-runes": "0.1.4-beta.9",
 		"lodash-es": "^4.17.21",
 		"lucide-svelte": "^0.438.0",
 		"prettier": "^3.3.3",

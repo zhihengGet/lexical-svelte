@@ -134,8 +134,7 @@
 .h-auto{height:auto;}
 .h-fit{height:fit-content;}
 .h-full{height:100%;}
-.h1,
-[h1=""]{height:0.25rem;}
+.h1{height:0.25rem;}
 .h3{height:0.75rem;}
 .max-h-\[300px\]{max-height:300px;}
 .max-h-\[85vh\]{max-height:85vh;}
@@ -239,7 +238,8 @@
 .text-ellipsis{text-overflow:ellipsis;}
 .whitespace-nowrap{white-space:nowrap;}
 .\[\&_tr\:last-child\]\:border-0 tr:last-child,
-.border-0{border-width:0px;}
+.border-0,
+[border~="\30 "]{border-width:0px;}
 .b,
 .border,
 .border-\[1px\],

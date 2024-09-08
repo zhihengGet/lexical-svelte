@@ -9,8 +9,8 @@
 
 	import { useEffect, useMemo, useRef, useState } from 'react';
 	import type { Snippet } from 'svelte';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	const dropDownPadding = 4;
-
 	let {
 		disabled = false,
 		buttonLabel,
@@ -30,12 +30,10 @@
 		stopCloseOnClickSelf?: boolean;
 		chevronClass: string;
 	}>();
-
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 </script>
 
 <DropdownMenu.Root>
-	<DropdownMenu.Trigger class={buttonClassName}>
+	<DropdownMenu.Trigger class={buttonClassName} {disabled}>
 		{#if buttonIconClassName}
 			<span class={buttonIconClassName}></span>
 		{/if}
@@ -43,7 +41,6 @@
 		{#if buttonLabel}
 			<span class="text-sm text-center">{buttonLabel}</span>
 		{/if}
-
 		<i class="chevron-down {chevronClass}"></i>
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content class="bg-[#fff] dropdown">
@@ -54,3 +51,9 @@
 		</DropdownMenu.Group>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
+
+<style>
+	:global(.toolbar button:disabled) {
+		opacity: 0.5;
+	}
+</style>

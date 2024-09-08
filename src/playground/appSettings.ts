@@ -82,8 +82,13 @@ export const DEFAULT_SETTINGS = {
 		console.log('on input', html);
 	},
 	initialHTML: '',
+	paragramComment: false,
 	allowedAttributesOnParagraph: [''],
-	paragraphCommentClickFn: (props: { id: string }) => {},
+	paragraphCommentClickFn: (props: {
+		id: string;
+		paragraphNode: ParagraphNode;
+		paragraphContent: string;
+	}) => {},
 	paragraphCommentComponent: null,
 	autoInsertComment: false,
 	config: {

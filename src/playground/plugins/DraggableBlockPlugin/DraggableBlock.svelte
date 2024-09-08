@@ -276,7 +276,7 @@
 
 	useEffect(() => {
 		if (menuRef.current) {
-			console.log('set menu position', menuRef.current, draggableBlockElem());
+			//console.log('set menu position', menuRef.current, draggableBlockElem());
 			setMenuPosition(draggableBlockElem(), menuRef.current, anchorElem);
 		}
 	}, [anchorElem, draggableBlockElem, menuRef]);

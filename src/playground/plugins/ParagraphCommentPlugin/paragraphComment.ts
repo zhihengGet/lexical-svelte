@@ -55,14 +55,14 @@ export class ParagraphCmmtNode extends DecoratorNode<SvelteRender> {
 		return {
 			component: this.__component || Comment,
 			nodeKey: this.getKey(),
-			props: { nodeKey: this.getKey() }
+			props: { nodeKey: this.getKey(), section_id: this.__id }
 		};
 	}
 }
 
 export function $createParagraphCommentNode(props: {
 	clickFn?: (arg: { section_id: string }) => void;
-	id: string | null;
+	id: string;
 	component?: SvelteComponent;
 }): ParagraphCmmtNode {
 	const p = new ParagraphCmmtNode(props.id);

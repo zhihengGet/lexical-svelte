@@ -64,11 +64,11 @@
 		<div>wait</div>
 	{:then component}
 		{#if component}
-			<svelte:component this={component} {...props.props ?? []}>
+			<component {...props.props ?? []}>
 				{#each props.childComponents ?? [] as cp}
 					<svelte:self {...cp} />
 				{/each}
-			</svelte:component>
+			</component>
 		{/if}
 	{/await}
 	{#if snippet}

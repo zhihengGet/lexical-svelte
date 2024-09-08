@@ -9,3 +9,9 @@ export { default as Editor } from './EditorBase.svelte';
 export { default as LexicalComposer } from './lib/LexicalComposer.svelte';
 export { default as SettingsContext } from './playground/context/SettingsContext.svelte';
 export { default as SharedAutocompleteContext } from './playground/context/SharedAutocompleteContext.svelte';
+export {
+	$createParagraphCommentNode,
+	ParagraphCmmtNode,
+	START_COMMENT_NODE
+} from './playground/plugins/ParagraphCommentPlugin/paragraphComment';
+export * as lexical from 'lexical';

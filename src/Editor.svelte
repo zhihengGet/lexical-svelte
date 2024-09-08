@@ -70,6 +70,7 @@
 		maxLength,
 		isDraggable,
 		image,
+		paragramComment,
 		onSizeLimit,
 		config: { query, editable }
 	} = $derived(settings());
@@ -130,6 +131,9 @@
 <div
 	class={`editor-container ${showTreeView ? 'tree-view' : ''} ${!isRichText ? 'plain-text' : ''}`}
 >
+	{#if paragramComment}
+		<ParagraphCommentPugin />
+	{/if}
 	{#if isRichText}
 		<LexicalRichTextPlugin contentEditable={contentEditableRichText} {placeholder} />
 		<PageBreakPlug />
@@ -202,7 +206,7 @@
 			initializor={() => HistoryPlugin({ externalHistoryState: historyState })}
 		/>
 	{/if}
-	<ParagraphCommentPugin />
+
 	{#if editable}
 		{#if isCollab}
 			<!-- enable history plugin  -->
