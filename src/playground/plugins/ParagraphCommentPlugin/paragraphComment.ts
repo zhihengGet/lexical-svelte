@@ -10,10 +10,12 @@ import {
 	type SerializedLexicalNode
 } from 'lexical';
 import Comment from './Comment.svelte';
+import type { SvelteComponent } from 'svelte';
 export type SerializedParagraphCommentkNode = SerializedLexicalNode;
 
 export class ParagraphCmmtNode extends DecoratorNode<SvelteRender> {
 	__id: string;
+	__component: SvelteComponent | null = null;
 	_clickFn?: (arg: { section_id: string }) => void;
 	static getType(): string {
 		return 'paragraph_comment';
@@ -50,15 +52,21 @@ export class ParagraphCmmtNode extends DecoratorNode<SvelteRender> {
 		return this.getLatest().__id;
 	}
 	decorate(_editor: LexicalEditor, config: EditorConfig): SvelteRender {
-		return { component: Comment, nodeKey: this.getKey(), props: { nodeKey: this.getKey() } };
+		return {
+			component: this.__component || Comment,
+			nodeKey: this.getKey(),
+			props: { nodeKey: this.getKey() }
+		};
 	}
 }
 
 export function $createParagraphCommentNode(props: {
-	clickFn: (arg: { section_id: string }) => void;
-	id: string;
+	clickFn?: (arg: { section_id: string }) => void;
+	id: string | null;
+	component?: SvelteComponent;
 }): ParagraphCmmtNode {
 	const p = new ParagraphCmmtNode(props.id);
+	if (props.component) p.__component = props.component;
 	p._clickFn = props.clickFn;
 	return p;
 }

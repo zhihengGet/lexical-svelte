@@ -47,9 +47,9 @@
 						console.log(html);
 						const customNode = node.$createParagraphCommentNode({
 							id: id,
-							clickFn: settings().paragraphCommentClickFn
+							clickFn: settings().paragraphCommentClickFn,
+							component: settings().paragraphCommentComponent
 						}); // Example: inserting a rocket emoji
-
 						editor.update(
 							() => {
 								paragraph.append(customNode);
@@ -78,7 +78,7 @@
 		);
 	});
 	$effect(() => {
-		if (settings().dev) {
+		if (settings().dev || settings().autoInsertComment) {
 			console.log('dev mode auto render paragraph comment node');
 			setTimeout(() => {
 				editor.dispatchCommand(node.START_COMMENT_NODE, null);

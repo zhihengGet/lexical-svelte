@@ -21,7 +21,7 @@ import PlaygroundEditorTheme from '../themes/PlaygroundEditorTheme';
 import { CustomParagraphNode } from '@nodes/CustomParagrahNode';
 import { ParagraphNode, TextNode } from 'lexical';
 import PlaygroundNodes from './PlaygroundNodes';
-import { getContext, onDestroy, setContext } from 'svelte';
+import { getContext, onDestroy, setContext, type SvelteComponent, type Snippet } from 'svelte';
 import type { SearchPromise, useQuery } from '@plugins/AutocompletePlugin';
 import { ExtendedTextNode } from '@nodes/CustomTextNode';
 
@@ -84,6 +84,8 @@ export const DEFAULT_SETTINGS = {
 	initialHTML: '',
 	allowedAttributesOnParagraph: [''],
 	paragraphCommentClickFn: (props: { id: string }) => {},
+	paragraphCommentComponent: null,
+	autoInsertComment: false,
 	config: {
 		query: undefined,
 		editable: true,
@@ -155,7 +157,10 @@ export const DEFAULT_SETTINGS = {
 
 export type SettingName = keyof typeof DEFAULT_SETTINGS;
 
-export type Settings = Omit<typeof DEFAULT_SETTINGS, 'config'> & { config: InitialConfigType } & {
+export type Settings = Omit<typeof DEFAULT_SETTINGS, 'config' | 'paragraphCommentComponent'> & {
+	config: InitialConfigType;
+	paragraphCommentComponent: SvelteComponent;
+} & {
 	onInput: (s: string) => unknown;
 };
 
