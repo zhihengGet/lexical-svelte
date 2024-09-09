@@ -5,30 +5,19 @@
 </script>
 
 <script lang="ts">
-	/* intialize editor */
 	import type { LexicalComposerContextType } from '@lexical/react/LexicalComposerContext.svelte';
 	import * as lex from 'lexical';
-
 	import {
 		createLexicalComposerContext,
 		setLexicalComposerContext
 	} from '@lexical/react/LexicalComposerContext.svelte';
-	import type {
-		EditorState,
-		EditorThemeClasses,
-		HTMLConfig,
-		Klass,
-		LexicalEditor,
-		LexicalNode,
-		LexicalNodeReplacement
-	} from 'lexical';
-	import { createEditor, $getRoot as getRoot } from 'lexical';
+	import type { LexicalEditor } from 'lexical';
+	import { createEditor } from 'lexical';
 
-	import { CAN_USE_DOM } from 'shared/canUseDOM';
-	import { useMemo } from 'react';
 	import { $generateHtmlFromNodes as generateHtmlFromNodes } from '@lexical/html';
-	import { useSettings, type InitialEditorStateType } from '../playground/appSettings';
 	import { onDestroy, type Snippet } from 'svelte';
+	import { useSettings } from '../playground/appSettings';
+	import { CustomParagraphNode } from '@nodes/CustomParagrahNode';
 
 	let { children, bindEditor = $bindable() }: { children: Snippet; bindEditor?: LexicalEditor } =
 		$props();
@@ -48,6 +37,8 @@
 		},
 		initialHTML
 	} = $derived(setting());
+
+	CustomParagraphNode.allowedAttributes = allowedAttributesOnParagraph;
 
 	const context: LexicalComposerContextType = $derived(createLexicalComposerContext(null, theme));
 	let editor = initialEditor || null;

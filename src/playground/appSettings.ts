@@ -83,7 +83,7 @@ export const DEFAULT_SETTINGS = {
 	},
 	initialHTML: '',
 	paragraphComment: false,
-	allowedAttributesOnParagraph: [''],
+	allowedAttributesOnParagraph: ['data-chapter-comment-id'],
 	paragraphCommentClickFn: (props: {
 		id: string;
 		paragraphNode: ParagraphNode;
@@ -137,6 +137,7 @@ export const DEFAULT_SETTINGS = {
 			{
 				replace: ParagraphNode,
 				with: () => {
+					//CustomParagraphNode.allowedAttributes = DEFAULT_SETTINGS.allowedAttributesOnParagraph;
 					/* 	const setting = useSettings();
 					if (setting) {
 						CustomParagraphNode.allowedAttributes = setting().allowedAttributesOnParagraph;
