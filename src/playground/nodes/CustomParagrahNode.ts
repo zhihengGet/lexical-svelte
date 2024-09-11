@@ -65,8 +65,6 @@ export class CustomParagraphNode extends ParagraphNode {
 			p: () => {
 				return {
 					conversion: (element) => {
-						/* 	const tt = super.importDOM();
-						const data = tt?.['p'](element)?.conversion(element); */
 						const t = new CustomParagraphNode();
 						t.attr = this.getAtt(element, this.allowedAttributes);
 						return { node: t };
