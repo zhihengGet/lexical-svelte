@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 
-	import { useSharedAutocompleteContext } from '../../context/SharedAutocompleteContext.svelte';
+	import { useSharedAutocompleteContext } from '../../context/SharedHistoryContext';
 	import {
 		$setSelection as setSelection,
 		COMMAND_PRIORITY_LOW,

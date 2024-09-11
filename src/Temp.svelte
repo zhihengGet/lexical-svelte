@@ -40,7 +40,7 @@
 	</SharedAutocompleteContext>
 </SettingsContext>
 <!-- editor 2 -->
-<SettingsContext settings={props}>
+<!-- <SettingsContext settings={props}>
 	<SharedAutocompleteContext>
 		<LexicalComposer>
 			<div class="editor-shell w-full">
@@ -48,8 +48,8 @@
 			</div>
 		</LexicalComposer>
 	</SharedAutocompleteContext>
-</SettingsContext>
-{#if true}
+</SettingsContext> -->
+{#if false}
 	<h2>Read Only</h2>
 	<SettingsContext
 		settings={{

@@ -1,7 +1,6 @@
 <script lang="ts" module>
 	let totalComponents = 0;
-	import { useEffect, useMemo, useState } from 'react';
-	import { getContext, setContext } from 'svelte';
+	import { getContext, setContext, type Snippet } from 'svelte';
 	totalComponents += 1;
 	let contextkey = 'AutoCompleteContext';
 	type Suggestion = null | string[];
@@ -29,7 +28,7 @@
 </script>
 
 <script lang="ts">
-	let { children } = $props();
+	let { children }: { chidlren: Snippet } = $props();
 	setContext(contextkey, autocomplete);
 </script>
 

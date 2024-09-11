@@ -47,7 +47,7 @@
 
 <button
 	onclick={() => {
-		s.initialHTML = '<p>1</p>';
+		s.initialHTML = s.initialHTML.length == dd.length ? '<p>1</p>' : dd;
 		/* editor.update((v) => {
 			let a = document.querySelector('button svg');
 			if (a) {
@@ -57,6 +57,7 @@
 		}); */
 	}}>render</button
 >
+{s.initialHTML.length}
 {#await EditorInstance}
 	Dynamically loading Editor
 {:then { default: Editor }}

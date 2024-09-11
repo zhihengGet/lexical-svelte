@@ -81,8 +81,7 @@
 										};
 										if (!el) {
 											console.error('failed to get comment element in editor');
-										}
-										el!.onclick = c;
+										} else el!.onclick = c;
 									},
 									tag: 'insert_comment'
 								}

@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
 	import type { MenuRenderFn, MenuResolution } from '../shared/LexicalMenu.svelte';
 
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
@@ -50,7 +50,7 @@
 		menuRenderFn,
 		anchorClassName,
 		commandPriority = COMMAND_PRIORITY_LOW
-	} = $props<prop>();
+	}: prop = $props();
 
 	const [editor] = useLexicalComposerContext();
 	const [resolution, setResolution] = useState<MenuResolution | null>(null);

@@ -12,7 +12,7 @@ import {
 
 import { getAllContexts, mount, onDestroy, onMount, type ComponentProps, unmount } from 'svelte';
 import { ClickAutoComplete, search, type useQuery, type SearchPromise } from '.';
-import { useSharedAutocompleteContext } from '../../context/SharedAutocompleteContext.svelte';
+import { useSharedAutocompleteContext } from '../../context/SharedHistoryContext';
 import { getCaretGlobalPosition, getCaretTopPoint } from '../../utils/careat';
 import { addSwipeRightListener } from '../../utils/swipe';
 import AutocompleteComponent from './AutocompleteComponent.svelte';

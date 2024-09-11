@@ -6,7 +6,9 @@ import {
 	$getSelection as getSelection,
 	$isRangeSelection as isRangeSelection,
 	type EditorState,
-	RootNode
+	RootNode,
+	$insertNodes as insert,
+	TextNode
 } from 'lexical';
 import { useEffect } from 'react';
 import { $generateHtmlFromNodes as toHTML } from '@lexical/html';
@@ -60,6 +62,8 @@ export function MaxByteDancePlugin({
 				onMaxLimit();
 				return;
 			} else if (prevKB >= maxMB) {
+				console.warn('MAX SIZE LIMITED');
+				//insert([new TextNode('Size limited')]);
 				/* if (lastRestoredEditorState) restoreEditorState(editor, lastRestoredEditorState);
 					lastRestoredEditorState = prevEditorState; */
 				//trimTextContentFromAnchor(editor, anchor, delCount);
