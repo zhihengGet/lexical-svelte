@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Temp from './Temp.svelte';
 	let { ...props } = $props();
 
 	let EditorInstance: any = $state();
@@ -42,29 +43,62 @@
     <p data-chapter-comment-id='\"20317838-2f2f-44b0-984c-4680819e8557\"'><br></p>
     <p data-chapter-comment-id='\"ef5fdb6e-9e75-40f1-a828-3cb7b0a1610d\"'><a name="%5C%22IV%5C%22"></a></p>
 `;
-	let s = $state({ initialHTML: dd });
+	let s = $state({
+		initialHTML: `<p class="PlaygroundEditorTheme__paragraph" dir="ltr">
+  <span style="color: green; white-space: pre-wrap;">jo123123123123123dsf</span>
+</p>
+<p class="PlaygroundEditorTheme__paragraph" dir="ltr">
+  <span style="color: green; white-space: pre-wrap;">sdf</span>
+</p>
+<p class="PlaygroundEditorTheme__paragraph">
+  <img src="/src/images/yellow-flower.jpg" alt="Yellow flower in tilt shift lens" width="inherit" height="inherit">
+</p>
+<p class="PlaygroundEditorTheme__paragraph" dir="ltr">
+  <span style="color: green; font-size: 49px; white-space: pre-wrap;">fs</span>
+</p>
+<p class="PlaygroundEditorTheme__paragraph" dir="ltr">
+  <span style="color: green; font-size: 49px; white-space: pre-wrap;">df</span>
+</p>
+<p class="PlaygroundEditorTheme__paragraph" dir="ltr">
+  <br>
+</p>`
+	});
 </script>
 
 <button
 	onclick={() => {
-		s.initialHTML = s.initialHTML.length == dd.length ? '<p>1</p>' : dd;
-		editor.update((v) => {
+		//s.initialHTML = s.initialHTML.length == dd.length ? '<p>1</p>' : dd;
+		const editor = document.getElementsByClassName('chapter_target').item(-1);
+		/* editor.update((v) => {
 			let a = document.querySelector('button svg');
 			if (a) {
 				a.classList.add('1');
 			}
 			console.log(a);
-		});
+		}); */
 	}}>Toggle Render Paragraphs</button
 >
-{s.initialHTML.length}
+<div>
+	<h1>Read only</h1>
+	<div class="chapter_target"></div>
+</div>
+
 {#await EditorInstance}
 	Dynamically loading Editor
 {:then { default: Editor }}
 	<Editor
+		initialLifeCycle={{
+			afterInitialHTMLRender: () => {
+				setTimeout(() => {
+					const last_target = document.getElementsByClassName('chapter_target').item(0);
+					const content = document.getElementsByClassName('editor-container').item(0);
+					last_target.append(content.cloneNode(true));
+				}, 1000);
+			}
+		}}
 		isAutocomplete={false}
 		dev={true}
-		config={{ editable: false }}
+		config={{ editable: true }}
 		paragraphComment={true}
 		initialHTML={s.initialHTML}
 		isCharLimitUtf8={false}

@@ -84,11 +84,20 @@ export const DEFAULT_SETTINGS = {
 	initialHTML: '',
 	paragraphComment: false,
 	allowedAttributesOnParagraph: ['data-chapter-comment-id'],
+	paragraphCommentCloseFn: (props: {
+		id: string;
+		paragraphNode: ParagraphNode;
+		paragraphContent: string;
+	}) => {},
 	paragraphCommentClickFn: (props: {
 		id: string;
 		paragraphNode: ParagraphNode;
 		paragraphContent: string;
 	}) => {},
+	initialLifeCycle: {
+		beforeInitialHTMLRender: () => null,
+		afterInitialHTMLRender: () => null
+	},
 	paragraphCommentComponent: null,
 	autoInsertComment: false,
 	config: {

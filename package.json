@@ -1,7 +1,7 @@
 {
 	"name": "lexical-svelte-runes",
 	"private": false,
-	"version": "0.1.4-beta.77",
+	"version": "0.1.4-beta.78",
 	"type": "module",
 	"author": {
 		"name": "zhiheng zhang"
@@ -94,7 +94,7 @@
 		"@melt-ui/svelte": "^0.83.0",
 		"@sveltejs/kit": "2.6.1",
 		"@sveltejs/package": "^2.3.5",
-		"@sveltejs/vite-plugin-svelte": "^3.1.2",
+		"@sveltejs/vite-plugin-svelte": "4.0.0-next.7",
 		"@swc/cli": "^0.4.1-nightly.20240914",
 		"@swc/core": "^1.7.26",
 		"@tsconfig/svelte": "^5.0.4",
