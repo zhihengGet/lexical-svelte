@@ -43,7 +43,7 @@
 
 <script lang="ts">
 	type Props = { anchorElem: HTMLElement };
-	let { anchorElem } = $props<Props>();
+	let { anchorElem }: Props = $props();
 
 	const [editor] = useLexicalComposerContext();
 

@@ -48,14 +48,14 @@
 <button
 	onclick={() => {
 		s.initialHTML = s.initialHTML.length == dd.length ? '<p>1</p>' : dd;
-		/* editor.update((v) => {
+		editor.update((v) => {
 			let a = document.querySelector('button svg');
 			if (a) {
 				a.classList.add('1');
 			}
 			console.log(a);
-		}); */
-	}}>render</button
+		});
+	}}>Toggle Render Paragraphs</button
 >
 {s.initialHTML.length}
 {#await EditorInstance}
