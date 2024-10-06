@@ -71,7 +71,7 @@
 											const temp = editor.read(() => {
 												return paragraph.getTextContent();
 											});
-											console.log('commen click', id, temp);
+											console.log('comment click', id, temp);
 											settings().paragraphCommentClickFn({
 												id: id,
 												paragraphNode: paragraph,
