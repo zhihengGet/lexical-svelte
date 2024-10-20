@@ -103,6 +103,6 @@
 		initialHTML={s.initialHTML}
 		isCharLimitUtf8={false}
 		paragramComment={true}
-		showToolbar={false}
+		showToolbar={true}
 	/>
 {/await}
