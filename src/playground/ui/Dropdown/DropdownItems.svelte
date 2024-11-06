@@ -2,7 +2,7 @@
 	import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 	import { getContext, setContext, type Snippet } from 'svelte';
 
-	let { children, dropDownRef, onClose, children } = $props<{
+	let { dropDownRef, onClose, children } = $props<{
 		dropDownRef: any;
 		children: Snippet;
 		onClose: () => void;
