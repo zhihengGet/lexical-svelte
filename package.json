@@ -49,7 +49,7 @@
 		"src"
 	],
 	"peerDependencies": {
-		"svelte": "^5.1.11"
+		"svelte": "^5.0.0"
 	},
 	"dependencies": {
 		"@lexical/clipboard": "0.18.0",
