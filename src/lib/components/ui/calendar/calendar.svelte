@@ -1,4 +1,3 @@
-<!-- @migration-task Error while migrating Svelte code: Can only bind to an Identifier or MemberExpression -->
 <script lang="ts">
 	import { Calendar as CalendarPrimitive, type WithoutChildrenOrChild } from "bits-ui";
 	import * as Calendar from "./index.js";

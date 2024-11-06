@@ -1,4 +1,3 @@
-<!-- @migration-task Error while migrating Svelte code: Can only bind to an Identifier or MemberExpression -->
 <script lang="ts" module>
 	import { getContext, setContext } from "svelte";
 	import type { ToggleVariants } from "$lib/components/ui/toggle/index.js";
