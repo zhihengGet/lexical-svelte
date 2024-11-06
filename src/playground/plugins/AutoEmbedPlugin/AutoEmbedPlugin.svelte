@@ -1,3 +1,4 @@
+<!-- @migration-task Error while migrating Svelte code: Cannot reassign or bind to snippet parameter -->
 <script lang="ts">
 	import LexicalAutoEmbedPlugin, {
 		AutoEmbedOption

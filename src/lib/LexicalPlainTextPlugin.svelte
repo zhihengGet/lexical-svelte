@@ -18,8 +18,10 @@
 	const [editor] = useLexicalComposerContext();
 	let fn = useDecorators(editor);
 	usePlainTextSetup(editor);
+
+	const SvelteComponent_1 = $derived(contentEditable);
 </script>
 
-<svelte:component this={contentEditable} {...contentEditableProps} />
+<SvelteComponent_1 {...contentEditableProps} />
 <Portal components={fn()} target={null} />
 <Placeholder {...placeholderProps} content={placeholder} />

@@ -3,7 +3,7 @@
 
 	import joinClasses from '../utils/joinClasses';
 
-	let { className, onClick, disabled, small, title, ...props } = $props<{
+	let { children, className, onClick, disabled, small, title, ...props } = $props<{
 		children?: any;
 		className?: string;
 		disabled?: boolean;
@@ -25,5 +25,5 @@
 	{title}
 	aria-label={title}
 >
-	<slot />
+	{@render children?.()}
 </button>

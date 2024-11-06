@@ -11,6 +11,7 @@ export default {
 	preprocess: vitePreprocess({ enableSourcemap: true, script: true }),
 	kit: {
 		alias: {
+			'$lib/*': './src/lib/*',
 			shared: path.resolve(__dirname, './src/util/src/'),
 			'@shared': path.resolve('./src/shared/'),
 			'@lexical/react': path.resolve(__dirname, 'src/lib/'),

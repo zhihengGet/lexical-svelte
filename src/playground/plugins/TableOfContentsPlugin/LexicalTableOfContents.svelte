@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
 	// your script goes here
 	import type { LexicalEditor, NodeKey, NodeMutation } from 'lexical';
 

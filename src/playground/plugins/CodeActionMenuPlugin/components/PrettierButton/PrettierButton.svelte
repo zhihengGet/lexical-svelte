@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
 	import { $isCodeNode as isCodeNode } from '@lexical/code';
 	import {
 		$getNearestNodeFromDOMNode as getNearestNodeFromDOMNode,
@@ -138,8 +138,8 @@
 		aria-label="prettier"
 	>
 		{#if syntaxError()}
-			<i class="format prettier-error" />
-		{:else}<i class="format prettier" />
+			<i class="format prettier-error"></i>
+		{:else}<i class="format prettier"></i>
 		{/if}
 	</button>
 	{#if tipsVisible()}

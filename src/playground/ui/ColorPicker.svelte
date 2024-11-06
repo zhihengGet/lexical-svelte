@@ -253,7 +253,7 @@
 					setInputColor(basicColor);
 					setSelfColor(transformColor('hex', basicColor));
 				}}
-			/>
+			></button>
 		{/each}
 	</div>
 	<MoveWrapper
@@ -268,7 +268,7 @@
 				left: saturationPosition.x,
 				top: saturationPosition.y
 			})}
-		/>
+		></div>
 	</MoveWrapper>
 	<MoveWrapper class="color-picker-hue" onChange={onMoveHue}>
 		<div
@@ -277,7 +277,7 @@
 				'background-color': `hsl(${selfColor().hsv.h}, 100%, 50%)`,
 				left: huePosition.x
 			})}
-		/>
+		></div>
 	</MoveWrapper>
-	<div class="color-picker-color" style="background-color: {selfColor().hex} " />
+	<div class="color-picker-color" style="background-color: {selfColor().hex} "></div>
 </div>

@@ -4,7 +4,7 @@
 </script>
 
 <button
-	on:click={() => {
+	onclick={() => {
 		setting.isAutocomplete = !setting.isAutocomplete;
 		setting.config.editable = !setting.config.editable;
 	}}>toggle</button

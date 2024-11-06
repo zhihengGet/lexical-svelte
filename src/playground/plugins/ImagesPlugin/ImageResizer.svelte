@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
 	import type { LexicalEditor } from 'lexical';
 
 	import type * as React from 'react';
@@ -244,48 +244,48 @@
 		onpointerdown={(event) => {
 			handlePointerDown(event, Direction.north);
 		}}
-	/>
+	></div>
 	<div
 		class="image-resizer image-resizer-ne"
 		onpointerdown={(event) => {
 			handlePointerDown(event, Direction.north | Direction.east);
 		}}
-	/>
+	></div>
 	<div
 		class="image-resizer image-resizer-e"
 		onpointerdown={(event) => {
 			handlePointerDown(event, Direction.east);
 		}}
-	/>
+	></div>
 	<div
 		class="image-resizer image-resizer-se"
 		onpointerdown={(event) => {
 			console.log('se');
 			handlePointerDown(event, Direction.south | Direction.east);
 		}}
-	/>
+	></div>
 	<div
 		class="image-resizer image-resizer-s"
 		onpointerdown={(event) => {
 			handlePointerDown(event, Direction.south);
 		}}
-	/>
+	></div>
 	<div
 		class="image-resizer image-resizer-sw"
 		onpointerdown={(event) => {
 			handlePointerDown(event, Direction.south | Direction.west);
 		}}
-	/>
+	></div>
 	<div
 		class="image-resizer image-resizer-w"
 		onpointerdown={(event) => {
 			handlePointerDown(event, Direction.west);
 		}}
-	/>
+	></div>
 	<div
 		class="image-resizer image-resizer-nw"
 		onpointerdown={(event) => {
 			handlePointerDown(event, Direction.north | Direction.west);
 		}}
-	/>
+	></div>
 </div>

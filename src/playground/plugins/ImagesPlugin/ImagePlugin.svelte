@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
 	import * as lexical from 'lexical';
 	import {
 		$setSelection as setSelection,

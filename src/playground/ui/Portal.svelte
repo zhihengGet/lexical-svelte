@@ -1,4 +1,5 @@
 <script lang="ts" generics="T extends SvelteComponent">
+	import Portal from './Portal.svelte';
 	import type { SvelteRender } from '@lexical/react/types';
 	import { usePortal } from '@melt-ui/svelte/internal/actions';
 	import InsertImageDialog from '@plugins/ImagesPlugin/InsertImageDialog.svelte';
@@ -66,7 +67,7 @@
 		{#if component}
 			<component {...props.props ?? []}>
 				{#each props.childComponents ?? [] as cp}
-					<svelte:self {...cp} />
+					<Portal {...cp} />
 				{/each}
 			</component>
 		{/if}
@@ -88,7 +89,7 @@
 	{/if}
 {/if}
 {#each components ?? [] as decorator}
-	<svelte:self {...decorator} />
+	<Portal {...decorator} />
 {/each}
 
 <style>

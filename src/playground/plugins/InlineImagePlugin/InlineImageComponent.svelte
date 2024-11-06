@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
 	type CommandPayload = {
 		equation: string;
 		inline: boolean;

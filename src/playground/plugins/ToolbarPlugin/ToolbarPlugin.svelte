@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
 	import {
 		$createCodeNode as createCodeNode,
 		$isCodeNode as isCodeNode,
@@ -386,7 +386,7 @@
 		class="toolbar-item spaced"
 		aria-label="Undo"
 	>
-		<i class="format undo" />
+		<i class="format undo"></i>
 	</button>
 	<button
 		disabled={!canRedo() || !isEditable()}
@@ -398,7 +398,7 @@
 		class="toolbar-item"
 		aria-label="Redo"
 	>
-		<i class="format redo" />
+		<i class="format redo"></i>
 	</button>
 	<Divider />
 	{#if blockType() in blockTypeToBlockName && activeEditor() === editor}
@@ -445,7 +445,7 @@
 			type="button"
 			aria-label={`Format text as bold. Shortcut: ${IS_APPLE ? '⌘B' : 'Ctrl+B'}`}
 		>
-			<i class="format bold" />
+			<i class="format bold"></i>
 		</button>
 		<button
 			disabled={!isEditable()}
@@ -457,7 +457,7 @@
 			type="button"
 			aria-label={`Format text as italics. Shortcut: ${IS_APPLE ? '⌘I' : 'Ctrl+I'}`}
 		>
-			<i class="format italic" />
+			<i class="format italic"></i>
 		</button>
 		<button
 			disabled={!isEditable()}
@@ -469,7 +469,7 @@
 			type="button"
 			aria-label={`Format text to underlined. Shortcut: ${IS_APPLE ? '⌘U' : 'Ctrl+U'}`}
 		>
-			<i class="format underline" />
+			<i class="format underline"></i>
 		</button>
 		<button
 			disabled={!isEditable()}
@@ -481,7 +481,7 @@
 			type="button"
 			aria-label="Insert code block"
 		>
-			<i class="format code" />
+			<i class="format code"></i>
 		</button>
 		<button
 			disabled={!isEditable()}
@@ -491,7 +491,7 @@
 			title="Insert link"
 			type="button"
 		>
-			<i class="format link" />
+			<i class="format link"></i>
 		</button>
 		<DropdownColorPicker
 			disabled={!isEditable()}
@@ -526,7 +526,7 @@
 				title="Strikethrough"
 				aria-label="Format text with a strikethrough"
 			>
-				<i class="icon strikethrough" />
+				<i class="icon strikethrough"></i>
 				<span class="text">Strikethrough</span>
 			</DropDownItem>
 			<DropDownItem
@@ -537,7 +537,7 @@
 				title="Subscript"
 				aria-label="Format text with a subscript"
 			>
-				<i class="icon subscript" />
+				<i class="icon subscript"></i>
 				<span class="text">Subscript</span>
 			</DropDownItem>
 			<DropDownItem
@@ -548,7 +548,7 @@
 				title="Superscript"
 				aria-label="Format text with a superscript"
 			>
-				<i class="icon superscript" />
+				<i class="icon superscript"></i>
 				<span class="text">Superscript</span>
 			</DropDownItem>
 			<DropDownItem
@@ -557,7 +557,7 @@
 				title="Clear text formatting"
 				aria-label="Clear all text formatting"
 			>
-				<i class="icon clear" />
+				<i class="icon clear"></i>
 				<span class="text">Clear Formatting</span>
 			</DropDownItem>
 		</DropDown>
@@ -579,7 +579,7 @@
 				}}
 				class="item"
 			>
-				<i class="icon horizontal-rule" />
+				<i class="icon horizontal-rule"></i>
 				<span class="text">Horizontal Rule</span>
 			</DropDownItem>
 			<DropDownItem
@@ -588,7 +588,7 @@
 				}}
 				class="item"
 			>
-				<i class="icon page-break" />
+				<i class="icon page-break"></i>
 				<span class="text">Page Break</span>
 			</DropDownItem>
 
@@ -622,7 +622,7 @@
 				}}
 				class="item"
 			>
-				<i class="icon image" />
+				<i class="icon image"></i>
 				<span class="text">Image</span>
 			</DropDownItem>
 			<!-- 	<DropDownItem
@@ -690,7 +690,7 @@
 				}}
 				class="item"
 			>
-				<i class="icon equation" />
+				<i class="icon equation"></i>
 				<span class="text">Equation</span>
 			</DropDownItem>
 			<!-- 	<DropDownItem
@@ -712,7 +712,7 @@
 				}}
 				class="item"
 			>
-				<i class="icon caret-right" />
+				<i class="icon caret-right"></i>
 				<span class="text">Collapsible container</span>
 			</DropDownItem>
 		</DropDown>
@@ -1060,7 +1060,8 @@
 </div>
 
 <Modal bind:open title="insert image">
-	<svelte:component this={child().component} {...child()?.props} />
+	{@const SvelteComponent = child().component}
+	<SvelteComponent {...child()?.props} />
 </Modal>
 
 <!-- <Modal bind:open title={'insert image'}

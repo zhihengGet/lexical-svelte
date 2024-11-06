@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
 	import './index.css';
 
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
@@ -400,4 +400,4 @@
 >
 	<div class={isEditable ? 'icon' : ''}></div>
 </div>
-<div class="draggable-block-target-line" bind:this={targetLineRef.current} />
+<div class="draggable-block-target-line" bind:this={targetLineRef.current}></div>

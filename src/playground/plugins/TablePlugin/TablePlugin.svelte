@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
 	/**
 	 * Copyright (c) Meta Platforms, Inc. and affiliates.
 	 *

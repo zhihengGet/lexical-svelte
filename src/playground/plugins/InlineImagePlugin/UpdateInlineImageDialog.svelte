@@ -1,3 +1,4 @@
+<!-- @migration-task Error while migrating Svelte code: `$getNodeByKey` is an illegal variable name. To reference a global variable called `$getNodeByKey`, use `globalThis.$getNodeByKey` -->
 <script context="module" lang="ts">
 	type CommandPayload = {
 		equation: string;

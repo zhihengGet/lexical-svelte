@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
 	import './index.css';
 	export const INSERT_INLINE_COMMAND: LexicalCommand<void> = createCommand('INSERT_INLINE_COMMAND');
 </script>
@@ -176,7 +176,7 @@
 		class={'popup-item spaced ' + (isBold ? 'active' : '')}
 		aria-label="Format text as bold"
 	>
-		<i class="format bold" />
+		<i class="format bold"></i>
 	</button>
 	<button
 		type="button"
@@ -186,7 +186,7 @@
 		class={'popup-item spaced ' + (isItalic ? 'active' : '')}
 		aria-label="Format text as italics"
 	>
-		<i class="format italic" />
+		<i class="format italic"></i>
 	</button>
 	<button
 		type="button"
@@ -196,7 +196,7 @@
 		class={'popup-item spaced ' + (isUnderline ? 'active' : '')}
 		aria-label="Format text to underlined"
 	>
-		<i class="format underline" />
+		<i class="format underline"></i>
 	</button>
 	<button
 		type="button"
@@ -206,7 +206,7 @@
 		class={'popup-item spaced ' + (isStrikethrough ? 'active' : '')}
 		aria-label="Format text with a strikethrough"
 	>
-		<i class="format strikethrough" />
+		<i class="format strikethrough"></i>
 	</button>
 	<button
 		type="button"
@@ -217,7 +217,7 @@
 		title="Subscript"
 		aria-label="Format Subscript"
 	>
-		<i class="format subscript" />
+		<i class="format subscript"></i>
 	</button>
 	<button
 		type="button"
@@ -228,7 +228,7 @@
 		title="Superscript"
 		aria-label="Format Superscript"
 	>
-		<i class="format superscript" />
+		<i class="format superscript"></i>
 	</button>
 	<button
 		type="button"
@@ -238,7 +238,7 @@
 		class={'popup-item spaced ' + (isCode ? 'active' : '')}
 		aria-label="Insert code block"
 	>
-		<i class="format code" />
+		<i class="format code"></i>
 	</button>
 	<button
 		type="button"
@@ -246,7 +246,7 @@
 		class={'popup-item spaced ' + (isLink ? 'active' : '')}
 		aria-label="Insert link"
 	>
-		<i class="format link" />
+		<i class="format link"></i>
 	</button>
 
 	<button
@@ -255,6 +255,6 @@
 		class={'popup-item spaced insert-comment'}
 		aria-label="Insert comment"
 	>
-		<i class="format add-comment" />
+		<i class="format add-comment"></i>
 	</button>
 </div>

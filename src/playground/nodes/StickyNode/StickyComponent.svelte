@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
   import type { LexicalEditor, NodeKey } from "lexical";
 
   import "./StickyNode.css";
@@ -227,7 +227,7 @@
       aria-label="Change sticky note color"
       title="Color"
     >
-      <i class="bucket" />
+      <i class="bucket"></i>
     </button>
     <LexicalNestedComposer
       initialEditor={caption}

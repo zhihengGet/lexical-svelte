@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
 	export type InsertImagePayload = Readonly<ImagePayload>;
 
 	const getDOMSelection = (targetWindow: Window | null): Selection | null =>

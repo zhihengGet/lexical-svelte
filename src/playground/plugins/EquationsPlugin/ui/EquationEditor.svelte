@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	//import { debug } from 'console';
 	/**
 	 * Copyright (c) Meta Platforms, Inc. and affiliates.

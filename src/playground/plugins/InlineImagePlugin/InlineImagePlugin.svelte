@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
 	import type { Position, InlineImagePayload } from './InlineImageNode.svelte';
 
 	import type { LexicalCommand, LexicalEditor } from 'lexical';

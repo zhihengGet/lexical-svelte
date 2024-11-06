@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
 	import type { CommandListenerPriority, LexicalNode, MutationListener } from 'lexical';
 
 	import { $isLinkNode as isLinkNode, AutoLinkNode, LinkNode } from '@lexical/link';

@@ -1,3 +1,4 @@
+<!-- @migration-task Error while migrating Svelte code: Mixing old (on:mousedown) and new syntaxes for event handling is not allowed. Use only the onmousedown syntax -->
 <script context="module" lang="ts">
 </script>
 

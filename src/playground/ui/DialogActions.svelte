@@ -1,8 +1,8 @@
 <script>
   import "./Dialog.css";
-  let { ...props } = $props();
+  let { children, ...props } = $props();
 </script>
 
 <div class="DialogActions">
-  <slot />
+  {@render children?.()}
 </div>

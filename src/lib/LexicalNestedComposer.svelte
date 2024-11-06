@@ -18,7 +18,7 @@
 	import invariant from 'shared/invariant';
 	import { useLexicalComposerContext } from './LexicalComposerContext.svelte';
 	import { useCollaborationContext } from './LexicalCollaborationContext.svelte';
-	let {
+	let { children,
 		initialEditor,
 
 		initialNodes,
@@ -116,5 +116,5 @@
 </script>
 
 {#if !isCollabActive || isCollabReady}
-	<slot />
+	{@render children?.()}
 {/if}

@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
 	import DropDown from '@ui/Dropdown/DropDown.svelte';
 	import { DropDownItem } from '@ui/index';
 	import type * as lexical from 'lexical';
@@ -58,7 +58,7 @@
 		}}
 		class="item"
 	>
-		<i class="icon left-align" />
+		<i class="icon left-align"></i>
 		<span class="text">Left Align</span>
 	</DropDownItem>
 	<DropDownItem
@@ -67,7 +67,7 @@
 		}}
 		class="item"
 	>
-		<i class="icon center-align" />
+		<i class="icon center-align"></i>
 		<span class="text">Center Align</span>
 	</DropDownItem>
 	<DropDownItem
@@ -76,7 +76,7 @@
 		}}
 		class="item"
 	>
-		<i class="icon right-align" />
+		<i class="icon right-align"></i>
 		<span class="text">Right Align</span>
 	</DropDownItem>
 	<DropDownItem
@@ -85,7 +85,7 @@
 		}}
 		class="item"
 	>
-		<i class="icon justify-align" />
+		<i class="icon justify-align"></i>
 		<span class="text">Justify Align</span>
 	</DropDownItem>
 	<DropDownItem
@@ -98,7 +98,7 @@
 			class={`icon ${
 				isRTL ? ELEMENT_FORMAT_OPTIONS.start.iconRTL : ELEMENT_FORMAT_OPTIONS.start.icon
 			}`}
-		/>
+		></i>
 		<span class="text">Start Align</span>
 	</DropDownItem>
 	<DropDownItem
@@ -109,7 +109,7 @@
 	>
 		<i
 			class={`icon ${isRTL ? ELEMENT_FORMAT_OPTIONS.end.iconRTL : ELEMENT_FORMAT_OPTIONS.end.icon}`}
-		/>
+		></i>
 		<span class="text">End Align</span>
 	</DropDownItem>
 	<Divider />
@@ -119,7 +119,7 @@
 		}}
 		class="item"
 	>
-		<i class={'icon ' + (isRTL ? 'indent' : 'outdent')} />
+		<i class={'icon ' + (isRTL ? 'indent' : 'outdent')}></i>
 		<span class="text">Outdent</span>
 	</DropDownItem>
 	<DropDownItem
@@ -128,7 +128,7 @@
 		}}
 		class="item"
 	>
-		<i class={'icon ' + (isRTL ? 'outdent' : 'indent')} />
+		<i class={'icon ' + (isRTL ? 'outdent' : 'indent')}></i>
 		<span class="text">Indent</span>
 	</DropDownItem>
 </DropDown>

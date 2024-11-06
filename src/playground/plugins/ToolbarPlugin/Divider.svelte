@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
 	import * as lexical from 'lexical';
 	import { createContext, useEffect, useMemo, useState } from 'react';
 	import Button from '../../ui/Button.svelte';
@@ -44,4 +44,4 @@
 <script lang="ts">
 </script>
 
-<div class="divider" />
+<div class="divider"></div>

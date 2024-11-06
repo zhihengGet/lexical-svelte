@@ -1,1 +1,11 @@
-<div class="DialogButtonsList"><slot /></div>
+<script>
+	/**
+	 * @typedef {Object} Props
+	 * @property {import('svelte').Snippet} [children]
+	 */
+
+	/** @type {Props} */
+	let { children } = $props();
+</script>
+
+<div class="DialogButtonsList">{@render children?.()}</div>

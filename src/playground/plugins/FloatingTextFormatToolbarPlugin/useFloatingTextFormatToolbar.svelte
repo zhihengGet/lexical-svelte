@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import './index.css';
 
 	import { $isCodeHighlightNode as isCodeHighlightNode } from '@lexical/code';

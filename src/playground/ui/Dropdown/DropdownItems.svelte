@@ -2,7 +2,7 @@
 	import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 	import { getContext, setContext, type Snippet } from 'svelte';
 
-	let { dropDownRef, onClose, children } = $props<{
+	let { children, dropDownRef, onClose, children } = $props<{
 		dropDownRef: any;
 		children: Snippet;
 		onClose: () => void;
@@ -66,5 +66,5 @@
 </script>
 
 <div class="dropdown" bind:this={dropDownRef.current} onkeydown={handleKeyDown}>
-	<slot />
+	{@render children?.()}
 </div>

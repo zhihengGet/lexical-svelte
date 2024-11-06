@@ -7,19 +7,19 @@
 	 *
 	 */
 
-	import { useEffect, useMemo, useRef, useState } from 'react';
 	import type { Snippet } from 'svelte';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	const dropDownPadding = 4;
 	let {
+		group,
+		children,
 		disabled = false,
 		buttonLabel,
 		buttonAriaLabel,
 		buttonClassName,
 		buttonIconClassName,
 		stopCloseOnClickSelf,
-		chevronClass = '',
-		children
+		chevronClass = ''
 	} = $props<{
 		children?: Snippet;
 		disabled?: boolean;
@@ -28,7 +28,7 @@
 		buttonIconClassName?: string;
 		buttonLabel?: string;
 		stopCloseOnClickSelf?: boolean;
-		chevronClass: string;
+		chevronClass?: string;
 	}>();
 </script>
 
@@ -45,9 +45,9 @@
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content class="bg-[#fff] dropdown">
 		<DropdownMenu.Group>
-			<DropdownMenu.Label><slot name="group" /></DropdownMenu.Label>
+			<DropdownMenu.Label>{@render group?.()}</DropdownMenu.Label>
 			<DropdownMenu.Separator />
-			<slot />
+			{@render children?.()}
 		</DropdownMenu.Group>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>

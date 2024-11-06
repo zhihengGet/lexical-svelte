@@ -1,3 +1,4 @@
+<!-- @migration-task Error while migrating Svelte code: Unexpected token -->
 <div
             className="typeahead-popover auto-embed-menu"
             style={{

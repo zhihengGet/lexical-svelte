@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
 	import * as lexical from 'lexical';
 	import { createContext, useEffect, useMemo, useState } from 'react';
 	import Button from '../../ui/Button.svelte';
@@ -124,57 +124,57 @@
 		class={'item ' + dropDownActiveClass(blockType === 'paragraph')}
 		onclick={formatParagraph}
 	>
-		<i class="icon paragraph" />
+		<i class="icon paragraph"></i>
 		<span class="text">Normal</span>
 	</DropDownItem>
 	<DropDownItem
 		class={'item ' + dropDownActiveClass(blockType === 'h1')}
 		onclick={() => formatHeading('h1')}
 	>
-		<i class="icon h1" />
+		<i class="icon h1"></i>
 		<span class="text">Heading 1</span>
 	</DropDownItem>
 	<DropDownItem
 		class={'item ' + dropDownActiveClass(blockType === 'h2')}
 		onclick={() => formatHeading('h2')}
 	>
-		<i class="icon h2" />
+		<i class="icon h2"></i>
 		<span class="text">Heading 2</span>
 	</DropDownItem>
 	<DropDownItem
 		class={'item ' + dropDownActiveClass(blockType === 'h3')}
 		onclick={() => formatHeading('h3')}
 	>
-		<i class="icon h3" />
+		<i class="icon h3"></i>
 		<span class="text">Heading 3</span>
 	</DropDownItem>
 	<DropDownItem
 		class={'item ' + dropDownActiveClass(blockType === 'bullet')}
 		onclick={formatBulletList}
 	>
-		<i class="icon bullet-list" />
+		<i class="icon bullet-list"></i>
 		<span class="text">Bullet List</span>
 	</DropDownItem>
 	<DropDownItem
 		class={'item ' + dropDownActiveClass(blockType === 'number')}
 		onclick={formatNumberedList}
 	>
-		<i class="icon numbered-list" />
+		<i class="icon numbered-list"></i>
 		<span class="text">Numbered List</span>
 	</DropDownItem>
 	<DropDownItem
 		class={'item ' + dropDownActiveClass(blockType === 'check')}
 		onclick={formatCheckList}
 	>
-		<i class="icon check-list" />
+		<i class="icon check-list"></i>
 		<span class="text">Check List</span>
 	</DropDownItem>
 	<DropDownItem class={'item ' + dropDownActiveClass(blockType === 'quote')} onclick={formatQuote}>
-		<i class="icon quote" />
+		<i class="icon quote"></i>
 		<span class="text">Quote</span>
 	</DropDownItem>
 	<DropDownItem class={'item ' + dropDownActiveClass(blockType === 'code')} onclick={formatCode}>
-		<i class="icon code" />
+		<i class="icon code"></i>
 		<span class="text">Code Block</span>
 	</DropDownItem>
 </DropDown>

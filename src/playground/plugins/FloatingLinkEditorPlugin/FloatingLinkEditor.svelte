@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
 	import {
 		$isAutoLinkNode as isAutoLinkNode,
 		$isLinkNode as isLinkNode,
@@ -223,7 +223,7 @@
 					onclick={() => {
 						setIsLinkEditMode(false);
 					}}
-				/>
+				></div>
 
 				<div
 					class="link-confirm"
@@ -231,7 +231,7 @@
 					tabIndex={0}
 					onmousedown={(event) => event.preventDefault()}
 					onclick={handleLinkSubmission}
-				/>
+				></div>
 			</div>
 		{:else}
 			<div class="link-view">
@@ -247,7 +247,7 @@
 						setEditedLinkUrl(linkUrl());
 						setIsLinkEditMode(true);
 					}}
-				/>
+				></div>
 				<div
 					class="link-trash"
 					tabIndex={0}
@@ -255,7 +255,7 @@
 					onclick={() => {
 						editor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
 					}}
-				/>
+				></div>
 			</div>
 		{/if}
 	{/if}

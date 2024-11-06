@@ -1,2 +1,2 @@
-<script context="module" lang="ts">
+<script module lang="ts">
 </script>

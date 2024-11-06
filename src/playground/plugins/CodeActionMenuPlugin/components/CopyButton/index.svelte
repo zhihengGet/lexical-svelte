@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
 	import { $isCodeNode as isCodeNode } from '@lexical/code';
 	import {
 		$getNearestNodeFromDOMNode as getNearestNodeFromDOMNode,
@@ -52,10 +52,10 @@
 	}
 </script>
 
-<button class="menu-item" on:click={handleClick} aria-label="copy">
+<button class="menu-item" onclick={handleClick} aria-label="copy">
 	{#if isCopyCompleted()}
-		<i class="format success" />
+		<i class="format success"></i>
 	{:else}
-		<i class="format copy" />
+		<i class="format copy"></i>
 	{/if}
 </button>

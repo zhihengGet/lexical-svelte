@@ -1,5 +1,12 @@
 <script>
   import "./Dialog.css";
+  /**
+   * @typedef {Object} Props
+   * @property {import('svelte').Snippet} [children]
+   */
+
+  /** @type {Props} */
+  let { children } = $props();
 </script>
 
-<div class="DialogButtonsList"><slot /></div>
+<div class="DialogButtonsList">{@render children?.()}</div>

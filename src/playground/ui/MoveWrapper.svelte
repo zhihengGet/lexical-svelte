@@ -14,7 +14,7 @@
 		onChange: (position: Position) => void;
 		children: Snippet;
 	}
-	let { onChange, ...props } = $props<MoveWrapperProps>();
+	let { children, onChange, ...props } = $props<MoveWrapperProps>();
 
 	let divRef = useRef<HTMLDivElement | null>(null);
 	function clamp(value: number, max: number, min: number) {
@@ -54,5 +54,5 @@
 
 <!-- {props.style} -->
 <div bind:this={divRef.current} {...props} style={props.style} onmousedown={onMouseDown}>
-	<slot />
+	{@render children?.()}
 </div>

@@ -1,3 +1,4 @@
+<!-- @migration-task Error while migrating Svelte code: Export 'MenuOption' is not defined -->
 <script module lang="ts">
 	import type { MenuRenderFn, MenuResolution } from '../shared/LexicalMenu.svelte';
 

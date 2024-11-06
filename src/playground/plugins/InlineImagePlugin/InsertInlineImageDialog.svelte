@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
 	import type { Position } from './InlineImageNode.svelte';
 
 	//import '../../ui/Checkbox.css';
