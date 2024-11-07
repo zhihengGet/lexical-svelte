@@ -1,6 +1,3 @@
-<script module lang="ts">
-</script>
-
 <script lang="ts">
 	import ColorPicker from './ColorPicker.svelte';
 	import DropDown from '@ui/Dropdown/DropDown.svelte';
@@ -14,10 +11,10 @@
 		title?: string;
 		stopCloseOnClickSelf?: boolean;
 		color: string;
-		onChange?: (color: string) => void;
+		onChange?: (value: string, skipHistoryStack: boolean) => void;
 	};
 
-	let { disabled = false, stopCloseOnClickSelf = true, color, onChange, ...rest } = $props<Props>();
+	let { disabled = false, stopCloseOnClickSelf = true, color, onChange, ...rest }: Props = $props();
 </script>
 
 <DropDown {...rest} {disabled}>

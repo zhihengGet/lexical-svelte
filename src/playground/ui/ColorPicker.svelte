@@ -7,12 +7,11 @@
 	import MoveWrapper from './MoveWrapper.svelte';
 	import { styleString } from '../utils/css';
 	import { untrack } from 'svelte';
-
+	let skipAddingToHistoryStack = false;
 	interface ColorPickerProps {
 		color: string;
-		onChange?: (color: string) => void;
+		onChange?: (value: string, skipHistoryStack: boolean) => void;
 	}
-
 	const basicColors = [
 		'#d0021b',
 		'#f5a623',
@@ -33,7 +32,7 @@
 
 	const WIDTH = 214;
 	const HEIGHT = 150;
-	let { color, onChange } = $props<Readonly<ColorPickerProps>>();
+	let { color, onChange }: Readonly<ColorPickerProps> = $props();
 
 	const [selfColor, setSelfColor] = useState(transformColor('hex', color));
 	const [inputColor, setInputColor] = useState(color);
@@ -83,7 +82,7 @@
 		// Check if the dropdown is actually active
 		if (innerDivRef.current !== null && onChange) {
 			console.log('calling useEFFECTt 90');
-			onChange(selfColor().hex);
+			onChange(selfColor().hex, skipAddingToHistoryStack);
 			setInputColor(selfColor().hex);
 		}
 	}, [selfColor, onChange]);
@@ -247,6 +246,7 @@
 	<div class="color-picker-basic-color">
 		{#each basicColors as basicColor (basicColor)}
 			<button
+				aria-label={basicColor}
 				class={basicColor === selfColor().hex ? ' active' : ''}
 				style="background-color:{basicColor}"
 				onclick={() => {

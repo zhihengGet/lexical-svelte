@@ -287,7 +287,7 @@
 		(styles: Record<string, string>, skipHistoryStack?: boolean) => {
 			activeEditor.update(
 				() => {
-					const selection = $getSelection();
+					const selection = getSelection();
 					if (selection !== null) {
 						patchStyleText(selection, styles);
 					}
@@ -322,19 +322,17 @@
 		}
 	}, [activeEditor, setIsLinkEditMode, toolbarState.isLink]);
 
-	const onCodeLanguageSelect = useCallback(
-		(value: string) => {
-			activeEditor.update(() => {
-				if (selectedElementKey !== null) {
-					const node = getNodeByKey(selectedElementKey());
-					if (isCodeNode(node)) {
-						node.setLanguage(value);
-					}
+	const onCodeLanguageSelect = (value: string) => {
+		activeEditor.update(() => {
+			let isElement = selectedElementKey();
+			if (isElement !== null) {
+				const node = getNodeByKey(isElement);
+				if (isCodeNode(node)) {
+					node.setLanguage(value);
 				}
-			});
-		},
-		[activeEditor, selectedElementKey]
-	);
+			}
+		});
+	};
 	const insertGifOnClick = (payload: InsertImagePayload) => {
 		activeEditor.dispatchCommand(INSERT_IMAGE_COMMAND, payload);
 	};

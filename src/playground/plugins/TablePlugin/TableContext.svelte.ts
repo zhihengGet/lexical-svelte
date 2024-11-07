@@ -6,7 +6,7 @@
  *
  */
 
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 import type { SvelteRender } from '@lexical/react/types';
 import { INSERT_TABLE_COMMAND } from '@lexical/table';
 import type {
@@ -16,12 +16,8 @@ import type {
 	LexicalEditor,
 	LexicalNode
 } from 'lexical';
-import {
-	$insertNodes,
-	COMMAND_PRIORITY_EDITOR,
-	createCommand
-} from 'lexical';
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { $insertNodes, COMMAND_PRIORITY_EDITOR, createCommand } from 'lexical';
+import { createContext, useEffect, useMemo, useState } from 'react';
 import * as React from 'react';
 import invariant from 'shared/invariant';
 import { getContext, setContext } from 'svelte';
@@ -61,17 +57,14 @@ export const setTableContext = () => {
 		cellEditorConfig: null,
 		cellEditorPlugins: null
 	});
-	const a = useMemo(
-		() => ({
-			cellEditorConfig: contextValue.cellEditorConfig,
-			cellEditorPlugins: contextValue.cellEditorPlugins,
-			set: (cellEditorConfig: CellEditorConfig, cellEditorPlugins: SvelteRender) => {
-				setContextValue({ cellEditorConfig, cellEditorPlugins });
-			}
-		}),
-		[contextValue.cellEditorConfig, contextValue.cellEditorPlugins]
-	);
+	const a = $derived(() => ({
+		cellEditorConfig: contextValue().cellEditorConfig,
+		cellEditorPlugins: contextValue().cellEditorPlugins,
+		set: (cellEditorConfig: CellEditorConfig, cellEditorPlugins: SvelteRender) => {
+			setContextValue({ cellEditorConfig, cellEditorPlugins });
+		}
+	}));
 	setContext(KEY, a);
 };
 
-export const getTableConext = () => getContext(KEY) as CellContextShape;
+export const getTableConext = () => getContext(KEY) as () => CellContextShape;
