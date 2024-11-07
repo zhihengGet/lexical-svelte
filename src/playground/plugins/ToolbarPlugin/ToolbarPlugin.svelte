@@ -117,7 +117,9 @@
 	} = $props();
 	const [selectedElementKey, setSelectedElementKey] = useState<NodeKey | null>(null);
 	const [modal, showModal, child, setModalChild] = useModal();
-	const { toolbarState, updateToolbarState } = $derived.by(useToolbarState());
+	const toolbar = useToolbarState();
+	const updateToolbarState = toolbar().updateToolbarState;
+	const toolbarState = $derived(toolbar().toolbarState);
 	const [isEditable, setIsEditable] = useState(() => editor.isEditable());
 
 	const updateToolbar = useCallback(() => {
