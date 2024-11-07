@@ -33,8 +33,6 @@
 </script>
 
 <script lang="ts">
-	import { TrashIcon } from 'lucide-svelte';
-
 	let { editor, isLink, setIsLink, anchorElem, isLinkEditMode, setIsLinkEditMode } = $props<{
 		editor: LexicalEditor;
 		isLink: boolean;
@@ -43,7 +41,6 @@
 		isLinkEditMode: boolean;
 		setIsLinkEditMode: React.Dispatch<boolean>;
 	}>();
-	console.log('props', isLink);
 	const editorRef = useRef<HTMLDivElement | null>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [linkUrl, setLinkUrl] = useState('');
@@ -214,6 +211,8 @@
 				}}
 			/>
 			<div>
+				<!-- svelte-ignore a11y_interactive_supports_focus -->
+				<!-- svelte-ignore a11y_click_events_have_key_events -->
 				<div
 					class="link-cancel"
 					role="button"
@@ -223,7 +222,8 @@
 						setIsLinkEditMode(false);
 					}}
 				></div>
-
+				<!-- svelte-ignore a11y_interactive_supports_focus -->
+				<!-- svelte-ignore a11y_click_events_have_key_events -->
 				<div
 					class="link-confirm"
 					role="button"
@@ -237,6 +237,8 @@
 				<a href={sanitizeUrl(linkUrl())} target="_blank" rel="noopener noreferrer">
 					{linkUrl()}
 				</a>
+				<!-- svelte-ignore a11y_interactive_supports_focus -->
+				<!-- svelte-ignore a11y_click_events_have_key_events -->
 				<div
 					class="link-edit"
 					role="button"
@@ -247,6 +249,8 @@
 						setIsLinkEditMode(true);
 					}}
 				></div>
+				<!-- svelte-ignore a11y_interactive_supports_focus -->
+				<!-- svelte-ignore a11y_click_events_have_key_events -->
 				<div
 					class="link-trash"
 					tabIndex={0}

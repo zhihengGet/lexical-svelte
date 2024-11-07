@@ -77,6 +77,7 @@ export const DEFAULT_SETTINGS = {
 	dev: true,
 	editorCSS: '',
 	toolbarCSS: '',
+	hasLinkAttributes: false,
 	showToolbar: true,
 	onInput: (html: string) => {
 		console.log('on input', html);

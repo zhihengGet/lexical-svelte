@@ -39,7 +39,7 @@
 	import { useSettings } from '../../context/SettingsContext.svelte';
 	import EmojisPlugin from '../EmojisPlugin';
 	import KeywordsPlugin from '../KeywordsPlugin';
-	import { LinkPlugin } from '../LinkPlugin';
+	import { LinkPluginComponent } from '../LinkPlugin';
 	// import MentionsPlugin from "../plugins/MentionsPlugin";
 	//import TreeViewPlugin from "../../plugins/TreeViewPlugin.svelte";
 	import ContentEditable from '@ui/ContentEditable.svelte';
@@ -235,7 +235,7 @@
 {/snippet}
 <div class="image-caption-container">
 	<LexicalNestedComposer initialEditor={caption}>
-		<LinkPlugin />
+		<LinkPluginComponent />
 		<FloatingLinkEditorPlugin isLinkEditMode={false} setIsLinkEditMode={() => {}} />
 		<FloatingTextFormatToolbarPlugin />
 		<Portal initializor={AutoFocusPlugin} />

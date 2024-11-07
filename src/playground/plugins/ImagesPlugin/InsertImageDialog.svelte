@@ -51,7 +51,7 @@
 		activeEditor: LexicalEditor;
 		onClose: () => void;
 	} = $props();
-	useEffect(() => {
+	$effect(() => {
 		hasModifier.current = false;
 		const handler = (e: KeyboardEvent) => {
 			hasModifier.current = e.altKey;
@@ -60,7 +60,7 @@
 		return () => {
 			document.removeEventListener('keydown', handler);
 		};
-	}, [activeEditor]);
+	});
 
 	const onClick = (payload: InsertImagePayload) => {
 		activeEditor.dispatchCommand(INSERT_IMAGE_COMMAND, payload);

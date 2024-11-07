@@ -20,7 +20,7 @@
 	import { CheckListPlugin } from '@plugins/ListPlugin/LexicalCheckListPlugin.svelte';
 	import CodeHighlightPlugin from '@plugins/CodeHighlightPlugin';
 	import CodeActionMenuPlugin from '@plugins/CodeActionMenuPlugin';
-	import { LinkPlugin } from '@plugins/LinkPlugin';
+	import { LinkPluginComponent } from '@plugins/LinkPlugin';
 	import FloatingTextFormatToolbarPlugin from '@plugins/FloatingTextFormatToolbarPlugin/FloatingTextFormatToolbarPlugin.svelte';
 	import FloatingLinkEditorPlugin from '@plugins/FloatingLinkEditorPlugin/FloatingLinkEditorPlugin.svelte';
 	import ImagePlugin from '@plugins/ImagesPlugin/ImagePlugin.svelte';
@@ -71,6 +71,7 @@
 		isDraggable,
 		image,
 		paragraphComment,
+		hasLinkAttributes,
 		onSizeLimit,
 		config: { query, editable }
 	} = $derived(settings());
@@ -171,7 +172,7 @@
 		{/if}
 
 		<EquationsPlugin />
-		<LinkPlugin />
+		<LinkPluginComponent {hasLinkAttributes} />
 
 		{@const el = floatingAnchorElem()}
 		{#if el && editable}

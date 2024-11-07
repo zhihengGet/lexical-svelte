@@ -79,6 +79,7 @@
 <DropDown
 	{disabled}
 	buttonClassName={`toolbar-item ${style}`}
+	buttonIconClassName="icon block-type font-family"
 	buttonLabel={value}
 	{buttonAriaLabel}
 >

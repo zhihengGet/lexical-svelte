@@ -34,7 +34,7 @@
 	const [editor] = useLexicalComposerContext();
 	const [activeEditor, setActiveEditor] = useState(editor);
 	const [isLink, setIsLink] = useState(false);
-
+	console.log('link anchor', anchorElem);
 	useEffect(() => {
 		function updateToolbar() {
 			const selection = getSelection();

@@ -90,9 +90,9 @@
 		initialLifeCycle={{
 			afterInitialHTMLRender: () => {
 				setTimeout(() => {
-					const last_target = document.getElementsByClassName('chapter_target').item(0);
+					/* 		const last_target = document.getElementsByClassName('chapter_target').item(0);
 					const content = document.getElementsByClassName('editor-container').item(0);
-					last_target.append(content.cloneNode(true));
+					last_target.append(content.cloneNode(true)); */
 				}, 1000);
 			}
 		}}

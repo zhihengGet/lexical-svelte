@@ -1,22 +1,20 @@
-import { useCallback, useState } from 'react';
-
 import type { SvelteRender } from '@lexical/react/types';
 import { default as Modal } from '../ui/Modal.svelte';
 import { type SvelteComponent } from 'svelte';
 
 export default function useModal() {
-	let modalContent = $state<SvelteRender<Modal> | null>(); // use this if <Portal/>
+	let modalContent = $state<SvelteRender<SvelteComponent<typeof Modal>> | null>(); // use this if <Portal/>
 	let modalChild = $state<SvelteRender>();
 	let open = $state(true);
 
-	function setModalContent(data: null | SvelteRender<Modal>) {
+	function setModalContent(data: null | SvelteRender<SvelteComponent<typeof Modal>>) {
 		modalContent = data;
 	}
-	const onClose = useCallback(() => {
+	const onClose = () => {
 		console.log('on close call');
 		open = false;
 		setModalContent(null);
-	}, []);
+	};
 
 	const showModal = (
 		action: string = 'modal',

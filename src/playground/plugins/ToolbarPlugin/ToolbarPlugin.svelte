@@ -345,13 +345,15 @@
 		[applyStyleText]
 	);
 
-	const insertLink = useCallback(() => {
+	const insertLink = () => {
 		if (!isLink()) {
-			editor.dispatchCommand(TOGGLE_LINK_COMMAND, sanitizeUrl('https://'));
+			setIsLinkEditMode(true);
+			activeEditor().dispatchCommand(TOGGLE_LINK_COMMAND, sanitizeUrl('https://'));
 		} else {
-			editor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
+			setIsLinkEditMode(false);
+			activeEditor().dispatchCommand(TOGGLE_LINK_COMMAND, null);
 		}
-	}, [editor, isLink]);
+	};
 
 	const onCodeLanguageSelect = useCallback(
 		(value: string) => {
@@ -599,7 +601,6 @@
 						component: InsertImageDialog,
 						props: { activeEditor: activeEditor() }
 					}; */
-					open = true;
 					/* 	showModal('Insert Image', (onClose) => {
 						return [
 							{
@@ -619,6 +620,7 @@
 							props: { activeEditor: activeEditor(), onClose, title: 'Insert Image', open: true }
 						};
 					});
+					open = true;
 				}}
 				class="item"
 			>
@@ -1060,8 +1062,10 @@
 </div>
 
 <Modal bind:open title="insert image">
-	{@const SvelteComponent = child().component}
-	<SvelteComponent {...child()?.props} />
+	{@const SvelteComponent = child()?.component}
+	{#if SvelteComponent}
+		<SvelteComponent {...child()?.props} />
+	{/if}
 </Modal>
 
 <!-- <Modal bind:open title={'insert image'}

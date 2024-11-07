@@ -4,7 +4,10 @@
 
 	import { fade } from 'svelte/transition';
 	import type { Snippet } from 'svelte';
-
+	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
+	import * as Dialog from '$lib/components/ui/dialog/index.js';
+	import { Input } from '$lib/components/ui/input/index.js';
+	import { Label } from '$lib/components/ui/label/index.js';
 	type temp = {
 		closeOnClickOutside?: boolean;
 		onClose?: () => void;
@@ -14,52 +17,35 @@
 	};
 	let { title: t, onClose, children, open = $bindable(false) }: temp = $props();
 
-	const {
+	/* 	const {
 		elements: { trigger, overlay, content, title, description, close, portalled },
 		states: { open: open1 }
 	} = createDialog({
 		defaultOpen: true,
 		closeOnOutsideClick: false
-	});
-
+	}); */
+	/* 
 	$effect(() => {
 		console.log('binded', open, $open1);
 		open1.set(open);
 		open1.subscribe((v) => (open = v));
-	});
+	}); */
 </script>
 
-<!-- is dialog {$open1}
-{open} -->
-<div class="z-100">
-	{#if open}
-		<div
-			{...$overlay}
-			use:overlay
-			class="fixed inset-0 z-50 bg-black/50"
-			transition:fade={{ duration: 150 }}
-		></div>
-
-		<div
-			class="fixed left-[50%] top-[50%] z-50 max-h-[85vh] w-[90vw]
-            max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-xl bg-white
-            p-6 shadow-lg"
-			{...$content}
-			use:content
-		>
-			<h1>{t}</h1>
-
+<Dialog.Root bind:open>
+	<!-- 	<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>Edit Profile</Dialog.Trigger> -->
+	<Dialog.Content class="sm:max-w-[425px]">
+		<Dialog.Header>
+			<Dialog.Title>{t}</Dialog.Title>
+			<Dialog.Description>
+				Make changes to your image here. Click save when you're done.
+			</Dialog.Description>
+		</Dialog.Header>
+		<div class="grid gap-4 py-4">
 			{@render children?.()}
-			<!-- <X class="square-4" /> -->
-			<button
-				{...$close}
-				use:close
-				aria-label="close"
-				class="absolute right-4 top-4 inline-flex h-6 w-6 appearance-none
-                items-center justify-center rounded-full p-1 text-magnum-800
-                hover:bg-magnum-100 focus:shadow-magnum-400"
-				>X
-			</button>
 		</div>
-	{/if}
-</div>
+		<Dialog.Footer>
+			<Button type="submit">Save changes</Button>
+		</Dialog.Footer>
+	</Dialog.Content>
+</Dialog.Root>

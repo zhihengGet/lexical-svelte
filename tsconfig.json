@@ -32,6 +32,12 @@
 		"isolatedModules": true
 	},
 	"exclude": ["src/playground/plugins/AutoEmbedPlugin/*"],
-	"include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte", "packages/**/*"],
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.js",
+		"src/**/*.svelte",
+		"packages/**/*",
+		"src/playground/plugins/FloatingLinkEditorPlugin/useFloatingLinkEditorToolbar.svelte_depreacated"
+	],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

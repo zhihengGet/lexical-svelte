@@ -46,7 +46,7 @@
 	}
 	let ref = props.ref ?? { current: undefined };
 	$effect.pre(() => {
-		//console.log('portal prerender', ref.current?.innerHTML);
+		console.log('portal prerender', props.props);
 		/* if ((props.component || props.target) && ref.current) {
 			ref.current.innerHTML = '';
 		} */
@@ -63,13 +63,13 @@
 {#snippet El()}
 	{#await props.component}
 		<div>wait</div>
-	{:then component}
-		{#if component}
-			<component {...props.props ?? []}>
+	{:then C}
+		{#if C}
+			<C {...props.props ?? []}>
 				{#each props.childComponents ?? [] as cp}
 					<Portal {...cp} />
 				{/each}
-			</component>
+			</C>
 		{/if}
 	{/await}
 	{#if snippet}

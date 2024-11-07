@@ -1,4 +1,5 @@
 import {
+	$applyNodeReplacement,
 	$isTextNode,
 	type DOMConversion,
 	type DOMConversionMap,
@@ -15,7 +16,7 @@ export class ExtendedTextNode extends TextNode {
 	}
 
 	static getType(): string {
-		return 'custom-text';
+		return 'extended-text';
 	}
 
 	static clone(node: ExtendedTextNode): ExtendedTextNode {
@@ -58,20 +59,20 @@ export class ExtendedTextNode extends TextNode {
 	}
 
 	isSimpleText() {
-		return this.__type === 'custom-text' && this.__mode === 0;
+		return this.__type === 'extended-text' && this.__mode === 0;
 	}
 
 	exportJSON(): SerializedTextNode {
 		return {
 			...super.exportJSON(),
-			type: 'custom-text',
+			type: 'extended-text',
 			version: 1
 		};
 	}
 }
 
 export function $createExtendedTextNode(text: string): ExtendedTextNode {
-	return new ExtendedTextNode(text);
+	return $applyNodeReplacement(new ExtendedTextNode(text));
 }
 
 export function $isExtendedTextNode(
