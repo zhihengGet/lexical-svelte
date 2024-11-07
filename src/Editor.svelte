@@ -96,6 +96,8 @@
 		}
 	};
 	const [editor] = useLexicalComposerContext();
+	const [activeEditor, setActiveEditor] = useState(editor);
+
 	//console.log('isRichText', isRichText);
 	let container = $state<HTMLDivElement>();
 
@@ -124,7 +126,7 @@
 
 <!-- {isRichText ? 'RichTExt' : 'Plain'} -->
 {#if showToolbar}
-	<ToolbarPlugin {setIsLinkEditMode} />
+	<ToolbarPlugin {editor} activeEditor={activeEditor()} {setActiveEditor} {setIsLinkEditMode} />
 {/if}
 <div
 	class={`editor-container ${showTreeView ? 'tree-view' : ''} ${!isRichText ? 'plain-text' : ''}`}

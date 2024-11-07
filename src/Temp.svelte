@@ -10,6 +10,7 @@
 	import type { Settings } from './playground/appSettings';
 	import { START_COMMENT_NODE } from '@plugins/ParagraphCommentPlugin/paragraphComment';
 	import type { LexicalEditor } from 'lexical';
+	import { ToolbarContext } from '@plugins/ToolbarPlugin/ToolbarContext.SVELTE';
 	let { ...props }: Settings = $props();
 	let s = $derived(props);
 	$effect.pre(() => {
@@ -28,6 +29,7 @@
 		}
 	}); */
 	let editor: LexicalEditor = $state();
+	ToolbarContext();
 </script>
 
 <SettingsContext settings={props}>

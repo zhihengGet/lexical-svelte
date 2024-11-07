@@ -32,12 +32,16 @@
 		$patchStyleText as patchStyleText,
 		$setBlocksType as setBlocksType
 	} from '@lexical/selection';
-	import { $isTableNode as isTableNode } from '@lexical/table';
+	import {
+		$isTableNode as isTableNode,
+		$isTableSelection as isTableSelection
+	} from '@lexical/table';
 	import {
 		$findMatchingParent as findMatchingParent,
 		$getNearestBlockElementAncestorOrThrow as getNearestBlockElementAncestorOrThrow,
 		$getNearestNodeOfType as getNearestNodeOfType,
-		mergeRegister
+		mergeRegister,
+		$isEditorIsNestedEditor as isEditorIsNestedEditor
 	} from '@lexical/utils';
 	import type { ElementFormatType, NodeKey } from 'lexical';
 	import {
@@ -96,36 +100,39 @@
 	import { INSERT_PAGE_BREAK } from '@plugins/PageBreakPlugin/PageBreakPlug.svelte';
 	import { useSettings } from '../../appSettings';
 	import type { SvelteRender } from '@lexical/react/types';
+	import FontSize from './FontSize.svelte';
+	import { useToolbarState } from './ToolbarContext.svelte';
+	import { clearFormatting } from './utils';
 
-	let { setIsLinkEditMode } = $props<{ setIsLinkEditMode: (param: boolean) => boolean }>();
-	const [editor] = useLexicalComposerContext();
-	const [activeEditor, setActiveEditor] = useState(editor);
-	const [blockType, setBlockType] = useState<keyof typeof blockTypeToBlockName>('paragraph');
-	const [rootType, setRootType] = useState<keyof typeof rootTypeToRootName>('root');
+	let {
+		editor,
+		activeEditor,
+		setActiveEditor,
+		setIsLinkEditMode
+	}: {
+		editor: LexicalEditor;
+		activeEditor: LexicalEditor;
+		setActiveEditor: (LexicalEditor: LexicalEditor) => void;
+		setIsLinkEditMode: (a: boolean) => void;
+	} = $props();
 	const [selectedElementKey, setSelectedElementKey] = useState<NodeKey | null>(null);
-	const [fontSize, setFontSize] = useState<string>('15px');
-	const [fontColor, setFontColor] = useState<string>('#000');
-	const [bgColor, setBgColor] = useState<string>('#fff');
-	const [fontFamily, setFontFamily] = useState<string>('Arial');
-	const [elementFormat, setElementFormat] = useState<ElementFormatType>('left');
-	const [isLink, setIsLink] = useState(false);
-	const [isBold, setIsBold] = useState(false);
-	const [isItalic, setIsItalic] = useState(false);
-	const [isUnderline, setIsUnderline] = useState(false);
-	const [isStrikethrough, setIsStrikethrough] = useState(false);
-	const [isSubscript, setIsSubscript] = useState(false);
-	const [isSuperscript, setIsSuperscript] = useState(false);
-	const [isCode, setIsCode] = useState(false);
-	const [canUndo, setCanUndo] = useState(false);
-	const [canRedo, setCanRedo] = useState(false);
 	const [modal, showModal, child, setModalChild] = useModal();
-	const [isRTL, setIsRTL] = useState(false);
-	const [codeLanguage, setCodeLanguage] = useState<string>('');
+	const { toolbarState, updateToolbarState } = $derived.by(useToolbarState());
 	const [isEditable, setIsEditable] = useState(() => editor.isEditable());
 
 	const updateToolbar = useCallback(() => {
 		const selection = getSelection();
 		if (isRangeSelection(selection)) {
+			if (activeEditor !== editor && isEditorIsNestedEditor(activeEditor)) {
+				const rootElement = activeEditor.getRootElement();
+				updateToolbarState(
+					'isImageCaption',
+					!!rootElement?.parentElement?.classList.contains('image-caption-container')
+				);
+			} else {
+				updateToolbarState('isImageCaption', false);
+			}
+
 			const anchorNode = selection.anchor.getNode();
 			let element =
 				anchorNode.getKey() === 'root'
@@ -140,32 +147,21 @@
 			}
 
 			const elementKey = element.getKey();
-			const elementDOM = activeEditor().getElementByKey(elementKey);
+			const elementDOM = activeEditor.getElementByKey(elementKey);
 
-			// Update text format
-			setIsBold(selection.hasFormat('bold'));
-			setIsItalic(selection.hasFormat('italic'));
-			setIsUnderline(selection.hasFormat('underline'));
-			setIsStrikethrough(selection.hasFormat('strikethrough'));
-			setIsSubscript(selection.hasFormat('subscript'));
-			setIsSuperscript(selection.hasFormat('superscript'));
-			setIsCode(selection.hasFormat('code'));
-			setIsRTL(isParentElementRTL(selection));
+			updateToolbarState('isRTL', isParentElementRTL(selection));
 
 			// Update links
 			const node = getSelectedNode(selection);
 			const parent = node.getParent();
-			if (isLinkNode(parent) || isLinkNode(node)) {
-				setIsLink(true);
-			} else {
-				setIsLink(false);
-			}
+			const isLink = isLinkNode(parent) || isLinkNode(node);
+			updateToolbarState('isLink', isLink);
 
 			const tableNode = findMatchingParent(node, isTableNode);
 			if (isTableNode(tableNode)) {
-				setRootType('table');
+				updateToolbarState('rootType', 'table');
 			} else {
-				setRootType('root');
+				updateToolbarState('rootType', 'root');
 			}
 
 			if (elementDOM !== null) {
@@ -173,25 +169,36 @@
 				if (isListNode(element)) {
 					const parentList = getNearestNodeOfType<ListNode>(anchorNode, ListNode);
 					const type = parentList ? parentList.getListType() : element.getListType();
-					setBlockType(type);
+
+					updateToolbarState('blockType', type);
 				} else {
 					const type = isHeadingNode(element) ? element.getTag() : element.getType();
-					//console.log('update editor', type, element);
 					if (type in blockTypeToBlockName) {
-						setBlockType(type as keyof typeof blockTypeToBlockName);
+						updateToolbarState('blockType', type as keyof typeof blockTypeToBlockName);
 					}
 					if (isCodeNode(element)) {
 						const language = element.getLanguage() as keyof typeof CODE_LANGUAGE_MAP;
-						setCodeLanguage(language ? CODE_LANGUAGE_MAP[language] || language : '');
+						updateToolbarState(
+							'codeLanguage',
+							language ? CODE_LANGUAGE_MAP[language] || language : ''
+						);
 						return;
 					}
 				}
 			}
 			// Handle buttons
-			setFontSize(getSelectionStyleValueForProperty(selection, 'font-size', '15px'));
-			setFontColor(getSelectionStyleValueForProperty(selection, 'color', '#000'));
-			setBgColor(getSelectionStyleValueForProperty(selection, 'background-color', '#fff'));
-			setFontFamily(getSelectionStyleValueForProperty(selection, 'font-family', 'Arial'));
+			updateToolbarState(
+				'fontColor',
+				getSelectionStyleValueForProperty(selection, 'color', '#000')
+			);
+			updateToolbarState(
+				'bgColor',
+				getSelectionStyleValueForProperty(selection, 'background-color', '#fff')
+			);
+			updateToolbarState(
+				'fontFamily',
+				getSelectionStyleValueForProperty(selection, 'font-family', 'Arial')
+			);
 			let matchingParent;
 			if (isLinkNode(parent)) {
 				// If node is a link, we need to fetch the parent paragraph node to set format
@@ -202,7 +209,8 @@
 			}
 
 			// If matchingParent is a valid node, pass it's format type
-			setElementFormat(
+			updateToolbarState(
+				'elementFormat',
 				isElementNode(matchingParent)
 					? matchingParent.getFormatType()
 					: isElementNode(node)
@@ -210,155 +218,112 @@
 						: parent?.getFormatType() || 'left'
 			);
 		}
-	}, [activeEditor]);
+		if (isRangeSelection(selection) || isTableSelection(selection)) {
+			// Update text format
+			updateToolbarState('isBold', selection.hasFormat('bold'));
+			updateToolbarState('isItalic', selection.hasFormat('italic'));
+			updateToolbarState('isUnderline', selection.hasFormat('underline'));
+			updateToolbarState('isStrikethrough', selection.hasFormat('strikethrough'));
+			updateToolbarState('isSubscript', selection.hasFormat('subscript'));
+			updateToolbarState('isSuperscript', selection.hasFormat('superscript'));
+			updateToolbarState('isCode', selection.hasFormat('code'));
+			updateToolbarState(
+				'fontSize',
+				getSelectionStyleValueForProperty(selection, 'font-size', '15px')
+			);
+		}
+	}, []);
 
 	useEffect(() => {
 		return editor.registerCommand(
 			SELECTION_CHANGE_COMMAND,
 			(_payload, newEditor) => {
-				updateToolbar();
 				setActiveEditor(newEditor);
+				updateToolbar();
 				return false;
 			},
 			COMMAND_PRIORITY_CRITICAL
 		);
-	}, [editor, updateToolbar]);
+	}, [editor, updateToolbar, setActiveEditor]);
+
+	useEffect(() => {
+		activeEditor.getEditorState().read(() => {
+			updateToolbar();
+		});
+	}, [activeEditor, updateToolbar]);
 
 	useEffect(() => {
 		return mergeRegister(
 			editor.registerEditableListener((editable) => {
 				setIsEditable(editable);
 			}),
-			activeEditor().registerUpdateListener(({ editorState }) => {
+			activeEditor.registerUpdateListener(({ editorState }) => {
 				editorState.read(() => {
 					updateToolbar();
 				});
 			}),
-			activeEditor().registerCommand<boolean>(
+			activeEditor.registerCommand<boolean>(
 				CAN_UNDO_COMMAND,
 				(payload) => {
-					setCanUndo(payload);
+					updateToolbarState('canUndo', payload);
 					return false;
 				},
 				COMMAND_PRIORITY_CRITICAL
 			),
-			activeEditor().registerCommand<boolean>(
+			activeEditor.registerCommand<boolean>(
 				CAN_REDO_COMMAND,
 				(payload) => {
-					setCanRedo(payload);
+					updateToolbarState('canRedo', payload);
 					return false;
 				},
 				COMMAND_PRIORITY_CRITICAL
 			)
 		);
-	}, [updateToolbar, activeEditor, editor]);
-
-	useEffect(() => {
-		return activeEditor().registerCommand(
-			KEY_MODIFIER_COMMAND,
-			(payload) => {
-				const event: KeyboardEvent = payload;
-				const { code, ctrlKey, metaKey } = event;
-
-				if (code === 'KeyK' && (ctrlKey || metaKey)) {
-					event.preventDefault();
-					if (!isLink) {
-						setIsLinkEditMode(true);
-					} else {
-						setIsLinkEditMode(false);
-					}
-					return activeEditor().dispatchCommand(TOGGLE_LINK_COMMAND, sanitizeUrl('https://'));
-				}
-				return false;
-			},
-			COMMAND_PRIORITY_NORMAL
-		);
-	}, [activeEditor, isLink, setIsLinkEditMode]);
+	}, [updateToolbar, activeEditor, editor, updateToolbarState]);
 
 	const applyStyleText = useCallback(
-		(styles: Record<string, string>) => {
-			activeEditor().update(() => {
-				const selection = getSelection();
-				if (selection !== null) {
-					patchStyleText(selection, styles);
-				}
-			});
+		(styles: Record<string, string>, skipHistoryStack?: boolean) => {
+			activeEditor.update(
+				() => {
+					const selection = $getSelection();
+					if (selection !== null) {
+						patchStyleText(selection, styles);
+					}
+				},
+				skipHistoryStack ? { tag: 'historic' } : {}
+			);
 		},
 		[activeEditor]
 	);
 
-	const clearFormatting = useCallback(() => {
-		activeEditor().update(() => {
-			const selection = getSelection();
-			if (isRangeSelection(selection)) {
-				const anchor = selection.anchor;
-				const focus = selection.focus;
-				const nodes = selection.getNodes();
-
-				if (anchor.key === focus.key && anchor.offset === focus.offset) {
-					return;
-				}
-
-				nodes.forEach((node, idx) => {
-					// We split the first and last node by the selection
-					// So that we don't format unselected text inside those nodes
-					if (isTextNode(node)) {
-						// Use a separate variable to ensure TS does not lose the refinement
-						let textNode = node;
-						if (idx === 0 && anchor.offset !== 0) {
-							textNode = textNode.splitText(anchor.offset)[1] || textNode;
-						}
-						if (idx === nodes.length - 1) {
-							textNode = textNode.splitText(focus.offset)[0] || textNode;
-						}
-
-						if (node.__style !== '') {
-							textNode.setStyle('');
-						}
-						if (textNode.__format !== 0) {
-							textNode.setFormat(0);
-							getNearestBlockElementAncestorOrThrow(textNode).setFormat('');
-						}
-					} else if (isHeadingNode(node) || isQuoteNode(node)) {
-						node.replace(createParagraphNode(), true);
-					} else if (isDecoratorBlockNode(node)) {
-						node.setFormat('');
-					}
-				});
-			}
-		});
-	}, [activeEditor]);
-
 	const onFontColorSelect = useCallback(
-		(value: string) => {
-			console.log('called', value);
-			//	debugger;
-			applyStyleText({ color: value });
+		(value: string, skipHistoryStack: boolean) => {
+			applyStyleText({ color: value }, skipHistoryStack);
 		},
 		[applyStyleText]
 	);
 
 	const onBgColorSelect = useCallback(
-		(value: string) => {
-			applyStyleText({ 'background-color': value });
+		(value: string, skipHistoryStack: boolean) => {
+			applyStyleText({ 'background-color': value }, skipHistoryStack);
 		},
 		[applyStyleText]
 	);
 
-	const insertLink = () => {
-		if (!isLink()) {
+	const insertLink = useCallback(() => {
+		if (!toolbarState.isLink) {
 			setIsLinkEditMode(true);
-			activeEditor().dispatchCommand(TOGGLE_LINK_COMMAND, sanitizeUrl('https://'));
+			activeEditor.dispatchCommand(TOGGLE_LINK_COMMAND, sanitizeUrl('https://'));
 		} else {
 			setIsLinkEditMode(false);
-			activeEditor().dispatchCommand(TOGGLE_LINK_COMMAND, null);
+			activeEditor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
 		}
-	};
+	}, [activeEditor, setIsLinkEditMode, toolbarState.isLink]);
 
 	const onCodeLanguageSelect = useCallback(
 		(value: string) => {
-			activeEditor().update(() => {
-				if (selectedElementKey() !== null) {
+			activeEditor.update(() => {
+				if (selectedElementKey !== null) {
 					const node = getNodeByKey(selectedElementKey());
 					if (isCodeNode(node)) {
 						node.setLanguage(value);
@@ -368,9 +333,10 @@
 		},
 		[activeEditor, selectedElementKey]
 	);
-	const insertGifonclick = (payload: InsertImagePayload) => {
-		activeEditor().dispatchCommand(INSERT_IMAGE_COMMAND, payload);
+	const insertGifOnClick = (payload: InsertImagePayload) => {
+		activeEditor.dispatchCommand(INSERT_IMAGE_COMMAND, payload);
 	};
+
 	const settings = useSettings();
 	let open = $state(false);
 	let modalContent = $state<SvelteRender>({});
@@ -379,9 +345,9 @@
 <div class="toolbar {settings().toolbarCSS}">
 	<button
 		class:hidden={settings().isUndoRedo == false}
-		disabled={!canUndo() || !isEditable()}
+		disabled={!toolbarState.canUndo || !isEditable()}
 		onclick={() => {
-			activeEditor().dispatchCommand(UNDO_COMMAND, undefined);
+			activeEditor.dispatchCommand(UNDO_COMMAND, undefined);
 		}}
 		title={IS_APPLE ? 'Undo (⌘Z)' : 'Undo (Ctrl+Z)'}
 		type="button"
@@ -391,9 +357,9 @@
 		<i class="format undo"></i>
 	</button>
 	<button
-		disabled={!canRedo() || !isEditable()}
+		disabled={!toolbarState.canRedo || !isEditable()}
 		onclick={() => {
-			activeEditor().dispatchCommand(REDO_COMMAND, undefined);
+			activeEditor.dispatchCommand(REDO_COMMAND, undefined);
 		}}
 		title={IS_APPLE ? 'Redo (⌘Y)' : 'Redo (Ctrl+Y)'}
 		type="button"
@@ -403,29 +369,29 @@
 		<i class="format redo"></i>
 	</button>
 	<Divider />
-	{#if blockType() in blockTypeToBlockName && activeEditor() === editor}
+	{#if toolbarState.blockType in blockTypeToBlockName && activeEditor === editor}
 		<BlockFormatDropdown
 			disabled={!isEditable()}
-			blockType={blockType()}
-			rootType={rootType()}
-			{editor}
+			blockType={toolbarState.blockType}
+			rootType={toolbarState.rootType}
+			editor={activeEditor}
 		/>
 		<Divider />
 	{:else}
 		<!-- Else block content goes here (if needed) -->
 	{/if}
-	{#if blockType() == 'code'}
+	{#if toolbarState.blockType == 'code'}
 		<!-- content here -->
 		<DropDown
 			disabled={!isEditable()}
 			buttonClassName="toolbar-item code-language"
-			buttonLabel={getLanguageFriendlyName(codeLanguage())}
+			buttonLabel={getLanguageFriendlyName(toolbarState.codeLanguage)}
 			buttonAriaLabel="Select language"
 		>
 			{#each CODE_LANGUAGE_OPTIONS as [value, name]}
 				<!-- content here -->
 				<DropDownItem
-					class={`item ${dropDownActiveClass(value === codeLanguage())}`}
+					class={`item ${dropDownActiveClass(value === toolbarState.codeLanguage)}`}
 					onclick={() => onCodeLanguageSelect(value)}
 				>
 					<span class="text">{name}</span>
@@ -433,16 +399,26 @@
 			{/each}
 		</DropDown>
 	{/if}
-	{#if blockType() !== 'code'}
+	{#if toolbarState.blockType !== 'code'}
 		<!-- content here -->
-		<FontDropDown disabled={!isEditable()} style={'font-family'} value={fontFamily()} {editor} />
+		<FontDropDown
+			disabled={!isEditable()}
+			style={'font-family'}
+			value={toolbarState.fontFamily}
+			{editor}
+		/>
+		<FontSize
+			selectionFontSize={toolbarState.fontSize.slice(0, -2)}
+			editor={activeEditor}
+			disabled={!isEditable()}
+		/>
 		<Divider />
 		<button
 			disabled={!isEditable()}
 			onclick={() => {
-				activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'bold');
+				activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold');
 			}}
-			class={'toolbar-item spaced ' + (isBold() ? 'active' : '')}
+			class={'toolbar-item spaced ' + (toolbarState.isBold ? 'active' : '')}
 			title={IS_APPLE ? 'Bold (⌘B)' : 'Bold (Ctrl+B)'}
 			type="button"
 			aria-label={`Format text as bold. Shortcut: ${IS_APPLE ? '⌘B' : 'Ctrl+B'}`}
@@ -452,9 +428,9 @@
 		<button
 			disabled={!isEditable()}
 			onclick={() => {
-				activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'italic');
+				activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic');
 			}}
-			class={'toolbar-item spaced ' + (isItalic() ? 'active' : '')}
+			class={'toolbar-item spaced ' + (toolbarState.isItalic ? 'active' : '')}
 			title={IS_APPLE ? 'Italic (⌘I)' : 'Italic (Ctrl+I)'}
 			type="button"
 			aria-label={`Format text as italics. Shortcut: ${IS_APPLE ? '⌘I' : 'Ctrl+I'}`}
@@ -464,9 +440,9 @@
 		<button
 			disabled={!isEditable()}
 			onclick={() => {
-				activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'underline');
+				activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline');
 			}}
-			class={'toolbar-item spaced ' + (isUnderline() ? 'active' : '')}
+			class={'toolbar-item spaced ' + (toolbarState.isUnderline ? 'active' : '')}
 			title={IS_APPLE ? 'Underline (⌘U)' : 'Underline (Ctrl+U)'}
 			type="button"
 			aria-label={`Format text to underlined. Shortcut: ${IS_APPLE ? '⌘U' : 'Ctrl+U'}`}
@@ -476,9 +452,9 @@
 		<button
 			disabled={!isEditable()}
 			onclick={() => {
-				activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'code');
+				activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code');
 			}}
-			class={'toolbar-item spaced ' + (isCode() ? 'active' : '')}
+			class={'toolbar-item spaced ' + (toolbarState.isCode ? 'active' : '')}
 			title="Insert code block"
 			type="button"
 			aria-label="Insert code block"
@@ -488,7 +464,7 @@
 		<button
 			disabled={!isEditable()}
 			onclick={insertLink}
-			class={'toolbar-item spaced ' + (isLink() ? 'active' : '')}
+			class={'toolbar-item spaced ' + (toolbarState.isLink ? 'active' : '')}
 			aria-label="Insert link"
 			title="Insert link"
 			type="button"
@@ -500,7 +476,7 @@
 			buttonClassName="toolbar-item color-picker"
 			buttonAriaLabel="Formatting text color"
 			buttonIconClassName="icon font-color"
-			color={fontColor()}
+			color={toolbarState.fontColor}
 			onChange={onFontColorSelect}
 			title="text color"
 		/>
@@ -509,7 +485,7 @@
 			buttonClassName="toolbar-item color-picker"
 			buttonAriaLabel="Formatting background color"
 			buttonIconClassName="icon bg-color"
-			color={bgColor()}
+			color={toolbarState.bgColor}
 			onChange={onBgColorSelect}
 			title="bg color"
 		/>
@@ -522,9 +498,9 @@
 		>
 			<DropDownItem
 				onclick={() => {
-					activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough');
+					activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough');
 				}}
-				class={'item ' + dropDownActiveClass(isStrikethrough())}
+				class={'item ' + dropDownActiveClass(toolbarState.isStrikethrough)}
 				title="Strikethrough"
 				aria-label="Format text with a strikethrough"
 			>
@@ -533,9 +509,9 @@
 			</DropDownItem>
 			<DropDownItem
 				onclick={() => {
-					activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript');
+					activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript');
 				}}
-				class={'item ' + dropDownActiveClass(isSubscript())}
+				class={'item ' + dropDownActiveClass(toolbarState.isSubscript)}
 				title="Subscript"
 				aria-label="Format text with a subscript"
 			>
@@ -544,9 +520,9 @@
 			</DropDownItem>
 			<DropDownItem
 				onclick={() => {
-					activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'superscript');
+					activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'superscript');
 				}}
-				class={'item ' + dropDownActiveClass(isSuperscript())}
+				class={'item ' + dropDownActiveClass(toolbarState.isSuperscript)}
 				title="Superscript"
 				aria-label="Format text with a superscript"
 			>
@@ -554,7 +530,7 @@
 				<span class="text">Superscript</span>
 			</DropDownItem>
 			<DropDownItem
-				onclick={clearFormatting}
+				onclick={() => clearFormatting(activeEditor)}
 				class="item"
 				title="Clear text formatting"
 				aria-label="Clear all text formatting"
@@ -577,7 +553,7 @@
 		>
 			<DropDownItem
 				onclick={() => {
-					activeEditor().dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined);
+					activeEditor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined);
 				}}
 				class="item"
 			>
@@ -586,7 +562,7 @@
 			</DropDownItem>
 			<DropDownItem
 				onclick={() => {
-					activeEditor().dispatchCommand(INSERT_PAGE_BREAK, undefined);
+					activeEditor.dispatchCommand(INSERT_PAGE_BREAK, undefined);
 				}}
 				class="item"
 			>
@@ -599,14 +575,14 @@
 				onclick={() => {
 					/* modalContent = {
 						component: InsertImageDialog,
-						props: { activeEditor: activeEditor() }
+						props: { activeEditor: activeEditor }
 					}; */
 					/* 	showModal('Insert Image', (onClose) => {
 						return [
 							{
 								component: InsertImageDialog,
 								props: {
-									activeEditor: activeEditor(),
+									activeEditor: activeEditor,
 									onClose,
 									title: 'Insert Image',
 									open: true
@@ -617,7 +593,7 @@
 					setModalChild((onClose) => {
 						return {
 							component: InsertImageDialog,
-							props: { activeEditor: activeEditor(), onClose, title: 'Insert Image', open: true }
+							props: { activeEditor: activeEditor, onClose, title: 'Insert Image', open: true }
 						};
 					});
 					open = true;
@@ -633,7 +609,7 @@
 						return [
 							{
 								component: InsertInlineImageDialog,
-								props: { activeEditor: activeEditor(), onClose },
+								props: { activeEditor: activeEditor, onClose },
 								onClose
 							}
 						];
@@ -657,7 +633,7 @@
 			</DropDownItem> -->
 			<!-- 	<DropDownItem
 				onclick={() => {
-					activeEditor().dispatchCommand(INSERT_EXCALIDRAW_COMMAND, undefined);
+					activeEditor.dispatchCommand(INSERT_EXCALIDRAW_COMMAND, undefined);
 				}}
 				class="item"
 			>
@@ -672,7 +648,7 @@
 						{
 							component: InsertEquationDialog,
 							props: {
-								activeEditor: activeEditor(),
+								activeEditor: activeEditor,
 								onClose
 							}
 						}
@@ -682,7 +658,7 @@
 						return {
 							component: InsertEquationDialog,
 							props: {
-								activeEditor: activeEditor(),
+								activeEditor: activeEditor,
 								onClose,
 								title: 'Insert Latex code',
 								open: true
@@ -734,7 +710,7 @@
 			<button
 				disabled={!isEditable()}
 				onclick={() => {
-					activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'bold');
+					activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold');
 				}}
 				class={'toolbar-item spaced ' + (isBold ? 'active' : '')}
 				title={IS_APPLE ? 'Bold (⌘B)' : 'Bold (Ctrl+B)'}
@@ -746,7 +722,7 @@
 			<button
 				disabled={!isEditable()}
 				onclick={() => {
-					activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'italic');
+					activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic');
 				}}
 				class={'toolbar-item spaced ' + (isItalic ? 'active' : '')}
 				title={IS_APPLE ? 'Italic (⌘I)' : 'Italic (Ctrl+I)'}
@@ -758,7 +734,7 @@
 			<button
 				disabled={!isEditable()}
 				onclick={() => {
-					activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'underline');
+					activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline');
 				}}
 				class={'toolbar-item spaced ' + (isUnderline ? 'active' : '')}
 				title={IS_APPLE ? 'Underline (⌘U)' : 'Underline (Ctrl+U)'}
@@ -770,7 +746,7 @@
 			<button
 				disabled={!isEditable()}
 				onclick={() => {
-					activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'code');
+					activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code');
 				}}
 				class={'toolbar-item spaced ' + (isCode ? 'active' : '')}
 				title="Insert code block"
@@ -816,7 +792,7 @@
 			>
 				<DropDownItem
 					onclick={() => {
-						activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough');
+						activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough');
 					}}
 					class={'item ' + dropDownActiveClass(isStrikethrough)}
 					title="Strikethrough"
@@ -827,7 +803,7 @@
 				</DropDownItem>
 				<DropDownItem
 					onclick={() => {
-						activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript');
+						activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript');
 					}}
 					class={'item ' + dropDownActiveClass(isSubscript)}
 					title="Subscript"
@@ -838,7 +814,7 @@
 				</DropDownItem>
 				<DropDownItem
 					onclick={() => {
-						activeEditor().dispatchCommand(FORMAT_TEXT_COMMAND, 'superscript');
+						activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'superscript');
 					}}
 					class={'item ' + dropDownActiveClass(isSuperscript)}
 					title="Superscript"
@@ -888,7 +864,7 @@
 			>
 				<DropDownItem
 					onclick={() => {
-						activeEditor().dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined);
+						activeEditor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined);
 					}}
 					class="item"
 				>
@@ -897,7 +873,7 @@
 				</DropDownItem>
 				<DropDownItem
 					onclick={() => {
-						activeEditor().dispatchCommand(INSERT_PAGE_BREAK, undefined);
+						activeEditor.dispatchCommand(INSERT_PAGE_BREAK, undefined);
 					}}
 					class="item"
 				>
@@ -940,7 +916,7 @@
 				</DropDownItem>
 				<DropDownItem
 					onclick={() => {
-						activeEditor().dispatchCommand(INSERT_EXCALIDRAW_COMMAND, undefined);
+						activeEditor.dispatchCommand(INSERT_EXCALIDRAW_COMMAND, undefined);
 					}}
 					class="item"
 				>
@@ -1029,7 +1005,7 @@
 					<DropDownItem
 						key={embedConfig.type}
 						onclick={() => {
-							activeEditor().dispatchCommand(INSERT_EMBED_COMMAND, embedConfig.type);
+							activeEditor.dispatchCommand(INSERT_EMBED_COMMAND, embedConfig.type);
 						}}
 						class="item"
 					>
@@ -1043,16 +1019,15 @@
 	<Divider />
 	<ElementFormatDropdown
 		disabled={!isEditable()}
-		value={elementFormat()}
-		{editor}
-		isRTL={isRTL()}
+		value={toolbarState.elementFormat}
+		editor={activeEditor}
+		isRTL={toolbarState.isRTL}
 	/>
 	<button
 		disabled={!isEditable()}
 		onclick={() => {
-			activeEditor().dispatchCommand(CLEAR_EDITOR_COMMAND, undefined);
+			activeEditor.dispatchCommand(CLEAR_EDITOR_COMMAND, undefined);
 		}}
-		class={'toolbar-item spaced ' + (isCode() ? 'active' : '')}
 		title="Insert code block"
 		type="button"
 		aria-label="Insert code block"

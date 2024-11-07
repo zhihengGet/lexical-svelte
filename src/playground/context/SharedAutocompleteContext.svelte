@@ -28,7 +28,7 @@
 </script>
 
 <script lang="ts">
-	let { children }: { chidlren: Snippet } = $props();
+	let { children }: { children: Snippet } = $props();
 	setContext(contextkey, autocomplete);
 </script>
 
