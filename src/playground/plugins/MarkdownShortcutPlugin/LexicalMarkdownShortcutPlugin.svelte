@@ -42,6 +42,4 @@
 	useEffect(() => {
 		return registerMarkdownShortcuts(editor, transformers);
 	}, [editor, transformers]);
-
-	return null;
 </script>

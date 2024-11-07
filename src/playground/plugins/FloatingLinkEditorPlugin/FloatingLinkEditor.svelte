@@ -11,7 +11,6 @@
 		COMMAND_PRIORITY_CRITICAL,
 		COMMAND_PRIORITY_HIGH,
 		COMMAND_PRIORITY_LOW,
-		type GridSelection,
 		KEY_ESCAPE_COMMAND,
 		type LexicalEditor,
 		type NodeSelection,
