@@ -226,9 +226,8 @@
 	import ColorPicker from 'svelte-awesome-color-picker';
 </script>
 
-<!-- 
 <ColorPicker
-	on:input={({ detail: { hex } }) => onChange?.(hex)}
+	on:input={({ detail: { hex } }) => onChange?.(hex, skipAddingToHistoryStack)}
 	hex={color}
 	isDialog={false}
 	nullable
@@ -239,9 +238,9 @@
 	--picker-z-index="10"
 	--input-size="100px"
 	--focus-color="green"
-/> -->
+/>
 
-<div class="color-picker-wrapper" style={'width:' + WIDTH + 'px'} bind:this={innerDivRef.current}>
+<!-- <div class="color-picker-wrapper" style={'width:' + WIDTH + 'px'} bind:this={innerDivRef.current}>
 	<TextInput label="Hex" onChange={onSetHex} value={inputColor()} />
 	<div class="color-picker-basic-color">
 		{#each basicColors as basicColor (basicColor)}
@@ -281,3 +280,4 @@
 	</MoveWrapper>
 	<div class="color-picker-color" style="background-color: {selfColor().hex} "></div>
 </div>
+ -->

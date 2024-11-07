@@ -8,9 +8,8 @@
 	import SharedAutocompleteContext from './playground/context/SharedAutocompleteContext.svelte';
 	import { createHistoryContext } from './playground/context/SharedHistoryContext';
 	import type { Settings } from './playground/appSettings';
-	import { START_COMMENT_NODE } from '@plugins/ParagraphCommentPlugin/paragraphComment';
 	import type { LexicalEditor } from 'lexical';
-	import { ToolbarContext } from '@plugins/ToolbarPlugin/ToolbarContext.SVELTE';
+	import { ToolbarContext } from '@plugins/ToolbarPlugin/ToolbarContext.svelte';
 	let { ...props }: Settings = $props();
 	let s = $derived(props);
 	$effect.pre(() => {
