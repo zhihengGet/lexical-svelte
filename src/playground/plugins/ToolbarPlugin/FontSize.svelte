@@ -74,7 +74,7 @@
 	};
 	const toolbarState = useToolbarState();
 	$effect(() => {
-		setInputValue(toolbarState().toolbarState.fontSize.slice(0, -2));
+		setInputValue(toolbarState().toolbarState.fontSize.slice(0, -2) || '0');
 	});
 </script>
 
