@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Temp from './Temp.svelte';
 	let { ...props } = $props();
 
 	let EditorInstance: any = $state();

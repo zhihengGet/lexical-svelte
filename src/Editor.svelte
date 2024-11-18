@@ -1,11 +1,7 @@
 <script lang="ts">
 	import { default as PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin.svelte';
-
-	import useLexicalEditable from '@lexical/react/useLexicalEditable.svelte';
 	import { CAN_USE_DOM } from 'shared/canUseDOM';
-	import LexicalContentEditable from './lib/LexicalContentEditable.svelte';
 	import { useState } from './react.svelte';
-	import LexicalTreeView from './lib/LexicalTreeView.svelte';
 	import TreeViewPlugin from './playground/plugins/TreeViewPlugin/TreeViewPlugin.svelte';
 	import ContentEditable from './playground/ui/ContentEditable.svelte';
 	import { useSettings } from './playground/appSettings';
@@ -35,9 +31,6 @@
 	import LexicalCharacterLimitPlugin from '@plugins/CharacterLimitPlugin/LexicalCharacterLimitPlugin.svelte';
 	import { MaxLengthPlugin } from '@plugins/MaxLengthPlugin/MaxLengthPlugin.svelte';
 	import { MaxByteDancePlugin } from '@plugins/MaxSizePlugin/MaxMBPlugin.svelte';
-	import TableOfContentsPlugin from '@plugins/TableOfContentsPlugin/TableOfContentsPlugin.svelte';
-	import MeltTree from '@plugins/TableOfContentsPlugin/MeltTree.svelte';
-	import { TextNode, UNDO_COMMAND } from 'lexical';
 	import DraggableBlock from '@plugins/DraggableBlockPlugin/DraggableBlock.svelte';
 	import { ClearEditorPlugin } from '@plugins/ClearEditorPlugin';
 	import TableCellResizerPlugin from '@plugins/TableCellResizer/TableCellResizerPlugin.svelte';

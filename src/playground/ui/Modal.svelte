@@ -1,8 +1,4 @@
 <script lang="ts">
-	import { createDialog } from '@melt-ui/svelte';
-	import { flyAndScale } from '..//utils/css';
-
-	import { fade } from 'svelte/transition';
 	import type { Snippet } from 'svelte';
 	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';

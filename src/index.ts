@@ -15,3 +15,4 @@ export {
 	START_COMMENT_NODE
 } from './playground/plugins/ParagraphCommentPlugin/paragraphComment';
 export * as lexical from 'lexical';
+export { useToolbarState } from './playground/plugins/ToolbarPlugin/ToolbarContext.svelte';
