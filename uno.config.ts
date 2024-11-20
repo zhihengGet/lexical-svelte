@@ -1,8 +1,8 @@
 // uno.config.ts
-import { defineConfig, presetAttributify, presetUno } from 'unocss';
+import { defineConfig, presetUno } from 'unocss';
 import extractorSvelte from '@unocss/extractor-svelte';
-import presetAnimations from 'unocss-preset-animations'
-import { presetShadcn } from 'unocss-preset-shadcn'
+import presetAnimations from 'unocss-preset-animations';
+import { presetShadcn } from 'unocss-preset-shadcn';
 
 export default defineConfig({
 	cli: {
@@ -15,16 +15,13 @@ export default defineConfig({
 
 	extractors: [extractorSvelte()],
 	presets: [
-		presetAttributify({
-			/* preset options */
-		}),
-		presetUno(),  
+		presetUno(),
 		presetAnimations(),
 		presetShadcn({
-		  color: 'red',
-		  // With default setting for SolidUI, you need to set the darkSelector option.
-		  darkSelector: '[data-kb-theme="dark"]',
-		}),
+			color: 'red'
+			// With default setting for SolidUI, you need to set the darkSelector option.
+			//	darkSelector: '[data-kb-theme="dark"]'
+		})
 		// ...custom presets
 	]
 });

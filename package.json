@@ -1,7 +1,7 @@
 {
 	"name": "lexical-svelte-runes",
 	"private": false,
-	"version": "0.1.4-beta.81",
+	"version": "0.1.4-beta.87",
 	"type": "module",
 	"author": {
 		"name": "zhiheng zhang"
@@ -19,6 +19,7 @@
 		"package": "svelte-package --input ./src && bunx unocss"
 	},
 	"exports": {
+		"/package.json": "./package.json",
 		".": {
 			"svelte": "./dist/",
 			"default": "./dist/*"
@@ -84,11 +85,11 @@
 		"tailwind-merge": "^2.5.4",
 		"tailwind-variants": "^0.2.1",
 		"y-websocket": "^2.0.4",
+		"@melt-ui/svelte": "^0.86.0",
 		"yjs": "^13.6.20"
 	},
 	"devDependencies": {
 		"@internationalized/date": "^3.5.6",
-		"@melt-ui/svelte": "^0.86.0",
 		"@rollup/plugin-node-resolve": "^15.3.0",
 		"@sveltejs/kit": "2.8.0",
 		"@sveltejs/package": "^2.3.7",
