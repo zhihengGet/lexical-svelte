@@ -111,7 +111,7 @@ export const useToolbarState = () => {
 		) => void;
 	} = getContext(Context);
 
-	if (context === undefined) {
+	if (context() === undefined) {
 		throw new Error('useToolbarState must be used within a ToolbarProvider');
 	}
 	console.log('context', context().toolbarState);
