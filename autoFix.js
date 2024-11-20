@@ -30,8 +30,7 @@ import {
 
 import { writeFile, readFile } from 'fs/promises';
 import { uniq } from 'lodash-es';
-import path from 'path';
-import { glob, globSync, globStream, globStreamSync, Glob } from 'glob';
+import { glob } from 'glob';
 import chalk from 'chalk';
 
 async function process(filename) {

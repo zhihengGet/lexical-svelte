@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { Bird } from 'lucide-svelte';
 	import Tree from './tree.svelte';
 	import { createTableOfContents } from '@melt-ui/svelte';
 	import Portal from '@ui/Portal.svelte';
