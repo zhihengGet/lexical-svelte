@@ -24,6 +24,7 @@ import PlaygroundNodes from './PlaygroundNodes';
 import { getContext, onDestroy, setContext, type SvelteComponent, type Snippet } from 'svelte';
 import type { SearchPromise, useQuery } from '@plugins/AutocompletePlugin';
 import { ExtendedTextNode } from '@nodes/CustomTextNode';
+import { unknown } from 'zod';
 
 /* const hostName = typeof window!  window.location.hostname;
 export const isDevPlayground: boolean =
@@ -101,8 +102,10 @@ export const DEFAULT_SETTINGS = {
 	},
 	paragraphCommentComponent: null,
 	autoInsertComment: false,
+	AutocompleteComponent: null,
 	config: {
 		query: undefined,
+		upload: async (data: File) => '',
 		editable: true,
 		editorState: JSON.stringify(
 			{
@@ -168,14 +171,18 @@ export const DEFAULT_SETTINGS = {
 			throw error;
 		},
 		theme: PlaygroundEditorTheme
-	} as InitialConfigType
+	}
 };
 
 export type SettingName = keyof typeof DEFAULT_SETTINGS;
 
-export type Settings = Omit<typeof DEFAULT_SETTINGS, 'config' | 'paragraphCommentComponent'> & {
-	config: InitialConfigType;
+export type Settings = Omit<
+	typeof DEFAULT_SETTINGS,
+	'config' | 'paragraphCommentComponent' | 'AutocompleteComponent'
+> & {
+	config: InitialConfigType & { upload: (file: File) => Promise<string> };
 	paragraphCommentComponent: SvelteComponent;
+	AutocompleteComponent: SvelteComponent;
 } & {
 	onInput: (s: string) => unknown;
 };

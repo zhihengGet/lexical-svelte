@@ -103,7 +103,7 @@
 </script>
 
 <span
-	class="text-[#ccc] absolute inline-block z-1 bg-blend-color-burn {data.select
+	class="z-1 absolute inline-block text-[#ccc] bg-blend-color-burn {data.select
 		? ' w-fit '
 		: 'w-0px'}"
 	spellcheck="false"
@@ -113,14 +113,17 @@
 	autofocus={false}
 	style="top:{props.top}px;left:{props.left}px;visibility:{props.visibility};"
 >
-	<span class="pointer-events-none select-none" class:invisible={!props.isEnd}>
+	<span
+		class="dark:text-zinc pointer-events-none select-none text-gray-100"
+		class:invisible={!props.isEnd}
+	>
 		{#if data.select}
 			{data.select}
 			(TAB)
 		{/if}
 	</span>
 	<div
-		class="max-h-30 overflow-auto bottom-[-5] border-[1px] border-solid border-green left-0 z-5000 w-100px max-w-120px rounded bg-neutral-100"
+		class="max-h-30 border-green z-5000 w-100px max-w-120px bottom-[-5] left-0 overflow-auto rounded border-[1px] border-solid bg-neutral-100"
 		bind:this={div}
 	>
 		{#each data.suggestions as item, key}
@@ -138,7 +141,7 @@
 					});
 				}}
 				data-id="suggestions"
-				class="block w-full font-500 text-truncate text-purple font-600 hover:bg-amber {key == 0
+				class="font-500 text-truncate text-purple font-600 hover:bg-amber block w-full {key == 0
 					? SELECTED_CLASSNAME
 					: ''}"
 			>

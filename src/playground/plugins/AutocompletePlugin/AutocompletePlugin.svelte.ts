@@ -45,7 +45,7 @@ export default function AutocompletePlugin({
 	//let lastSuggestion: null | string = null;
 	let searchPromise: null | SearchPromise = null;
 	const editorContext = getAllContexts();
-	const el_states: ComponentProps<AutocompleteComponent> = $state({
+	const el_states: ComponentProps<typeof AutocompleteComponent> = $state({
 		top: 0,
 		left: 0,
 		visibility: 'hidden',
@@ -57,7 +57,7 @@ export default function AutocompletePlugin({
 		props: el_states,
 		context: editorContext
 	});
-	function setElState(s: Partial<ComponentProps<AutocompleteComponent>>) {
+	function setElState(s: Partial<ComponentProps<typeof AutocompleteComponent>>) {
 		el_states.left = s.left ?? el_states.left;
 		el_states.top = s.top ?? el_states.top;
 		el_states.visibility = s.visibility ?? el_states.visibility;

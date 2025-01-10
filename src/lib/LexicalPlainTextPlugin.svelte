@@ -5,11 +5,11 @@
 	import { usePlainTextSetup } from '../shared/usePlainTextSetup.svelte';
 	import Placeholder from './placeholder.svelte';
 	import Portal from '@ui/Portal.svelte';
-	import type { ComponentType, SvelteComponent } from 'svelte';
+	import type { Component, SvelteComponent } from 'svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
 
 	let { contentEditable, placeholder, contentEditableProps, placeholderProps } = $props<{
-		contentEditable: ComponentType<SvelteComponent>;
+		contentEditable: Component;
 		placeholder: string;
 		contentEditableProps?: HTMLAttributes<any>;
 		placeholderProps?: HTMLAttributes<any>;

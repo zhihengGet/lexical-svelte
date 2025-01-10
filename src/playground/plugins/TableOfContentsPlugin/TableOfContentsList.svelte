@@ -130,7 +130,7 @@
 				<div class="normal-heading-wrapper">
 					<div
 						class="first-heading"
-						onClick={() => scrollToNode(key, index)}
+						onclick={() => scrollToNode(key, index)}
 						role="button"
 						tabIndex={0}
 					>
@@ -145,7 +145,7 @@
 					}`}
 				>
 					<div
-						onClick={() => scrollToNode(key, index)}
+						onclick={() => scrollToNode(key, index)}
 						role="button"
 						class={indent(tag)}
 						tabIndex={0}

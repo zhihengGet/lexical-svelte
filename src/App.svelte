@@ -3,7 +3,9 @@
 
 	let EditorInstance: any = $state();
 	$effect(() => {
-		EditorInstance = import('./Temp.svelte');
+		import('./Temp.svelte').then((v) => {
+			EditorInstance = v.default;
+		});
 	});
 	const dd = `
     <p data-chapter-comment-id='\"84d4f75d-cd55-4b5c-b537-5ae481e5c58d\"'>
@@ -84,8 +86,8 @@
 
 {#await EditorInstance}
 	Dynamically loading Editor
-{:then { default: Editor }}
-	<Editor
+{:then}
+	<EditorInstance
 		initialLifeCycle={{
 			afterInitialHTMLRender: () => {
 				setTimeout(() => {
@@ -97,7 +99,17 @@
 		}}
 		isAutocomplete={false}
 		dev={true}
-		config={{ editable: true }}
+		config={{
+			editable: true,
+			query: async () => {
+				console.log('query');
+				debugger;
+				return;
+			},
+			upload: async () => {
+				return 'https://placehold.co/600x400';
+			}
+		}}
 		paragraphComment={true}
 		initialHTML={s.initialHTML}
 		isCharLimitUtf8={false}

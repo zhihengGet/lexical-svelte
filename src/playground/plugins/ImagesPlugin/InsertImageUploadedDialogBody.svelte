@@ -24,26 +24,40 @@
 	import { default as DialogActions } from '@ui/DialogActions.svelte';
 	import FileInput from '@ui/FileInput.svelte';
 	import TextInput from '@ui/TextInput.svelte';
+	import { useSettings } from '../../appSettings';
 	const [src, setSrc] = useState('');
 	const [altText, setAltText] = useState('');
 	let { onClick } = $props<{
 		onClick: (payload: InsertImagePayload) => void;
 	}>();
-	const loadImage = (files: FileList | null) => {
+	const setting = useSettings();
+	let isSaving = $state(false);
+	const loadImage = async (files: FileList | null) => {
 		const reader = new FileReader();
 		reader.onload = function () {
 			if (typeof reader.result === 'string') {
 				setSrc(reader.result);
 			}
+			isSaving = false;
 			return '';
 		};
 		if (files !== null) {
-			reader.readAsDataURL(files[0]);
+			isSaving = true;
+			let url = await setting().config?.upload?.(files[0]);
+			if (!url) {
+				reader.readAsDataURL(files[0]);
+			} else {
+				setSrc(url);
+				isSaving = false;
+			}
 		}
 	};
 	const isDisabled = $derived(src() === '');
 </script>
 
+{#if isSaving}
+	<div>Uploading...</div>
+{/if}
 <FileInput
 	label="Image Upload"
 	onChange={loadImage}
