@@ -44,11 +44,12 @@
 		if (files !== null) {
 			isSaving = true;
 			let url = await setting().config?.upload?.(files[0]);
-			if (!url) {
-				reader.readAsDataURL(files[0]);
-			} else {
+			if (url) {
 				setSrc(url);
 				isSaving = false;
+			}
+			if (!url) {
+				reader.readAsDataURL(files[0]);
 			}
 		}
 	};
