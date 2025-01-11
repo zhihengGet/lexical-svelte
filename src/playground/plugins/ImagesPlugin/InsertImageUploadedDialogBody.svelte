@@ -31,7 +31,9 @@
 		onClick: (payload: InsertImagePayload) => void;
 	}>();
 	const setting = useSettings();
+	let preview = $state('');
 	let isSaving = $state(false);
+	let file: File = null;
 	const loadImage = async (files: FileList | null) => {
 		const reader = new FileReader();
 		reader.onload = function () {
@@ -42,22 +44,38 @@
 			return '';
 		};
 		if (files !== null) {
-			isSaving = true;
-			let url = await setting().config?.upload?.(files[0]);
+			//isSaving = true;
+			/* let url = await setting().config?.upload?.(files[0]);
 			if (url) {
 				setSrc(url);
 				isSaving = false;
-			}
-			if (!url) {
-				reader.readAsDataURL(files[0]);
-			}
+			} */
+			file = files[0];
+			//if(files[0].size <= 5000)
+			let url = URL.createObjectURL(file);
+			preview = url;
 		}
 	};
-	const isDisabled = $derived(src() === '');
+	async function upload() {
+		if (!File) {
+			alert('No File Uploaded');
+			return;
+		}
+		isSaving = true;
+		let url = await setting().config?.upload?.(file);
+		if (url) {
+			setSrc(url);
+			onClick({ altText: altText(), src: src() });
+			return true;
+		}
+		isSaving = false;
+		return false;
+	}
+	const isDisabled = $derived(preview === '');
 </script>
 
 {#if isSaving}
-	<div>Uploading...</div>
+	<div class="bg-blue text-blue">Uploading Image...</div>
 {/if}
 <FileInput
 	label="Image Upload"
@@ -72,8 +90,9 @@
 	value={altText()}
 	data-test-id="image-modal-alt-text-input"
 />
+
+<img src={preview} width="200" height="200" alt={'Preview'} class="border-1 border-amber mx-auto" />
+
 <DialogActions>
-	<Button disabled={isDisabled} onClick={() => onClick({ altText: altText(), src: src() })}>
-		Confirm
-	</Button>
+	<Button disabled={isDisabled} onClick={() => upload()}>Confirm</Button>
 </DialogActions>

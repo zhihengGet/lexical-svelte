@@ -30,7 +30,7 @@
 
 <Dialog.Root bind:open>
 	<!-- 	<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>Edit Profile</Dialog.Trigger> -->
-	<Dialog.Content class="sm:max-w-[425px]">
+	<Dialog.Content class="sm:max-w-[500px]">
 		<Dialog.Header>
 			<Dialog.Title>{t}</Dialog.Title>
 			<Dialog.Description>
@@ -40,8 +40,8 @@
 		<div class="grid gap-4 py-4">
 			{@render children?.()}
 		</div>
-		<Dialog.Footer>
+		<!-- 	<Dialog.Footer>
 			<Button type="submit">Save changes</Button>
-		</Dialog.Footer>
+		</Dialog.Footer> -->
 	</Dialog.Content>
 </Dialog.Root>

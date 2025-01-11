@@ -1,6 +1,7 @@
 <script lang="ts">
 	let { ...props } = $props();
-
+	import './app.css';
+	import 'uno.css';
 	let EditorInstance: any = $state();
 	$effect(() => {
 		import('./Temp.svelte').then((v) => {
