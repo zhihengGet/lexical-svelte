@@ -17,12 +17,12 @@ import type {
 	NodeKey,
 	SerializedEditor,
 	SerializedLexicalNode,
-	Spread
+	Spread,
+	LexicalUpdateJSON
 } from 'lexical';
 
 import { $applyNodeReplacement, createEditor, DecoratorNode } from 'lexical';
 import type { ImageComponent as comp } from '.';
-import type { ComponentType } from 'svelte';
 
 const ImageComponent =
 	// @ts-ignore
@@ -39,14 +39,22 @@ export interface ImagePayload {
 	width?: number;
 	captionsEnabled?: boolean;
 }
-
-function convertImageElement(domNode: Node): null | DOMConversionOutput {
-	if (domNode instanceof HTMLImageElement) {
-		const { alt: altText, src, width, height } = domNode;
-		const node = $createImageNode({ altText, height, src, width });
-		return { node };
+function isGoogleDocCheckboxImg(img: HTMLImageElement): boolean {
+	return (
+		img.parentElement != null &&
+		img.parentElement.tagName === 'LI' &&
+		img.previousSibling === null &&
+		img.getAttribute('aria-roledescription') === 'checkbox'
+	);
+}
+function $convertImageElement(domNode: Node): null | DOMConversionOutput {
+	const img = domNode as HTMLImageElement;
+	if (img.src.startsWith('file:///') || isGoogleDocCheckboxImg(img)) {
+		return null;
 	}
-	return null;
+	const { alt: altText, src, width, height } = img;
+	const node = $createImageNode({ altText, height, src, width });
+	return { node };
 }
 
 export type SerializedImageNode = Spread<
@@ -62,7 +70,7 @@ export type SerializedImageNode = Spread<
 	SerializedLexicalNode
 >;
 
-export class ImageNode extends DecoratorNode<SvelteRender<comp>> {
+export class ImageNode extends DecoratorNode<SvelteRender<typeof comp>> {
 	__src: string;
 	__altText: string;
 	__width: 'inherit' | number;
@@ -92,15 +100,20 @@ export class ImageNode extends DecoratorNode<SvelteRender<comp>> {
 	}
 
 	static importJSON(serializedNode: SerializedImageNode): ImageNode {
-		const { altText, height, width, maxWidth, caption, src, showCaption } = serializedNode;
-		const node = $createImageNode({
+		const { altText, height, width, maxWidth, src, showCaption } = serializedNode;
+		return $createImageNode({
 			altText,
 			height,
 			maxWidth,
 			showCaption,
 			src,
 			width
-		});
+		}).updateFromJSON(serializedNode);
+	}
+	updateFromJSON(serializedNode: LexicalUpdateJSON<SerializedImageNode>): this {
+		const node = super.updateFromJSON(serializedNode);
+		const { caption } = serializedNode;
+
 		const nestedEditor = node.__caption;
 		const editorState = nestedEditor.parseEditorState(caption.editorState);
 		if (!editorState.isEmpty()) {
@@ -121,7 +134,7 @@ export class ImageNode extends DecoratorNode<SvelteRender<comp>> {
 	static importDOM(): DOMConversionMap | null {
 		return {
 			img: (node: Node) => ({
-				conversion: convertImageElement,
+				conversion: $convertImageElement,
 				priority: 0
 			})
 		};
@@ -211,7 +224,6 @@ export class ImageNode extends DecoratorNode<SvelteRender<comp>> {
 			captionsEnabled: this.__captionsEnabled,
 			resizable: true
 		};
-
 		return { component: ImageComponent(), props: myObject, portal: false, target: null };
 	}
 }

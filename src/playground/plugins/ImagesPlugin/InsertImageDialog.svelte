@@ -96,7 +96,9 @@
 			</Button>
 		{/if}
 		<Button onClick={() => setMode('url')}>URL</Button>
-		<Button onClick={() => setMode('file')}>File</Button>
+		{#if setting().imageUpload}
+			<Button onClick={() => setMode('file')}>File</Button>
+		{/if}
 	</DialogButtonsList>
 {/if}
 

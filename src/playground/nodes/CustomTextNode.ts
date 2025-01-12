@@ -9,7 +9,7 @@ import {
 	type SerializedTextNode,
 	type LexicalNode
 } from 'lexical';
-//https://lexical.dev/docs/concepts/serialization#handling-extended-html-styling
+
 export class ExtendedTextNode extends TextNode {
 	constructor(text: string, key?: NodeKey) {
 		super(text, key);
@@ -55,23 +55,17 @@ export class ExtendedTextNode extends TextNode {
 	}
 
 	static importJSON(serializedNode: SerializedTextNode): TextNode {
-		return TextNode.importJSON(serializedNode);
+		return $createExtendedTextNode().updateFromJSON(serializedNode);
 	}
 
 	isSimpleText() {
 		return this.__type === 'extended-text' && this.__mode === 0;
 	}
 
-	exportJSON(): SerializedTextNode {
-		return {
-			...super.exportJSON(),
-			type: 'extended-text',
-			version: 1
-		};
-	}
+	// no need to add exportJSON here, since we are not adding any new properties
 }
 
-export function $createExtendedTextNode(text: string): ExtendedTextNode {
+export function $createExtendedTextNode(text: string = ''): ExtendedTextNode {
 	return $applyNodeReplacement(new ExtendedTextNode(text));
 }
 

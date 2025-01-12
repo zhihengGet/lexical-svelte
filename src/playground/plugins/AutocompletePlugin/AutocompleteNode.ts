@@ -30,7 +30,9 @@ export type SerializedAutocompleteNode = Spread<
 	SerializedLexicalNode
 >;
 
-export class AutocompleteNode extends DecoratorNode<SvelteRender<AutocompleteComponent> | null> {
+export class AutocompleteNode extends DecoratorNode<SvelteRender<
+	typeof AutocompleteComponent
+> | null> {
 	// TODO add comment
 	__uuid: string;
 
@@ -43,8 +45,7 @@ export class AutocompleteNode extends DecoratorNode<SvelteRender<AutocompleteCom
 	}
 
 	static importJSON(serializedNode: SerializedAutocompleteNode): AutocompleteNode {
-		const node = $createAutocompleteNode(serializedNode.uuid);
-		return node;
+		return $createAutocompleteNode(serializedNode.uuid).updateFromJSON(serializedNode);
 	}
 
 	exportJSON(): SerializedAutocompleteNode {
@@ -74,11 +75,20 @@ export class AutocompleteNode extends DecoratorNode<SvelteRender<AutocompleteCom
 		return node;
 	}
 
-	decorate(): SvelteRender<AutocompleteComponent> | null {
+	decorate(): SvelteRender<typeof AutocompleteComponent> | null {
 		if (this.__uuid !== UUID) {
 			return null;
 		}
-		return { component: AutocompleteComponent, props: { nodeKey: this.__key } };
+		return {
+			component: AutocompleteComponent,
+			props: {
+				nodeKey: this.__key,
+				visibility: 'visible',
+				top: 0,
+				isEnd: false,
+				left: 0
+			}
+		};
 	}
 }
 

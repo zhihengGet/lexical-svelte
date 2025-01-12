@@ -50,6 +50,8 @@
 	import { $isImageNode as isImageNode } from './ImageNode';
 	import Portal from '@ui/Portal.svelte';
 	import { onMount } from 'svelte';
+	import useLexicalEditable from '@lexical/react/useLexicalEditable.svelte';
+
 	export const RIGHT_CLICK_IMAGE_COMMAND: LexicalCommand<MouseEvent> = createCommand(
 		'RIGHT_CLICK_IMAGE_COMMAND'
 	);
@@ -74,7 +76,7 @@
 		altText: string;
 		caption: LexicalEditor;
 		height: 'inherit' | number;
-		maxWidth: number;
+		maxWidth: string;
 		nodeKey: NodeKey;
 		resizable: boolean;
 		showCaption: boolean;
@@ -103,24 +105,25 @@
 	const [selection, setSelection] = useState<RangeSelection | NodeSelection | BaseSelection | null>(
 		null
 	);
+	const isEditable = useLexicalEditable();
 	const activeEditorRef = useRef<LexicalEditor | null>(null);
 
 	const onDelete = useCallback(
 		(payload: KeyboardEvent) => {
-			if (isSelected() && isNodeSelection(getSelection())) {
+			const deleteSelection = getSelection();
+			if (isSelected() && isNodeSelection(deleteSelection)) {
 				const event: KeyboardEvent = payload;
 				event.preventDefault();
-				const node = getNodeByKey(nodeKey);
-				if (isImageNode(node)) {
-					node.remove();
-					return true;
-				}
+				deleteSelection.getNodes().forEach((node) => {
+					if (isImageNode(node)) {
+						node.remove();
+					}
+				});
 			}
 			return false;
 		},
-		[isSelected, nodeKey]
+		[isSelected]
 	);
-
 	const onEnter = useCallback(
 		(event: KeyboardEvent) => {
 			const latestSelection = getSelection();
@@ -289,7 +292,7 @@
 	const onResizeStart = () => {
 		setIsResizing(true);
 	};
-
+	const isFocused = (isSelected() || isResizing()) && isEditable;
 	const { historyState } = useSharedHistoryContext();
 	const settings = useSettings();
 	let srcLazy = $state(src);

@@ -4,7 +4,7 @@
 	import { useState } from 'react';
 
 	import type { CreateEditorArgs } from 'lexical';
-	import { setContext, type Snippet } from 'svelte';
+	import { setContext, untrack, type Snippet } from 'svelte';
 	import { DEFAULT_SETTINGS, useSettings, type Settings } from '../appSettings';
 	import { merge } from 'lodash-es';
 	import { CustomParagraphNode } from '@nodes/CustomParagrahNode';
@@ -31,11 +31,13 @@
 	$effect(() => {
 		// on prop change
 		if (s) {
-			CustomParagraphNode.allowedAttributes =
-				s.allowedAttributesOnParagraph ?? CustomParagraphNode.allowedAttributes;
-			console.log('lexical:updating props', s);
-			setSettings((v) => {
-				return merge(v, s);
+			untrack(() => {
+				CustomParagraphNode.allowedAttributes =
+					s.allowedAttributesOnParagraph ?? CustomParagraphNode.allowedAttributes;
+				console.log('lexical:updating props', s);
+				setSettings((v) => {
+					return merge(v, s);
+				});
 			});
 		}
 	});
@@ -55,5 +57,5 @@
 		}}>update autocomplete {settings().isAutocomplete} {settings().dev}</button
 	>
 {/if}
-
+{settings().isAutocomplete}
 {@render children()}

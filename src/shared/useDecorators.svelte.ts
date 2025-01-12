@@ -8,7 +8,7 @@
 
 import type { LexicalEditor } from 'lexical';
 
-import { flushSync, getAllContexts, mount, onMount, unmount } from 'svelte';
+import { flushSync, getAllContexts, mount, onDestroy, onMount, unmount } from 'svelte';
 import type { SvelteRender } from '@lexical/react/types';
 export function useDecorators(editor: LexicalEditor) {
 	let isChanged = $state(false);
@@ -22,46 +22,43 @@ export function useDecorators(editor: LexicalEditor) {
 	// If the content editable mounts before the subscription is added, then
 	// nothing will be rendered on initial pass. We can get around that by
 	// ensuring that we set the value.
-	onMount(() => {
-		decorators = editor.getDecorators();
-		isChanged = !isChanged;
-	});
+	// onMount(() => {
+	// 	decorators = editor.getDecorators();
+	// 	isChanged = !isChanged;
+	// });
 	const context = getAllContexts();
 	let old: unknown[] = [];
-	onMount(() => {
-		//NOTE
-		// do not render decorators with portal because lexical need to be in sync with svelte, node might not be rendered by the time lexical wants it
-		return editor.registerDecoratorListener<SvelteRender>((nextDecorators) => {
-			flushSync(() => {
-				decorators = nextDecorators;
 
-				const decoratorKeys = Object.keys(decorators);
-				old.forEach((v) => unmount(v)); // destroy old component, even though lexical will remove them , we need to clean $effect
-				old = [];
-				for (let i = 0; i < decoratorKeys.length; i++) {
-					const nodeKey = decoratorKeys[i];
+	//NOTE
+	// do not render decorators with portal because lexical need to be in sync with svelte, node might not be rendered by the time lexical wants it
 
-					const element = editor.getElementByKey(nodeKey);
+	const sub = editor.registerDecoratorListener<SvelteRender>((nextDecorators) => {
+		decorators = nextDecorators;
+		const decoratorKeys = Object.keys(decorators);
+		old.forEach((v) => unmount(v)); // destroy old component, even though lexical will remove them , we need to clean $effect
+		old = [];
+		for (let i = 0; i < decoratorKeys.length; i++) {
+			const nodeKey = decoratorKeys[i];
 
-					if (element !== null) {
-						const node = decorators[nodeKey];
-						node.target = element;
-						node.nodeKey = nodeKey;
-						Promise.resolve(node.component).then((v) => {
-							const app = mount(v, {
-								props: node.props,
-								target: node.target || document.body,
-								context: context
-							});
-							old.push(app);
-						}); //dynamic import component
+			const element = editor.getElementByKey(nodeKey);
 
-						// lexical will handle removal of this node
-					}
-				}
-			});
-		});
+			if (element !== null) {
+				const node = decorators[nodeKey];
+				node.target = element;
+				node.nodeKey = nodeKey;
+				Promise.resolve(node.component).then((v) => {
+					const app = mount(v, {
+						props: node.props,
+						target: node.target || document.body,
+						context: context
+					});
+					old.push(app);
+				}); //dynamic import component
+
+				// lexical will handle removal of this node
+			}
+		}
 	});
-
+	onDestroy(() => sub());
 	return () => undefined;
 }

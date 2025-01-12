@@ -80,6 +80,7 @@ export const DEFAULT_SETTINGS = {
 	toolbarCSS: '',
 	hasLinkAttributes: false,
 	showToolbar: true,
+	imageUpload: true,
 	onInput: (html: string) => {
 		console.log('on input', html);
 	},

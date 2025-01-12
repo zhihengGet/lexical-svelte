@@ -57,7 +57,7 @@
 		}
 	};
 	async function upload() {
-		if (!File) {
+		if (!File || !setting().imageUpload) {
 			alert('No File Uploaded');
 			return;
 		}
@@ -75,7 +75,7 @@
 </script>
 
 {#if isSaving}
-	<div class="bg-blue text-blue">Uploading Image...</div>
+	<div class=" text-neutral">Uploading Image...</div>
 {/if}
 <FileInput
 	label="Image Upload"
