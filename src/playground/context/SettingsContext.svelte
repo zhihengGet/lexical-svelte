@@ -57,5 +57,4 @@
 		}}>update autocomplete {settings().isAutocomplete} {settings().dev}</button
 	>
 {/if}
-{settings().isAutocomplete}
 {@render children()}
