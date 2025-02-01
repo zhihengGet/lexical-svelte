@@ -17,7 +17,7 @@
 		"fix": "eslint --fix .",
 		"tsc": "tsc",
 		"unocss": "unocss",
-		"package": "svelte-package --input ./src && bunx unocss"
+		"package": "svelte-package --input ./src && unocss"
 	},
 	"exports": {
 		".": {
@@ -26,8 +26,8 @@
 		},
 		"./editor": {
 			"svelte": "./dist/index.js",
-			"default": "./dist/index",
-			"types": "./dist/index.d.ts"
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index"
 		},
 		"./*": {
 			"svelte": "./dist/*",

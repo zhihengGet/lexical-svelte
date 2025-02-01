@@ -31,7 +31,7 @@
 		onClick: (payload: InsertImagePayload) => void;
 	}>();
 	const setting = useSettings();
-	let preview = $state('');
+	let preview = $state('data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=');
 	let isSaving = $state(false);
 	let file: File = null;
 	const loadImage = async (files: FileList | null) => {
@@ -91,7 +91,7 @@
 	data-test-id="image-modal-alt-text-input"
 />
 
-<img src={preview} width="200" height="200" alt={'Preview'} class="border-1 border-amber mx-auto" />
+<img src={preview} width="200" height="200" alt={'Preview'} class="border-1 mx-auto" />
 
 <DialogActions>
 	<Button disabled={isDisabled} onClick={() => upload()}>Confirm</Button>
