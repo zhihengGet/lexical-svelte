@@ -1,9 +1,6 @@
 <script lang="ts" generics="T extends Component">
 	import Portal from './Portal.svelte';
 	import type { SvelteRender } from '@lexical/react/types';
-	import { usePortal } from '@melt-ui/svelte/internal/actions';
-	import InsertImageDialog from '@plugins/ImagesPlugin/InsertImageDialog.svelte';
-	import { useRef } from 'react';
 	import { onDestroy, type Component, type Snippet } from 'svelte';
 
 	let {
@@ -17,30 +14,11 @@
 	function refFn(node: HTMLElement) {
 		console.log('portal refFn', node);
 		if (!node) return console.error('portal element does not exists', node);
-		// if (portal === false || !props.target) {
-		// 	return;
-		// 	// if we don't need to portal then remove the div that is wrapper it
-		// 	let parent = node.parentElement;
-		// 	let child = node.childNodes;
-		// 	if (parent && child) {
-		// 		parent?.removeChild(node);
-		// 		parent.append(...child);
-		// 	} else if (parent) {
-		// 		parent.removeChild(node);
-		// 	}
-
-		// 	return;
-		// }
-
 		props.target?.appendChild(node);
 		//let p = usePortal(node, props.target);
 		onDestroy(() => {
 			console.log('portal destroy refFn', node);
 			node?.remove();
-			//props.target?.remove();
-			/* if (p && p.destroy) {
-				p.destroy();
-			} */
 		});
 	}
 	if (typeof props.initializor == 'function') {
