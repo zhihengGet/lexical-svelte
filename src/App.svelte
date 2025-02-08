@@ -46,7 +46,7 @@
     <p data-chapter-comment-id='\"ef5fdb6e-9e75-40f1-a828-3cb7b0a1610d\"'><a name="%5C%22IV%5C%22"></a></p>
 `;
 	let s = $state({
-		initialHTML: `<p class="PlaygroundEditorTheme__paragraph" data-chapter-comment-id="638a9df9-95d2-4d9a-81ed-f65a2bd0a9c5"><img src="http://127.0.0.1:5173/rest/api/upload/serve/chapter-attachments/images/7f4dec70-852c-411f-8ac1-ccf39d9c7853/01945732-a33e-74c0-af5a-ac82bb09e9ea/01945734-17fb-71fa-b73f-0bdf31992dc7/01945c63-28c8-78f1-8fcb-4a19e81bce65.jpeg" alt="" width="inherit" height="inherit"><img src="http://127.0.0.1:5173/rest/api/upload/serve/chapter-attachments/images/7f4dec70-852c-411f-8ac1-ccf39d9c7853/01945732-a33e-74c0-af5a-ac82bb09e9ea/01945734-17fb-71fa-b73f-0bdf31992dc7/01945c63-b74d-7d60-a178-3c115bf74116.jpeg" alt="" width="inherit" height="inherit"></p><p class="PlaygroundEditorTheme__paragraph" data-chapter-comment-id="c0cae97d-600d-4d1b-b72d-4b5695a4ce1b" dir="ltr"><span style="white-space: pre-wrap;">asdsad</span><img src="http://127.0.0.1:5173/rest/api/upload/serve/chapter-attachments/images/7f4dec70-852c-411f-8ac1-ccf39d9c7853/01945732-a33e-74c0-af5a-ac82bb09e9ea/01945734-17fb-71fa-b73f-0bdf31992dc7/01945c67-6c0c-7c1d-9dfb-8136dd0cd623.jpeg" alt="" width="inherit" height="inherit"><img src="http://127.0.0.1:5173/rest/api/upload/serve/chapter-attachments/images/7f4dec70-852c-411f-8ac1-ccf39d9c7853/01945732-a33e-74c0-af5a-ac82bb09e9ea/01945734-17fb-71fa-b73f-0bdf31992dc7/01945c65-e6ca-7bc2-a4cc-69ac827b30e1.jpeg" alt="" width="inherit" height="inherit"></p>`
+		initialHTML: `<p>1</p>`
 	});
 </script>
 

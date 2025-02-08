@@ -12,19 +12,23 @@
 		editor: LexicalEditor;
 		getCodeDOMNode: () => HTMLElement | null;
 	}
-
 	const PRETTIER_PARSER_MODULES = {
-		css: () => import('prettier/parser-postcss'),
-		html: () => import('prettier/parser-html'),
-		js: () => import('prettier/parser-babel'),
-		markdown: () => import('prettier/parser-markdown')
+		css: [() => import('prettier/parser-postcss')],
+		html: [() => import('prettier/parser-html')],
+		js: [() => import('prettier/parser-babel'), () => import('prettier/plugins/estree')],
+		markdown: [() => import('prettier/parser-markdown')],
+		typescript: [
+			() => import('prettier/parser-typescript'),
+			() => import('prettier/plugins/estree')
+		]
 	} as const;
 
 	type LanguagesType = keyof typeof PRETTIER_PARSER_MODULES;
 
 	async function loadPrettierParserByLang(lang: string) {
-		const dynamicImport = PRETTIER_PARSER_MODULES[lang as LanguagesType];
-		return await dynamicImport();
+		const dynamicImports = PRETTIER_PARSER_MODULES[lang as LanguagesType];
+		const modules = await Promise.all(dynamicImports.map((dynamicImport) => dynamicImport()));
+		return modules;
 	}
 
 	async function loadPrettierFormat() {
@@ -33,18 +37,11 @@
 	}
 
 	const PRETTIER_OPTIONS_BY_LANG: Record<string, Options> = {
-		css: {
-			parser: 'css'
-		},
-		html: {
-			parser: 'html'
-		},
-		js: {
-			parser: 'babel'
-		},
-		markdown: {
-			parser: 'markdown'
-		}
+		css: { parser: 'css' },
+		html: { parser: 'html' },
+		js: { parser: 'babel' },
+		markdown: { parser: 'markdown' },
+		typescript: { parser: 'typescript' }
 	};
 
 	const LANG_CAN_BE_PRETTIER = Object.keys(PRETTIER_OPTIONS_BY_LANG);
@@ -64,49 +61,47 @@
 </script>
 
 <script lang="ts">
-	let { lang, editor, getCodeDOMNode } = $props<Props>();
+	let { lang, editor, getCodeDOMNode }: Props = $props();
 	const [syntaxError, setSyntaxError] = useState<string>('');
 	const [tipsVisible, setTipsVisible] = useState<boolean>(false);
 
 	async function handleClick(): Promise<void> {
 		const codeDOMNode = getCodeDOMNode();
+		if (!codeDOMNode) {
+			return;
+		}
+
+		let content = '';
+		editor.update(() => {
+			const codeNode = getNearestNodeFromDOMNode(codeDOMNode);
+			if (isCodeNode(codeNode)) {
+				content = codeNode.getTextContent();
+			}
+		});
+		if (content === '') {
+			return;
+		}
 
 		try {
 			const format = await loadPrettierFormat();
 			const options = getPrettierOptions(lang);
-			options.plugins = [await loadPrettierParserByLang(lang)];
+			const prettierParsers = await loadPrettierParserByLang(lang);
+			options.plugins = prettierParsers.map((parser) => parser.default || parser);
+			const formattedCode = await format(content, options);
 
-			if (!codeDOMNode) {
-				return;
-			}
-
-			editor.update(async () => {
+			editor.update(() => {
 				const codeNode = getNearestNodeFromDOMNode(codeDOMNode);
-
 				if (isCodeNode(codeNode)) {
-					const content = codeNode.getTextContent();
-
-					let parsed = '';
-
-					try {
-						parsed = await format(content, options);
-					} catch (error: unknown) {
-						setError(error);
-					}
-
-					if (parsed !== '') {
-						const selection = codeNode.select(0);
-						selection.insertText(parsed);
-						setSyntaxError('');
-						setTipsVisible(false);
-					}
+					const selection = codeNode.select(0);
+					selection.insertText(formattedCode);
+					setSyntaxError('');
+					setTipsVisible(false);
 				}
 			});
 		} catch (error: unknown) {
 			setError(error);
 		}
 	}
-
 	function setError(error: unknown) {
 		if (error instanceof Error) {
 			setSyntaxError(error.message);
@@ -132,9 +127,9 @@
 <div class="prettier-wrapper">
 	<button
 		class="menu-item"
-		onClick={handleClick}
-		onMouseEnter={handleMouseEnter}
-		onMouseLeave={handleMouseLeave}
+		onclick={handleClick}
+		onmouseenter={handleMouseEnter}
+		onmouseleave={handleMouseLeave}
 		aria-label="prettier"
 	>
 		{#if syntaxError()}

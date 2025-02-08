@@ -16,7 +16,6 @@ import { onMount } from 'svelte';
 export function useRichTextSetup(editor: LexicalEditor): void {
 	onMount(() => {
 		return mergeRegister(registerRichText(editor), registerDragonSupport(editor));
-
 		// We only do this for init
 	});
 }

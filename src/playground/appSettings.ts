@@ -24,7 +24,6 @@ import PlaygroundNodes from './PlaygroundNodes';
 import { getContext, onDestroy, setContext, type SvelteComponent, type Snippet } from 'svelte';
 import type { SearchPromise, useQuery } from '@plugins/AutocompletePlugin';
 import { ExtendedTextNode } from '@nodes/CustomTextNode';
-import { unknown } from 'zod';
 
 /* const hostName = typeof window!  window.location.hostname;
 export const isDevPlayground: boolean =

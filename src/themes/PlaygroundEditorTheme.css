@@ -151,6 +151,13 @@
 	height: 4px;
 	background-color: #999;
 }
+/*
+  A firefox workaround to allow scrolling of overflowing table cell
+  ref: https://bugzilla.mozilla.org/show_bug.cgi?id=1904159
+*/
+.PlaygroundEditorTheme__tableCell > * {
+	overflow: inherit;
+}
 .PlaygroundEditorTheme__tableCellResizer {
 	position: absolute;
 	right: -4px;
@@ -440,6 +447,8 @@
 .PlaygroundEditorTheme__layoutItem {
 	border: 1px dashed #ddd;
 	padding: 8px 16px;
+	min-width: 0;
+	max-width: 100%;
 }
 .PlaygroundEditorTheme__autocomplete {
 	color: #ccc;

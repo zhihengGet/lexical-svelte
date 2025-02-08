@@ -36,6 +36,7 @@
 	import TableCellResizerPlugin from '@plugins/TableCellResizer/TableCellResizerPlugin.svelte';
 	import { TablePlugin } from './lib/LexicalTablePlugin';
 	import ParagraphCommentPugin from '@plugins/ParagraphCommentPlugin/ParagraphCommentPugin.svelte';
+	import LexicalMarkdownShortcutPlugin from '@plugins/MarkdownShortcutPlugin/LexicalMarkdownShortcutPlugin.svelte';
 	const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
 	const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
 	const isEditable = true;
@@ -129,6 +130,7 @@
 	{/if}
 	{#if isRichText}
 		<LexicalRichTextPlugin contentEditable={contentEditableRichText} {placeholder} />
+		<LexicalMarkdownShortcutPlugin></LexicalMarkdownShortcutPlugin>
 		<PageBreakPlug />
 		{#if image}
 			<ImagePlugin captionsEnabled={true} />

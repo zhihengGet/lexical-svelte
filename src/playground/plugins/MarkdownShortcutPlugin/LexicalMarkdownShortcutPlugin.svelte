@@ -1,4 +1,3 @@
-<!-- @migration-task Error while migrating Svelte code: 'return' outside of function -->
 <script lang="ts">
 	import type { ElementTransformer, Transformer } from '@lexical/markdown';
 	import type { LexicalNode } from 'lexical';
@@ -11,6 +10,7 @@
 		HorizontalRuleNode
 	} from '@lexical/react/LexicalHorizontalRuleNode';
 	import { useEffect } from 'react';
+	import { PLAYGROUND_TRANSFORMERS } from '@plugins/MarkdownTransformers';
 
 	const HR: ElementTransformer = {
 		dependencies: [HorizontalRuleNode],
@@ -33,7 +33,7 @@
 	};
 	const DEFAULT_TRANSFORMERS = [HR, ...TRANSFORMERS];
 	let {
-		transformers = DEFAULT_TRANSFORMERS
+		transformers = PLAYGROUND_TRANSFORMERS
 	}: Readonly<{
 		transformers?: Array<Transformer>;
 	}> = $props();
