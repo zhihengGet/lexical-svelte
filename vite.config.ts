@@ -35,7 +35,7 @@ export default defineConfig({
 		}
 	],
 	optimizeDeps: {
-		exclude: ['@biomejs/wasm-bundler'] // Exclude Wasm from optimization
+		exclude: ['@biomejs/wasm-bundler', '@biomejs/js-api'] // Exclude Wasm from optimization
 	},
 	build: {
 		/* lib: {
@@ -50,13 +50,9 @@ export default defineConfig({
 		reportCompressedSize: true,
 		//cssMinify: 'esbuild',
 		// Reduce bloat from legacy polyfills.
-		target: 'esnext',
+		//	target: 'esnext',
 		// Leave minification up to applications.
 		minify: false,
-		rollupOptions: {
-			plugins: [
-				/* nodeResolve() */
-			]
-		}
+		rollupOptions: { external: ['@biomejs/js-api'] }
 	}
 });

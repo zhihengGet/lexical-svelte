@@ -154,6 +154,7 @@ body {
 .h3{height:0.75rem;}
 .h4{height:1rem;}
 .h6{height:1.5rem;}
+.max-h-\[300px\]{max-height:300px;}
 .max-h-30{max-height:7.5rem;}
 .max-w-120px{max-width:120px;}
 .max-w-lg{max-width:32rem;}

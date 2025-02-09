@@ -385,7 +385,7 @@
 		<DropDown
 			disabled={!isEditable()}
 			buttonClassName="toolbar-item code-language"
-			buttonLabel={getLanguageFriendlyName(toolbarState.codeLanguage)}
+			buttonLabel={getLanguageFriendlyName(toolbarState.codeLanguage).toUpperCase()}
 			buttonAriaLabel="Select language"
 		>
 			{#each CODE_LANGUAGE_OPTIONS as [value, name]}

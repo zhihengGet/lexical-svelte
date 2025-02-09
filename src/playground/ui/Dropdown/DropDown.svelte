@@ -39,11 +39,11 @@
 		{/if}
 
 		{#if buttonLabel}
-			<span class="text-sm text-center">{buttonLabel}</span>
+			<span class="text-center text-sm">{buttonLabel}</span>
 		{/if}
 		<i class="chevron-down {chevronClass}"></i>
 	</DropdownMenu.Trigger>
-	<DropdownMenu.Content class="bg-[#fff] dropdown">
+	<DropdownMenu.Content class="dropdown max-h-[300px] overflow-y-auto bg-[#fff]">
 		<DropdownMenu.Group>
 			<DropdownMenu.Label>{@render group?.()}</DropdownMenu.Label>
 			<DropdownMenu.Separator />

@@ -57,7 +57,7 @@
 		isCharLimit,
 		isCharLimitUtf8,
 		isRichText,
-		markdown,
+		isMarkdown,
 		showTreeView,
 		floatingToolbar,
 		showTableOfContents,
@@ -131,7 +131,7 @@
 	{/if}
 	{#if isRichText}
 		<LexicalRichTextPlugin contentEditable={contentEditableRichText} {placeholder} />
-		{#if markdown}
+		{#if isMarkdown}
 			<LexicalMarkdownShortcutPlugin></LexicalMarkdownShortcutPlugin>
 		{/if}
 
