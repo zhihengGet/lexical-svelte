@@ -7,6 +7,7 @@
 	import type { Options } from 'prettier';
 	import { useState } from 'react';
 	import { biomeLang } from '.';
+	import type { Biome } from '@biomejs/js-api';
 
 	interface Props {
 		lang: string;
@@ -69,7 +70,7 @@
 		return options;
 	}
 	// biomejs
-	async function initializeBiome() {
+	async function initializeBiome(): Promise<Biome> {
 		const { Biome, Distribution } = await import('@biomejs/js-api'); // or "bundler"
 		const biome = await Biome.create({
 			distribution: Distribution.BUNDLER // or Distribution.BUNDLER

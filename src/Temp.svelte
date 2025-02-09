@@ -57,6 +57,7 @@
 			...props,
 			dev: false,
 			autocomplte: true,
+			isMarkdown: true,
 			config: {
 				editable: false,
 				query: () => {

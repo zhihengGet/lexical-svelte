@@ -1,5 +1,6 @@
-import { CODE_LANGUAGE_FRIENDLY_NAME_MAP } from '@lexical/code';
+import { CODE_LANGUAGE_FRIENDLY_NAME_MAP, getLanguageFriendlyName } from '@lexical/code';
 import type { ElementFormatType } from 'lexical';
+import { startCase } from 'lodash-es';
 
 const blockTypeToBlockName = {
 	bullet: 'Bulleted List',
@@ -35,6 +36,10 @@ function getCodeLanguageOptions(): [string, string][] {
 		['jsx', 'JSX'],
 		['tsx', 'TSX']
 	]);
+}
+export function getLanguageFriendlyNameCustom(lang: string) {
+	let friendlyName = getLanguageFriendlyName(lang);
+	return friendlyName == lang ? startCase(lang) : friendlyName;
 }
 
 const CODE_LANGUAGE_OPTIONS = getCodeLanguageOptions();

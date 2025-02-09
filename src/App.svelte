@@ -81,6 +81,7 @@
 				}, 1000);
 			}
 		}}
+		isMarkdown={true}
 		isAutocomplete={false}
 		dev={true}
 		imageUpload={true}

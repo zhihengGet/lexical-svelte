@@ -75,7 +75,7 @@
 	}
 	import { useCallback, useEffect, useState } from 'react';
 	import type { rootTypeToRootName } from '.';
-	import { CODE_LANGUAGE_OPTIONS, blockTypeToBlockName } from '.';
+	import { CODE_LANGUAGE_OPTIONS, blockTypeToBlockName, getLanguageFriendlyNameCustom } from '.';
 	import useModal from '../../hooks/useModal.svelte';
 	import { getSelectedNode } from '../../utils/getSelectedNode';
 	import { sanitizeUrl } from '../../utils/url';
@@ -385,7 +385,7 @@
 		<DropDown
 			disabled={!isEditable()}
 			buttonClassName="toolbar-item code-language"
-			buttonLabel={getLanguageFriendlyName(toolbarState.codeLanguage).toUpperCase()}
+			buttonLabel={getLanguageFriendlyNameCustom(toolbarState.codeLanguage)}
 			buttonAriaLabel="Select language"
 		>
 			{#each CODE_LANGUAGE_OPTIONS as [value, name]}

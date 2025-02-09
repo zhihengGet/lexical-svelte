@@ -1,7 +1,7 @@
 {
 	"name": "lexical-svelte-runes",
 	"private": false,
-	"version": "0.1.4-beta.88.973",
+	"version": "0.1.4-beta.88.975",
 	"type": "module",
 	"author": {
 		"name": "zhiheng zhang"
@@ -78,7 +78,7 @@
 		"@myriaddreamin/typst-ts-renderer": "0.5.4",
 		"@myriaddreamin/typst.ts": "0.5.4",
 		"@unocss/reset": "^65.4.3",
-		"bits-ui": "1.0.0-next.88",
+		"bits-ui": "^1.0.0-next.90",
 		"clsx": "^2.1.1",
 		"katex": "^0.16.21",
 		"lexical": "^0.24.0",
