@@ -56,8 +56,5 @@ export const biomeLang = {
 	json: 'json',
 	typescript: 'ts'
 };
-const LANG_CAN_BE_PRETTIER = Object.keys(PRETTIER_OPTIONS_BY_LANG);
 
-export function canBePrettier(lang: string): boolean {
-	return LANG_CAN_BE_PRETTIER.includes(lang);
-}
+export { canBePrettier } from './PrettierButton.svelte';
