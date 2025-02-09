@@ -57,6 +57,7 @@
 		isCharLimit,
 		isCharLimitUtf8,
 		isRichText,
+		markdown,
 		showTreeView,
 		floatingToolbar,
 		showTableOfContents,
@@ -130,7 +131,10 @@
 	{/if}
 	{#if isRichText}
 		<LexicalRichTextPlugin contentEditable={contentEditableRichText} {placeholder} />
-		<LexicalMarkdownShortcutPlugin></LexicalMarkdownShortcutPlugin>
+		{#if markdown}
+			<LexicalMarkdownShortcutPlugin></LexicalMarkdownShortcutPlugin>
+		{/if}
+
 		<PageBreakPlug />
 		{#if image}
 			<ImagePlugin captionsEnabled={true} />

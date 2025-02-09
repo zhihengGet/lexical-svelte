@@ -6,7 +6,7 @@
 	} from 'lexical';
 	import type { Options } from 'prettier';
 	import { useState } from 'react';
-	import { biomeLang, PRETTIER_OPTIONS_BY_LANG } from '.';
+	import { biomeLang } from '.';
 
 	interface Props {
 		lang: string;
@@ -38,7 +38,20 @@
 		const { format } = await import('prettier/standalone');
 		return format;
 	}
-
+	const PRETTIER_OPTIONS_BY_LANG: Record<string, Options> = {
+		css: {
+			parser: 'css'
+		},
+		html: {
+			parser: 'html'
+		},
+		js: {
+			parser: 'babel'
+		},
+		markdown: {
+			parser: 'markdown'
+		}
+	};
 	const LANG_CAN_BE_PRETTIER = Object.keys(PRETTIER_OPTIONS_BY_LANG);
 
 	export function canBePrettier(lang: string): boolean {

@@ -77,6 +77,7 @@ export const DEFAULT_SETTINGS = {
 	dev: true,
 	editorCSS: '',
 	toolbarCSS: '',
+	markdown: false,
 	hasLinkAttributes: false,
 	showToolbar: true,
 	imageUpload: true,
