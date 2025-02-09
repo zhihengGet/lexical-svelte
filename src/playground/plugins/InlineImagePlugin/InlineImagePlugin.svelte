@@ -9,11 +9,6 @@
 	import { $wrapNodeInElement as wrapNodeInElement } from '@lexical/utils';
 
 	import { InlineImageNode } from './InlineImageNode.svelte';
-	import Button from '@ui/Button.svelte';
-	import DialogActions from '@ui/DialogActions.svelte';
-	import FileInput from '@ui/FileInput.svelte';
-	import Select from '@ui/Select.svelte';
-	import TextInput from '@ui/TextInput.svelte';
 	import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext.svelte';
 	import { mergeRegister } from '@lexical/utils';
 	import {
@@ -34,6 +29,7 @@
 	} from 'lexical';
 	export type InsertInlineImagePayload = Readonly<InlineImagePayload>;
 	import * as inline from './InlineImageNode.svelte';
+	import type { ChangeEvent } from '../../../../react';
 	export const INSERT_INLINE_IMAGE_COMMAND: LexicalCommand<InlineImagePayload> = createCommand(
 		'INSERT_INLINE_IMAGE_COMMAND'
 	);
@@ -177,7 +173,7 @@
 		activeEditor: LexicalEditor;
 		onClose: () => void;
 	};
-	let { activeEditor, onClose } = $props<props>();
+	let { activeEditor, onClose }: props = $props();
 	const hasModifier = useRef(false);
 
 	const [src, setSrc] = useState('');
@@ -187,11 +183,11 @@
 
 	const isDisabled = src() === '';
 
-	const handleShowCaptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleShowCaptionChange = (e: InputEvent) => {
 		setShowCaption(e.target.checked);
 	};
 
-	const handlePositionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+	const handlePositionChange = (e: InputEvent) => {
 		setPosition(e.target.value as Position);
 	};
 

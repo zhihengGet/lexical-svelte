@@ -8,18 +8,18 @@ const __dirname = dirname(__filename);
 export default {
 	// Consult https://svelte.dev/docs#compile-time-svelte-preprocess
 	// for more information about preprocessors
-	preprocess: vitePreprocess({ enableSourcemap: true, script: true }),
+	preprocess: vitePreprocess({ script: true }),
 	kit: {
 		alias: {
-			'$lib/*': './src/lib/*',
-			shared: path.resolve(__dirname, './src/util/src/'),
-			'@shared': path.resolve('./src/shared/'),
-			'@lexical/react': path.resolve(__dirname, 'src/lib/'),
-			react: path.resolve(__dirname, 'src/react.svelte'),
-			'@theme': path.resolve(__dirname, './src/themes/'),
-			'@ui': path.resolve(__dirname, './src/playground/ui/'),
-			'@nodes': path.resolve(__dirname, './src/playground/nodes/'),
-			'@plugins': path.resolve(__dirname, './src/playground/plugins/')
+			$lib: './src/lib',
+			shared: './src/util/src',
+			'@shared': './src/shared',
+			'@lexical/react': './src/lib',
+			react: './src/react.svelte',
+			'@theme': './src/themes',
+			'@ui': './src/playground/ui',
+			'@nodes': './src/playground/nodes',
+			'@plugins': './src/playground/plugins'
 		}
 	}
 };

@@ -1,7 +1,7 @@
 {
 	"name": "lexical-svelte-runes",
 	"private": false,
-	"version": "0.1.4-beta.88.9",
+	"version": "0.1.4-beta.88.971",
 	"type": "module",
 	"author": {
 		"name": "zhiheng zhang"
@@ -17,7 +17,7 @@
 		"fix": "eslint --fix .",
 		"tsc": "tsc",
 		"unocss": "unocss",
-		"package": "svelte-package --input ./src && unocss"
+		"package": "svelte-kit sync && svelte-package --input ./src && unocss"
 	},
 	"exports": {
 		".": {
@@ -51,7 +51,7 @@
 	],
 	"peerDependencies": {
 		"svelte": "^5.0.0",
-		"bits-ui": "1.0.0-next.88"
+		"prettier": "^3.4.2"
 	},
 	"dependencies": {
 		"@lexical/clipboard": "0.24.0",
@@ -80,19 +80,19 @@
 		"katex": "^0.16.21",
 		"lexical": "^0.24.0",
 		"lucide-svelte": "^0.475.0",
-		"prettier": "^3.4.2",
 		"svelte-awesome-color-picker": "^3.1.4",
 		"tailwind-merge": "^3.0.1",
 		"tailwind-variants": "^0.3.1",
 		"y-websocket": "^2.1.0",
-		"yjs": "^13.6.23"
+		"yjs": "^13.6.23",
+		"bits-ui": "1.0.0-next.88"
 	},
 	"devDependencies": {
 		"eslint-plugin-unused-imports": "^4.1.4",
 		"@internationalized/date": "^3.7.0",
 		"@rollup/plugin-node-resolve": "^16.0.0",
 		"@sveltejs/kit": "2.17.1",
-		"@sveltejs/package": "^2.3.10",
+		"@sveltejs/package": "2.3.10",
 		"@sveltejs/vite-plugin-svelte": "5.0.3",
 		"@swc/cli": "^0.6.0",
 		"@swc/core": "^1.10.14",
@@ -104,7 +104,6 @@
 		"@typescript-eslint/parser": "^8.23.0",
 		"@unocss/cli": "^65.4.3",
 		"@unocss/extractor-svelte": "^65.4.3",
-		"ajv": "^8.17.1",
 		"autoprefixer": "^10.4.20",
 		"chalk": "^5.4.1",
 		"csstype": "^3.1.3",

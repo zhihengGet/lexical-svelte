@@ -1,4 +1,7 @@
 <script module lang="ts">
+</script>
+
+<script lang="ts">
 	import { $isCodeNode as isCodeNode } from '@lexical/code';
 	import {
 		$getNearestNodeFromDOMNode as getNearestNodeFromDOMNode,
@@ -58,9 +61,6 @@
 
 		return options;
 	}
-</script>
-
-<script lang="ts">
 	let { lang, editor, getCodeDOMNode }: Props = $props();
 	const [syntaxError, setSyntaxError] = useState<string>('');
 	const [tipsVisible, setTipsVisible] = useState<boolean>(false);
