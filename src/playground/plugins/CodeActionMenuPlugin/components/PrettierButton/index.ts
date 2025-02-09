@@ -40,18 +40,24 @@ export const PRETTIER_OPTIONS_BY_LANG: Record<string, Options> = {
 		parser: 'markdown'
 	}
 };
-
+export const biomeLang = {
+	css: 'css',
+	html: 'html',
+	js: 'js',
+	//markdown: 'md',
+	jsx: 'jsx',
+	tsx: 'tsx',
+	yaml: 'yaml',
+	graphql: 'graphql',
+	svelte: 'svelte',
+	vue: 'vue',
+	astro: 'astro',
+	jsonc: 'jsonc',
+	json: 'json',
+	typescript: 'ts'
+};
 const LANG_CAN_BE_PRETTIER = Object.keys(PRETTIER_OPTIONS_BY_LANG);
 
 export function canBePrettier(lang: string): boolean {
 	return LANG_CAN_BE_PRETTIER.includes(lang);
-}
-
-function getPrettierOptions(lang: string): Options {
-	const options = PRETTIER_OPTIONS_BY_LANG[lang];
-	if (!options) {
-		throw new Error(`CodeActionMenuPlugin: Prettier does not support this language: ${lang}`);
-	}
-
-	return options;
 }

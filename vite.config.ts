@@ -2,6 +2,9 @@ import { defineConfig } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import UnoCSS from 'unocss/vite';
+import wasm from 'vite-plugin-wasm';
+import topLevelAwait from 'vite-plugin-top-level-await';
+
 // https://vitejs.dev/config/
 export default defineConfig({
 	base: './',
@@ -18,6 +21,8 @@ export default defineConfig({
 		}
 	}, */
 	plugins: [
+		wasm(),
+		topLevelAwait(),
 		tsconfigPaths({ loose: true }),
 		UnoCSS(),
 		svelte(),
@@ -29,6 +34,9 @@ export default defineConfig({
 			}
 		}
 	],
+	optimizeDeps: {
+		exclude: ['@biomejs/wasm-bundler'] // Exclude Wasm from optimization
+	},
 	build: {
 		/* lib: {
 			entry: path.resolve(__dirname, './src/index.ts'),

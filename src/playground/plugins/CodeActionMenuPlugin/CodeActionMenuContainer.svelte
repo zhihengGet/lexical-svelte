@@ -39,6 +39,7 @@
 		}
 	}
 	import './index.css';
+	import { canBeBiome } from './components/PrettierButton/PrettierButton.svelte';
 </script>
 
 <script lang="ts">
@@ -145,14 +146,15 @@
 	const codeFriendlyName = $derived(getLanguageFriendlyName(lang()));
 
 	let style = $derived(styleString(position()));
+	let mode: 'biome' | 'prettier' = 'prettier';
 </script>
 
 {#if isShown()}
 	<div class="code-action-menu-container z-1" {style}>
 		<div class="code-highlight-language">{codeFriendlyName}</div>
 		<CopyButton {editor} {getCodeDOMNode} />
-		{#if canBePrettier(normalizedLang)}
-			<PrettierButton {editor} {getCodeDOMNode} lang={normalizedLang} />
+		{#if mode == 'prettier' ? canBePrettier(normalizedLang) : canBeBiome(normalizedLang)}
+			<PrettierButton {editor} {getCodeDOMNode} lang={normalizedLang} {mode} />
 		{/if}
 	</div>
 {/if}

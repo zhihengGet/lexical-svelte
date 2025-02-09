@@ -256,7 +256,7 @@
 			const _draggableBlockElem = getBlockElement(anchorElem, editor, event);
 			//console.log('drag:draggable block element', _draggableBlockElem);
 			if (!_draggableBlockElem) {
-				console.warn('empty');
+				console.log('empty');
 			}
 			setDraggableBlockElem(_draggableBlockElem);
 		}

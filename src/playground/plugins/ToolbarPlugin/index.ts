@@ -29,7 +29,12 @@ function getCodeLanguageOptions(): [string, string][] {
 		options.push([lang, friendlyName]);
 	}
 
-	return options;
+	return options.concat([
+		['json', 'JSON'],
+		['graphql', 'GraphQL'],
+		['jsx', 'JSX'],
+		['tsx', 'TSX']
+	]);
 }
 
 const CODE_LANGUAGE_OPTIONS = getCodeLanguageOptions();

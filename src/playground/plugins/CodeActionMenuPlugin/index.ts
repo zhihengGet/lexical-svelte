@@ -1,10 +1,7 @@
 import type { SvelteRender } from '@lexical/react/types';
 import CodeActionMenuContainerSvelte from './CodeActionMenuContainer.svelte';
 export { default as CopyButton } from './components/CopyButton/index.svelte';
-export {
-	default as PrettierButton,
-	canBePrettier
-} from './components/PrettierButton/PrettierButton.svelte';
+export { default as PrettierButton } from './components/PrettierButton/PrettierButton.svelte';
 export default function CodeActionMenuPlugin({
 	anchorElem = document.body
 }: {

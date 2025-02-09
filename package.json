@@ -1,7 +1,7 @@
 {
 	"name": "lexical-svelte-runes",
 	"private": false,
-	"version": "0.1.4-beta.88.971",
+	"version": "0.1.4-beta.88.972",
 	"type": "module",
 	"author": {
 		"name": "zhiheng zhang"
@@ -54,6 +54,9 @@
 		"prettier": "^3.4.2"
 	},
 	"dependencies": {
+		"@biomejs/js-api": "^0.7.1",
+		"@biomejs/wasm-bundler": "^1.9.4",
+		"@biomejs/wasm-web": "^1.9.4",
 		"@lexical/clipboard": "0.24.0",
 		"@lexical/code": "0.24.0",
 		"@lexical/dragon": "0.24.0",
@@ -72,20 +75,22 @@
 		"@lexical/text": "0.24.0",
 		"@lexical/utils": "0.24.0",
 		"@lexical/yjs": "0.24.0",
-		"lodash-es": "^4.17.21",
 		"@myriaddreamin/typst-ts-renderer": "0.5.4",
 		"@myriaddreamin/typst.ts": "0.5.4",
 		"@unocss/reset": "^65.4.3",
+		"bits-ui": "1.0.0-next.88",
 		"clsx": "^2.1.1",
 		"katex": "^0.16.21",
 		"lexical": "^0.24.0",
+		"lodash-es": "^4.17.21",
 		"lucide-svelte": "^0.475.0",
 		"svelte-awesome-color-picker": "^3.1.4",
 		"tailwind-merge": "^3.0.1",
 		"tailwind-variants": "^0.3.1",
+		"vite-plugin-top-level-await": "^1.4.4",
+		"vite-plugin-wasm": "^3.4.1",
 		"y-websocket": "^2.1.0",
-		"yjs": "^13.6.23",
-		"bits-ui": "1.0.0-next.88"
+		"yjs": "^13.6.23"
 	},
 	"devDependencies": {
 		"eslint-plugin-unused-imports": "^4.1.4",

@@ -6,14 +6,21 @@
  *
  */
 
-import type { LexicalNode, Spread } from 'lexical';
+import type { LexicalNode, SerializedLexicalNode, Spread } from 'lexical';
 
-import type { EditorConfig, NodeKey, SerializedLexicalNode } from 'lexical';
+import type {
+	DOMExportOutput,
+	EditorConfig,
+	LexicalEditor,
+	NodeKey,
+	SerializedTextNode
+} from 'lexical';
 import { DecoratorNode } from 'lexical';
 
 import { uuid as UUID } from '.';
 import type { SvelteRender } from '@lexical/react/types';
 import AutocompleteComponent from './AutocompleteComponent.svelte';
+import type { SerializedDecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode';
 
 declare global {
 	interface Navigator {
@@ -50,16 +57,16 @@ export class AutocompleteNode extends DecoratorNode<SvelteRender<
 
 	exportJSON(): SerializedAutocompleteNode {
 		return {
-			//...super.exportJSON(),
-			type: 'autocomplete',
-			uuid: this.__uuid,
-			version: 1
+			...super.exportJSON(),
+			uuid: this.__uuid
 		};
 	}
-
 	constructor(uuid: string, key?: NodeKey) {
 		super(key);
 		this.__uuid = uuid;
+	}
+	exportDOM(): DOMExportOutput {
+		return { element: null };
 	}
 
 	updateDOM(prevNode: unknown, dom: HTMLElement, config: EditorConfig): boolean {
