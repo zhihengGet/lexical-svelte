@@ -19,11 +19,11 @@
 		css: [() => import('prettier/parser-postcss')],
 		html: [() => import('prettier/parser-html')],
 		js: [() => import('prettier/parser-babel'), () => import('prettier/plugins/estree')],
-		markdown: [() => import('prettier/parser-markdown')],
-		typescript: [
+		markdown: [() => import('prettier/parser-markdown')]
+		/* typescript: [
 			() => import('prettier/parser-typescript'),
 			() => import('prettier/plugins/estree')
-		]
+		] */
 	} as const;
 
 	type LanguagesType = keyof typeof PRETTIER_PARSER_MODULES;
@@ -43,8 +43,8 @@
 		css: { parser: 'css' },
 		html: { parser: 'html' },
 		js: { parser: 'babel' },
-		markdown: { parser: 'markdown' },
-		typescript: { parser: 'typescript' }
+		markdown: { parser: 'markdown' }
+		//typescript: { parser: 'typescript' }
 	};
 
 	const LANG_CAN_BE_PRETTIER = Object.keys(PRETTIER_OPTIONS_BY_LANG);
